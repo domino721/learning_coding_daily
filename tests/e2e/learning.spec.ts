@@ -14,6 +14,13 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await expect(page.getByRole("button", { name: /코딩테스트/ })).toBeDisabled();
   const todayTotal = page.getByRole("group", { name: "오늘 누적 학습" });
   await expect(todayTotal).toContainText("오늘 총 0문제 풀었어요.");
+  const footprints = page.getByRole("region", { name: "최근 7일의 발자국" });
+  await expect(footprints).toBeInViewport();
+  const footprintBox = (await footprints.boundingBox())!;
+  const dailyBox = (await page
+    .getByRole("region", { name: "데이터를 읽는 작은 습관" })
+    .boundingBox())!;
+  expect(footprintBox.y + footprintBox.height).toBeLessThan(dailyBox.y);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -130,6 +137,9 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   });
   await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
   await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await expect(footprints).toContainText(
+    "목표를 채우고, 한 걸음 더 나아갔어요.",
+  );
   await page.reload();
   await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
   await page.getByRole("button", { name: "나의 기록" }).click();

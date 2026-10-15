@@ -399,9 +399,21 @@ progress::-moz-progress-bar {
 .activity {
   border: 1px solid var(--border);
   border-radius: 18px;
-  background: white;
+  background: linear-gradient(135deg, #f1f7e8, white 75%);
   padding: 22px;
-  margin-top: 24px;
+  margin: 0 0 24px;
+}
+.activity .today-completed {
+  margin: 12px 0 8px;
+}
+.activity .today-completed strong {
+  font-size: 32px;
+}
+.achievement-note {
+  color: #486d47;
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 0 0 18px;
 }
 .week {
   display: flex;
