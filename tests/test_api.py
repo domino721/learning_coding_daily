@@ -225,3 +225,95 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert client.get("/api/health").json() == {"status": "ok"}
         assert client.get("/api/tracks").json()[0]["exercise_count"] == 30
         assert client.get("/assets/../../pyproject.toml").status_code == 404
+
+
+def test_extra_batches_prioritize_unseen_resume_and_allow_repeated_practice(learning):
+    client, path, clock = learning
+    endpoint = '/api/sessions/extra'
+    body = {'track_id': 'pandas'}
+    assert client.post(endpoint, json=body).status_code == 409
+    daily = start(client)
+    for item in daily['items']:
+        answer(client, daily, item)
+    seen = {item['id'] for item in daily['items']}
+    for batch in range(1, 6):
+        extra = client.post(endpoint, json=body).json()
+        assert extra['batch'] == batch
+        assert not seen & {item['id'] for item in extra['items']}
+        assert all(item['category'] == 'new' for item in extra['items'])
+        assert client.post(endpoint, json=body).json()['id'] == extra['id']
+        for item in extra['items']:
+            answer(client, extra, item)
+        seen.update(item['id'] for item in extra['items'])
+    assert len(seen) == 30
+    repeated = client.post(endpoint, json=body).json()
+    assert repeated['batch'] == 6
+    assert all(item['category'] == 'practice' for item in repeated['items'])
+    assert not {i['id'] for i in repeated['items']} & {i['id'] for i in extra['items']}
+    answer(client, repeated, repeated['items'][0])
+    with TestClient(create_app(path, now=lambda: clock[0])) as restarted:
+        resumed = restarted.post(endpoint, json=body).json()
+        assert resumed['id'] == repeated['id']
+        assert resumed['completed_count'] == 1
+    dashboard = client.get('/api/dashboard').json()
+    assert dashboard['today']['id'] == daily['id']
+    assert dashboard['today']['completed_count'] == 5
+    assert dashboard['extra']['id'] == repeated['id']
+    assert dashboard['today_completed_count'] == 31
+    assert dashboard['learned_count'] == 30
+    clock[0] += timedelta(days=1)
+    next_daily = start(client)
+    assert next_daily['batch'] == 0
+    assert next_daily['id'] != daily['id']
+    assert client.get('/api/dashboard').json()['extra'] is None
+    assert client.post(endpoint, json=body).status_code == 409
+
+
+def test_concurrent_extra_creation_resumes_one_batch(learning):
+    client, _, _ = learning
+    daily = start(client)
+    for item in daily['items']:
+        answer(client, daily, item)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        results = list(pool.map(lambda _: client.post('/api/sessions/extra', json={'track_id':'pandas'}).json(), range(4)))
+    assert len({result['id'] for result in results}) == 1
+    assert all(result['batch'] == 1 for result in results)
+
+
+def test_schema_v1_upgrade_preserves_completed_session_and_attempts(tmp_path):
+    import sqlite3
+    path = tmp_path / 'legacy.sqlite3'
+    with sqlite3.connect(path) as db:
+        db.executescript('''
+            CREATE TABLE sessions(id TEXT PRIMARY KEY, track_id TEXT NOT NULL, local_day TEXT NOT NULL,
+                timezone TEXT NOT NULL, created_at TEXT NOT NULL, UNIQUE(track_id, local_day));
+            CREATE TABLE session_items(session_id TEXT NOT NULL REFERENCES sessions(id), position INTEGER NOT NULL,
+                exercise_id TEXT NOT NULL, version INTEGER NOT NULL, category TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending', hints_used INTEGER NOT NULL DEFAULT 0,
+                attempts_count INTEGER NOT NULL DEFAULT 0, last_answer TEXT, last_correct INTEGER,
+                active_seconds INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(session_id, exercise_id), UNIQUE(session_id, position));
+            CREATE TABLE attempts(id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id),
+                exercise_id TEXT NOT NULL, answer TEXT NOT NULL, correct INTEGER NOT NULL,
+                hints_used INTEGER NOT NULL, active_seconds INTEGER NOT NULL, created_at TEXT NOT NULL);
+            CREATE TABLE progress(exercise_id TEXT PRIMARY KEY, completed_count INTEGER NOT NULL DEFAULT 0,
+                last_day TEXT NOT NULL, due_day TEXT NOT NULL, last_outcome TEXT NOT NULL);
+            PRAGMA user_version=1;
+            INSERT INTO sessions VALUES('legacy', 'pandas', '2026-10-15', 'Asia/Seoul', '2026-10-15T00:00:00Z');
+        ''')
+        for i, ex in enumerate(EXERCISES[:5]):
+            db.execute("INSERT INTO session_items(session_id, position, exercise_id, version, category, status, attempts_count) VALUES('legacy', ?, ?, 1, 'new', 'correct', 1)", (i, ex.id))
+            db.execute("INSERT INTO progress VALUES(?, 1, '2026-10-15', '2026-10-18', 'correct')", (ex.id,))
+        db.execute("INSERT INTO attempts VALUES(?, 'legacy', ?, ?, 1, 0, 30, '2026-10-15T00:00:00Z')", (str(uuid4()), EXERCISES[0].id, EXERCISES[0].answer))
+    now = lambda: datetime(2026,10,15,12,tzinfo=timezone.utc)
+    with TestClient(create_app(path, now=now)) as client:
+        daily = start(client)
+        assert daily['id'] == 'legacy' and daily['finished'] and daily['batch'] == 0
+        extra = client.post('/api/sessions/extra', json={'track_id':'pandas'}).json()
+        assert extra['batch'] == 1
+        assert len(extra['items']) == 5
+    with connect(path) as db:
+        assert db.execute('PRAGMA user_version').fetchone()[0] == 2
+        assert db.execute('PRAGMA foreign_keys').fetchone()[0] == 1
+        assert not db.execute('PRAGMA foreign_key_check').fetchall()
+        assert db.execute('SELECT count(*) FROM attempts').fetchone()[0] == 1
+        assert db.execute('SELECT count(*) FROM progress').fetchone()[0] == 5

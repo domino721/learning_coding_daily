@@ -306,10 +306,19 @@ export default function App() {
     }
   }
   function start() {
+    openSession(false);
+  }
+  function startExtra() {
+    openSession(true);
+  }
+  function openSession(extra: boolean) {
     void action(async () => {
-      const data = await api<Session>("/sessions/today", {
-        track_id: "pandas",
-      });
+      const data = await api<Session>(
+        extra ? "/sessions/extra" : "/sessions/today",
+        {
+          track_id: "pandas",
+        },
+      );
       setSession(data);
       setIndex(
         Math.max(
@@ -387,6 +396,10 @@ export default function App() {
   const day = dashboard?.local_day;
   const todaySession = dashboard?.today;
   const item = session?.items[index];
+  const extraLabel =
+    dashboard?.extra && !dashboard.extra.finished
+      ? "추가 학습 이어서 풀기"
+      : "추가로 5문제 풀기";
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -485,7 +498,7 @@ export default function App() {
                       </div>
                       <div className="daily-details">
                         <span>◷ 약 10분</span>
-                        <span>▤ 하루 5문제</span>
+                        <span>▤ 목표 5문제</span>
                         <span>기초 → 적용</span>
                       </div>
                       {todaySession && (
@@ -517,6 +530,20 @@ export default function App() {
                         <span aria-hidden="true">↗</span>
                       </button>
                     </section>
+                    {todaySession?.finished && (
+                      <div className="extra-prompt">
+                        <button
+                          className="extra-button"
+                          disabled={busy}
+                          onClick={startExtra}
+                        >
+                          {extraLabel} <span aria-hidden="true">→</span>
+                        </button>
+                        <p className="gentle-note">
+                          오늘의 목표는 달성했어요. 원하면 더 연습할 수 있어요.
+                        </p>
+                      </div>
+                    )}
                     <section
                       className="tracks-section"
                       aria-labelledby="tracks-title"
@@ -590,6 +617,13 @@ export default function App() {
                         개 중
                       </span>
                     </div>
+                    <p className="record-note">
+                      오늘 총{" "}
+                      {dashboard.today_completed_count ??
+                        todaySession?.completed_count ??
+                        0}
+                      문제 풀었어요.
+                    </p>
                     {screen === "record" && (
                       <p className="record-note">
                         정답과 해설 학습을 모두 기록해요. 도움을 받은 문제는
@@ -638,9 +672,13 @@ export default function App() {
                 <span className="summary-symbol" aria-hidden="true">
                   ✦
                 </span>
-                <p className="eyebrow">TODAY, ONE STEP FORWARD</p>
+                <p className="eyebrow">
+                  {session.batch
+                    ? "EXTRA PRACTICE, ONE MORE STEP"
+                    : "TODAY, ONE STEP FORWARD"}
+                </p>
                 <h1 ref={focusTarget} tabIndex={-1}>
-                  오늘의 한 걸음,
+                  {session.batch ? "추가 연습도," : "오늘의 한 걸음,"}
                   <br />잘 마쳤어요.
                 </h1>
                 <p>
@@ -659,6 +697,18 @@ export default function App() {
                     </strong>
                     <span>해설로 배움</span>
                   </div>
+                </div>
+                <div className="extra-prompt">
+                  <button
+                    className="primary"
+                    disabled={busy}
+                    onClick={startExtra}
+                  >
+                    {extraLabel} <span aria-hidden="true">→</span>
+                  </button>
+                  <p className="gentle-note">
+                    안 푼 문제를 먼저 드리고, 모두 풀면 기존 문제로 연습해요.
+                  </p>
                 </div>
                 <ul className="summary-list">
                   {session.items.map((ex) => (
@@ -693,7 +743,7 @@ export default function App() {
                 <p className="gentle-note">
                   복습할 문제는 다음 학습에 다시 섞어 드릴게요.
                   <br />
-                  오늘의 분량은 여기까지. 내일 또 만나요.
+                  오늘의 목표는 달성했어요. 더 풀거나 여기서 마쳐도 좋아요.
                 </p>
                 <button className="primary" onClick={() => home()}>
                   오늘 학습으로 돌아가기

@@ -32,6 +32,7 @@ export type Exercise = {
   explanation?: string;
 };
 export type Session = {
+  batch?: number;
   id: string;
   track_id: string;
   local_day: string;
@@ -49,6 +50,8 @@ export type Dashboard = {
   learned_count: number;
   weekly_days: string[];
   today: Session | null;
+  extra?: Session | null;
+  today_completed_count?: number;
 };
 export async function api<T>(path: string, body?: unknown): Promise<T> {
   if (import.meta.env.MODE === "web") return browserApi<T>(path, body);

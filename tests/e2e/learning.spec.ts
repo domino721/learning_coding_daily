@@ -87,6 +87,48 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await page.getByRole("button", { name: "나의 기록" }).click();
   await expect(page.getByText("1일 학습했어요")).toBeVisible();
   await expect(page.getByText("지금까지 만난 문제")).toContainText("5개");
+  // A completed daily goal must not block new questions or lose its result.
+  await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
+  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  const extras = curriculum.exercises.slice(5, 10);
+  async function solve(exercise: (typeof extras)[number]) {
+    await expect(
+      page.getByRole("heading", { name: exercise.title }),
+    ).toBeVisible();
+    if (exercise.kind === "blank")
+      await page.getByLabel("빈칸에 들어갈 답").fill(exercise.answer);
+    else await page.getByLabel(exercise.answer, { exact: true }).check();
+    await page.getByRole("button", { name: "답 확인하기" }).click();
+    await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
+    await page.getByRole("button", { name: "다음으로" }).click();
+  }
+  await solve(extras[0]);
+  await page.reload();
+  await expect(
+    page.getByRole("progressbar", { name: "오늘 학습 진행률" }),
+  ).toHaveAttribute("value", "5");
+  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
+  for (const exercise of extras.slice(1)) await solve(exercise);
+  await expect(
+    page.getByRole("heading", { name: "추가 연습도, 잘 마쳤어요." }),
+  ).toBeVisible();
+  await expect(page.locator(".summary-stats")).toContainText(
+    "5정답으로 마침0해설로 배움",
+  );
+  await page.screenshot({
+    path: `test-results/${test.info().project.name}-extra.png`,
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
+  await expect(page.getByText(/오늘 총\s*10문제 풀었어요/)).toBeVisible();
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await expect(page.locator(".summary-stats")).toContainText(
+    "4정답으로 마침1해설로 배움",
+  );
+  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  await expect(
+    page.getByRole("heading", { name: curriculum.exercises[10].title }),
+  ).toBeVisible();
   expect(errors).toEqual([]);
 });
 

@@ -1,4 +1,4 @@
-"""SQLite schema v1 for a single-person local learning app."""
+"""SQLite schema v2 for a single-person local learning app."""
 from contextlib import contextmanager
 from pathlib import Path
 import sqlite3
@@ -6,8 +6,8 @@ import sqlite3
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY, track_id TEXT NOT NULL, local_day TEXT NOT NULL,
-    timezone TEXT NOT NULL, created_at TEXT NOT NULL,
-    UNIQUE(track_id, local_day)
+    timezone TEXT NOT NULL, created_at TEXT NOT NULL, batch INTEGER NOT NULL DEFAULT 0,
+    UNIQUE(track_id, local_day, batch)
 );
 CREATE TABLE IF NOT EXISTS session_items (
     session_id TEXT NOT NULL REFERENCES sessions(id), position INTEGER NOT NULL,
@@ -35,18 +35,35 @@ def connect(path: Path):
     path.parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path, timeout=15)
     db.row_factory = sqlite3.Row
-    db.execute("PRAGMA foreign_keys=ON")
     try:
-        # Serialize read/modify/write operations across tabs and requests.
+        # v1 allowed exactly one session per day. Rebuild only that parent table,
+        # retaining IDs so items, attempts and progress survive the upgrade.
+        if db.execute("PRAGMA user_version").fetchone()[0] != 2:
+            db.execute("PRAGMA foreign_keys=OFF")
+            db.execute("BEGIN IMMEDIATE")
+            version = db.execute("PRAGMA user_version").fetchone()[0]
+            if version == 0:
+                for statement in SCHEMA.split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+            elif version == 1:
+                db.execute("""CREATE TABLE sessions_v2 (
+                    id TEXT PRIMARY KEY, track_id TEXT NOT NULL, local_day TEXT NOT NULL,
+                    timezone TEXT NOT NULL, created_at TEXT NOT NULL, batch INTEGER NOT NULL DEFAULT 0,
+                    UNIQUE(track_id, local_day, batch))""")
+                db.execute("""INSERT INTO sessions_v2(id, track_id, local_day, timezone, created_at)
+                    SELECT id, track_id, local_day, timezone, created_at FROM sessions""")
+                db.execute("DROP TABLE sessions")
+                db.execute("ALTER TABLE sessions_v2 RENAME TO sessions")
+            elif version != 2:
+                raise RuntimeError(f"Unsupported database schema version: {version}")
+            if db.execute("PRAGMA foreign_key_check").fetchall():
+                raise RuntimeError("Database migration failed foreign key validation")
+            db.execute("PRAGMA user_version=2")
+            db.commit()
+        db.execute("PRAGMA foreign_keys=ON")
+        # Serialize creation/resumption of extra batches and answer retries.
         db.execute("BEGIN IMMEDIATE")
-        version = db.execute("PRAGMA user_version").fetchone()[0]
-        if version not in (0, 1):
-            raise RuntimeError(f"Unsupported database schema version: {version}")
-        if version == 0:
-            for statement in SCHEMA.split(";"):
-                if statement.strip():
-                    db.execute(statement)
-            db.execute("PRAGMA user_version=1")
         yield db
         db.commit()
     except Exception:

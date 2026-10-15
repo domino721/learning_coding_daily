@@ -12,7 +12,8 @@
 
 - 트랙 목록: 데이터 분석 활성화, 코딩테스트는 준비 중
 - 데이터 분석 30문제: pandas 10개, NumPy·SQL·통계·scikit-learn 각 5개. 코드 읽기·짧은 빈칸·평가 절차 판단
-- 하루 5문제, 같은 날 같은 구성, 새로고침·서버 재시작 후 이어하기
+- 하루 기본 목표 5문제, 같은 날 같은 기본 구성, 새로고침·서버 재시작 후 이어하기
+- 완료 후 추가로 5문제씩 계속 풀기: 안 푼 문제 우선, 모두 풀면 최근 반복을 피한 연습. 추가 학습도 저장·이어하기 지원
 - 풀이 전에는 개념명과 풀이 설명을 숨김. 요청한 2단계 힌트, 오답 재시도, 해설 학습
 - 오늘의 정답/해설 학습 구분, 최근 7일 학습 기록
 - 도움을 받은 문제는 다음날, 혼자 맞힌 문제는 3일 뒤 복습 후보로 등록
@@ -63,13 +64,13 @@ Vite의 5173 포트는 `/api` 요청을 8000 포트로 전달합니다. `API_PRO
 - `APP_DB_PATH`로 DB 경로를 변경할 수 있습니다. 백업은 서버를 멈춘 후 이 파일을 복사합니다.
 - `APP_TIMEZONE`은 기본 `Asia/Seoul`입니다. 하루는 서버에 설정된 학습 시간대로 나뉩니다. 학습 기록을 쌓은 뒤 시간대를 바꾸는 UI는 아직 없습니다.
 - 자정 이후 이전 날짜의 제출은 거절하고 오늘 학습으로 돌아가도록 안내합니다. 이전 학습 기록은 읽을 수 있습니다.
-- DB 스키마 v1은 `PRAGMA user_version`으로 관리합니다. 알 수 없는 버전은 덮어쓰지 않고 오류를 냅니다.
+- DB 스키마 v2는 `PRAGMA user_version`으로 관리합니다. v1 기록은 세션 ID·답안·진도를 보존하며 자동 이전합니다. 알 수 없는 버전은 덮어쓰지 않고 오류를 냅니다.
 
 ## 검증
 
 ```bash
-bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + Python 테스트 39개
-npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 테스트 5개
+bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + Python 테스트 42개
+npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 테스트 6개
 ```
 
 브라우저 테스트는 `/usr/bin/chromium`이 있으면 사용하며, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`로 경로를 지정할 수 있습니다. 시스템 Chromium이 없는 로컬 환경은 `npx playwright install chromium`으로 Playwright 브라우저를 설치하세요. 테스트용 서버는 8001·5174·5175 포트를 사용하고 매 실행 별도의 임시 DB를 생성하므로 개인 진도를 변경하지 않습니다.
@@ -100,4 +101,6 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 
 `docker build -t learning-coding-daily .`로 Python/SQLite 모드의 배포용 이미지를 만들 수 있습니다. 8000 포트와 `/app/.data` 저장 경로를 사용합니다. 프록시가 자체 CA를 사용하는 빌드 환경은 `--secret id=build_ca,src=/etc/ssl/certs/ca-certificates.crt`로 신뢰된 CA 묶음을 빌드 시에만 전달할 수 있습니다. TLS와 잠금 파일 체크섬 검증은 유지합니다. 무료 GitHub Pages 모드에서는 이 컨테이너가 필요하지 않습니다.
 
-문제 작성 원칙은 [콘텐츠 기준](docs/CONTENT_GUIDELINES.md)을 따릅니다. 이미 마친 오늘의 기록은 유지하며, 새로운 분야 구성은 다음 일일 세션부터 적용됩니다. 데이터 분석 트랙의 내부 ID는 기존 기록 호환을 위해 `pandas`를 유지합니다.
+문제 작성 원칙은 [콘텐츠 기준](docs/CONTENT_GUIDELINES.md)을 따릅니다. 이미 마친 오늘의 기록은 유지하며, 새 분야 문제는 완료 화면 또는 홈의 **추가로 5문제 풀기**로 오늘 바로 풀 수 있습니다. 기존 일일 묶음과 별도로 저장됩니다. 데이터 분석 트랙의 내부 ID는 기존 기록 호환을 위해 `pandas`를 유지합니다.
+
+`POST /api/sessions/extra` (`{"track_id":"pandas"}`)는 기본 학습 완료 후 추가 묶음을 시작하거나 미완료 묶음을 복구합니다. 같은 날 기본 학습은 `batch=0`, 추가 학습은 `batch=1,2,…`로 보존합니다. `/api/dashboard`는 `today`, 최신 `extra`, 당일 전체 완료 수 `today_completed_count`를 구분해 반환합니다. 추가 학습은 미학습 문제를 우선하고, 문제를 모두 풀어도 계속 연습할 수 있습니다.

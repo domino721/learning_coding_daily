@@ -69,7 +69,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         completed = sum(item["status"] != "pending" for item in items)
         correct = sum(item["status"] == "correct" for item in items)
         return {"id": record["id"], "track_id": record["track_id"], "local_day": record["local_day"],
-                "timezone": record["timezone"], "items": items, "completed_count": completed,
+                "timezone": record["timezone"], "batch": record["batch"], "items": items, "completed_count": completed,
                 "correct_count": correct, "total": len(items), "finished": completed == len(items)}
 
     def pending_item(db, session_id, exercise_id):
@@ -105,14 +105,17 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
     def dashboard():
         with connect(path) as db:
             day = today().isoformat()
-            record = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=?", (day,)).fetchone()
+            record = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND batch=0 AND local_day=?", (day,)).fetchone()
+            extra = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=? AND batch>0 ORDER BY batch DESC LIMIT 1", (day,)).fetchone()
+            total_done = db.execute("SELECT count(*) FROM session_items i JOIN sessions s ON i.session_id=s.id WHERE s.local_day=? AND i.status!='pending'", (day,)).fetchone()[0]
             learned = db.execute("SELECT count(*) FROM progress").fetchone()[0]
             start = (today() - timedelta(days=6)).isoformat()
             days = db.execute("""SELECT DISTINCT s.local_day FROM sessions s JOIN session_items i ON i.session_id=s.id
                 WHERE i.status != 'pending' AND s.local_day BETWEEN ? AND ? ORDER BY s.local_day""", (start, day)).fetchall()
             return {"local_day": day, "timezone": str(zone), "learned_count": learned,
                     "weekly_days": [row[0] for row in days],
-                    "today": snapshot(db, record[0]) if record else None}
+                    "today": snapshot(db, record[0]) if record else None,
+                    "extra": snapshot(db, extra[0]) if extra else None, "today_completed_count": total_done}
 
     @app.post("/api/sessions/today")
     def start(body: StartSession):
@@ -120,7 +123,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
         with connect(path) as db:
             day = today().isoformat()
-            existing = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=?", (body.track_id, day)).fetchone()
+            existing = db.execute("SELECT id FROM sessions WHERE track_id=? AND batch=0 AND local_day=?", (body.track_id, day)).fetchone()
             if existing:
                 return snapshot(db, existing[0])
             progress = {row["exercise_id"]: row for row in db.execute("SELECT * FROM progress")}
@@ -136,8 +139,36 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                                   key=lambda ex: (progress.get(ex.id, {"due_day": day})["due_day"], EXERCISES.index(ex)))
                 selected += [(ex, "practice") for ex in practice[:5 - len(selected)]]
             session_id = str(uuid4())
-            db.execute("INSERT INTO sessions VALUES(?, ?, ?, ?, ?)",
+            db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at) VALUES(?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat()))
+            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category) VALUES(?, ?, ?, ?, ?)",
+                           [(session_id, pos, ex.id, ex.version, category) for pos, (ex, category) in enumerate(selected)])
+            return snapshot(db, session_id)
+
+    @app.post("/api/sessions/extra")
+    def start_extra(body: StartSession):
+        if body.track_id != "pandas":
+            raise HTTPException(409, "아직 준비 중인 트랙입니다.")
+        with connect(path) as db:
+            day = today().isoformat()
+            daily = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? AND batch=0", (body.track_id, day)).fetchone()
+            if not daily or not snapshot(db, daily[0])["finished"]:
+                raise HTTPException(409, "오늘의 기본 학습을 마친 뒤 추가로 풀 수 있어요.")
+            latest = db.execute("SELECT id, batch FROM sessions WHERE track_id=? AND local_day=? ORDER BY batch DESC LIMIT 1", (body.track_id, day)).fetchone()
+            if latest["batch"] > 0 and not snapshot(db, latest["id"])["finished"]:
+                return snapshot(db, latest["id"])
+            progress = {row["exercise_id"] for row in db.execute("SELECT exercise_id FROM progress")}
+            selected = [(ex, "new") for ex in EXERCISES if ex.id not in progress][:5]
+            selected_ids = {ex.id for ex, _ in selected}
+            # Prefer the least recently encountered questions after unseen content.
+            history = db.execute("""SELECT i.exercise_id FROM session_items i JOIN sessions s ON i.session_id=s.id
+                WHERE i.status!='pending' ORDER BY s.local_day, s.batch, i.position""").fetchall()
+            last_seen = {row[0]: pos for pos, row in enumerate(history)}
+            practice = sorted((ex for ex in EXERCISES if ex.id not in selected_ids), key=lambda ex: last_seen.get(ex.id, -1))
+            selected += [(ex, "practice") for ex in practice[:5 - len(selected)]]
+            session_id = str(uuid4())
+            db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at, batch) VALUES(?, ?, ?, ?, ?, ?)",
+                       (session_id, body.track_id, day, str(zone), clock().isoformat(), latest["batch"] + 1))
             db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category) VALUES(?, ?, ?, ?, ?)",
                            [(session_id, pos, ex.id, ex.version, category) for pos, (ex, category) in enumerate(selected)])
             return snapshot(db, session_id)

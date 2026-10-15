@@ -56,6 +56,7 @@ function read(): Store {
       throw Error();
     // Preserve completed records; refresh only pending cards from the current curriculum.
     for (const session of data.sessions as Session[]) {
+      session.batch ??= 0;
       session.items = session.items.map((item) => {
         const source = sources.get(item.id);
         if (!source) return item;
@@ -171,9 +172,21 @@ function handle(path: string, payload?: unknown): unknown {
             .map((s) => s.local_day),
         ),
       ].sort(),
+      extra:
+        data.sessions
+          .filter(
+            (s) =>
+              s.local_day === today &&
+              s.track_id === "pandas" &&
+              (s.batch ?? 0) > 0,
+          )
+          .sort((a, b) => b.batch! - a.batch!)[0] ?? null,
+      today_completed_count: data.sessions
+        .filter((s) => s.local_day === today)
+        .reduce((total, s) => total + s.completed_count, 0),
       today:
         data.sessions.find(
-          (s) => s.track_id === "pandas" && s.local_day === today,
+          (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
         ) ?? null,
     };
     return dashboard;
@@ -182,7 +195,7 @@ function handle(path: string, payload?: unknown): unknown {
     if (body.track_id !== "pandas")
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const existing = data.sessions.find(
-      (s) => s.track_id === "pandas" && s.local_day === today,
+      (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
     );
     if (existing) return existing;
     const due = curriculum.exercises
@@ -216,6 +229,61 @@ function handle(path: string, payload?: unknown): unknown {
       track_id: "pandas",
       local_day: today,
       timezone: TIMEZONE,
+      batch: 0,
+      items: selected,
+      completed_count: 0,
+      correct_count: 0,
+      total: selected.length,
+      finished: false,
+    };
+    data.sessions.push(session);
+    save(data);
+    return session;
+  }
+  if (path === "/sessions/extra") {
+    if (body.track_id !== "pandas")
+      throw new ApiError("아직 준비 중인 트랙입니다.", 409);
+    const daily = data.sessions.find(
+      (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
+    );
+    if (!daily?.finished)
+      throw new ApiError(
+        "오늘의 기본 학습을 마친 뒤 추가로 풀 수 있어요.",
+        409,
+      );
+    const latest = data.sessions
+      .filter((s) => s.track_id === "pandas" && s.local_day === today)
+      .sort((a, b) => (b.batch ?? 0) - (a.batch ?? 0))[0];
+    if (latest.batch && !latest.finished) return latest;
+    const selected = curriculum.exercises
+      .filter((ex) => !data.progress[ex.id])
+      .slice(0, 5)
+      .map((ex) => makeItem(ex, "new"));
+    const ids = new Set(selected.map((ex) => ex.id));
+    const lastSeen = new Map<string, number>();
+    const history = [...data.sessions].sort(
+      (a, b) =>
+        a.local_day.localeCompare(b.local_day) ||
+        (a.batch ?? 0) - (b.batch ?? 0),
+    );
+    let sequence = 0;
+    for (const session of history)
+      for (const item of session.items)
+        if (item.status !== "pending") lastSeen.set(item.id, sequence++);
+    const practice = curriculum.exercises
+      .filter((ex) => !ids.has(ex.id))
+      .sort((a, b) => (lastSeen.get(a.id) ?? -1) - (lastSeen.get(b.id) ?? -1));
+    selected.push(
+      ...practice
+        .slice(0, 5 - selected.length)
+        .map((ex) => makeItem(ex, "practice")),
+    );
+    const session: Session = {
+      id: crypto.randomUUID(),
+      track_id: "pandas",
+      local_day: today,
+      timezone: TIMEZONE,
+      batch: (latest.batch ?? 0) + 1,
       items: selected,
       completed_count: 0,
       correct_count: 0,
