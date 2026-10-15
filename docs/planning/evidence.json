@@ -39,6 +39,17 @@
         "tests/e2e/browser-migration.spec.ts"
       ],
       "code_reference": "2404fab3160a5ba4d4a770ee75f5439e42b8f46b"
+    },
+    {
+      "id": "EV-004",
+      "record": "docs/planning/evidence/EV-004.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts",
+        "docs/LEARNING_RECORDS.md"
+      ],
+      "code_reference": "2227271b1820e8b1a22c0e28d43154452f1543fb"
     }
   ]
 }
