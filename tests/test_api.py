@@ -260,12 +260,20 @@ def test_extra_batches_prioritize_unseen_resume_and_allow_repeated_practice(lear
     assert dashboard['today']['completed_count'] == 5
     assert dashboard['extra']['id'] == repeated['id']
     assert dashboard['today_completed_count'] == 31
+    assert [s['batch'] for s in dashboard['today_sessions']] == list(range(7))
+    completed = [item for s in dashboard['today_sessions'] for item in s['items'] if item['status'] != 'pending']
+    assert len(completed) == 31
+    assert len({item['id'] for item in completed}) == 30
+    assert all('answer' in item and 'explanation' in item for item in completed)
+    assert all('answer' not in item and 'explanation' not in item
+               for s in dashboard['today_sessions'] for item in s['items'] if item['status'] == 'pending')
     assert dashboard['learned_count'] == 30
     clock[0] += timedelta(days=1)
     next_daily = start(client)
     assert next_daily['batch'] == 0
     assert next_daily['id'] != daily['id']
     assert client.get('/api/dashboard').json()['extra'] is None
+    assert [s['id'] for s in client.get('/api/dashboard').json()['today_sessions']] == [next_daily['id']]
     assert client.post(endpoint, json=body).status_code == 409
 
 

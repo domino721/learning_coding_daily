@@ -107,7 +107,7 @@ test("already completed legacy daily goal opens unseen extra questions without a
     .filter((ex) => !old.some((done) => done.id === ex.id))
     .slice(0, 5);
   await page.goto("./");
-  await page.getByRole("button", { name: "기본 학습 돌아보기" }).click();
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
   await expect(
     page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
   ).toBeVisible();

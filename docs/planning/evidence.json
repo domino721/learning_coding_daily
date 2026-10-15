@@ -50,6 +50,21 @@
         "docs/LEARNING_RECORDS.md"
       ],
       "code_reference": "2227271b1820e8b1a22c0e28d43154452f1543fb"
+    },
+    {
+      "id": "EV-005",
+      "record": "docs/planning/evidence/EV-005.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/api.ts",
+        "src/browserApi.ts",
+        "backend/main.py",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/browser-migration.spec.ts",
+        "tests/test_api.py",
+        "docs/LEARNING_RECORDS.md"
+      ],
+      "code_reference": "WBS-030 daily review fix (accompanying commit)"
     }
   ]
 }

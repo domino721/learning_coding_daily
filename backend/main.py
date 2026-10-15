@@ -107,6 +107,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             day = today().isoformat()
             record = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND batch=0 AND local_day=?", (day,)).fetchone()
             extra = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=? AND batch>0 ORDER BY batch DESC LIMIT 1", (day,)).fetchone()
+            sessions = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=? ORDER BY batch", (day,)).fetchall()
             total_done = db.execute("SELECT count(*) FROM session_items i JOIN sessions s ON i.session_id=s.id WHERE s.local_day=? AND i.status!='pending'", (day,)).fetchone()[0]
             learned = db.execute("SELECT count(*) FROM progress").fetchone()[0]
             start = (today() - timedelta(days=6)).isoformat()
@@ -115,6 +116,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             return {"local_day": day, "timezone": str(zone), "learned_count": learned,
                     "weekly_days": [row[0] for row in days],
                     "today": snapshot(db, record[0]) if record else None,
+                    "today_sessions": [snapshot(db, row[0]) for row in sessions],
                     "extra": snapshot(db, extra[0]) if extra else None, "today_completed_count": total_done}
 
     @app.post("/api/sessions/today")

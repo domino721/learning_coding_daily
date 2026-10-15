@@ -91,7 +91,7 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     fullPage: true,
   });
   await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
-  await page.getByRole("button", { name: "기본 학습 돌아보기" }).click();
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
   await expect(
     page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
   ).toBeVisible();
@@ -120,17 +120,26 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   ).toHaveAttribute("value", "5");
   await expect(todayTotal).toContainText("오늘 총 6문제 풀었어요.");
   await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 1문제");
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await expect(page.locator(".summary-list > li")).toHaveCount(6);
+  await expect(page.locator(".summary-stats")).toContainText(
+    "5정답으로 마침1해설로 배움",
+  );
+  await expect(page.locator(".summary-list")).not.toContainText(
+    extras[1].title,
+  );
   await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
   for (const exercise of extras.slice(1)) await solve(exercise);
   await expect(
     page.getByRole("heading", { name: "추가 연습도, 잘 마쳤어요." }),
   ).toBeVisible();
   await expect(page.locator(".summary-stats")).toContainText(
-    "5정답으로 마침0해설로 배움",
+    "9정답으로 마침1해설로 배움",
   );
   await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
   await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 5문제");
-  await expect(page.getByText("이번 추가 학습 5문제 결과")).toBeVisible();
+  await expect(page.getByText("오늘 푼 전체 문제 결과")).toBeVisible();
+  await expect(page.locator(".summary-list > li")).toHaveCount(10);
   await page.screenshot({
     path: `test-results/${test.info().project.name}-extra.png`,
     fullPage: true,
@@ -146,20 +155,43 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
   await expect(page.getByText("지금까지 만난 문제")).toContainText("10개");
   await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
-  await page.getByRole("button", { name: "기본 학습 돌아보기" }).click();
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
   await expect(page.locator(".summary-stats")).toContainText(
-    "4정답으로 마침1해설로 배움",
+    "9정답으로 마침1해설로 배움",
   );
   await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await expect(page.getByText("이번 기본 학습 5문제 결과")).toBeVisible();
-  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  await expect(page.locator(".summary-list > li")).toHaveCount(10);
   await expect(
-    page.getByRole("heading", { name: curriculum.exercises[10].title }),
+    page.getByText("기본 학습 5문제 · 추가 학습 5문제"),
   ).toBeVisible();
-  await page.getByRole("button", { name: "해설 보고 마치기" }).click();
-  await page.getByRole("button", { name: "← 오늘 학습", exact: true }).click();
-  await expect(todayTotal).toContainText("오늘 총 11문제 풀었어요.");
-  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 6문제");
+  for (const exercise of curriculum.exercises.slice(0, 10)) {
+    const row = page
+      .locator(".summary-list > li")
+      .filter({ hasText: exercise.title });
+    await row.getByText("해설", { exact: true }).click();
+    await expect(row.locator("details")).toContainText(exercise.explanation);
+  }
+  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  await solve(curriculum.exercises[10]);
+  await page.reload();
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await expect(page.locator(".summary-list > li")).toHaveCount(11);
+  await expect(page.locator(".summary-stats")).toContainText(
+    "10정답으로 마침1해설로 배움",
+  );
+  await expect(
+    page.getByText("기본 학습 5문제 · 추가 학습 6문제"),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
+  await expect(
+    page.getByRole("heading", { name: curriculum.exercises[11].title }),
+  ).toBeVisible();
+  for (const exercise of curriculum.exercises.slice(11, 15))
+    await solve(exercise);
+  await expect(page.locator(".summary-list > li")).toHaveCount(15);
+  await expect(page.locator(".summary-stats")).toContainText(
+    "14정답으로 마침1해설로 배움",
+  );
   expect(errors).toEqual([]);
 });
 
@@ -202,7 +234,7 @@ test("small screen and network failures keep a recovery action", async ({
   await page.getByRole("button", { name: "다시 연결" }).click();
   await expect(
     page.getByRole("button", {
-      name: /오늘 학습 시작하기|기본 학습 돌아보기|이어서 학습하기/,
+      name: /오늘 학습 시작하기|오늘 학습 돌아보기|이어서 학습하기/,
     }),
   ).toBeEnabled();
   expect(

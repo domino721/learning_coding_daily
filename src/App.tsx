@@ -334,6 +334,7 @@ export default function App() {
           track_id: "pandas",
         },
       );
+      if (data.finished) await refresh();
       setSession(data);
       setIndex(
         Math.max(
@@ -413,6 +414,23 @@ export default function App() {
   const day = dashboard?.local_day;
   const todaySession = dashboard?.today;
   const item = session?.items[index];
+  // Include every batch, replacing the active one with its latest local result.
+  const summarySessions = session
+    ? [
+        ...(dashboard?.today_sessions ?? []).filter(
+          (s) => s.local_day === session.local_day && s.id !== session.id,
+        ),
+        session,
+      ].sort((a, b) => (a.batch ?? 0) - (b.batch ?? 0))
+    : [];
+  const summaryItems = summarySessions.flatMap((s) =>
+    s.items
+      .filter((ex) => ex.status !== "pending")
+      .map((ex) => ({ exercise: ex, sessionId: s.id, batch: s.batch ?? 0 })),
+  );
+  const summaryCorrect = summaryItems.filter(
+    ({ exercise }) => exercise.status === "correct",
+  ).length;
   const extraLabel =
     dashboard?.extra && !dashboard.extra.finished
       ? "추가 학습 이어서 풀기"
@@ -596,7 +614,7 @@ export default function App() {
                         onClick={start}
                       >
                         {todaySession?.finished
-                          ? "기본 학습 돌아보기"
+                          ? "오늘 학습 돌아보기"
                           : todaySession && todaySession.completed_count > 0
                             ? "이어서 학습하기"
                             : "오늘 학습 시작하기"}
@@ -708,19 +726,14 @@ export default function App() {
                   오늘 배운 개념을 잠깐 돌아볼까요?
                 </p>
                 {dashboard && <TodayCompleted dashboard={dashboard} />}
-                <p className="batch-result-label">
-                  이번 {session.batch ? "추가" : "기본"} 학습 {session.total}
-                  문제 결과
-                </p>
+                <p className="batch-result-label">오늘 푼 전체 문제 결과</p>
                 <div className="summary-stats">
                   <div>
-                    <strong>{session.correct_count}</strong>
+                    <strong>{summaryCorrect}</strong>
                     <span>정답으로 마침</span>
                   </div>
                   <div>
-                    <strong>
-                      {session.completed_count - session.correct_count}
-                    </strong>
+                    <strong>{summaryItems.length - summaryCorrect}</strong>
                     <span>해설로 배움</span>
                   </div>
                 </div>
@@ -737,8 +750,8 @@ export default function App() {
                   </p>
                 </div>
                 <ul className="summary-list">
-                  {session.items.map((ex) => (
-                    <li key={ex.id}>
+                  {summaryItems.map(({ exercise: ex, sessionId, batch }) => (
+                    <li key={`${sessionId}:${ex.id}`}>
                       <span
                         className={
                           ex.status === "correct"
@@ -754,6 +767,7 @@ export default function App() {
                       <span>
                         <strong>{ex.title}</strong>
                         <small>
+                          {batch ? `추가 학습 ${batch}` : "기본 학습"} ·{" "}
                           {ex.domain ?? "데이터 분석"} · {ex.concept}
                         </small>
                       </span>

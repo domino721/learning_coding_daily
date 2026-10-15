@@ -50,6 +50,7 @@ export type Dashboard = {
   learned_count: number;
   weekly_days: string[];
   today: Session | null;
+  today_sessions: Session[];
   extra?: Session | null;
   today_completed_count?: number;
 };

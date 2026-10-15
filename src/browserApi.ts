@@ -172,6 +172,9 @@ function handle(path: string, payload?: unknown): unknown {
             .map((s) => s.local_day),
         ),
       ].sort(),
+      today_sessions: data.sessions
+        .filter((s) => s.local_day === today && s.track_id === "pandas")
+        .sort((a, b) => (a.batch ?? 0) - (b.batch ?? 0)),
       extra:
         data.sessions
           .filter(
