@@ -65,6 +65,14 @@
         "docs/LEARNING_RECORDS.md"
       ],
       "code_reference": "WBS-030 daily review fix (accompanying commit)"
+    },
+    {
+      "id": "EV-006",
+      "record": "docs/planning/evidence/EV-006.md",
+      "artifacts": [
+        ".github/workflows/pages.yml"
+      ],
+      "code_reference": "WBS-010 Pages retry artifact naming (accompanying commit)"
     }
   ]
 }
