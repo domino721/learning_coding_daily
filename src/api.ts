@@ -9,6 +9,8 @@ export type Track = {
   exercise_count: number;
 };
 export type Exercise = {
+  domain?: string;
+  level?: number;
   id: string;
   version: number;
   concept: string;

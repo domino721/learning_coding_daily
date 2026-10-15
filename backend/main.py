@@ -55,6 +55,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         for row in db.execute("SELECT * FROM session_items WHERE session_id=? ORDER BY position", (session_id,)):
             exercise = BY_ID[row["exercise_id"]]
             item = {"id": exercise.id, "version": row["version"], "concept": exercise.concept,
+                    "domain": exercise.domain, "level": exercise.level,
                     "kind": exercise.kind, "title": exercise.title, "prompt": exercise.prompt,
                     "code": exercise.code, "choices": exercise.choices, "estimated_seconds": exercise.seconds,
                     "category": row["category"], "status": row["status"],

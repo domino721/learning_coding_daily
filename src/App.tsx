@@ -84,7 +84,8 @@ function ExerciseCard({
     <>
       <div className="lesson-meta">
         <span>
-          {labels[item.category]} · {item.concept}
+          {labels[item.category]} · {item.domain ?? "데이터 분석"}
+          {done ? ` · ${item.concept}` : ""}
         </span>
         <span>
           {index + 1} / {total}
@@ -151,7 +152,7 @@ function ExerciseCard({
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
                 disabled={busy || done}
-                placeholder="메서드 이름 또는 연산자"
+                placeholder="빈칸에 들어갈 답"
                 autoComplete="off"
                 autoCapitalize="none"
                 spellCheck={false}
@@ -459,18 +460,16 @@ export default function App() {
                       </div>
                       <div className="daily-card-content">
                         <div>
-                          <p className="daily-kicker">
-                            PANDAS & REAL-WORLD DATA
-                          </p>
+                          <p className="daily-kicker">DATA ANALYSIS PRACTICE</p>
                           <h2 id="daily-title">
                             데이터를 읽는
                             <br />
                             작은 습관
                           </h2>
                           <p>
-                            열 선택부터 그룹 집계까지,
+                            NumPy부터 SQL·머신러닝까지,
                             <br />
-                            작은 주문 데이터로 연습해요.
+                            작은 실무 문제로 연습해요.
                           </p>
                         </div>
                         <div className="data-art" aria-hidden="true">
@@ -617,7 +616,7 @@ export default function App() {
                   >
                     ← 오늘 학습
                   </button>
-                  <span>pandas · 실무 분석</span>
+                  <span>데이터 분석</span>
                 </div>
                 <ExerciseCard
                   key={item.id}
@@ -678,7 +677,9 @@ export default function App() {
                       </span>
                       <span>
                         <strong>{ex.title}</strong>
-                        <small>{ex.concept}</small>
+                        <small>
+                          {ex.domain ?? "데이터 분석"} · {ex.concept}
+                        </small>
                       </span>
                       <details>
                         <summary>해설</summary>

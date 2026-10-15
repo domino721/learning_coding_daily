@@ -1,14 +1,16 @@
 import { test, expect } from "@playwright/test";
+import curriculum from "../../src/curriculum.json" with { type: "json" };
 
-test("mobile daily learning persists, supports hints and distinguishes revealed answers", async ({
+test("daily analysis spans five areas without unsolicited solutions and resumes correctly", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  const [first, second, ...remaining] = curriculum.exercises.slice(0, 5);
   await page.goto("./");
   await expect(
-    page.getByRole("heading", { name: "오늘도, 가볍게 한 걸음 더." }),
-  ).toBeVisible();
+    page.getByRole("button", { name: /데이터 분석.*NumPy/ }),
+  ).toContainText("30문제");
   await expect(page.getByRole("button", { name: /코딩테스트/ })).toBeDisabled();
   expect(
     await page.evaluate(
@@ -20,47 +22,48 @@ test("mobile daily learning persists, supports hints and distinguishes revealed 
     fullPage: true,
   });
   await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
-  await expect(
-    page.getByRole("heading", { name: "필요한 열만 꺼내기" }),
-  ).toBeVisible();
-  await page.getByLabel("df.amount()", { exact: true }).check();
+  await expect(page.getByRole("heading", { name: first.title })).toBeVisible();
+  await expect(page.locator(".lesson-meta")).not.toContainText(first.concept);
+  await expect(page.getByText(first.hints[0], { exact: false })).toHaveCount(0);
+  const wrong = first.choices.find((choice) => choice !== first.answer)!;
+  await page.getByLabel(wrong, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
   await expect(page.getByText("한 번 더 생각해 볼까요?")).toBeVisible();
+  await expect(page.locator(".lesson-meta")).not.toContainText(first.concept);
   await page.getByRole("button", { name: /힌트 보기/ }).click();
-  await expect(
-    page.getByText("대괄호 안에 필요한 열의 이름을 넣어요."),
-  ).toBeVisible();
-  await page.getByLabel('df["amount"]', { exact: true }).check();
+  await expect(page.getByText(first.hints[0], { exact: false })).toBeVisible();
+  await page.getByLabel(first.answer, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
   await expect(
     page.getByRole("heading", { name: "작은 한 걸음, 완료!" }),
   ).toBeVisible();
+  await expect(page.locator(".lesson-meta")).toContainText(first.concept);
   await page.screenshot({
     path: `test-results/${test.info().project.name}-feedback.png`,
     fullPage: true,
   });
   await page.reload();
   await page.getByRole("button", { name: "이어서 학습하기" }).click();
-  await expect(
-    page.getByRole("heading", { name: "조건에 맞는 행 찾기" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: second.title })).toBeVisible();
+  await expect(page.locator(".lesson-meta")).toContainText("NumPy");
   await page.getByRole("button", { name: "해설 보고 마치기" }).click();
   await expect(
     page.getByRole("heading", { name: "다음에 다시 꺼내 볼게요." }),
   ).toBeVisible();
   await page.getByRole("button", { name: "다음으로" }).click();
-  await page.getByLabel("1", { exact: true }).check();
-  await page.getByRole("button", { name: "답 확인하기" }).click();
-  await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
-  await page.getByRole("button", { name: "다음으로" }).click();
-  await page.getByLabel("9000", { exact: true }).check();
-  await page.getByRole("button", { name: "답 확인하기" }).click();
-  await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
-  await page.getByRole("button", { name: "다음으로" }).click();
-  await page.getByLabel("빈칸에 들어갈 답").fill("sum");
-  await page.getByRole("button", { name: "답 확인하기" }).click();
-  await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
-  await page.getByRole("button", { name: "다음으로" }).click();
+  for (const exercise of remaining) {
+    await expect(
+      page.getByRole("heading", { name: exercise.title }),
+    ).toBeVisible();
+    if (exercise.kind === "blank")
+      await page
+        .getByLabel("빈칸에 들어갈 답")
+        .fill(exercise.answer === "WHERE" ? "wHeRe" : exercise.answer);
+    else await page.getByLabel(exercise.answer, { exact: true }).check();
+    await page.getByRole("button", { name: "답 확인하기" }).click();
+    await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
+    await page.getByRole("button", { name: "다음으로" }).click();
+  }
   await expect(
     page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
   ).toBeVisible();

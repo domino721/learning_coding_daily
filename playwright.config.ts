@@ -23,7 +23,11 @@ export default defineConfig({
         baseURL: "http://127.0.0.1:5175/learning_coding_daily/",
       },
     },
-    { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
+    {
+      name: "mobile-chromium",
+      use: { ...devices["Pixel 7"] },
+      testIgnore: "**/browser-migration.spec.ts",
+    },
   ],
   webServer: [
     {

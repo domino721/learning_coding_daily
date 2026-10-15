@@ -41,6 +41,7 @@ def test_daily_creation_and_resume_after_server_restart(learning):
     assert session["local_day"] == "2026-10-15"
     assert len(session["items"]) == 5
     assert len({item["id"] for item in session["items"]}) == 5
+    assert len({item["domain"] for item in session["items"]}) == 5
     assert all("answer" not in item and "explanation" not in item for item in session["items"])
     first = session["items"][0]
     response = answer(client, session, first).json()
@@ -121,7 +122,22 @@ def test_next_day_new_content_and_later_practice(learning):
     clock[0] += timedelta(days=1)
     third = start(client)
     assert len(third["items"]) == 5
-    assert all(item["category"] == "practice" for item in third["items"])
+    assert all(item["category"] == "new" for item in third["items"])
+    # Work through the larger curriculum, respecting scheduled reviews.
+    for _ in range(20):
+        current = start(client)
+        for item in current["items"]:
+            if item["status"] == "pending":
+                answer(client, current, item)
+        clock[0] += timedelta(days=1)
+        if client.get("/api/dashboard").json()["learned_count"] == len(EXERCISES):
+            break
+    else:
+        pytest.fail("The curriculum never reached all unseen exercises")
+    practice = start(client)
+    assert len(practice["items"]) == 5
+    assert all(item["category"] != "new" for item in practice["items"])
+    assert any(item["category"] == "practice" for item in practice["items"])
 
 
 def test_retry_idempotency_and_invalid_submissions(learning):
@@ -168,10 +184,10 @@ def test_blank_answer_normalization_and_no_execution(learning):
     session = start(client)
     blank = next(item for item in session["items"] if item["kind"] == 'blank')
     assert answer(client, session, blank, "__import__('os').getcwd()").json()["correct"] is False
-    assert answer(client, session, blank, "  sum  ").json()["correct"] is True
+    assert answer(client, session, blank, "  wHeRe  ").json()["correct"] is True
 
 
-def test_all_ten_content_answers_against_pandas():
+def test_original_pandas_answers_remain_valid():
     """Independent reference computations validate the published answer keys."""
     df = pd.DataFrame({"item": ["커피", "차"], "amount": [4000, 3000]})
     assert df["amount"].tolist() == [4000, 3000]
@@ -192,8 +208,8 @@ def test_all_ten_content_answers_against_pandas():
     assert BY_ID['pandas-sort-02'].answer == 'sort_values' and amounts.sort_values('amount')['amount'].tolist() == [3000, 5000, 9000]
     teams = pd.DataFrame({"team": ["A", "B", "A"], "amount": [3000, 4000, 5000]})
     assert str(teams.groupby('team')['amount'].sum()['A']) == BY_ID['pandas-group-02'].answer
-    assert len(EXERCISES) == len(BY_ID) == 10
-    assert len({e.concept for e in EXERCISES}) == 5
+    assert len(EXERCISES) == len(BY_ID) == 30
+    assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn"}
 
 
 def test_same_server_serves_frontend_and_learning_api(tmp_path):
@@ -207,5 +223,5 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert '매일코딩' in client.get("/").text
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/api/health").json() == {"status": "ok"}
-        assert client.get("/api/tracks").json()[0]["exercise_count"] == 10
+        assert client.get("/api/tracks").json()[0]["exercise_count"] == 30
         assert client.get("/assets/../../pyproject.toml").status_code == 404

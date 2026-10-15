@@ -2,7 +2,10 @@ import curriculum from "./curriculum.json";
 import { ApiError } from "./errors";
 import type { Dashboard, Exercise, Session } from "./api";
 
-type Source = (typeof curriculum.exercises)[number];
+type Source = Omit<
+  (typeof curriculum.exercises)[number],
+  "choices" | "accepted"
+> & { choices: string[]; accepted: string[] };
 type Progress = { due: string; completed: number };
 type Submission = {
   session: string;
@@ -18,7 +21,9 @@ type Store = {
 };
 const KEY = "learning-coding-daily:v1";
 const TIMEZONE = "Asia/Seoul";
-const sources = new Map(curriculum.exercises.map((ex) => [ex.id, ex]));
+const sources = new Map<string, Source>(
+  curriculum.exercises.map((ex) => [ex.id, ex]),
+);
 
 function day() {
   const parts = new Intl.DateTimeFormat("en", {
@@ -49,6 +54,29 @@ function read(): Store {
       !data.attempts
     )
       throw Error();
+    // Preserve completed records; refresh only pending cards from the current curriculum.
+    for (const session of data.sessions as Session[]) {
+      session.items = session.items.map((item) => {
+        const source = sources.get(item.id);
+        if (!source) return item;
+        if (item.status !== "pending")
+          return {
+            ...item,
+            domain: item.domain ?? source.domain,
+            level: item.level ?? source.level,
+          };
+        const updated = makeItem(source, item.category);
+        return {
+          ...updated,
+          hints_used: item.hints_used,
+          hints: source.hints.slice(0, item.hints_used),
+          attempts_count: item.attempts_count,
+          last_answer: item.last_answer,
+          last_correct: item.last_correct,
+          active_seconds: item.active_seconds,
+        };
+      });
+    }
     return data;
   } catch {
     throw new ApiError(
@@ -82,6 +110,8 @@ function makeItem(source: Source, category: Exercise["category"]): Exercise {
     id: source.id,
     version: source.version,
     concept: source.concept,
+    domain: source.domain,
+    level: source.level,
     kind: source.kind as Exercise["kind"],
     title: source.title,
     prompt: source.prompt,
@@ -244,9 +274,11 @@ function handle(path: string, payload?: unknown): unknown {
     throw new ApiError("문제에 맞는 답안을 입력해 주세요.", 422);
   if (item.kind === "choice" && !source.choices.includes(body.answer))
     throw new ApiError("보기에서 답을 골라 주세요.", 422);
-  const correct = [source.answer, ...source.accepted].includes(
-    body.answer.trim(),
-  );
+  const proposed = body.answer.trim();
+  const correct =
+    source.domain === "SQL" && source.kind === "blank"
+      ? proposed.toUpperCase() === source.answer.toUpperCase()
+      : [source.answer, ...source.accepted].includes(proposed);
   const assisted = item.hints_used > 0 || item.attempts_count > 0;
   item.attempts_count++;
   item.last_answer = body.answer;

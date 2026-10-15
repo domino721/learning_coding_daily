@@ -1,6 +1,6 @@
 # 매일코딩
 
-매일 짧은 문제로 데이터 분석 실력을 쌓는 모바일 우선 학습 앱입니다. [제품·개발 설계](docs/PROJECT_PLAN.md)에 따라 pandas·실무 분석 트랙부터 개발하고 있습니다.
+매일 짧은 문제로 데이터 분석 실력을 쌓는 모바일 우선 학습 앱입니다. [제품·개발 설계](docs/PROJECT_PLAN.md)에 따라 NumPy·pandas·SQL·통계·scikit-learn을 포괄하는 데이터 분석 트랙을 개발하고 있습니다.
 
 ## 휴대폰에서 사용하려면
 
@@ -10,10 +10,10 @@
 
 ## 현재 사용할 수 있는 기능
 
-- 트랙 목록: pandas·실무 분석 활성화, 코딩테스트·통계 분석은 준비 중
-- 열 선택·필터링·결측치·정렬·집계의 10문제: 결과 예측과 짧은 빈칸 입력
+- 트랙 목록: 데이터 분석 활성화, 코딩테스트는 준비 중
+- 데이터 분석 30문제: pandas 10개, NumPy·SQL·통계·scikit-learn 각 5개. 코드 읽기·짧은 빈칸·평가 절차 판단
 - 하루 5문제, 같은 날 같은 구성, 새로고침·서버 재시작 후 이어하기
-- 오답 재시도, 문제별 2단계 힌트, 해설을 보고 마치기
+- 풀이 전에는 개념명과 풀이 설명을 숨김. 요청한 2단계 힌트, 오답 재시도, 해설 학습
 - 오늘의 정답/해설 학습 구분, 최근 7일 학습 기록
 - 도움을 받은 문제는 다음날, 혼자 맞힌 문제는 3일 뒤 복습 후보로 등록
 
@@ -68,13 +68,13 @@ Vite의 5173 포트는 `/api` 요청을 8000 포트로 전달합니다. `API_PRO
 ## 검증
 
 ```bash
-bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + Python 테스트 9개
-npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 테스트 4개
+bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + Python 테스트 39개
+npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 테스트 5개
 ```
 
 브라우저 테스트는 `/usr/bin/chromium`이 있으면 사용하며, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`로 경로를 지정할 수 있습니다. 시스템 Chromium이 없는 로컬 환경은 `npx playwright install chromium`으로 Playwright 브라우저를 설치하세요. 테스트용 서버는 8001·5174·5175 포트를 사용하고 매 실행 별도의 임시 DB를 생성하므로 개인 진도를 변경하지 않습니다.
 
-서버 테스트는 재시작 후 복구, 한국 시간 자정 전환, 복습 수 제한, 동시 요청·중복 제출 방지, 입력 검증 및 10문제의 pandas 참조 결과를 확인합니다. 브라우저 테스트는 문제 풀이·힌트·해설·빈칸 입력·새로고침 후 이어하기·기록·320px 너비·통신 실패 복구를 확인합니다. Starlette의 httpx 사용 중단 예정 경고 1개가 발생하지만 테스트는 통과합니다.
+서버 테스트는 재시작 후 복구, 한국 시간 자정 전환, 복습 수 제한, 동시 요청·중복 제출 방지, 입력 검증 및 30문제의 NumPy·pandas·SQL·scikit-learn 참조 결과를 확인합니다. 브라우저 테스트는 기존 기록 호환·풀이 전 개념/힌트 미노출·문제 풀이·힌트·해설·빈칸 입력·새로고침 후 이어하기·기록·320px 너비·통신 실패 복구를 확인합니다. Starlette의 httpx 사용 중단 예정 경고 1개가 발생하지만 테스트는 통과합니다.
 
 ```bash
 curl --fail http://127.0.0.1:5173/api/health
@@ -87,7 +87,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 ## 구조
 
 - `src/`: 모바일 React 화면과 API 타입
-- `backend/content.py`: 정답·힌트·해설이 포함된 문제 원본
+- `backend/content.py`: 30문제와 분야·개념·정답·힌트·해설 원본
 - `backend/main.py`: 일일 학습·제출·복습·기록 API
 - `backend/storage.py`: SQLite 스키마와 트랜잭션
 - `tests/`: 서버·콘텐츠 검증, `tests/e2e/`: 브라우저 검증
@@ -99,3 +99,5 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 ## 컨테이너 패키지
 
 `docker build -t learning-coding-daily .`로 Python/SQLite 모드의 배포용 이미지를 만들 수 있습니다. 8000 포트와 `/app/.data` 저장 경로를 사용합니다. 프록시가 자체 CA를 사용하는 빌드 환경은 `--secret id=build_ca,src=/etc/ssl/certs/ca-certificates.crt`로 신뢰된 CA 묶음을 빌드 시에만 전달할 수 있습니다. TLS와 잠금 파일 체크섬 검증은 유지합니다. 무료 GitHub Pages 모드에서는 이 컨테이너가 필요하지 않습니다.
+
+문제 작성 원칙은 [콘텐츠 기준](docs/CONTENT_GUIDELINES.md)을 따릅니다. 이미 마친 오늘의 기록은 유지하며, 새로운 분야 구성은 다음 일일 세션부터 적용됩니다. 데이터 분석 트랙의 내부 ID는 기존 기록 호환을 위해 `pandas`를 유지합니다.
