@@ -11,6 +11,21 @@ import {
 type Screen = "home" | "lesson" | "summary" | "record";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
 
+function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
+  const basic = dashboard.today?.completed_count ?? 0;
+  const total = dashboard.today_completed_count ?? basic;
+  return (
+    <div className="today-completed" role="group" aria-label="오늘 누적 학습">
+      <p>
+        오늘 총 <strong>{total}문제</strong> 풀었어요.
+      </p>
+      <span>
+        기본 학습 {basic}문제 · 추가 학습 {total - basic}문제
+      </span>
+    </div>
+  );
+}
+
 function week(day: string) {
   const date = new Date(`${day}T12:00:00Z`);
   return Array.from({ length: 7 }, (_, i) => {
@@ -381,8 +396,10 @@ export default function App() {
       (item) => item.status === "pending",
     );
     if (pending < 0) {
-      setScreen("summary");
-      void refresh().catch(() => {});
+      void action(async () => {
+        await refresh();
+        setScreen("summary");
+      });
     } else {
       setIndex(pending);
       pendingSubmission.current = null;
@@ -501,10 +518,11 @@ export default function App() {
                         <span>▤ 목표 5문제</span>
                         <span>기초 → 적용</span>
                       </div>
+                      {dashboard && <TodayCompleted dashboard={dashboard} />}
                       {todaySession && (
                         <div className="daily-progress">
                           <div>
-                            <span>오늘의 한 걸음</span>
+                            <span>기본 목표</span>
                             <strong>
                               {todaySession.completed_count} /{" "}
                               {todaySession.total}
@@ -513,7 +531,7 @@ export default function App() {
                           <progress
                             value={todaySession.completed_count}
                             max={todaySession.total}
-                            aria-label="오늘 학습 진행률"
+                            aria-label="기본 목표 진행률"
                           />
                         </div>
                       )}
@@ -523,7 +541,7 @@ export default function App() {
                         onClick={start}
                       >
                         {todaySession?.finished
-                          ? "오늘 학습 돌아보기"
+                          ? "기본 학습 돌아보기"
                           : todaySession && todaySession.completed_count > 0
                             ? "이어서 학습하기"
                             : "오늘 학습 시작하기"}
@@ -617,13 +635,9 @@ export default function App() {
                         개 중
                       </span>
                     </div>
-                    <p className="record-note">
-                      오늘 총{" "}
-                      {dashboard.today_completed_count ??
-                        todaySession?.completed_count ??
-                        0}
-                      문제 풀었어요.
-                    </p>
+                    {screen === "record" && (
+                      <TodayCompleted dashboard={dashboard} />
+                    )}
                     {screen === "record" && (
                       <p className="record-note">
                         정답과 해설 학습을 모두 기록해요. 도움을 받은 문제는
@@ -685,6 +699,11 @@ export default function App() {
                   작게 풀어도 실력은 차곡차곡 쌓여요.
                   <br />
                   오늘 배운 개념을 잠깐 돌아볼까요?
+                </p>
+                {dashboard && <TodayCompleted dashboard={dashboard} />}
+                <p className="batch-result-label">
+                  이번 {session.batch ? "추가" : "기본"} 학습 {session.total}
+                  문제 결과
                 </p>
                 <div className="summary-stats">
                   <div>

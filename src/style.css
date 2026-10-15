@@ -263,6 +263,29 @@ main {
 .daily-progress {
   padding-bottom: 18px;
 }
+.today-completed {
+  margin: 20px 0;
+}
+.today-completed p {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+.today-completed strong {
+  font-size: 24px;
+}
+.today-completed > span {
+  font-size: 12px;
+  color: #687660;
+}
+.daily-card .today-completed > span {
+  color: #d4e4c8;
+}
+.summary .batch-result-label {
+  margin: 24px 0 8px;
+}
+.batch-result-label + .summary-stats {
+  margin-top: 0;
+}
 .daily-progress > div {
   display: flex;
   justify-content: space-between;

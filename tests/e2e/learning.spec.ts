@@ -12,6 +12,8 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     page.getByRole("button", { name: /데이터 분석.*NumPy/ }),
   ).toContainText("30문제");
   await expect(page.getByRole("button", { name: /코딩테스트/ })).toBeDisabled();
+  const todayTotal = page.getByRole("group", { name: "오늘 누적 학습" });
+  await expect(todayTotal).toContainText("오늘 총 0문제 풀었어요.");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -70,6 +72,8 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await expect(page.locator(".summary-stats")).toContainText(
     "4정답으로 마침1해설로 배움",
   );
+  await expect(todayTotal).toContainText("오늘 총 5문제 풀었어요.");
+  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 0문제");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -80,7 +84,7 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     fullPage: true,
   });
   await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await page.getByRole("button", { name: "기본 학습 돌아보기" }).click();
   await expect(
     page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
   ).toBeVisible();
@@ -105,8 +109,10 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await solve(extras[0]);
   await page.reload();
   await expect(
-    page.getByRole("progressbar", { name: "오늘 학습 진행률" }),
+    page.getByRole("progressbar", { name: "기본 목표 진행률" }),
   ).toHaveAttribute("value", "5");
+  await expect(todayTotal).toContainText("오늘 총 6문제 풀었어요.");
+  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 1문제");
   await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
   for (const exercise of extras.slice(1)) await solve(exercise);
   await expect(
@@ -115,20 +121,35 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await expect(page.locator(".summary-stats")).toContainText(
     "5정답으로 마침0해설로 배움",
   );
+  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 5문제");
+  await expect(page.getByText("이번 추가 학습 5문제 결과")).toBeVisible();
   await page.screenshot({
     path: `test-results/${test.info().project.name}-extra.png`,
     fullPage: true,
   });
   await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
-  await expect(page.getByText(/오늘 총\s*10문제 풀었어요/)).toBeVisible();
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await page.reload();
+  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await page.getByRole("button", { name: "나의 기록" }).click();
+  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await expect(page.getByText("지금까지 만난 문제")).toContainText("10개");
+  await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
+  await page.getByRole("button", { name: "기본 학습 돌아보기" }).click();
   await expect(page.locator(".summary-stats")).toContainText(
     "4정답으로 마침1해설로 배움",
   );
+  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
+  await expect(page.getByText("이번 기본 학습 5문제 결과")).toBeVisible();
   await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
   await expect(
     page.getByRole("heading", { name: curriculum.exercises[10].title }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "해설 보고 마치기" }).click();
+  await page.getByRole("button", { name: "← 오늘 학습", exact: true }).click();
+  await expect(todayTotal).toContainText("오늘 총 11문제 풀었어요.");
+  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 6문제");
   expect(errors).toEqual([]);
 });
 
@@ -171,7 +192,7 @@ test("small screen and network failures keep a recovery action", async ({
   await page.getByRole("button", { name: "다시 연결" }).click();
   await expect(
     page.getByRole("button", {
-      name: /오늘 학습 (시작하기|돌아보기)|이어서 학습하기/,
+      name: /오늘 학습 시작하기|기본 학습 돌아보기|이어서 학습하기/,
     }),
   ).toBeEnabled();
   expect(
