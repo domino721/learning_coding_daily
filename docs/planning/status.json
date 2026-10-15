@@ -6,7 +6,7 @@
   "timezone": "Asia/Seoul",
   "focus": "WBS-210",
   "next_task": "WBS-210",
-  "code_reference": "4ba81cded09ccb38ff6899f186ef48d152ffd542",
+  "code_reference": "2404fab3160a5ba4d4a770ee75f5439e42b8f46b",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -34,9 +34,10 @@
       "actual_started": null,
       "actual_finished": "2026-10-15",
       "evidence": [
-        "EV-001"
+        "EV-001",
+        "EV-003"
       ],
-      "note": "Git 이력과 현재 구현에 대조한 소급 등록. 실측 공수는 기록되지 않았다."
+      "note": "Git 이력과 현재 구현에 대조한 소급 등록. 실측 공수는 기록되지 않았다. 이후 유지보수: LOG-005·006에서 오늘 총합과 기본/추가 표시를 수정하고 EV-003으로 검증. 기존 완료 날짜와 기준선 유지."
     },
     "WBS-110": {
       "status": "done",

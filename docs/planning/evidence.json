@@ -28,6 +28,17 @@
         "docs/planning/CHANGE_CONTROL.md"
       ],
       "code_reference": "plan-v1.0.0"
+    },
+    {
+      "id": "EV-003",
+      "record": "docs/planning/evidence/EV-003.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/browser-migration.spec.ts"
+      ],
+      "code_reference": "2404fab3160a5ba4d4a770ee75f5439e42b8f46b"
     }
   ]
 }
