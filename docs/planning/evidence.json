@@ -73,6 +73,16 @@
         ".github/workflows/pages.yml"
       ],
       "code_reference": "WBS-010 Pages retry artifact naming (accompanying commit)"
+    },
+    {
+      "id": "EV-007",
+      "record": "docs/planning/evidence/EV-007.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "src/App.tsx",
+        "src/browserApi.ts"
+      ],
+      "code_reference": "4fc887745aae3d18d6bfcfc8419fc6197eb3c67c"
     }
   ]
 }

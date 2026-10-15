@@ -110,6 +110,17 @@
       "changes": [],
       "summary": "돌아보기 수정 73956c2 main 반영 후 Pages 첫 배포는 GitHub 서버 500 오류, 재실행은 동일 이름 artifact 2개 충돌로 실패. 재시도마다 artifact 이름을 github.run_attempt로 구분하고 게시 단계에서 같은 이름을 선택하도록 수정해 새 배포 실행. 앱 재변경·저장 변경 없음. 실패 근거 EV-006, 원격 성공은 별도 확인.",
       "commit": "73956c2923f58d16e61e090dda930bedeb021dbc"
+    },
+    {
+      "id": "LOG-011",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-010",
+        "WBS-030"
+      ],
+      "changes": [],
+      "summary": "Pages 원격 배포 성공: 4fc8877, Publish mobile web 38737408611 전체 및 Deploy 단계 success 확인. 사이트 https://domino721.github.io/learning_coding_daily/ 확인 근거 EV-007. 배포된 JS는 로컬 E2E 산출물과 같은 index-DyUGiCSg.js. 이 후속 커밋은 검증 문서만 기록하며 [skip ci]로 동일 앱 재배포를 생략한다. 실제 기기 관찰은 미실시, 다음 WBS-210 유지.",
+      "commit": "4fc887745aae3d18d6bfcfc8419fc6197eb3c67c"
     }
   ]
 }
