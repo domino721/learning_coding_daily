@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "current": {
+    "design": "1.0.0",
+    "plan": "1.0.0"
+  },
+  "versions": [
+    {
+      "kind": "design",
+      "version": "1.0.0",
+      "path": "docs/planning/baselines/design-v1.0.0.md",
+      "sha256": "0f254699c033a064e145c0deda11bbccc36482235be5cbf0b6b04ef6aae45964",
+      "change": "CR-004",
+      "git_tag": "design-v1.0.0"
+    },
+    {
+      "kind": "plan",
+      "version": "1.0.0",
+      "path": "docs/planning/baselines/plan-v1.0.0.json",
+      "sha256": "a273ff2a836767bcb38ce7aa21b3f80bc2e90887c5ed6b5fa0832c999a35b952",
+      "change": "CR-004",
+      "git_tag": "plan-v1.0.0"
+    }
+  ],
+  "legacy": {
+    "path": "docs/planning/baselines/design-v0.3-legacy.md",
+    "sha256": "f6a2691e0572a92d11dfee216d33310cf9c00452bcd774e97e55e13bc78f3389",
+    "source": "4ba81cded09ccb38ff6899f186ef48d152ffd542:docs/PROJECT_PLAN.md",
+    "note": "기존 v0.3 제목 아래 추가 학습이 누적된 원문을 그대로 보존. 과거 버전 규율이 이미 존재했다고 주장하지 않음."
+  }
+}

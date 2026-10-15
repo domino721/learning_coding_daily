@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "design_version": "1.0.0",
+  "plan_version": "1.0.0",
+  "updated": "2026-10-15",
+  "timezone": "Asia/Seoul",
+  "focus": "WBS-210",
+  "next_task": "WBS-210",
+  "code_reference": "4ba81cded09ccb38ff6899f186ef48d152ffd542",
+  "tasks": {
+    "WBS-010": {
+      "status": "done",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": "2026-10-15",
+      "evidence": [
+        "EV-001"
+      ],
+      "note": "Git 이력과 현재 구현에 대조한 소급 등록. 실측 공수는 기록되지 않았다."
+    },
+    "WBS-020": {
+      "status": "done",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": "2026-10-15",
+      "evidence": [
+        "EV-001"
+      ],
+      "note": "Git 이력과 현재 구현에 대조한 소급 등록. 실측 공수는 기록되지 않았다."
+    },
+    "WBS-030": {
+      "status": "done",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": "2026-10-15",
+      "evidence": [
+        "EV-001"
+      ],
+      "note": "Git 이력과 현재 구현에 대조한 소급 등록. 실측 공수는 기록되지 않았다."
+    },
+    "WBS-110": {
+      "status": "done",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": "2026-10-15",
+      "evidence": [
+        "EV-002"
+      ],
+      "note": "설계/계획 1.0.0·28개 WBS·변경/근거/위험 관리·로컬 및 CI 검사 구성 완료."
+    },
+    "WBS-210": {
+      "status": "ready",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": "관리 체계 완료 후 다음 착수 대상. 개념 맵과 선행 조건 정의부터 진행한다."
+    },
+    "WBS-220": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-230": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-240": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-250": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-260": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-270": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-310": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-320": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-330": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-340": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-410": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-420": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-430": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-440": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-510": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-520": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-530": {
+      "status": "planned",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-610": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-620": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-630": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-640": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-710": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    },
+    "WBS-720": {
+      "status": "deferred",
+      "updated": "2026-10-15",
+      "actual_started": null,
+      "actual_finished": null,
+      "evidence": [],
+      "note": ""
+    }
+  }
+}

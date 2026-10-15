@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "LOG-001",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-010"
+      ],
+      "changes": [],
+      "summary": "모바일 학습 기반·저장·무료 Pages 경로 구현. 기존 기록에서 소급 정리.",
+      "commit": "01fa834d4af1b2f90845e3e4edf2d428d1452263"
+    },
+    {
+      "id": "LOG-002",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-020"
+      ],
+      "changes": [
+        "CR-001",
+        "CR-002"
+      ],
+      "summary": "데이터 분석 30문제·풀이 단서 제거·참조 검증. 기존 기록에서 소급 정리.",
+      "commit": "d24118db96cd440085fe08b5ae4407e2990caac1"
+    },
+    {
+      "id": "LOG-003",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-030"
+      ],
+      "changes": [
+        "CR-003"
+      ],
+      "summary": "추가 학습·복구·기본 기록 보존·SQLite v2 이전. 기존 기록에서 소급 정리.",
+      "commit": "4ba81cded09ccb38ff6899f186ef48d152ffd542"
+    },
+    {
+      "id": "LOG-004",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-110"
+      ],
+      "changes": [
+        "CR-004"
+      ],
+      "summary": "설계/계획 1.0.0·28개 WBS·변경/결정/위험/증거·AGENTS·CI 검사 구축 완료. 관리 도구 10개를 포함한 pytest 52개와 모바일 E2E 6개 통과. 다음 WBS-210은 착수 가능.",
+      "commit": null
+    }
+  ]
+}

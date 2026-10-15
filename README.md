@@ -2,6 +2,10 @@
 
 매일 짧은 문제로 데이터 분석 실력을 쌓는 모바일 우선 학습 앱입니다. [제품·개발 설계](docs/PROJECT_PLAN.md)에 따라 NumPy·pandas·SQL·통계·scikit-learn을 포괄하는 데이터 분석 트랙을 개발하고 있습니다.
 
+## 설계와 진행 계획
+
+현재 기준선과 다음 작업은 [설계 안내](docs/PROJECT_PLAN.md)와 [프로젝트 현황판](docs/planning/STATUS.md)에서 확인합니다. [WBS와 현황](docs/planning/WBS.md)에서 작업별 선행 조건·담당·산출물·완료 근거를 확인합니다. [변경 통제](docs/planning/CHANGE_CONTROL.md)에 따라 기존 기준선은 보존하고 새 버전으로 변경합니다. 작업 지침은 [AGENTS.md](AGENTS.md), 관리 원본과 명령은 [관리 문서 사용법](docs/planning/README.md)에 있습니다.
+
 ## 휴대폰에서 사용하려면
 
 무료 웹 버전을 준비했습니다. **[휴대폰 사용·게시 안내](docs/PHONE_SETUP.md)**를 따라 GitHub Pages에서 사이트 주소를 발급받습니다. 클라우드 환경의 Publish는 앱 사이트를 게시하는 버튼이 아닙니다. 실제 게시가 성공하기 전에는 휴대폰용 접속 주소가 없습니다.
@@ -69,7 +73,7 @@ Vite의 5173 포트는 `/api` 요청을 8000 포트로 전달합니다. `API_PRO
 ## 검증
 
 ```bash
-bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + Python 테스트 42개
+bash scripts/check.sh  # 콘텐츠 일치·프런트 포맷·타입·빌드 + 앱 Python 테스트 42개 + 관리 검증 테스트 10개
 npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 테스트 6개
 ```
 
@@ -104,3 +108,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 문제 작성 원칙은 [콘텐츠 기준](docs/CONTENT_GUIDELINES.md)을 따릅니다. 이미 마친 오늘의 기록은 유지하며, 새 분야 문제는 완료 화면 또는 홈의 **추가로 5문제 풀기**로 오늘 바로 풀 수 있습니다. 기존 일일 묶음과 별도로 저장됩니다. 데이터 분석 트랙의 내부 ID는 기존 기록 호환을 위해 `pandas`를 유지합니다.
 
 `POST /api/sessions/extra` (`{"track_id":"pandas"}`)는 기본 학습 완료 후 추가 묶음을 시작하거나 미완료 묶음을 복구합니다. 같은 날 기본 학습은 `batch=0`, 추가 학습은 `batch=1,2,…`로 보존합니다. `/api/dashboard`는 `today`, 최신 `extra`, 당일 전체 완료 수 `today_completed_count`를 구분해 반환합니다. 추가 학습은 미학습 문제를 우선하고, 문제를 모두 풀어도 계속 연습할 수 있습니다.
+
+## 계획 관리 명령
+
+`npm run plan:render`로 WBS·현재 설계 안내를 생성하고 `npm run plan:check`로 기준선 해시·진행 상태·의존성·완료 근거·변경/작업 기록을 검사합니다. 관리 정의는 버전 고정 계획 JSON, 실제 진행은 별도 상태 JSON이 원본입니다. 일반 진행 갱신은 Git 이력으로, 범위·일정 구조 변경은 CR과 새 계획 버전으로 남깁니다. 새 요청은 합의한 목적에 대조해 처리하고, 이미 명시된 사용자 요청을 중복 확인하는 절차로 사용하지 않습니다.

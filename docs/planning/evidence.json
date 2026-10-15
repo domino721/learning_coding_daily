@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "id": "EV-001",
+      "record": "docs/planning/evidence/EV-001.md",
+      "artifacts": [
+        "backend/content.py",
+        "backend/main.py",
+        "backend/storage.py",
+        "src/App.tsx",
+        "src/browserApi.ts",
+        "tests/test_api.py",
+        "tests/test_curriculum.py",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/browser-migration.spec.ts"
+      ],
+      "code_reference": "4ba81cded09ccb38ff6899f186ef48d152ffd542"
+    },
+    {
+      "id": "EV-002",
+      "record": "docs/planning/evidence/EV-002.md",
+      "artifacts": [
+        "AGENTS.md",
+        "scripts/planning.py",
+        "tests/test_planning.py",
+        ".github/workflows/planning.yml",
+        "docs/planning/CHANGE_CONTROL.md"
+      ],
+      "code_reference": "plan-v1.0.0"
+    }
+  ]
+}
