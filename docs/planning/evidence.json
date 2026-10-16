@@ -103,6 +103,16 @@
         "docs/PHONE_SETUP.md"
       ],
       "code_reference": "plan-v1.1.0"
+    },
+    {
+      "id": "EV-009",
+      "record": "docs/planning/evidence/EV-009.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "src/App.tsx",
+        "src/browserApi.ts"
+      ],
+      "code_reference": "3dfccae44f74fdb7f6b7c313fba49e549761ff03"
     }
   ]
 }

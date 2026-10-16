@@ -6,7 +6,7 @@
   "timezone": "Asia/Seoul",
   "focus": "WBS-210",
   "next_task": "WBS-210",
-  "code_reference": "plan-v1.1.0",
+  "code_reference": "3dfccae44f74fdb7f6b7c313fba49e549761ff03",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -252,9 +252,10 @@
       "actual_started": "2026-10-15",
       "actual_finished": "2026-10-16",
       "evidence": [
-        "EV-008"
+        "EV-008",
+        "EV-009"
       ],
-      "note": "CR-005: 객관식·단답형·서술형 선택, 모드별 입력/채점·해설 비교, 두 저장 모드 복구 및 이전 검증 완료. 원격 게시 결과는 별도 확인."
+      "note": "CR-005 구현·기록 호환·검증 EV-008 완료. main 3dfccae 및 기준선 태그 원격 저장, 기존 GitHub Pages 배포 성공(EV-009). 다음 작업 WBS-210."
     }
   }
 }
