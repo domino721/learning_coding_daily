@@ -7,7 +7,15 @@ test("independent courses use unique pools, capped choices and preserved history
   test.setTimeout(150_000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
+  const clock = new Date("2026-10-16T00:00:00Z");
+  await page.clock.install({ time: clock });
+  await page.clock.pauseAt(clock);
   await page.goto("./");
+  const theme = page.getByRole("button", { name: "다크 테마" });
+  await expect(theme).toHaveAttribute("aria-pressed", "false");
+  await theme.click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   const python = page.getByRole("button", {
     name: /Python 데이터 분석.*pandas/,
   });
@@ -29,6 +37,26 @@ test("independent courses use unique pools, capped choices and preserved history
       .getByRole("button", { name: /오늘 학습 시작하기|이어서 학습하기/ })
       .click();
   await resume();
+  const timer = page.getByRole("timer", { name: "풀이 경과 시간" });
+  await expect(timer).toHaveText("경과 0:00");
+  await page.clock.runFor(3000);
+  await expect(timer).toHaveText("경과 0:03");
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", {
+      configurable: true,
+      value: true,
+    });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await page.clock.runFor(5000);
+  await expect(timer).toHaveText("경과 0:03");
+  await page.evaluate(() => {
+    delete (document as Document & { hidden?: boolean }).hidden;
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await page.clock.runFor(2000);
+  await expect(timer).toHaveText("경과 0:05");
+  await page.clock.resume();
   const first = curriculum.exercises[0];
   const wrong = first.choices.find((c) => c !== first.answer)!;
   await page.getByLabel(wrong, { exact: true }).check();
@@ -37,11 +65,16 @@ test("independent courses use unique pools, capped choices and preserved history
   await page.getByRole("button", { name: /힌트 보기/ }).click();
   await expect(page.getByText(first.hints[0], { exact: false })).toBeVisible();
   await page.reload();
+  await expect(theme).toHaveAttribute("aria-pressed", "true");
   await resume();
   await expect(page.getByText("남은 기회 1회", { exact: false })).toBeVisible();
   await page.getByLabel(wrong, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
   await expect(page.getByText("오답으로 기록했어요")).toBeVisible();
+  await expect(page.locator(".result-symbol")).toHaveText("×");
+  const completedTime = await timer.innerText();
+  await page.clock.fastForward(3000);
+  await expect(timer).toHaveText(completedTime);
   await expect(page.getByRole("button", { name: "답 확인하기" })).toHaveCount(
     0,
   );
@@ -72,16 +105,20 @@ test("independent courses use unique pools, capped choices and preserved history
     await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
     count++;
     await page.getByRole("button", { name: "다음으로", exact: true }).click();
-    await expect
-      .poll(async () =>
-        (await page.locator("#question-title").count())
-          ? await page.locator("#question-title").innerText()
-          : "summary",
-      )
-      .not.toBe(title);
+    await expect(
+      page.getByRole("heading", { name: title, exact: true }),
+    ).toHaveCount(0);
   }
   while (await page.locator("#question-title").count()) await solve("python");
   await expect(today).toContainText("오늘 총 5문제");
+  const review = page.locator(".summary-list > li").first();
+  await review.getByText("문제와 해설 보기", { exact: true }).click();
+  await expect(review.locator("pre")).toHaveText(first.code);
+  await expect(
+    review.getByRole("list", { name: "문제 보기" }).locator("li"),
+  ).toHaveCount(first.choices.length);
+  await expect(review).toContainText(wrong);
+  await expect(review).toContainText(first.explanation);
   for (let batch = 0; batch < 20; batch++) {
     const more = page.getByRole("button", {
       name: /추천 문제 더 풀기|추가 학습 이어서 풀기/,
@@ -94,6 +131,7 @@ test("independent courses use unique pools, capped choices and preserved history
   await expect(
     page.getByText("오늘 추천할 문제를 모두 풀었어요.", { exact: false }),
   ).toBeVisible();
+  await expect(page.locator(".summary-list > li")).toHaveCount(count);
   await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
   await expect(lifetime).toContainText(`${count}문제 풀이`);
   await sql.click();
@@ -101,6 +139,12 @@ test("independent courses use unique pools, capped choices and preserved history
   await expect(lifetime).toContainText(`${count}문제 풀이`);
   await resume();
   await expect(page.locator("#question-title")).toBeVisible();
+  await expect(
+    page
+      .locator(".syntax-keyword")
+      .filter({ hasText: /SELECT/i })
+      .first(),
+  ).toBeVisible();
   while (await page.locator("#question-title").count()) await solve("sql");
   await page.getByRole("button", { name: "나의 기록" }).click();
   await expect(lifetime).toContainText(`${count}문제 풀이`);

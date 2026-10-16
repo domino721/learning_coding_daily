@@ -272,6 +272,30 @@
       ],
       "summary": "앱 283efdd 및 설계/계획1.3.0 태그 원격 저장 확인. Pages38855280968/job116825232244 전체 단계 success, 관리38855280847 success, 배포환경URL·최종 E2E 일치 JS/CSS 확인 EV-016. 환경 프록시 CONNECT403으로 직접 사이트읽기 제한도 기록. WBS-280 완료·다음 WBS-510, 문서 전용 [skip ci] 후속 저장.",
       "commit": "283efdd5b5999144c0f2cc12c1178f420363ea85"
+    },
+    {
+      "id": "LOG-023",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-290"
+      ],
+      "changes": [
+        "CR-008"
+      ],
+      "summary": "사용자 지시로 원격 main/배포본을 기준으로 분기된 초기 테스트 파일을 정리한다. 초기 로컬 수정은 source tar/patch와 Git stash로 보존하고 원격 main 17a5382로 fast-forward. 기존 55개 활성 문제·트랙·추천·기록 보존 계층 위에 UX 개선을 선택 이식한다. 설계/계획 1.4.0 채택, 확인 전 완료/배포 성공 주장 없음.",
+      "commit": null
+    },
+    {
+      "id": "LOG-024",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-290"
+      ],
+      "changes": [
+        "CR-008"
+      ],
+      "summary": "Python/SQL·추천·백업/복구·snapshot 계층을 유지하고 테마·코드 색상·활성 타이머·완료 효과·기본/추가 및 과거 문제 복습 통합. Python173/Node14/모바일15 검증 EV-017. 발자국 카드 다크 대비 확인, 중첩 UI 및 비동기 저장 테스트 대기 보완. 같은 main/build:web/기존 Pages 경로로 게시 예정이며 원격 성공은 아직 미기록.",
+      "commit": null
     }
   ]
 }

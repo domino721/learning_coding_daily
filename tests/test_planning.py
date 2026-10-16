@@ -43,7 +43,7 @@ class PlanningValidationTests(unittest.TestCase):
 
     def test_current_governance_is_consistent(self):
         project = self.project
-        assert len(validate(project)['plan']['tasks']) == 30
+        assert len(validate(project)['plan']['tasks']) == 31
 
 
     def test_changed_baseline_requires_new_digest_and_version(self):

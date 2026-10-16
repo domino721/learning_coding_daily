@@ -108,6 +108,7 @@ test("already completed legacy daily goal opens unseen extra questions without a
     "5문제 풀이",
   );
   await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
+  await expect(page.locator("#question-title")).toBeVisible();
   let stored = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("learning-coding-daily:v1")!),
   );

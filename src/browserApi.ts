@@ -497,6 +497,16 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     return session;
   }
   if (route[2] === "reveal") {
+    if (body.active_seconds !== undefined) {
+      if (
+        typeof body.active_seconds !== "number" ||
+        !Number.isInteger(body.active_seconds) ||
+        body.active_seconds < 0 ||
+        body.active_seconds > 86400
+      )
+        throw new ApiError("풀이 시간을 확인해 주세요.", 422);
+      item.active_seconds = Math.max(item.active_seconds, body.active_seconds);
+    }
     complete(data, session, item, "revealed", true);
     addEvent(
       data,

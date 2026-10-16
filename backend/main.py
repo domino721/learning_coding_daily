@@ -48,10 +48,13 @@ class Restore(RequestModel):
     recover_unreadable: bool = False
 
 
-class Answer(ExerciseAction):
+class TimedExerciseAction(ExerciseAction):
+    active_seconds: int = Field(default=0, ge=0, le=86400, strict=True)
+
+
+class Answer(TimedExerciseAction):
     answer: str = Field(min_length=1, max_length=2000)
     attempt_id: UUID
-    active_seconds: int = Field(default=0, ge=0, le=86400, strict=True)
 
 
 def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None = None,
@@ -287,13 +290,15 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/{session_id}/reveal")
-    def reveal(session_id: str, body: ExerciseAction):
+    def reveal(session_id: str, body: TimedExerciseAction):
         with connect(path) as db:
             session_record(db, session_id, mutable=True)
             item = db.execute("SELECT status FROM session_items WHERE session_id=? AND exercise_id=?", (session_id, body.exercise_id)).fetchone()
             if item and item["status"] == "revealed":
                 return snapshot(db, session_id)
             pending_item(db, session_id, body.exercise_id)
+            db.execute("UPDATE session_items SET active_seconds=max(active_seconds, ?) WHERE session_id=? AND exercise_id=?",
+                       (body.active_seconds, session_id, body.exercise_id))
             finish(db, session_id, body.exercise_id, "revealed", True)
             event(db,'reveal',session_id,body.exercise_id,f'reveal:{session_id}:{body.exercise_id}',occurred_at=clock().isoformat())
             return snapshot(db, session_id)

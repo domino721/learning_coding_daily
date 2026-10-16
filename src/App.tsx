@@ -8,6 +8,10 @@ import {
   type Session,
   type Track,
 } from "./api";
+import CodeBlock from "./CodeBlock";
+import ExerciseReview from "./ExerciseReview";
+import { readTheme, saveTheme } from "./theme";
+import { formatTime, useActiveTime } from "./useActiveTime";
 
 const trackName = (id: string) =>
   id === "sql"
@@ -58,34 +62,6 @@ function week(day: string) {
   });
 }
 
-function useActiveTime(id: string | undefined, initial: number) {
-  const elapsed = useRef(initial);
-  const since = useRef<number | null>(null);
-  useEffect(() => {
-    elapsed.current = initial;
-    since.current = document.hidden ? null : performance.now();
-    const visibility = () => {
-      if (since.current !== null)
-        elapsed.current += (performance.now() - since.current) / 1000;
-      since.current = document.hidden ? null : performance.now();
-    };
-    document.addEventListener("visibilitychange", visibility);
-    return () => document.removeEventListener("visibilitychange", visibility);
-    // Restore the persisted total only when changing questions.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-  return () =>
-    Math.min(
-      86400,
-      Math.floor(
-        elapsed.current +
-          (since.current === null
-            ? 0
-            : (performance.now() - since.current) / 1000),
-      ),
-    );
-}
-
 function ExerciseCard({
   item,
   index,
@@ -104,7 +80,7 @@ function ExerciseCard({
   onAnswer: (answer: string, seconds: number) => void;
   onDraft: (draft: string) => Promise<void>;
   onHint: () => void;
-  onReveal: () => void;
+  onReveal: (seconds: number) => void;
   onNext: () => void;
 }) {
   const [draft, setDraft] = useState(
@@ -131,12 +107,16 @@ function ExerciseCard({
     }, 700);
     return () => clearTimeout(timer);
   }, [draft, item.id, item.status, mode]);
-  const seconds = useActiveTime(item.id, item.active_seconds);
+  const done = item.status !== "pending";
+  const { seconds, readSeconds } = useActiveTime(
+    item.id,
+    item.active_seconds,
+    !done && !busy,
+  );
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
   }, []);
-  const done = item.status !== "pending";
   const wrong = !done && item.last_correct === false;
   return (
     <>
@@ -161,12 +141,24 @@ function ExerciseCard({
         ))}
       </div>
       <section className="exercise-card" aria-labelledby="question-title">
-        <p className="eyebrow">
-          {item.kind === "choice"
-            ? "결과를 생각해 보세요"
-            : "작은 빈칸을 채워 보세요"}{" "}
-          <span>약 {Math.ceil(item.estimated_seconds / 60)}분</span>
-        </p>
+        <div className="exercise-heading">
+          <p className="eyebrow">
+            {item.kind === "choice"
+              ? "결과를 생각해 보세요"
+              : "작은 빈칸을 채워 보세요"}
+          </p>
+          <div className="exercise-time">
+            <span>예상 {Math.ceil(item.estimated_seconds / 60)}분</span>
+            <span
+              className="elapsed-time"
+              role="timer"
+              aria-label="풀이 경과 시간"
+            >
+              {done ? "풀이" : "경과"}{" "}
+              {formatTime(done ? item.active_seconds : seconds)}
+            </span>
+          </div>
+        </div>
         <h1 ref={heading} tabIndex={-1} id="question-title">
           {item.title}
         </h1>
@@ -177,9 +169,7 @@ function ExerciseCard({
                 .replaceAll("구하세요", "고르세요")
             : item.prompt.replaceAll("고르세요", "입력하세요")}
         </p>
-        <pre>
-          <code>{item.code}</code>
-        </pre>
+        <CodeBlock code={item.code} language={item.domain} />
         <p className="question-format">
           {mode === "choice"
             ? "객관식"
@@ -197,7 +187,7 @@ function ExerciseCard({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (!busy && !done && draft.trim()) onAnswer(draft, seconds());
+            if (!busy && !done && draft.trim()) onAnswer(draft, readSeconds());
           }}
         >
           {mode === "choice" ? (
@@ -289,13 +279,20 @@ function ExerciseCard({
               className={`feedback ${item.status === "correct" ? "success" : item.status === "incorrect" ? "incorrect" : "reviewed"}`}
               role="status"
             >
+              <span className="result-symbol" aria-hidden="true">
+                {item.status === "correct"
+                  ? "○"
+                  : item.status === "incorrect"
+                    ? "×"
+                    : "↺"}
+              </span>
               <span className="eyebrow">
                 {item.status === "incorrect"
                   ? "오답으로 기록했어요"
                   : mode === "essay"
                     ? "미채점 · 답안 보관"
                     : item.status === "correct"
-                      ? "잘 풀었어요"
+                      ? "정답이에요"
                       : "해설로 배웠어요"}
               </span>
               <h2>
@@ -342,7 +339,7 @@ function ExerciseCard({
                 type="button"
                 className="text-button muted"
                 disabled={busy}
-                onClick={onReveal}
+                onClick={() => onReveal(readSeconds())}
               >
                 해설 보고 마치기
               </button>
@@ -371,13 +368,14 @@ function ExerciseCard({
         </form>
       </section>
       <p className="gentle-note">
-        서두르지 않아도 괜찮아요. 막히면 힌트로 한 걸음씩.
+        시간 제한은 없어요. 다른 탭을 보는 동안에는 잠시 멈춰요.
       </p>
     </>
   );
 }
 
 export default function App() {
+  const [theme, setTheme] = useState(readTheme);
   const [screen, setScreen] = useState<Screen>("home");
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [trackId, setTrackId] = useState(() => {
@@ -525,12 +523,13 @@ export default function App() {
         );
       });
   }
-  function reveal() {
+  function reveal(activeSeconds: number) {
     if (session)
       void action(async () => {
         setSession(
           await api<Session>(`/sessions/${session.id}/reveal`, {
             exercise_id: session.items[index].id,
+            active_seconds: activeSeconds,
           }),
         );
         pendingSubmission.current = null;
@@ -600,7 +599,19 @@ export default function App() {
           </span>
           매일코딩<span className="beta">EARLY</span>
         </button>
-        <span className="header-note">작은 문제, 꾸준한 성장</span>
+        <button
+          className="theme-toggle"
+          aria-label="다크 테마"
+          aria-pressed={theme === "dark"}
+          onClick={() => {
+            const next = theme === "dark" ? "light" : "dark";
+            saveTheme(next);
+            setTheme(next);
+          }}
+        >
+          <span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span>
+          {theme === "dark" ? "다크" : "라이트"}
+        </button>
       </header>
       <main className={screen === "lesson" ? "lesson-main" : ""}>
         {error && (
@@ -906,7 +917,7 @@ export default function App() {
                   <span>{trackName(session.track_id)}</span>
                 </div>
                 <ExerciseCard
-                  key={item.id}
+                  key={`${session.id}:${item.id}`}
                   item={item}
                   index={index}
                   total={session.total}
@@ -1003,7 +1014,9 @@ export default function App() {
                         className={
                           ex.status === "correct"
                             ? "outcome-correct"
-                            : "outcome-reviewed"
+                            : ex.status === "incorrect"
+                              ? "outcome-incorrect"
+                              : "outcome-reviewed"
                         }
                         aria-label={outcome(ex)}
                       >
@@ -1020,19 +1033,7 @@ export default function App() {
                           {ex.domain ?? "데이터 분석"} · {ex.concept}
                         </small>
                       </span>
-                      <details>
-                        <summary>해설</summary>
-                        {ex.response_mode === "essay" && ex.last_answer && (
-                          <p className="submitted-answer">
-                            <strong>내 답안</strong>
-                            <br />
-                            {ex.last_answer}
-                          </p>
-                        )}
-                        <p>
-                          <code>{ex.answer}</code> · {ex.explanation}
-                        </p>
-                      </details>
+                      <ExerciseReview item={ex} />
                     </li>
                   ))}
                 </ul>

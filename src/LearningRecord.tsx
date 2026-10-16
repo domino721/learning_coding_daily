@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, type Dashboard, type Session } from "./api";
+import ExerciseReview from "./ExerciseReview";
 import {
   createBackup,
   parseBackup,
@@ -269,11 +270,8 @@ export function LearningRecord({
                   </p>
                 )}
                 {i.answer && (
-                  <p>
-                    정답: <code>{i.answer}</code>
-                  </p>
+                  <ExerciseReview item={i} includeSubmission={false} />
                 )}
-                <p>{i.explanation}</p>
               </li>
             ))}
           </ul>

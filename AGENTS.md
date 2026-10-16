@@ -20,6 +20,7 @@
 ## 시작할 때
 
 1. `docs/PROJECT_PLAN.md`, `docs/planning/README.md`, `docs/planning/status.json`을 읽는다.
+   변경 전에 origin/main을 fetch해 현재 checkout과 비교한다. 로컬 수정이 있으면 먼저 백업하고, 오래된 프로토타입을 최신 배포본 위에 통째로 덮어쓰지 않는다. 별도 HTML 파일을 독립 업데이트 채널로 만들지 않는다.
 2. 현재 설계·계획 버전과 이번 작업의 WBS ID, 요구사항 ID, 완료 조건, 선행 작업을 확인한다.
 3. 현재 동작은 README와 코드/테스트로 확인한다. 계획된 기능을 구현된 기능으로 간주하지 않는다.
 4. 기존 checkout을 사용한다. 사용자 요청 없이 별도 Git worktree를 만들지 않는다.

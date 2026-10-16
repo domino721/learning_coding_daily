@@ -123,7 +123,7 @@ test("past logs and checked backup merge survive repeat import and corrupted fil
   const row = page
     .locator(".history-session")
     .filter({ hasText: "2026-10-01" });
-  await row.locator("summary").click();
+  await row.locator(":scope > summary").click();
   await expect(row).toContainText("베타에서 풀었던 원래 제목");
   await expect(row).toContainText("베타에서 저장한 원래 해설");
   await upload(page, value);
@@ -177,7 +177,7 @@ test("legacy essays remain ungraded with drafts preserved and excluded from new 
   await upload(page, value);
   await confirm(page);
   const row = page.locator(".history-session").filter({ hasText: draft.draft });
-  await row.locator("summary").click();
+  await row.locator(":scope > summary").click();
   await expect(row).toContainText("서술형 보류 · 미채점");
   await expect(row).toContainText(draft.draft);
   await page.reload();

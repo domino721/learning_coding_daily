@@ -208,6 +208,28 @@
         "backend/main.py"
       ],
       "code_reference": "283efdd5b5999144c0f2cc12c1178f420363ea85"
+    },
+    {
+      "id": "EV-017",
+      "record": "docs/planning/evidence/EV-017.md",
+      "artifacts": [
+        "docs/INTEGRATION.md",
+        "src/App.tsx",
+        "src/LearningRecord.tsx",
+        "src/ExerciseReview.tsx",
+        "src/CodeBlock.tsx",
+        "src/theme.ts",
+        "src/useActiveTime.ts",
+        "src/style.css",
+        "backend/main.py",
+        "src/browserApi.ts",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/browser-migration.spec.ts",
+        "tests/e2e/records.spec.ts",
+        "tests/test_api.py",
+        "tests/test_planning.py"
+      ],
+      "code_reference": "plan-v1.4.0"
     }
   ]
 }

@@ -216,6 +216,24 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 
+def test_reveal_saves_active_time_without_changing_snapshot_or_counting_retries(learning):
+    client, _, _ = learning
+    session = start(client)
+    item = session['items'][0]
+    url = f"/api/sessions/{session['id']}/reveal"
+    for invalid in [-1, 86401, '42']:
+        assert client.post(url,json={'exercise_id':item['id'],'active_seconds':invalid}).status_code==422
+    for seconds in [42,99]:
+        response=client.post(url,json={'exercise_id':item['id'],'active_seconds':seconds})
+        assert response.status_code==200
+        result=response.json()
+        current=result['items'][0]
+        assert current['active_seconds']==42
+        assert current['code']==item['code'] and current['version']==item['version']
+        assert current['status']=='revealed' and result['completed_count']==1
+    assert start(client)['items'][0]['active_seconds']==42
+
+
 def test_extras_never_repeat_today_and_exhaustion_creates_no_empty_session(learning):
     client, path, clock = learning
     endpoint='/api/sessions/extra';body={'track_id':'python'}

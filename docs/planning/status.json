@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "design_version": "1.3.0",
-  "plan_version": "1.3.0",
+  "design_version": "1.4.0",
+  "plan_version": "1.4.0",
   "updated": "2026-10-16",
   "timezone": "Asia/Seoul",
-  "focus": "WBS-510",
-  "next_task": "WBS-510",
+  "focus": "WBS-290",
+  "next_task": "WBS-290",
   "code_reference": "283efdd5b5999144c0f2cc12c1178f420363ea85",
   "tasks": {
     "WBS-010": {
@@ -306,6 +306,16 @@
         "EV-016"
       ],
       "note": "CR-007 네 항목 구현·기록 보존·Python172/Node14/모바일15개 고유 성공 및 최종호환4개 EV-015. 원격 main·태그 저장과 Pages/관리 CI 성공 EV-016. 직접 URL은 환경 프록시403으로 제한되며 실제 사용자 기기/학습 효과는 별도."
+    },
+    "WBS-290": {
+      "status": "in_progress",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": null,
+      "evidence": [
+        "EV-017"
+      ],
+      "note": "배포본 기준 통합·Python173/Node14/모바일15 검증 EV-017 완료. Pages 원격 성공 확인 전까지 진행 중 유지."
     }
   }
 }
