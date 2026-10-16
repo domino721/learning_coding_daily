@@ -113,6 +113,49 @@
         "src/browserApi.ts"
       ],
       "code_reference": "3dfccae44f74fdb7f6b7c313fba49e549761ff03"
+    },
+    {
+      "id": "EV-010",
+      "record": "docs/planning/evidence/EV-010.md",
+      "artifacts": [
+        "backend/content.py",
+        "backend/extra_content.py",
+        "backend/difficulty.json",
+        "backend/curriculum.py",
+        "src/recommendation.ts",
+        "tests/test_recommendation.py",
+        "tests/test_curriculum.py",
+        "tests/fixtures/recommendation.json",
+        "tests/recommendation.test.ts",
+        "docs/CURRICULUM.md"
+      ],
+      "code_reference": "plan-v1.2.0"
+    },
+    {
+      "id": "EV-011",
+      "record": "docs/planning/evidence/EV-011.md",
+      "artifacts": [
+        "backend/storage.py",
+        "backend/records.py",
+        "src/records.ts",
+        "src/browserApi.ts",
+        "src/LearningRecord.tsx",
+        "tests/test_records.py",
+        "docs/RECORD_RELIABILITY.md"
+      ],
+      "code_reference": "plan-v1.2.0"
+    },
+    {
+      "id": "EV-012",
+      "record": "docs/planning/evidence/EV-012.md",
+      "artifacts": [
+        "src/App.tsx",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/records.spec.ts",
+        "tests/e2e/browser-migration.spec.ts",
+        ".github/workflows/pages.yml"
+      ],
+      "code_reference": "plan-v1.2.0"
     }
   ]
 }

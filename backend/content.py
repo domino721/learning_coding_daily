@@ -21,6 +21,12 @@ class Exercise:
     domain: str = "pandas"
     level: int = 1
 
+    concept_id: str = ""
+    response_mode: str = "short"
+    difficulty: dict | None = None
+    reference_setup: str = ""
+    reference_output: str = ""
+
     def matches(self, answer: str) -> bool:
         if self.domain == "SQL" and self.kind == "blank":
             return answer.strip().upper() == self.answer.upper()
@@ -324,6 +330,10 @@ BLANK_CHOICES = {
     'pandas-sort-02': ('sort_index', 'reset_index', 'sort_values', 'value_counts'),
 }
 EXERCISES = [replace(ex, choices=BLANK_CHOICES[ex.id]) if ex.id in BLANK_CHOICES else ex for ex in EXERCISES]
+from backend.extra_content import authored_extras
+EXERCISES += authored_extras(Exercise)
+from backend.curriculum import attach_metadata
+EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}
 TRACKS = [
     # This storage ID is retained for compatibility with existing personal learning records.

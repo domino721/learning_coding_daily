@@ -108,7 +108,7 @@ def generated(root, data=None):
 - [변경 기록](planning/changes.json) · [작업 기록](planning/worklog.json) · [결정 기록](planning/DECISIONS.md)
 - [콘텐츠 작성 기준](CONTENT_GUIDELINES.md) · [휴대폰 사용 안내](PHONE_SETUP.md)
 
-현재 데이터 분석 30문제·기본 목표 5문제·추가 학습·저장/복구는 구현되어 있습니다. 개념별 진단·숙련도·개인화·심화 복습·자유 코드 실행·계정 동기화는 WBS의 후속 작업입니다. 소요 시간과 학습 효과는 실제 사용 자료로 확인해야 합니다.
+현재 구현과 검증 범위는 [README](../README.md), 작업별 완료 근거는 WBS에서 확인합니다. 문항·추천·기록 저장의 변경은 현재 기준선과 검증 기록에 연결하며, 실제 학습 효과·기기 사용·계정 동기화와 규칙 테스트 통과를 구분합니다.
 
 이 문서와 WBS는 `python3 scripts/planning.py render`로 생성합니다. 기준선은 새 버전으로 변경하고, 진행 상태는 별도 기록으로 갱신합니다. 과거 문서는 [보존 원문](planning/baselines/design-v0.3-legacy.md)에서 확인할 수 있습니다.
 '''

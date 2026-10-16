@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "design_version": "1.1.0",
-  "plan_version": "1.1.0",
+  "design_version": "1.2.0",
+  "plan_version": "1.2.0",
   "updated": "2026-10-16",
   "timezone": "Asia/Seoul",
-  "focus": "WBS-210",
-  "next_task": "WBS-210",
-  "code_reference": "3dfccae44f74fdb7f6b7c313fba49e549761ff03",
+  "focus": "WBS-510",
+  "next_task": "WBS-510",
+  "code_reference": "plan-v1.2.0",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -55,92 +55,125 @@
       "note": "설계/계획 1.0.0·28개 WBS·변경/근거/위험 관리·로컬 및 CI 검사 구성 완료."
     },
     "WBS-210": {
-      "status": "ready",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": "관리 체계 완료 후 다음 착수 대상. 개념 맵과 선행 조건 정의부터 진행한다."
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-220": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-011",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-230": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-240": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-250": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-260": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-270": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-011",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-310": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-320": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-330": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-340": {
-      "status": "planned",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-16",
+      "actual_started": "2026-10-16",
+      "actual_finished": "2026-10-16",
+      "evidence": [
+        "EV-010",
+        "EV-012"
+      ],
+      "note": "CR-006: 단일 시작·문항별 형식·상세 난이도/개념 경로·간단 추천·기록 보존/복구 관련 완료 조건과 검증 근거 확보. 실제 사용 효과는 별도 검증."
     },
     "WBS-410": {
       "status": "planned",
@@ -175,12 +208,12 @@
       "note": ""
     },
     "WBS-510": {
-      "status": "planned",
-      "updated": "2026-10-15",
+      "status": "ready",
+      "updated": "2026-10-16",
       "actual_started": null,
       "actual_finished": null,
       "evidence": [],
-      "note": ""
+      "note": "이벤트·파일 백업·기초 관찰 지표는 확보. 실제 자료를 바탕으로 시간·힌트·재시도·복습의 보정/누락을 검토하는 다음 작업."
     },
     "WBS-520": {
       "status": "planned",
@@ -255,7 +288,7 @@
         "EV-008",
         "EV-009"
       ],
-      "note": "CR-005 구현·기록 호환·검증 EV-008 완료. main 3dfccae 및 기준선 태그 원격 저장, 기존 GitHub Pages 배포 성공(EV-009). 다음 작업 WBS-210."
+      "note": "CR-005 구현·기록 호환·검증 EV-008 완료. main 3dfccae 및 기준선 태그 원격 저장, 기존 GitHub Pages 배포 성공(EV-009). 다음 작업 WBS-210. CR-006 이후 신규 화면은 문항별 형식 추천으로 대체하며 기존 묶음/모드 기록과 API 호환은 보존한다."
     }
   }
 }

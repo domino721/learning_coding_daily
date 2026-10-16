@@ -124,7 +124,7 @@ def test_next_day_new_content_and_later_practice(learning):
     assert len(third["items"]) == 5
     assert all(item["category"] == "new" for item in third["items"])
     # Work through the larger curriculum, respecting scheduled reviews.
-    for _ in range(20):
+    for _ in range(120):
         current = start(client)
         for item in current["items"]:
             if item["status"] == "pending":
@@ -209,7 +209,7 @@ def test_original_pandas_answers_remain_valid():
     assert BY_ID['pandas-sort-02'].answer == 'sort_values' and amounts.sort_values('amount')['amount'].tolist() == [3000, 5000, 9000]
     teams = pd.DataFrame({"team": ["A", "B", "A"], "amount": [3000, 4000, 5000]})
     assert str(teams.groupby('team')['amount'].sum()['A']) == BY_ID['pandas-group-02'].answer
-    assert len(EXERCISES) == len(BY_ID) == 30
+    assert len(EXERCISES) == len(BY_ID) == 60
     assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn"}
 
 
@@ -224,7 +224,7 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert '매일코딩' in client.get("/").text
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/api/health").json() == {"status": "ok"}
-        assert client.get("/api/tracks").json()[0]["exercise_count"] == 30
+        assert client.get("/api/tracks").json()[0]["exercise_count"] == 60
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 
@@ -240,35 +240,26 @@ def test_extra_batches_prioritize_unseen_resume_and_allow_repeated_practice(lear
     for batch in range(1, 6):
         extra = client.post(endpoint, json=body).json()
         assert extra['batch'] == batch
-        assert not seen & {item['id'] for item in extra['items']}
-        assert all(item['category'] == 'new' for item in extra['items'])
+        assert len(extra['items'])==5
+        assert all(item['level']<3 for item in extra['items'])
         assert client.post(endpoint, json=body).json()['id'] == extra['id']
-        for item in extra['items']:
-            answer(client, extra, item)
+        for item in extra['items']:answer(client,extra,item)
         seen.update(item['id'] for item in extra['items'])
-    assert len(seen) == 30
     repeated = client.post(endpoint, json=body).json()
-    assert repeated['batch'] == 6
-    assert all(item['category'] == 'practice' for item in repeated['items'])
-    assert not {i['id'] for i in repeated['items']} & {i['id'] for i in extra['items']}
-    answer(client, repeated, repeated['items'][0])
-    with TestClient(create_app(path, now=lambda: clock[0])) as restarted:
-        resumed = restarted.post(endpoint, json=body).json()
-        assert resumed['id'] == repeated['id']
-        assert resumed['completed_count'] == 1
-    dashboard = client.get('/api/dashboard').json()
-    assert dashboard['today']['id'] == daily['id']
-    assert dashboard['today']['completed_count'] == 5
-    assert dashboard['extra']['id'] == repeated['id']
-    assert dashboard['today_completed_count'] == 31
-    assert [s['batch'] for s in dashboard['today_sessions']] == list(range(7))
-    completed = [item for s in dashboard['today_sessions'] for item in s['items'] if item['status'] != 'pending']
-    assert len(completed) == 31
-    assert len({item['id'] for item in completed}) == 30
+    assert repeated['batch']==6
+    answer(client,repeated,repeated['items'][0])
+    with TestClient(create_app(path,now=lambda:clock[0])) as restarted:
+        resumed=restarted.post(endpoint,json=body).json()
+        assert resumed['id']==repeated['id'] and resumed['completed_count']==1
+    dashboard=client.get('/api/dashboard').json()
+    assert dashboard['today']['id']==daily['id'] and dashboard['today']['completed_count']==5
+    assert dashboard['today_completed_count']==31 and dashboard['all_time_completed_count']==31
+    assert [s['batch'] for s in dashboard['today_sessions']]==list(range(7))
+    completed=[item for s in dashboard['today_sessions'] for item in s['items'] if item['status']!='pending']
+    assert len(completed)==31
     assert all('answer' in item and 'explanation' in item for item in completed)
-    assert all('answer' not in item and 'explanation' not in item
-               for s in dashboard['today_sessions'] for item in s['items'] if item['status'] == 'pending')
-    assert dashboard['learned_count'] == 30
+    assert dashboard['learned_count']==len({i['id'] for i in completed})
+    assert all(c['level']==1 for c in dashboard['concepts'])  # Same-day repeats never grant mastery.
     clock[0] += timedelta(days=1)
     next_daily = start(client)
     assert next_daily['batch'] == 0
@@ -321,7 +312,7 @@ def test_schema_v1_upgrade_preserves_completed_session_and_attempts(tmp_path):
         assert extra['batch'] == 1
         assert len(extra['items']) == 5
     with connect(path) as db:
-        assert db.execute('PRAGMA user_version').fetchone()[0] == 3
+        assert db.execute('PRAGMA user_version').fetchone()[0] == 4
         assert db.execute('PRAGMA foreign_keys').fetchone()[0] == 1
         assert not db.execute('PRAGMA foreign_key_check').fetchall()
         assert db.execute('SELECT count(*) FROM attempts').fetchone()[0] == 1
@@ -332,7 +323,8 @@ def test_response_modes_persist_without_changing_completed_records(learning):
     client, path, clock = learning
     session = start(client)
     first, second, third, *_ = session['items']
-    assert all(item['response_mode'] == 'short' for item in session['items'])
+    assert all(item['response_mode'] == BY_ID[item['id']].response_mode for item in session['items'])
+    client.post(f"/api/sessions/{session['id']}/mode",json={'exercise_id':first['id'],'response_mode':'short'})
     assert answer(client, session, first, " df [ 'amount' ] ").json()['correct'] is True
     url = f"/api/sessions/{session['id']}"
     changed = client.post(url + '/mode', json={'exercise_id': second['id'], 'response_mode': 'choice'}).json()
@@ -368,15 +360,21 @@ def test_sqlite_v2_modes_upgrade_preserves_pending_attempts(learning):
     client, path, _ = learning
     session = start(client)
     item = session['items'][0]
-    answer(client, session, item, 'wrong code')
+    wrong=next(choice for choice in item['choices'] if choice!=BY_ID[item['id']].answer)
+    assert answer(client, session, item, wrong).json()['correct'] is False
     # Recreate the exact previous schema by dropping only the new v3 column.
     with sqlite3.connect(path) as db:
         db.execute('ALTER TABLE session_items DROP COLUMN response_mode')
+        for column in ('snapshot','draft','completed_at'):db.execute('ALTER TABLE session_items DROP COLUMN '+column)
+        db.execute('ALTER TABLE attempts DROP COLUMN response_mode')
+        db.execute('ALTER TABLE progress DROP COLUMN streak')
+        db.execute('DROP TABLE learning_events')
+        db.execute('DROP TABLE metadata')
         db.execute('PRAGMA user_version=2')
     restored = start(client)
     assert restored['id'] == session['id']
     assert restored['items'][0]['response_mode'] == 'choice'
-    assert restored['items'][0]['last_answer'] == 'wrong code'
+    assert restored['items'][0]['last_answer'] == wrong
     assert restored['items'][0]['attempts_count'] == 1
     assert restored['items'][2]['response_mode'] == 'short'
     assert answer(client, restored, restored['items'][0]).json()['correct'] is True

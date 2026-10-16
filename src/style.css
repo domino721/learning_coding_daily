@@ -1088,3 +1088,131 @@ pre {
   overflow-wrap: anywhere;
   margin: 10px 0;
 }
+
+.lifetime-card {
+  background: #edf4e7;
+  border: 1px solid #dce7d4;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 0 0 24px;
+}
+.lifetime-card > strong {
+  display: block;
+  font-size: 38px;
+  line-height: 1.5;
+  color: #275c43;
+}
+.lifetime-card > strong span {
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.lifetime-card p {
+  font-size: 13px;
+  color: #526b49;
+}
+.question-format {
+  color: #536c48;
+  font-size: 13px;
+  margin: 14px 0;
+}
+.recommended-note {
+  font-size: 13px;
+  margin: 16px 0;
+  color: #e6f0df;
+}
+.records-panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.records-panel h2 {
+  font-size: 19px;
+  margin-bottom: 12px;
+}
+.records-panel h3 {
+  font-size: 16px;
+  margin: 20px 0 10px;
+}
+.backup-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.backup-upload {
+  display: block;
+  color: #275c43;
+  font-size: 14px;
+  width: 100%;
+}
+.backup-upload input {
+  display: block;
+  max-width: 100%;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.import-preview {
+  background: #f3f7ed;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+.import-preview label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0;
+}
+.import-preview input {
+  flex: none;
+}
+.storage-notice,
+.record-message {
+  padding: 12px;
+  background: #fff8df;
+  border-radius: 10px;
+  font-size: 13px;
+  margin: 10px 0;
+}
+.curriculum-view,
+.history-session,
+.event-view {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.records-panel summary {
+  cursor: pointer;
+  min-height: 36px;
+  font-weight: 600;
+}
+.concept-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+.concept-grid article {
+  background: #f6f8f2;
+  padding: 12px;
+  border-radius: 10px;
+}
+.history-session ul,
+.event-view ol {
+  padding-left: 18px;
+}
+.history-session li {
+  margin: 12px 0 20px;
+  overflow-wrap: anywhere;
+}
+.history-session li > span,
+.event-view time,
+.event-view span {
+  display: block;
+}
+.event-view li {
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}

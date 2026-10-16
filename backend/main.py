@@ -1,5 +1,10 @@
 from datetime import datetime, timedelta, timezone
 import os
+import json
+from dataclasses import asdict
+from backend.content import Exercise
+from backend.curriculum import select_exercises, concept_states, review_due
+from backend.records import event, export_records, restore_records
 from pathlib import Path
 from typing import Callable, Literal
 from uuid import UUID, uuid4
@@ -21,7 +26,7 @@ ResponseMode = Literal["choice", "short", "essay"]
 
 
 class StartSession(RequestModel):
-    response_mode: ResponseMode = "short"
+    response_mode: ResponseMode | None = None
     track_id: Literal["pandas", "algorithms", "statistics"] = "pandas"
 
 
@@ -31,6 +36,16 @@ class ExerciseAction(RequestModel):
 
 class ModeChange(ExerciseAction):
     response_mode: ResponseMode
+
+
+class Draft(ExerciseAction):
+    draft: str = Field(max_length=2000)
+
+
+class Restore(RequestModel):
+    data: dict
+    confirm_owner: bool = False
+    recover_unreadable: bool = False
 
 
 class Answer(ExerciseAction):
@@ -57,13 +72,20 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             raise HTTPException(409, "날짜가 바뀌었어요. 오늘 학습을 다시 열어 주세요.")
         return record
 
+    def authored(row):
+        return Exercise(**json.loads(row['snapshot'])) if row['snapshot'] else BY_ID[row['exercise_id']]
+
+    def all_sessions(db):
+        return [snapshot(db,row[0]) for row in db.execute('SELECT id FROM sessions ORDER BY local_day,batch')]
+
     def snapshot(db, session_id):
         record = session_record(db, session_id)
         items = []
         for row in db.execute("SELECT * FROM session_items WHERE session_id=? ORDER BY position", (session_id,)):
-            exercise = BY_ID[row["exercise_id"]]
+            exercise = authored(row)
             item = {"id": exercise.id, "version": row["version"], "concept": exercise.concept,
-                    "domain": exercise.domain, "level": exercise.level,
+                    "domain": exercise.domain, "level": exercise.level, "concept_id": exercise.concept_id, "difficulty": exercise.difficulty,
+                    "draft": row['draft'], "completed_at": row['completed_at'],
                     "kind": exercise.kind, "response_mode": row["response_mode"] or ("choice" if exercise.kind == "choice" else "short"),
                     "title": exercise.title, "prompt": exercise.prompt,
                     "code": exercise.code, "choices": exercise.choices, "estimated_seconds": exercise.seconds,
@@ -92,12 +114,16 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     def finish(db, session_id, exercise_id, status, assisted):
         db.execute("UPDATE session_items SET status=? WHERE session_id=? AND exercise_id=?", (status, session_id, exercise_id))
-        due = today() + timedelta(days=1 if assisted or status == "revealed" else 3)
-        db.execute("""INSERT INTO progress(exercise_id, completed_count, last_day, due_day, last_outcome)
-                    VALUES(?, 1, ?, ?, ?)
-                    ON CONFLICT(exercise_id) DO UPDATE SET completed_count=completed_count+1,
-                    last_day=excluded.last_day, due_day=excluded.due_day, last_outcome=excluded.last_outcome""",
-                   (exercise_id, today().isoformat(), due.isoformat(), status))
+        prior=db.execute('SELECT * FROM progress WHERE exercise_id=?',(exercise_id,)).fetchone()
+        prior=dict(prior) if prior else {}
+        due,streak=review_due(today().isoformat(),prior,not assisted and status=='correct')
+        db.execute("""INSERT INTO progress(exercise_id,completed_count,last_day,due_day,last_outcome,streak)
+            VALUES(?,1,?,?,?,?) ON CONFLICT(exercise_id) DO UPDATE SET completed_count=completed_count+1,
+            last_day=excluded.last_day,due_day=excluded.due_day,last_outcome=excluded.last_outcome,streak=excluded.streak""",
+            (exercise_id,today().isoformat(),due,status,streak))
+        db.execute('UPDATE session_items SET completed_at=?,draft=NULL WHERE session_id=? AND exercise_id=?',(clock().isoformat(),session_id,exercise_id))
+        event(db,'completed',session_id,exercise_id,f'completed:{session_id}:{exercise_id}',status,clock().isoformat())
+
 
     @app.get("/api/health")
     def health():
@@ -125,6 +151,9 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             return {"local_day": day, "timezone": str(zone), "learned_count": learned,
                     "weekly_days": [row[0] for row in days],
                     "today": snapshot(db, record[0]) if record else None,
+                    "learner_id": db.execute("SELECT value FROM metadata WHERE key='learner_id'").fetchone()[0],
+                    "all_time_completed_count":max(db.execute("SELECT count(*) FROM session_items WHERE status!='pending'").fetchone()[0],db.execute('SELECT coalesce(sum(completed_count),0) FROM progress').fetchone()[0]),
+                    "concepts":list(concept_states(all_sessions(db),BY_ID).values()),
                     "today_sessions": [snapshot(db, row[0]) for row in sessions],
                     "extra": snapshot(db, extra[0]) if extra else None, "today_completed_count": total_done}
 
@@ -137,23 +166,14 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             existing = db.execute("SELECT id FROM sessions WHERE track_id=? AND batch=0 AND local_day=?", (body.track_id, day)).fetchone()
             if existing:
                 return snapshot(db, existing[0])
-            progress = {row["exercise_id"]: row for row in db.execute("SELECT * FROM progress")}
-            due = sorted((ex for ex in EXERCISES if ex.id in progress and progress[ex.id]["due_day"] <= day),
-                         key=lambda ex: (progress[ex.id]["due_day"], EXERCISES.index(ex)))[:3]
-            new = [ex for ex in EXERCISES if ex.id not in progress]
-            selected = [(ex, "review") for ex in due]
-            selected += [(ex, "new") for ex in new[:5 - len(selected)]]
-            if len(selected) < 5:
-                ids = {ex.id for ex, _ in selected}
-                # Once all content has been seen, offer explicit extra practice; never mislabel it as due review.
-                practice = sorted((ex for ex in EXERCISES if ex.id not in ids),
-                                  key=lambda ex: (progress.get(ex.id, {"due_day": day})["due_day"], EXERCISES.index(ex)))
-                selected += [(ex, "practice") for ex in practice[:5 - len(selected)]]
+            progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
+            selected=select_exercises(EXERCISES,all_sessions(db),progress,day)
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at) VALUES(?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat()))
-            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode) VALUES(?, ?, ?, ?, ?, ?)",
-                           [(session_id, pos, ex.id, ex.version, category, body.response_mode) for pos, (ex, category) in enumerate(selected)])
+            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode, snapshot) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                           [(session_id, pos, ex.id, ex.version, category, body.response_mode or ex.response_mode, json.dumps(asdict(ex),ensure_ascii=False)) for pos, (ex, category) in enumerate(selected)])
+            event(db,'session_started',session_id,occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/extra")
@@ -168,21 +188,38 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             latest = db.execute("SELECT id, batch FROM sessions WHERE track_id=? AND local_day=? ORDER BY batch DESC LIMIT 1", (body.track_id, day)).fetchone()
             if latest["batch"] > 0 and not snapshot(db, latest["id"])["finished"]:
                 return snapshot(db, latest["id"])
-            progress = {row["exercise_id"] for row in db.execute("SELECT exercise_id FROM progress")}
-            selected = [(ex, "new") for ex in EXERCISES if ex.id not in progress][:5]
-            selected_ids = {ex.id for ex, _ in selected}
-            # Prefer the least recently encountered questions after unseen content.
-            history = db.execute("""SELECT i.exercise_id FROM session_items i JOIN sessions s ON i.session_id=s.id
-                WHERE i.status!='pending' ORDER BY s.local_day, s.batch, i.position""").fetchall()
-            last_seen = {row[0]: pos for pos, row in enumerate(history)}
-            practice = sorted((ex for ex in EXERCISES if ex.id not in selected_ids), key=lambda ex: last_seen.get(ex.id, -1))
-            selected += [(ex, "practice") for ex in practice[:5 - len(selected)]]
+            progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
+            selected=select_exercises(EXERCISES,all_sessions(db),progress,day,extra=True)
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at, batch) VALUES(?, ?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat(), latest["batch"] + 1))
-            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode) VALUES(?, ?, ?, ?, ?, ?)",
-                           [(session_id, pos, ex.id, ex.version, category, body.response_mode) for pos, (ex, category) in enumerate(selected)])
+            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode, snapshot) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                           [(session_id, pos, ex.id, ex.version, category, body.response_mode or ex.response_mode, json.dumps(asdict(ex),ensure_ascii=False)) for pos, (ex, category) in enumerate(selected)])
+            event(db,'session_started',session_id,occurred_at=clock().isoformat())
             return snapshot(db, session_id)
+
+    @app.get('/api/history')
+    def history():
+        with connect(path) as db:
+            data=export_records(db,snapshot)
+            return {'sessions':list(reversed(data['sessions'])),'events':list(reversed(data['events']))}
+
+    @app.get('/api/backup')
+    def backup():
+        with connect(path) as db:return export_records(db,snapshot)
+
+    @app.post('/api/restore')
+    def restore(body:Restore):
+        with connect(path) as db:
+            restore_records(db,body.data,snapshot,body.confirm_owner)
+            return {'restored':True}
+
+    @app.post('/api/sessions/{session_id}/draft')
+    def draft(session_id:str,body:Draft):
+        with connect(path) as db:
+            pending_item(db,session_id,body.exercise_id)
+            db.execute('UPDATE session_items SET draft=? WHERE session_id=? AND exercise_id=?',(body.draft,session_id,body.exercise_id))
+            return snapshot(db,session_id)
 
     @app.get("/api/sessions/{session_id}")
     def read_session(session_id: str):
@@ -205,21 +242,20 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             if prior:
                 if (prior["session_id"], prior["exercise_id"], prior["answer"]) != (session_id, body.exercise_id, body.answer):
                     raise HTTPException(409, "같은 제출 ID를 다른 답안에 사용할 수 없습니다.")
-                state = snapshot(db, session_id)
-                mode = next(item['response_mode'] for item in state['items'] if item['id'] == body.exercise_id)
-                return {"correct": None if mode == "essay" else bool(prior["correct"]), "session": state}
+                return {"correct": None if prior['response_mode']=='essay' else bool(prior['correct']), "session":snapshot(db,session_id)}
             item = pending_item(db, session_id, body.exercise_id)
-            exercise = BY_ID[body.exercise_id]
+            exercise = authored(item)
             mode = item["response_mode"] or ("choice" if exercise.kind == "choice" else "short")
             if (not body.answer.strip() or (mode != "essay" and len(body.answer) > 200)
                     or (mode == "choice" and body.answer not in exercise.choices)):
                 raise HTTPException(422, "문제에 맞는 답안을 입력해 주세요.")
             correct = mode != "essay" and exercise.matches(body.answer)
-            db.execute("INSERT INTO attempts VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                       (str(body.attempt_id), session_id, exercise.id, body.answer, int(correct), item["hints_used"], body.active_seconds, clock().isoformat()))
+            db.execute("INSERT INTO attempts VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (str(body.attempt_id), session_id, exercise.id, body.answer, int(correct), item["hints_used"], body.active_seconds, clock().isoformat(),mode))
             db.execute("""UPDATE session_items SET attempts_count=attempts_count+1, last_answer=?, last_correct=?,
                         active_seconds=max(active_seconds, ?) WHERE session_id=? AND exercise_id=?""",
                        (body.answer, None if mode == "essay" else int(correct), body.active_seconds, session_id, exercise.id))
+            event(db,'attempt',session_id,exercise.id,str(body.attempt_id),'서술 답안 저장' if mode=='essay' else '정답' if correct else '다시 시도',clock().isoformat())
             if mode == "essay":
                 finish(db, session_id, exercise.id, "revealed", True)
             elif correct:
@@ -230,8 +266,9 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
     def hint(session_id: str, body: ExerciseAction):
         with connect(path) as db:
             item = pending_item(db, session_id, body.exercise_id)
-            count = min(item["hints_used"] + 1, len(BY_ID[body.exercise_id].hints))
+            count = min(item["hints_used"] + 1, len(authored(item).hints))
             db.execute("UPDATE session_items SET hints_used=? WHERE session_id=? AND exercise_id=?", (count, session_id, body.exercise_id))
+            event(db,'hint',session_id,body.exercise_id,f'hint:{session_id}:{body.exercise_id}:{count}',occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/{session_id}/reveal")
@@ -243,6 +280,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                 return snapshot(db, session_id)
             pending_item(db, session_id, body.exercise_id)
             finish(db, session_id, body.exercise_id, "revealed", True)
+            event(db,'reveal',session_id,body.exercise_id,f'reveal:{session_id}:{body.exercise_id}',occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
     if frontend_dir is not None:

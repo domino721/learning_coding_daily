@@ -6,20 +6,19 @@ type Source = Omit<
   (typeof curriculum.exercises)[number],
   "choices" | "accepted"
 > & { choices: string[]; accepted: string[] };
-type Progress = { due: string; completed: number };
-type Submission = {
-  session: string;
-  exercise: string;
-  answer: string;
-  correct: boolean;
-};
-type Store = {
-  version: 1;
-  sessions: Session[];
-  progress: Record<string, Progress>;
-  attempts: Record<string, Submission>;
-};
-const KEY = "learning-coding-daily:v1";
+import {
+  KEY,
+  loadRecords,
+  saveRecords,
+  addEvent,
+  mergeRecords,
+  validateStore,
+  migrateStore,
+  storageNotice,
+  storageCopies,
+  type Store,
+} from "./records";
+import { selectExercises, conceptStates, reviewDue } from "./recommendation";
 const TIMEZONE = "Asia/Seoul";
 const sources = new Map<string, Source>(
   curriculum.exercises.map((ex) => [ex.id, ex]),
@@ -41,65 +40,36 @@ function shift(date: string, days: number) {
   result.setUTCDate(result.getUTCDate() + days);
   return result.toISOString().slice(0, 10);
 }
-function read(): Store {
-  try {
-    const raw = localStorage.getItem(KEY);
-    if (raw === null)
-      return { version: 1, sessions: [], progress: {}, attempts: {} };
-    const data = JSON.parse(raw);
-    if (
-      data.version !== 1 ||
-      !Array.isArray(data.sessions) ||
-      !data.progress ||
-      !data.attempts
-    )
-      throw Error();
-    // Preserve completed records; refresh only pending cards from the current curriculum.
-    for (const session of data.sessions as Session[]) {
-      session.batch ??= 0;
-      session.items = session.items.map((item) => {
-        const source = sources.get(item.id);
-        if (!source) return item;
-        if (item.status !== "pending")
-          return {
-            ...item,
-            response_mode:
-              item.response_mode ??
-              (item.kind === "choice" ? "choice" : "short"),
-            domain: item.domain ?? source.domain,
-            level: item.level ?? source.level,
-          };
-        const updated = makeItem(source, item.category);
-        return {
-          ...updated,
-          response_mode:
-            item.response_mode ?? (item.kind === "choice" ? "choice" : "short"),
-          hints_used: item.hints_used,
-          hints: source.hints.slice(0, item.hints_used),
-          attempts_count: item.attempts_count,
-          last_answer: item.last_answer,
-          last_correct: item.last_correct,
-          active_seconds: item.active_seconds,
-        };
-      });
-    }
-    return data;
-  } catch {
-    throw new ApiError(
-      "저장된 학습 기록을 읽지 못했어요. 브라우저 데이터는 지우지 않았습니다. 저장 공간과 브라우저 설정을 확인해 주세요.",
-      500,
-    );
+async function read(): Promise<Store> {
+  const data = await loadRecords();
+  let dirty = !data.catalog;
+  data.catalog ??= {};
+  for (const session of data.sessions) {
+    session.batch ??= 0;
+    session.items = session.items.map((item) => {
+      const key = `${session.id}:${item.id}`;
+      const source =
+        (data.catalog?.[key] as Source | undefined) ?? sources.get(item.id);
+      if (!source) return item;
+      if (!data.catalog![key]) {
+        data.catalog![key] = source;
+        dirty = true;
+      }
+      if (!item.concept_id) dirty = true;
+      // Preserve the first saved content snapshot, including pending legacy cards.
+      return {
+        ...item,
+        concept_id: item.concept_id ?? source.concept_id,
+        difficulty: item.difficulty ?? source.difficulty,
+        domain: item.domain ?? source.domain,
+        level: item.level ?? source.level,
+        response_mode:
+          item.response_mode ?? (item.kind === "choice" ? "choice" : "short"),
+      };
+    });
   }
-}
-function save(data: Store) {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(data));
-  } catch {
-    throw new ApiError(
-      "기록을 저장하지 못했어요. 브라우저 저장 공간을 확인해 주세요. 기존 기록은 유지됩니다.",
-      500,
-    );
-  }
+  if (dirty || !data.updated_at) await saveRecords(data);
+  return data;
 }
 function refresh(session: Session) {
   session.completed_count = session.items.filter(
@@ -114,9 +84,11 @@ function refresh(session: Session) {
 function makeItem(
   source: Source,
   category: Exercise["category"],
-  mode: ResponseMode = "short",
+  mode: ResponseMode = source.response_mode as ResponseMode,
 ): Exercise {
   return {
+    concept_id: source.concept_id,
+    difficulty: source.difficulty,
     response_mode: mode,
     id: source.id,
     version: source.version,
@@ -146,16 +118,34 @@ function complete(
   status: "correct" | "revealed",
   assisted: boolean,
 ) {
-  const source = sources.get(item.id)!;
+  const source =
+    (data.catalog?.[`${session.id}:${item.id}`] as Source | undefined) ??
+    sources.get(item.id)!;
   Object.assign(item, {
     status,
     answer: source.answer,
     explanation: source.explanation,
   });
+  const prior = data.progress[item.id] ?? {};
   data.progress[item.id] = {
-    due: shift(day(), assisted || status === "revealed" ? 1 : 3),
+    ...reviewDue(
+      day(),
+      prior,
+      !assisted && status === "correct" && item.response_mode !== "essay",
+    ),
+    last_day: day(),
     completed: (data.progress[item.id]?.completed ?? 0) + 1,
   };
+  item.completed_at = new Date().toISOString();
+  item.draft = "";
+  addEvent(
+    data,
+    "completed",
+    session.id,
+    item.id,
+    `completed:${session.id}:${item.id}`,
+    status,
+  );
   refresh(session);
 }
 
@@ -193,15 +183,73 @@ function normalizeAnswer(value: string): string {
   return result;
 }
 
-function handle(path: string, payload?: unknown): unknown {
-  const data = read();
-  const today = day();
+async function handle(path: string, payload?: unknown): Promise<unknown> {
   const body = (payload ?? {}) as Record<string, unknown>;
+  let data: Store;
+  try {
+    data = await read();
+  } catch (e) {
+    if (
+      path !== "/restore" ||
+      body.recover_unreadable !== true ||
+      (e instanceof Error && e.message.includes("더 새로운"))
+    )
+      throw e;
+    validateStore(body.data);
+    data = migrateStore({
+      version: 1,
+      sessions: [],
+      progress: {},
+      attempts: {},
+    });
+  }
+  const today = day();
   if (path === "/tracks") return curriculum.tracks;
+  if (path === "/backup") return data;
+  if (path === "/restore") {
+    const incoming = validateStore(body.data);
+    if (
+      data.sessions.length &&
+      incoming.learner_id !== data.learner_id &&
+      body.confirm_owner !== true
+    )
+      throw new ApiError(
+        "다른 학습 ID의 기록입니다. 본인의 백업인지 확인해 주세요.",
+        422,
+      );
+    const merged = mergeRecords(data, incoming);
+    addEvent(
+      merged,
+      "imported",
+      undefined,
+      undefined,
+      undefined,
+      "검증된 파일 백업 병합",
+    );
+    await saveRecords(merged);
+    return { restored: true };
+  }
+  if (path === "/history")
+    return {
+      sessions: [...data.sessions].sort(
+        (a, b) =>
+          b.local_day.localeCompare(a.local_day) ||
+          (b.batch ?? 0) - (a.batch ?? 0),
+      ),
+      events: [...(data.events ?? [])].reverse(),
+    };
   if (path === "/dashboard") {
     const dashboard: Dashboard = {
       local_day: today,
       timezone: TIMEZONE,
+      learner_id: data.learner_id,
+      storage_notice: storageNotice,
+      storage_copies: storageCopies,
+      all_time_completed_count: Math.max(
+        data.sessions.reduce((sum, s) => sum + s.completed_count, 0),
+        Object.values(data.progress).reduce((sum, p) => sum + p.completed, 0),
+      ),
+      concepts: conceptStates(data.sessions),
       storage_mode: "device",
       learned_count: Object.keys(data.progress).length,
       weekly_days: [
@@ -238,15 +286,17 @@ function handle(path: string, payload?: unknown): unknown {
     };
     return dashboard;
   }
-  const requestedMode = body.response_mode ?? "short";
+  const requestedMode = body.response_mode;
   const validMode = (mode: unknown): mode is ResponseMode =>
     ["choice", "short", "essay"].includes(mode as string);
   if (
     (path === "/sessions/today" || path === "/sessions/extra") &&
+    requestedMode !== undefined &&
+    requestedMode !== null &&
     !validMode(requestedMode)
   )
     throw new ApiError("풀이 모드를 확인해 주세요.", 422);
-  const mode = requestedMode as ResponseMode;
+  const mode = requestedMode as ResponseMode | undefined;
   if (path === "/sessions/today") {
     if (body.track_id !== "pandas")
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
@@ -254,34 +304,9 @@ function handle(path: string, payload?: unknown): unknown {
       (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
     );
     if (existing) return existing;
-    const due = curriculum.exercises
-      .filter((ex) => data.progress[ex.id]?.due <= today)
-      .sort((a, b) =>
-        data.progress[a.id].due.localeCompare(data.progress[b.id].due),
-      )
-      .slice(0, 3);
-    const selected = due.map((ex) => makeItem(ex, "review", mode));
-    const unseen = curriculum.exercises.filter((ex) => !data.progress[ex.id]);
-    selected.push(
-      ...unseen
-        .slice(0, 5 - selected.length)
-        .map((ex) => makeItem(ex, "new", mode)),
+    const selected = selectExercises(data.sessions, data.progress, today).map(
+      ([ex, category]) => makeItem(ex, category, mode),
     );
-    if (selected.length < 5) {
-      const ids = new Set(selected.map((ex) => ex.id));
-      const practice = curriculum.exercises
-        .filter((ex) => !ids.has(ex.id))
-        .sort((a, b) =>
-          (data.progress[a.id]?.due ?? today).localeCompare(
-            data.progress[b.id]?.due ?? today,
-          ),
-        );
-      selected.push(
-        ...practice
-          .slice(0, 5 - selected.length)
-          .map((ex) => makeItem(ex, "practice", mode)),
-      );
-    }
     const session: Session = {
       id: crypto.randomUUID(),
       track_id: "pandas",
@@ -295,7 +320,11 @@ function handle(path: string, payload?: unknown): unknown {
       finished: false,
     };
     data.sessions.push(session);
-    save(data);
+    data.catalog ??= {};
+    for (const card of selected)
+      data.catalog[`${session.id}:${card.id}`] = sources.get(card.id)!;
+    addEvent(data, "session_started", session.id);
+    await saveRecords(data);
     return session;
   }
   if (path === "/sessions/extra") {
@@ -313,29 +342,12 @@ function handle(path: string, payload?: unknown): unknown {
       .filter((s) => s.track_id === "pandas" && s.local_day === today)
       .sort((a, b) => (b.batch ?? 0) - (a.batch ?? 0))[0];
     if (latest.batch && !latest.finished) return latest;
-    const selected = curriculum.exercises
-      .filter((ex) => !data.progress[ex.id])
-      .slice(0, 5)
-      .map((ex) => makeItem(ex, "new", mode));
-    const ids = new Set(selected.map((ex) => ex.id));
-    const lastSeen = new Map<string, number>();
-    const history = [...data.sessions].sort(
-      (a, b) =>
-        a.local_day.localeCompare(b.local_day) ||
-        (a.batch ?? 0) - (b.batch ?? 0),
-    );
-    let sequence = 0;
-    for (const session of history)
-      for (const item of session.items)
-        if (item.status !== "pending") lastSeen.set(item.id, sequence++);
-    const practice = curriculum.exercises
-      .filter((ex) => !ids.has(ex.id))
-      .sort((a, b) => (lastSeen.get(a.id) ?? -1) - (lastSeen.get(b.id) ?? -1));
-    selected.push(
-      ...practice
-        .slice(0, 5 - selected.length)
-        .map((ex) => makeItem(ex, "practice", mode)),
-    );
+    const selected = selectExercises(
+      data.sessions,
+      data.progress,
+      today,
+      true,
+    ).map(([ex, category]) => makeItem(ex, category, mode));
     const session: Session = {
       id: crypto.randomUUID(),
       track_id: "pandas",
@@ -349,11 +361,15 @@ function handle(path: string, payload?: unknown): unknown {
       finished: false,
     };
     data.sessions.push(session);
-    save(data);
+    data.catalog ??= {};
+    for (const card of selected)
+      data.catalog[`${session.id}:${card.id}`] = sources.get(card.id)!;
+    addEvent(data, "session_started", session.id);
+    await saveRecords(data);
     return session;
   }
   const route = path.match(
-    /^\/sessions\/([^/]+)(?:\/(answers|hint|reveal|mode))?$/,
+    /^\/sessions\/([^/]+)(?:\/(answers|hint|reveal|mode|draft))?$/,
   );
   if (!route) throw new ApiError("학습 요청을 찾을 수 없어요.", 404);
   const session = data.sessions.find((s) => s.id === route[1]);
@@ -363,7 +379,14 @@ function handle(path: string, payload?: unknown): unknown {
     throw new ApiError("날짜가 바뀌었어요. 오늘 학습을 다시 열어 주세요.", 409);
   const item = session.items.find((ex) => ex.id === body.exercise_id);
   if (!item) throw new ApiError("오늘 학습에 포함되지 않은 문제입니다.", 404);
-  const source = sources.get(item.id)!;
+  const source =
+    (data.catalog?.[`${session.id}:${item.id}`] as Source | undefined) ??
+    sources.get(item.id);
+  if (!source)
+    throw new ApiError(
+      "원본 문제를 찾지 못했어요. 기존 기록을 보존했으니 백업을 먼저 내려받아 주세요.",
+      409,
+    );
   if (route[2] === "answers" && typeof body.attempt_id === "string") {
     const previous = data.attempts[body.attempt_id];
     if (previous) {
@@ -377,7 +400,7 @@ function handle(path: string, payload?: unknown): unknown {
           409,
         );
       return {
-        correct: item.response_mode === "essay" ? null : previous.correct,
+        correct: previous.correct,
         session,
       };
     }
@@ -385,24 +408,45 @@ function handle(path: string, payload?: unknown): unknown {
   if (route[2] === "reveal" && item.status === "revealed") return session;
   if (item.status !== "pending")
     throw new ApiError("이미 마친 문제입니다. 학습을 새로 불러와 주세요.", 409);
+  if (route[2] === "draft") {
+    if (typeof body.draft !== "string" || body.draft.length > 2000)
+      throw new ApiError("입력한 답안을 확인해 주세요.", 422);
+    item.draft = body.draft;
+    await saveRecords(data);
+    return session;
+  }
   if (route[2] === "mode") {
     if (!validMode(body.response_mode))
       throw new ApiError("풀이 모드를 확인해 주세요.", 422);
     for (const pending of session.items)
       if (pending.status === "pending")
         pending.response_mode = body.response_mode;
-    save(data);
+    await saveRecords(data);
     return session;
   }
   if (route[2] === "hint") {
     item.hints_used = Math.min(item.hints_used + 1, 2);
     item.hints = source.hints.slice(0, item.hints_used);
-    save(data);
+    addEvent(
+      data,
+      "hint",
+      session.id,
+      item.id,
+      `hint:${session.id}:${item.id}:${item.hints_used}`,
+    );
+    await saveRecords(data);
     return session;
   }
   if (route[2] === "reveal") {
     complete(data, session, item, "revealed", true);
-    save(data);
+    addEvent(
+      data,
+      "reveal",
+      session.id,
+      item.id,
+      `reveal:${session.id}:${item.id}`,
+    );
+    await saveRecords(data);
     return session;
   }
   if (
@@ -435,18 +479,40 @@ function handle(path: string, payload?: unknown): unknown {
     session: session.id,
     exercise: item.id,
     answer: body.answer,
-    correct,
+    correct: item.response_mode === "essay" ? null : correct,
+    response_mode: item.response_mode,
+    created_at: new Date().toISOString(),
+    hints_used: item.hints_used,
+    active_seconds: item.active_seconds,
   };
+  addEvent(
+    data,
+    "attempt",
+    session.id,
+    item.id,
+    body.attempt_id,
+    item.response_mode === "essay"
+      ? "서술 답안 저장"
+      : correct
+        ? "정답"
+        : "다시 시도",
+  );
   if (item.response_mode === "essay")
     complete(data, session, item, "revealed", true);
   else if (correct) complete(data, session, item, "correct", assisted);
-  save(data);
+  await saveRecords(data);
   return { correct: item.response_mode === "essay" ? null : correct, session };
 }
 
+let queue: Promise<unknown> = Promise.resolve();
 export async function browserApi<T>(path: string, body?: unknown): Promise<T> {
   // HTTPS browsers serialize updates from different tabs using Web Locks.
-  const work = () => structuredClone(handle(path, body)) as T;
+  const work = async () => structuredClone(await handle(path, body)) as T;
   if (navigator.locks) return navigator.locks.request(KEY, work);
-  return work();
+  const result = queue.then(work, work);
+  queue = result.then(
+    () => undefined,
+    () => undefined,
+  );
+  return result;
 }

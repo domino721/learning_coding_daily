@@ -23,7 +23,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-select",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 2,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "리포트 출력 점검: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "numpy-shape-01",
@@ -43,7 +57,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "NumPy",
-      "level": 1
+      "level": 1,
+      "concept_id": "numpy-structure",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "센서 배열 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "sql-where-01",
@@ -63,7 +91,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "SQL",
-      "level": 1
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 2,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "주문 조회 완성: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "stats-median-01",
@@ -83,7 +125,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "통계",
-      "level": 1
+      "level": 1,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "ml-split-01",
@@ -103,7 +159,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "scikit-learn",
-      "level": 1
+      "level": 1,
+      "concept_id": "ml-evaluation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 2,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-filter-01",
@@ -123,7 +193,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-filter",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "점수 코드 검토: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "numpy-axis-01",
@@ -143,7 +227,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "NumPy",
-      "level": 1
+      "level": 1,
+      "concept_id": "numpy-structure",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "sql-count-01",
@@ -163,7 +261,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "SQL",
-      "level": 1
+      "level": 1,
+      "concept_id": "sql-aggregation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "주문 건수 검토: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "stats-weight-01",
@@ -183,7 +295,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "통계",
-      "level": 1
+      "level": 1,
+      "concept_id": "stats-rates",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "전체 전환율 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "ml-scale-01",
@@ -203,7 +329,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "scikit-learn",
-      "level": 2
+      "level": 2,
+      "concept_id": "ml-preprocessing",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "새 입력 처리 결과: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-null-01",
@@ -223,7 +363,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-null",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "주문 데이터 확인: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "numpy-broadcast-01",
@@ -248,7 +402,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "NumPy",
-      "level": 2
+      "level": 2,
+      "concept_id": "numpy-broadcast",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "보정값 적용 결과: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "sql-having-01",
@@ -268,7 +436,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "SQL",
-      "level": 2
+      "level": 2,
+      "concept_id": "sql-aggregation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "팀별 조회 완성: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "stats-std-01",
@@ -288,7 +470,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "통계",
-      "level": 2
+      "level": 2,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "변동성 수치 확인: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "ml-metric-01",
@@ -308,7 +504,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "scikit-learn",
-      "level": 1
+      "level": 1,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "모델 점수 확인: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-sort-01",
@@ -328,7 +538,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-sort",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "주문 목록 출력: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "numpy-mask-01",
@@ -348,7 +572,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "NumPy",
-      "level": 2
+      "level": 2,
+      "concept_id": "numpy-mask",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "측정값 코드 검토: 원소별 조건과 단계별 인덱싱의 결과를 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "sql-join-01",
@@ -368,7 +606,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "SQL",
-      "level": 2
+      "level": 2,
+      "concept_id": "sql-joins",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "고객 리포트 행 수: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "stats-ab-01",
@@ -388,7 +640,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "통계",
-      "level": 2
+      "level": 2,
+      "concept_id": "stats-rates",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "실험 리포트 단위 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "ml-neighbor-01",
@@ -408,7 +674,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "scikit-learn",
-      "level": 2
+      "level": 2,
+      "concept_id": "ml-neighbors",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "예측 한 건 확인: 거리·이웃 수·레이블 결정을 순서대로 적용한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-group-01",
@@ -428,7 +708,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-group",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "일일 지표 완성: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "numpy-view-01",
@@ -448,7 +742,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "NumPy",
-      "level": 2
+      "level": 2,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "전처리 뒤 원본 확인: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "sql-null-01",
@@ -468,7 +776,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "SQL",
-      "level": 2
+      "level": 2,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "조회 누락 조사: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "stats-conditional-01",
@@ -488,7 +810,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "통계",
-      "level": 2
+      "level": 2,
+      "concept_id": "stats-rates",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "그룹 지표 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "ml-leakage-01",
@@ -513,7 +849,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "scikit-learn",
-      "level": 2
+      "level": 2,
+      "concept_id": "ml-evaluation",
+      "response_mode": "essay",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "평가 절차 리뷰: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-select-02",
@@ -533,7 +883,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 1
+      "level": 1,
+      "concept_id": "pandas-select",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 0,
+        "rationale": "출력 크기 확인: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-filter-02",
@@ -553,7 +917,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 2
+      "level": 2,
+      "concept_id": "pandas-filter",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "대상 주문 추출: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-null-02",
@@ -573,7 +951,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 2
+      "level": 2,
+      "concept_id": "pandas-null",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "입력 데이터 준비: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-sort-02",
@@ -593,7 +985,21 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 2
+      "level": 2,
+      "concept_id": "pandas-sort",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "리포트 순서 맞추기: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
     },
     {
       "id": "pandas-group-02",
@@ -613,7 +1019,1061 @@
       "seconds": 120,
       "version": 2,
       "domain": "pandas",
-      "level": 2
+      "level": 2,
+      "concept_id": "pandas-group",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "팀 리포트 검토: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": ""
+    },
+    {
+      "id": "pandas-select-03",
+      "concept": "조건과 열 선택",
+      "kind": "choice",
+      "title": "품절 상품의 가격 합",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"stock\": [0, 2, 0], \"price\": [30, 50, 70]}, index=[4, 7, 9])\nprint(df.loc[df[\"stock\"] == 0, \"price\"].sum())",
+      "answer": "100",
+      "explanation": "조건은 행을, price는 열을 선택합니다. 라벨 4와 9의 가격 30+70=100입니다.",
+      "hints": [
+        "loc의 첫 인수와 두 번째 인수가 무엇을 선택하는지 나눠 보세요.",
+        "첫 인수의 불리언 조건으로 행을 고른 뒤, 선택한 열만 집계합니다."
+      ],
+      "choices": ["100", "150", "30", "0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-select",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "품절 상품의 가격 합: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "100"
+    },
+    {
+      "id": "pandas-filter-03",
+      "concept": "구간 경계 선택",
+      "kind": "choice",
+      "title": "허용 구간 점검",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ns = pd.Series([0, 10, 20, 30])\nprint(s[s.between(10, 30, inclusive=\"left\")].tolist())",
+      "answer": "[10, 20]",
+      "explanation": "왼쪽 경계 10은 포함하고 오른쪽 경계 30은 제외합니다.",
+      "hints": [
+        "양끝 경계가 모두 포함되는지 확인해 보세요.",
+        "inclusive=\"left\"는 왼쪽 경계만 포함합니다. 내부 값은 두 경계 사이에서 찾습니다."
+      ],
+      "choices": ["[10, 20]", "[10, 20, 30]", "[20]", "[0, 10, 20]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-filter",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "허용 구간 점검: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[10, 20]"
+    },
+    {
+      "id": "pandas-null-03",
+      "concept": "결측치와 분모",
+      "kind": "choice",
+      "title": "평균 계산 절차",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ns = pd.Series([2.0, None, 4.0])\nprint((float(s.mean()), float(s.fillna(0).mean())))",
+      "answer": "(3.0, 2.0)",
+      "explanation": "원래 평균은 결측값을 빼고 6/2, 0 대체 후에는 6/3을 계산합니다.",
+      "hints": [
+        "두 평균에서 사용하는 분모가 같은지 확인해 보세요.",
+        "첫 평균은 결측값을 제외하고, 두 번째 평균은 0 대체 후 모든 위치를 셉니다."
+      ],
+      "choices": ["(3.0, 2.0)", "(2.0, 2.0)", "(3.0, 3.0)", "(2.0, 3.0)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-null",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "평균 계산 절차: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(3.0, 2.0)"
+    },
+    {
+      "id": "pandas-sort-03",
+      "concept": "다중 정렬",
+      "kind": "choice",
+      "title": "동점 순위 정리",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"name\": [\"C\", \"A\", \"B\"], \"score\": [80, 90, 90]})\nprint(df.sort_values([\"score\", \"name\"], ascending=[False, True])[\"name\"].tolist())",
+      "answer": "['A', 'B', 'C']",
+      "explanation": "점수는 내림차순, 동점이면 이름 오름차순으로 정렬합니다.",
+      "hints": [
+        "정렬 기준 두 개의 우선순위를 나누어 읽어 보세요.",
+        "첫 번째 값으로 먼저 정렬하고 동점인 행끼리 두 번째 기준을 적용합니다."
+      ],
+      "choices": [
+        "['A', 'B', 'C']",
+        "['B', 'A', 'C']",
+        "['C', 'A', 'B']",
+        "['C', 'B', 'A']"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-sort",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "동점 순위 정리: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "['A', 'B', 'C']"
+    },
+    {
+      "id": "pandas-group-03",
+      "concept": "그룹 집계와 필터",
+      "kind": "choice",
+      "title": "최소 주문 수 집계",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"team\": [\"A\", \"B\", \"A\"], \"amount\": [2, 9, 4]})\ncounts = df.groupby(\"team\")[\"amount\"].count()\nprint(counts[counts >= 2].index.tolist())",
+      "answer": "['A']",
+      "explanation": "A는 두 건, B는 한 건입니다. 거래 금액 크기와 건수는 별개입니다.",
+      "hints": [
+        "금액 합계를 구하는 코드인지 건수를 세는 코드인지 보세요.",
+        "각 그룹의 행 수로 만든 Series에 마지막 조건을 적용합니다."
+      ],
+      "choices": ["['A']", "['B']", "['A', 'B']", "[]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-group",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "['A']"
+    },
+    {
+      "id": "pandas-group-04",
+      "concept": "그룹의 결측치 집계",
+      "kind": "choice",
+      "title": "보고서 건수 차이",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"team\": [\"A\", \"A\", \"B\"], \"value\": [1, None, 2]})\ng = df.groupby(\"team\")[\"value\"]\nprint((int(g.size()[\"A\"]), int(g.count()[\"A\"])))",
+      "answer": "(2, 1)",
+      "explanation": "size는 행 수, count는 결측값을 제외한 값의 수입니다.",
+      "hints": [
+        "그룹에 행은 있지만 값이 비어 있는 경우를 생각해 보세요.",
+        "size는 행 수, count는 결측값이 아닌 값의 수를 셉니다."
+      ],
+      "choices": ["(2, 1)", "(1, 1)", "(2, 2)", "(1, 2)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-group",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "보고서 건수 차이: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(2, 1)"
+    },
+    {
+      "id": "numpy-shape-02",
+      "concept": "배열 변형",
+      "kind": "choice",
+      "title": "이미지 배치 재구성",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\nx = np.arange(12).reshape(2, 2, 3)\nprint(x.reshape(4, -1).shape)",
+      "answer": "(4, 3)",
+      "explanation": "원소 12개를 네 행으로 나누므로 남은 축의 길이는 3입니다.",
+      "hints": [
+        "변형 전후 전체 원소 수가 같은지 먼저 확인해 보세요.",
+        "지정된 축 길이로 전체 원소 수를 나누면 -1로 둔 축의 길이를 구할 수 있습니다."
+      ],
+      "choices": ["(4, 3)", "(4, 6)", "(2, 6)", "(12,)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-structure",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(4, 3)"
+    },
+    {
+      "id": "numpy-axis-02",
+      "concept": "축 보존 집계",
+      "kind": "choice",
+      "title": "행 기준 보정",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\nx = np.array([[1, 3], [2, 6]])\nprint((x - x.mean(axis=1, keepdims=True)).tolist())",
+      "answer": "[[-1.0, 1.0], [-2.0, 2.0]]",
+      "explanation": "행 평균은 각각 2와 4이며 keepdims로 (2,1) 구조를 유지해 각 행에 뺍니다.",
+      "hints": [
+        "axis=1 집계 뒤 평균 배열의 모양을 적어 보세요.",
+        "keepdims가 줄어든 축을 길이 1로 남기므로 평균이 각 행에 적용됩니다."
+      ],
+      "choices": [
+        "[[-1.0, 1.0], [-2.0, 2.0]]",
+        "[[-0.5, -1.5], [0.5, 1.5]]",
+        "[[0.0, 0.0], [0.0, 0.0]]",
+        "[[1, 3], [2, 6]]"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-structure",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "행 기준 보정: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[[-1.0, 1.0], [-2.0, 2.0]]"
+    },
+    {
+      "id": "numpy-broadcast-02",
+      "concept": "서로 다른 축의 확장",
+      "kind": "choice",
+      "title": "행과 열 보정값",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\na = np.array([[1], [2], [3]])\nb = np.array([10, 20])\nprint((a + b).tolist())",
+      "answer": "[[11, 21], [12, 22], [13, 23]]",
+      "explanation": "(3,1)과 (2,)는 (3,2)로 확장됩니다. 열 보정 두 값이 각 행에 더해집니다.",
+      "hints": [
+        "두 shape를 오른쪽부터 나란히 적어 보세요.",
+        "길이 1인 축이 다른 쪽 길이에 맞춰 확장됩니다. 원소를 짝지어 한 번만 더하는 방식과 비교하세요."
+      ],
+      "choices": [
+        "[[11, 21], [12, 22], [13, 23]]",
+        "[[11], [22], [33]]",
+        "[11, 22]",
+        "오류가 발생한다"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-broadcast",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "행과 열 보정값: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[[11, 21], [12, 22], [13, 23]]"
+    },
+    {
+      "id": "numpy-mask-02",
+      "concept": "원본 기준과 단계별 마스크",
+      "kind": "choice",
+      "title": "이중 조건 추적",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\nx = np.array([2, 5, 8, 11])\ny = x[x > 4]\nprint(y[y % 2 == 0].tolist())",
+      "answer": "[8]",
+      "explanation": "첫 조건 뒤에는 5,8,11이 남고 그 중 짝수는 8뿐입니다.",
+      "hints": [
+        "중간 배열 y에 남는 값부터 적어 보세요.",
+        "두 번째 마스크는 원본 x가 아니라 이미 줄어든 y에 적용됩니다."
+      ],
+      "choices": ["[8]", "[2, 8]", "[5, 11]", "[5, 8, 11]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-mask",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "이중 조건 추적: 원소별 조건과 단계별 인덱싱의 결과를 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[8]"
+    },
+    {
+      "id": "numpy-view-02",
+      "concept": "고급 인덱싱 복사",
+      "kind": "choice",
+      "title": "인덱스 목록의 변경",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\nx = np.array([1, 2, 3])\ny = x[[0, 1]]\ny[0] = 9\nprint(x.tolist())",
+      "answer": "[1, 2, 3]",
+      "explanation": "정수 배열을 통한 고급 인덱싱은 복사본을 만듭니다. y의 변경은 x에 전달되지 않습니다.",
+      "hints": [
+        "슬라이싱과 정수 목록 인덱싱이 같은 종류인지 보세요.",
+        "정수 배열로 고른 결과는 복사본입니다. 그 결과를 바꿨을 때 원본과 연결되는지 판단하세요."
+      ],
+      "choices": ["[1, 2, 3]", "[9, 2, 3]", "[9, 2]", "[9, 9, 3]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-memory",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "인덱스 목록의 변경: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[1, 2, 3]"
+    },
+    {
+      "id": "numpy-view-03",
+      "concept": "공유 메모리의 전이",
+      "kind": "choice",
+      "title": "두 경로의 변경 추적",
+      "prompt": "출력값과 원본이 그렇게 바뀌는 이유를 적으세요.",
+      "code": "import numpy as np\nx = np.array([1, 2, 3, 4])\na = x[1:3]\nb = x[[1, 2]]\na[0] = 7\nb[1] = 9\nprint(x.tolist())",
+      "answer": "[1, 7, 3, 4]",
+      "explanation": "a는 슬라이스 뷰라 x의 두 번째 값이 7로 바뀝니다. b는 복사본이라 9는 원본에 반영되지 않습니다.",
+      "hints": [
+        "a와 b를 만드는 두 인덱싱 방식의 차이를 찾으세요.",
+        "슬라이스는 메모리를 공유하고 정수 목록 선택은 복사합니다. 각 대입의 경로를 따로 추적하세요."
+      ],
+      "choices": [
+        "[1, 7, 3, 4]",
+        "[1, 7, 9, 4]",
+        "[1, 2, 3, 4]",
+        "[1, 2, 9, 4]"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-memory",
+      "response_mode": "essay",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "두 경로의 변경 추적: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[1, 7, 3, 4]"
+    },
+    {
+      "id": "sql-where-02",
+      "concept": "NULL과 제외 조건",
+      "kind": "choice",
+      "title": "제외 목록 검토",
+      "prompt": "반환되는 id 목록을 구하세요.",
+      "code": "SELECT id FROM orders WHERE id NOT IN (2, NULL) ORDER BY id;",
+      "answer": "[]",
+      "explanation": "id=2는 False이고 다른 id는 NULL과의 비교로 Unknown이 됩니다. True인 행이 없습니다.",
+      "hints": [
+        "제외 목록에 NULL이 들어 있다는 점을 살펴보세요.",
+        "일치하지 않는 원소도 NULL과 비교한 결과가 Unknown일 수 있습니다. WHERE는 True만 남깁니다."
+      ],
+      "choices": ["[]", "[1, 3]", "[2]", "[1, 2, 3]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "제외 목록 검토: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE orders(id); INSERT INTO orders VALUES(1),(2),(3);",
+      "reference_output": "[]"
+    },
+    {
+      "id": "sql-having-02",
+      "concept": "그룹별 고유 개수",
+      "kind": "choice",
+      "title": "재구매 고객 수",
+      "prompt": "반환되는 team 목록을 구하세요.",
+      "code": "SELECT team FROM sales GROUP BY team HAVING COUNT(DISTINCT customer) >= 2 ORDER BY team;",
+      "answer": "['B']",
+      "explanation": "A의 두 거래는 고객 한 명, B의 두 거래는 서로 다른 고객입니다.",
+      "hints": [
+        "거래 건수와 서로 다른 고객 수를 나누어 세어 보세요.",
+        "DISTINCT는 같은 그룹 안의 중복 고객 값을 한 번만 셉니다."
+      ],
+      "choices": ["['B']", "['A']", "['A', 'B']", "[]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-aggregation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "재구매 고객 수: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE sales(team, customer); INSERT INTO sales VALUES('A',1),('A',1),('B',2),('B',3);",
+      "reference_output": "['B']"
+    },
+    {
+      "id": "sql-count-02",
+      "concept": "조건부 집계",
+      "kind": "choice",
+      "title": "완료 주문 비율의 분자",
+      "prompt": "아래 SQL의 출력값을 구하세요.",
+      "code": "SELECT SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) FROM orders;",
+      "answer": "2",
+      "explanation": "조건을 만족하는 두 행에만 1을 주고 나머지 행에는 0을 줍니다.",
+      "hints": [
+        "CASE가 각 행에서 반환하는 값을 먼저 적어 보세요.",
+        "조건에 맞는 행에는 1, 나머지에는 0을 준 뒤 그 수를 합칩니다."
+      ],
+      "choices": ["2", "3", "1", "0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-aggregation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "완료 주문 비율의 분자: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE orders(status); INSERT INTO orders VALUES('done'),('open'),('done');",
+      "reference_output": "2"
+    },
+    {
+      "id": "sql-join-02",
+      "concept": "외부 조인 후 조건",
+      "kind": "choice",
+      "title": "주문 없는 고객 찾기",
+      "prompt": "반환되는 고객 id 목록을 구하세요.",
+      "code": "SELECT c.id FROM customers c LEFT JOIN orders o ON c.id=o.customer_id WHERE o.id IS NULL ORDER BY c.id;",
+      "answer": "[2]",
+      "explanation": "연결되는 주문이 없는 고객 2의 오른쪽 열이 NULL이 되어 남습니다.",
+      "hints": [
+        "주문이 없는 고객의 오른쪽 열에 어떤 값이 들어가는지 보세요.",
+        "LEFT JOIN이 보존한 행 중 오른쪽 주문 ID가 비어 있는 행을 찾습니다."
+      ],
+      "choices": ["[2]", "[1]", "[1, 2]", "[]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-joins",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "주문 없는 고객 찾기: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2); CREATE TABLE orders(id,customer_id); INSERT INTO orders VALUES(10,1),(11,1);",
+      "reference_output": "[2]"
+    },
+    {
+      "id": "sql-join-03",
+      "concept": "외부 조인의 집계",
+      "kind": "choice",
+      "title": "빈 그룹의 두 건수",
+      "prompt": "두 집계 결과와 값이 달라지는 이유를 적으세요.",
+      "code": "SELECT COUNT(*), COUNT(o.id) FROM customers c LEFT JOIN orders o ON c.id=o.customer_id WHERE c.id=2;",
+      "answer": "(1, 0)",
+      "explanation": "고객 2의 보존된 행은 한 행입니다. o.id는 NULL이라 COUNT(o.id)는 0입니다.",
+      "hints": [
+        "조건을 만족하는 고객이 조인 결과에서 사라지는지 확인해 보세요.",
+        "별표 집계는 보존된 행을 세고 열 집계는 그 열의 NULL을 제외합니다."
+      ],
+      "choices": ["(1, 0)", "(0, 0)", "(1, 1)", "(0, 1)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-joins",
+      "response_mode": "essay",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "빈 그룹의 두 건수: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2); CREATE TABLE orders(id,customer_id); INSERT INTO orders VALUES(10,1);",
+      "reference_output": "(1, 0)"
+    },
+    {
+      "id": "sql-null-02",
+      "concept": "결측값 대체와 합계",
+      "kind": "choice",
+      "title": "환불 누락값 처리",
+      "prompt": "아래 SQL의 출력값을 구하세요.",
+      "code": "SELECT SUM(COALESCE(refund, 0)) FROM orders;",
+      "answer": "5",
+      "explanation": "NULL을 0으로 대체해 2+0+3=5입니다. NULL을 행 수로 해석하지 않습니다.",
+      "hints": [
+        "COALESCE를 각 입력값에 먼저 적용해 보세요.",
+        "첫 번째 값이 NULL이면 뒤의 대체값을 사용한 다음 합계에 넣습니다."
+      ],
+      "choices": ["5", "3", "2", "0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-rows",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "환불 누락값 처리: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "CREATE TABLE orders(refund); INSERT INTO orders VALUES(2),(NULL),(3);",
+      "reference_output": "5"
+    },
+    {
+      "id": "stats-median-02",
+      "concept": "그룹 평균의 합성",
+      "kind": "choice",
+      "title": "두 팀 지표 합치기",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "groups = [[1, 1, 1], [9]]\nprint(sum(sum(g) for g in groups) / sum(len(g) for g in groups))",
+      "answer": "3.0",
+      "explanation": "그룹 크기를 고려하면 합계 12를 전체 4개로 나눕니다. 두 평균 1과 9의 단순 평균 5가 아닙니다.",
+      "hints": [
+        "두 그룹의 크기가 같은지 확인해 보세요.",
+        "코드는 그룹 평균을 다시 평균 내지 않고 전체 합계와 전체 개수를 구합니다."
+      ],
+      "choices": ["3.0", "5.0", "6.0", "4.0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "두 팀 지표 합치기: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "3.0"
+    },
+    {
+      "id": "stats-std-02",
+      "concept": "표본과 모집단",
+      "kind": "choice",
+      "title": "두 변동성의 비율",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "import numpy as np\nx = np.array([0.0, 2.0])\nprint(round(float(x.var(ddof=1) / x.var(ddof=0)), 1))",
+      "answer": "2.0",
+      "explanation": "편차 제곱합은 같고 분모는 각각 1과 2이므로 표본분산은 모집단분산의 두 배입니다.",
+      "hints": [
+        "두 계산에서 바뀌는 것이 편차 제곱합인지 분모인지 보세요.",
+        "분산의 분모는 n-ddof입니다. 같은 분자를 서로 다른 분모로 나눈 비율을 구하세요."
+      ],
+      "choices": ["2.0", "1.0", "0.5", "4.0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "두 변동성의 비율: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "2.0"
+    },
+    {
+      "id": "stats-weight-02",
+      "concept": "전체와 조건부 분모",
+      "kind": "choice",
+      "title": "전체 성공률 합치기",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "success = [8, 2]\ntrials = [10, 20]\nprint(round(sum(success) / sum(trials), 2))",
+      "answer": "0.33",
+      "explanation": "전체 성공 10건을 전체 시도 30건으로 나눕니다. 그룹 성공률을 단순 평균하지 않습니다.",
+      "hints": [
+        "분자가 전체 성공 건수인지 그룹별 비율의 합인지 보세요.",
+        "전체 성공률의 분모에는 두 그룹의 모든 시도가 들어갑니다."
+      ],
+      "choices": ["0.33", "0.45", "0.5", "0.8"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "전체 성공률 합치기: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "0.33"
+    },
+    {
+      "id": "stats-ab-02",
+      "concept": "상대 변화",
+      "kind": "choice",
+      "title": "실험 개선율 검토",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "before, after = 0.10, 0.12\nprint(round((after / before - 1) * 100, 1))",
+      "answer": "20.0",
+      "explanation": "기준 대비 상대 증가율은 20%입니다. 두 비율의 차인 2퍼센트포인트와 다릅니다.",
+      "hints": [
+        "뺄셈으로 차이를 구하는지 나눗셈으로 비교하는지 보세요.",
+        "기준값 대비 상대 변화는 두 비율의 절대 차이와 단위가 다릅니다."
+      ],
+      "choices": ["20.0", "2.0", "0.02", "120.0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "실험 개선율 검토: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "20.0"
+    },
+    {
+      "id": "stats-conditional-02",
+      "concept": "조건부 확률의 방향",
+      "kind": "choice",
+      "title": "구매자 중 모바일 비율",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "events = [(\"mobile\", 1), (\"mobile\", 0), (\"desktop\", 1)]\nbuyers = [device for device, bought in events if bought]\nprint(buyers.count(\"mobile\") / len(buyers))",
+      "answer": "0.5",
+      "explanation": "분모는 구매자 두 명입니다. 모바일 방문자 수 두 명으로 구매율을 구하는 질문과 다릅니다.",
+      "hints": [
+        "질문의 조건이 구매인지 기기 종류인지 나누어 읽으세요.",
+        "분모는 buyers에 들어온 사례 수입니다. 그 중 원하는 기기가 몇 개인지 셉니다."
+      ],
+      "choices": ["0.5", "0.67", "1.0", "0.33"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "구매자 중 모바일 비율: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "0.5"
+    },
+    {
+      "id": "stats-conditional-03",
+      "concept": "집단 구성과 전체 비율",
+      "kind": "choice",
+      "title": "통합 지표 해석",
+      "prompt": "두 값이 다른 이유와 전체 지표만으로 판단할 때 주의할 점을 적으세요.",
+      "code": "rates = [0.9, 0.2]\nweights_a, weights_b = [90, 10], [10, 90]\na = sum(r*n for r,n in zip(rates, weights_a)) / sum(weights_a)\nb = sum(r*n for r,n in zip(rates, weights_b)) / sum(weights_b)\nprint((round(a, 2), round(b, 2)))",
+      "answer": "(0.83, 0.27)",
+      "explanation": "집단별 비율은 같은데 집단 구성비가 달라 전체 값은 0.83과 0.27입니다. 전체 차이를 집단별 성능 변화로 단정하면 안 됩니다.",
+      "hints": [
+        "두 경우에서 바뀐 것이 개별 비율인지 집단 구성인지 보세요.",
+        "같은 집단별 비율도 가중치가 달라지면 전체 지표가 달라질 수 있습니다."
+      ],
+      "choices": ["(0.83, 0.27)", "(0.55, 0.55)", "(0.27, 0.83)", "(0.9, 0.2)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "essay",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "통합 지표 해석: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(0.83, 0.27)"
+    },
+    {
+      "id": "ml-split-02",
+      "concept": "계층 분할",
+      "kind": "choice",
+      "title": "클래스 비율 보존",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "from sklearn.model_selection import train_test_split\ny = [0] * 8 + [1] * 4\n_, test = train_test_split(y, test_size=0.25, stratify=y, random_state=1)\nprint((test.count(0), test.count(1)))",
+      "answer": "(2, 1)",
+      "explanation": "평가 데이터 세 개에 기존 2:1 클래스 비율을 유지해 0 두 개, 1 한 개를 배치합니다.",
+      "hints": [
+        "평가 묶음의 전체 크기와 원래 클래스 비율을 구하세요.",
+        "stratify는 분할 전후 클래스 비율을 보존하도록 합니다. 난수 시드는 주로 순서에 영향을 줍니다."
+      ],
+      "choices": ["(2, 1)", "(1, 2)", "(3, 0)", "(0, 3)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-evaluation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "클래스 비율 보존: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(2, 1)"
+    },
+    {
+      "id": "ml-scale-02",
+      "concept": "학습 기준의 재사용",
+      "kind": "choice",
+      "title": "평가 입력 평균",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "from sklearn.preprocessing import StandardScaler\ns = StandardScaler().fit([[0.0], [2.0]])\nprint(s.transform([[4.0], [6.0]]).ravel().tolist())",
+      "answer": "[3.0, 5.0]",
+      "explanation": "학습 평균 1, 표준편차 1을 평가 입력에도 사용합니다. 평가 데이터로 다시 fit하지 않습니다.",
+      "hints": [
+        "fit이 어떤 입력에서 실행되었는지 먼저 보세요.",
+        "transform은 학습 입력에서 얻은 평균과 표준편차를 그대로 사용합니다."
+      ],
+      "choices": ["[3.0, 5.0]", "[-1.0, 1.0]", "[0.0, 0.0]", "[4.0, 6.0]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-preprocessing",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "평가 입력 평균: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[3.0, 5.0]"
+    },
+    {
+      "id": "ml-metric-02",
+      "concept": "재현율의 분모",
+      "kind": "choice",
+      "title": "양성 탐지 점검",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "from sklearn.metrics import recall_score\nprint(recall_score([1, 1, 1, 0], [1, 0, 0, 0]))",
+      "answer": "0.3333333333333333",
+      "explanation": "실제 양성 세 개 중 한 개를 찾았으므로 재현율은 1/3입니다.",
+      "hints": [
+        "실제 양성이 몇 개이며 그 중 몇 개를 찾았는지 세세요.",
+        "재현율의 분모는 실제 양성 수이고, 양성으로 예측한 수가 아닙니다."
+      ],
+      "choices": ["0.3333333333333333", "0.5", "1.0", "0.75"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "양성 탐지 점검: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "0.3333333333333333"
+    },
+    {
+      "id": "ml-metric-03",
+      "concept": "정밀도와 재현율",
+      "kind": "choice",
+      "title": "양성 예측의 신뢰도",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "from sklearn.metrics import precision_score\nprint(precision_score([1, 0, 0, 1], [1, 1, 0, 0]))",
+      "answer": "0.5",
+      "explanation": "양성으로 예측한 두 개 중 실제 양성은 한 개라 정밀도는 0.5입니다.",
+      "hints": [
+        "양성으로 예측한 위치만 먼저 골라 보세요.",
+        "정밀도는 그 예측들 가운데 실제 양성인 사례의 비율입니다."
+      ],
+      "choices": ["0.5", "0.25", "1.0", "0.0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "양성 예측의 신뢰도: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "0.5"
+    },
+    {
+      "id": "ml-neighbor-02",
+      "concept": "이웃 다수결",
+      "kind": "choice",
+      "title": "세 이웃 예측",
+      "prompt": "아래 코드의 출력값을 구하세요.",
+      "code": "from sklearn.neighbors import KNeighborsClassifier\nm = KNeighborsClassifier(n_neighbors=3)\nm.fit([[0], [3], [4], [10]], [0, 1, 1, 0])\nprint(m.predict([[2]]).tolist())",
+      "answer": "[1]",
+      "explanation": "가까운 세 입력 3,0,4의 레이블은 1,0,1로 다수인 1을 예측합니다.",
+      "hints": [
+        "이웃 수를 확인하고 새 입력과 각 학습 입력의 거리를 구하세요.",
+        "가장 가까운 한 레이블만 쓰지 않고 지정한 수의 이웃 레이블로 다수결합니다."
+      ],
+      "choices": ["[1]", "[0]", "[2]", "[3]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-neighbors",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "세 이웃 예측: 거리·이웃 수·레이블 결정을 순서대로 적용한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "[1]"
+    },
+    {
+      "id": "ml-leakage-02",
+      "concept": "결측치 대체의 누수",
+      "kind": "choice",
+      "title": "평가 전처리 검토",
+      "prompt": "두 출력값의 차이가 생긴 이유와 평가 절차를 어떻게 고칠지 적으세요.",
+      "code": "from sklearn.impute import SimpleImputer\ntrain = [[0.0], [2.0]]\ntest = [[100.0], [float(\"nan\")]]\nwrong = SimpleImputer().fit(train + test).transform(test)[1, 0]\nright = SimpleImputer().fit(train).transform(test)[1, 0]\nprint((float(wrong), float(right)))",
+      "answer": "(34.0, 1.0)",
+      "explanation": "전체 데이터로 fit하면 평가값 100도 대체 기준에 반영되어 34가 됩니다. 학습 데이터로만 fit한 평균 1을 평가 입력에 적용해야 합니다.",
+      "hints": [
+        "두 imputer가 기준을 학습한 데이터 범위를 비교해 보세요.",
+        "평가 데이터의 관측값도 대체 평균을 계산하는 fit에 들어가면 아직 보지 않아야 할 정보가 반영됩니다."
+      ],
+      "choices": ["(34.0, 1.0)", "(1.0, 1.0)", "(34.0, 34.0)", "(100.0, 1.0)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-evaluation",
+      "response_mode": "essay",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "평가 전처리 검토: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+      },
+      "reference_setup": "",
+      "reference_output": "(34.0, 1.0)"
     }
   ],
   "tracks": [
@@ -622,7 +2082,7 @@
       "name": "데이터 분석",
       "description": "NumPy · pandas · SQL · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 30
+      "exercise_count": 60
     },
     {
       "id": "algorithms",
@@ -630,6 +2090,116 @@
       "description": "문자열부터 탐색까지, 한 단계씩",
       "available": false,
       "exercise_count": 0
+    }
+  ],
+  "concepts": [
+    {
+      "id": "pandas-select",
+      "name": "행·열 선택",
+      "domain": "pandas",
+      "prerequisites": []
+    },
+    {
+      "id": "pandas-filter",
+      "name": "조건 필터",
+      "domain": "pandas",
+      "prerequisites": ["pandas-select"]
+    },
+    {
+      "id": "pandas-null",
+      "name": "결측치 처리",
+      "domain": "pandas",
+      "prerequisites": ["pandas-select"]
+    },
+    {
+      "id": "pandas-sort",
+      "name": "정렬과 순서",
+      "domain": "pandas",
+      "prerequisites": ["pandas-select"]
+    },
+    {
+      "id": "pandas-group",
+      "name": "그룹 집계",
+      "domain": "pandas",
+      "prerequisites": ["pandas-filter"]
+    },
+    {
+      "id": "numpy-structure",
+      "name": "배열 구조와 축",
+      "domain": "NumPy",
+      "prerequisites": []
+    },
+    {
+      "id": "numpy-broadcast",
+      "name": "브로드캐스팅",
+      "domain": "NumPy",
+      "prerequisites": ["numpy-structure"]
+    },
+    {
+      "id": "numpy-mask",
+      "name": "조건 마스크",
+      "domain": "NumPy",
+      "prerequisites": ["numpy-structure"]
+    },
+    {
+      "id": "numpy-memory",
+      "name": "뷰와 복사",
+      "domain": "NumPy",
+      "prerequisites": ["numpy-structure"]
+    },
+    {
+      "id": "sql-rows",
+      "name": "행 조건과 NULL",
+      "domain": "SQL",
+      "prerequisites": []
+    },
+    {
+      "id": "sql-aggregation",
+      "name": "SQL 집계",
+      "domain": "SQL",
+      "prerequisites": ["sql-rows"]
+    },
+    {
+      "id": "sql-joins",
+      "name": "테이블 연결",
+      "domain": "SQL",
+      "prerequisites": ["sql-rows"]
+    },
+    {
+      "id": "stats-summaries",
+      "name": "대표값과 변동",
+      "domain": "통계",
+      "prerequisites": []
+    },
+    {
+      "id": "stats-rates",
+      "name": "비율과 비교",
+      "domain": "통계",
+      "prerequisites": ["stats-summaries"]
+    },
+    {
+      "id": "ml-evaluation",
+      "name": "학습·평가 분리",
+      "domain": "scikit-learn",
+      "prerequisites": []
+    },
+    {
+      "id": "ml-preprocessing",
+      "name": "전처리 기준",
+      "domain": "scikit-learn",
+      "prerequisites": ["ml-evaluation"]
+    },
+    {
+      "id": "ml-metrics",
+      "name": "모델 평가 지표",
+      "domain": "scikit-learn",
+      "prerequisites": ["ml-evaluation"]
+    },
+    {
+      "id": "ml-neighbors",
+      "name": "이웃 기반 예측",
+      "domain": "scikit-learn",
+      "prerequisites": ["ml-evaluation"]
     }
   ]
 }

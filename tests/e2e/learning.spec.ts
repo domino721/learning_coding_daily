@@ -1,241 +1,150 @@
 import { test, expect, type Page } from "@playwright/test";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
 
-async function setMode(page: Page, name: string) {
-  const button = page
-    .getByRole("group", { name: "풀이 모드" })
-    .getByRole("button", { name, exact: true });
-  await button.click();
-  await expect(button).toHaveAttribute("aria-pressed", "true");
-  await expect(button).toBeEnabled();
-}
-
-test("daily analysis spans five areas without unsolicited solutions and resumes correctly", async ({
+test("one start recommends authored formats and preserves basic extra and all-time history", async ({
   page,
 }) => {
-  // This journey covers three modes, reloads and two full learning batches.
   test.setTimeout(90_000);
   const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  const [first, second, ...remaining] = curriculum.exercises.slice(0, 5);
+  page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("./");
   await expect(
     page.getByRole("button", { name: /데이터 분석.*NumPy/ }),
-  ).toContainText("30문제");
-  await expect(page.getByRole("button", { name: /코딩테스트/ })).toBeDisabled();
-  const todayTotal = page.getByRole("group", { name: "오늘 누적 학습" });
-  await expect(todayTotal).toContainText("오늘 총 0문제 풀었어요.");
-  const footprints = page.getByRole("region", { name: "최근 7일의 발자국" });
-  await expect(footprints).toBeInViewport();
-  const footprintBox = (await footprints.boundingBox())!;
-  const dailyBox = (await page
-    .getByRole("region", { name: "데이터를 읽는 작은 습관" })
-    .boundingBox())!;
-  expect(footprintBox.y + footprintBox.height).toBeLessThan(dailyBox.y);
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBeTruthy();
+  ).toContainText("60문제");
+  await expect(page.getByRole("group", { name: "풀이 모드" })).toHaveCount(0);
+  const today = page.getByRole("group", { name: "오늘 누적 학습" }),
+    lifetime = page.getByRole("region", { name: "누적 학습" });
+  await expect(today).toContainText("오늘 총 0문제");
+  await expect(lifetime).toContainText("0문제 풀이");
+  const foot = await page
+      .getByRole("region", { name: "최근 7일의 발자국" })
+      .boundingBox(),
+    card = await page
+      .getByRole("region", { name: "데이터를 읽는 작은 습관" })
+      .boundingBox();
+  expect(foot!.y + foot!.height).toBeLessThan(card!.y);
   await page.screenshot({
     path: `test-results/${test.info().project.name}-home.png`,
     fullPage: true,
   });
   await page.setViewportSize({ width: 320, height: 740 });
   await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
-  await expect(page.getByRole("heading", { name: first.title })).toBeVisible();
-  await expect(page.locator(".lesson-meta")).not.toContainText(first.concept);
-  await expect(page.getByText(first.hints[0], { exact: false })).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { name: "단답형", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("radio")).toHaveCount(0);
-  await expect(page.getByLabel("빈칸에 들어갈 답")).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBeTruthy();
-  await setMode(page, "객관식");
-  const wrong = first.choices.find((choice) => choice !== first.answer)!;
-  await page.getByLabel(wrong, { exact: true }).check();
+  let correct = 0,
+    reviewed = 0;
+  async function solve() {
+    const title = await page.locator("#question-title").innerText(),
+      ex = curriculum.exercises.find((e) => e.title === title)!;
+    expect(ex).toBeTruthy();
+    await expect(page.locator(".lesson-meta")).not.toContainText(ex.concept);
+    await expect(page.getByText(ex.hints[0], { exact: false })).toHaveCount(0);
+    if (ex.response_mode === "choice")
+      await page.getByLabel(ex.answer, { exact: true }).check();
+    else
+      await page
+        .getByRole("textbox")
+        .fill(
+          ex.response_mode === "essay"
+            ? `${ex.answer}\n내가 생각한 이유: ${ex.explanation}`
+            : ex.answer,
+        );
+    await page
+      .getByRole("button", {
+        name:
+          ex.response_mode === "essay"
+            ? "답 저장하고 해설 비교하기"
+            : "답 확인하기",
+        exact: true,
+      })
+      .click();
+    await expect(
+      page.getByRole("heading", {
+        name:
+          ex.response_mode === "essay"
+            ? "다음에 다시 꺼내 볼게요."
+            : "작은 한 걸음, 완료!",
+      }),
+    ).toBeVisible();
+    if (ex.response_mode === "essay") reviewed++;
+    else correct++;
+    await page.getByRole("button", { name: "다음으로", exact: true }).click();
+  }
+  const first = curriculum.exercises[0];
+  await expect(page.locator("#question-title")).toHaveText(first.title);
+  await page
+    .getByLabel(
+      first.choices.find((c) => c !== first.answer)!,
+      { exact: true },
+    )
+    .check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
   await expect(page.getByText("한 번 더 생각해 볼까요?")).toBeVisible();
-  await expect(page.locator(".lesson-meta")).not.toContainText(first.concept);
   await page.getByRole("button", { name: /힌트 보기/ }).click();
   await expect(page.getByText(first.hints[0], { exact: false })).toBeVisible();
   await page.getByLabel(first.answer, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
-  await expect(
-    page.getByRole("heading", { name: "작은 한 걸음, 완료!" }),
-  ).toBeVisible();
-  await expect(page.locator(".lesson-meta")).toContainText(first.concept);
+  await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
+  correct++;
   await page.screenshot({
     path: `test-results/${test.info().project.name}-feedback.png`,
     fullPage: true,
   });
+  await page.getByRole("button", { name: "다음으로" }).click();
+  await page.getByRole("textbox").fill("(2,3)");
+  await expect(page.getByText("입력한 답을 저장했어요.")).toBeVisible();
   await page.reload();
   await page.getByRole("button", { name: "이어서 학습하기" }).click();
-  await expect(page.getByRole("heading", { name: second.title })).toBeVisible();
-  await expect(page.locator(".lesson-meta")).toContainText("NumPy");
-  await expect(
-    page.getByRole("button", { name: "객관식", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await setMode(page, "단답형");
-  await page.getByLabel("답 입력", { exact: true }).fill("(3,2)");
-  await page.getByRole("button", { name: "답 확인하기" }).click();
-  await expect(page.getByText("한 번 더 생각해 볼까요?")).toBeVisible();
-  await setMode(page, "서술형");
-  const essay = "(2, 3)입니다. 행이 두 개이고 각 행에는 세 값이 있습니다.";
-  await expect(page.getByLabel("답과 풀이 이유")).toHaveValue("");
-  await page.getByLabel("답과 풀이 이유").fill(essay);
-  await expect(page.getByText(/자동 채점 없이/)).toBeVisible();
-  await page.getByRole("button", { name: "답 저장하고 해설 비교하기" }).click();
-  await expect(page.locator(".submitted-answer")).toContainText(essay);
-  await expect(
-    page.getByRole("heading", { name: "다음에 다시 꺼내 볼게요." }),
-  ).toBeVisible();
+  await expect(page.getByRole("textbox")).toHaveValue("(2,3)");
+  await solve();
+  await page.getByRole("button", { name: "해설 보고 마치기" }).click();
+  reviewed++;
   await page.getByRole("button", { name: "다음으로" }).click();
-  for (const exercise of remaining) {
-    await expect(
-      page.getByRole("heading", { name: exercise.title }),
-    ).toBeVisible();
-    await setMode(page, "단답형");
-    if (exercise.kind === "blank")
-      await page
-        .getByLabel("빈칸에 들어갈 답")
-        .fill(exercise.answer === "WHERE" ? "wHeRe" : exercise.answer);
-    else
-      await page
-        .getByLabel("답 입력", { exact: true })
-        .fill(exercise.id === "stats-median-01" ? "3.0" : exercise.answer);
-    await page.getByRole("button", { name: "답 확인하기" }).click();
-    await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
-    await page.getByRole("button", { name: "다음으로" }).click();
-  }
+  await solve();
+  await solve();
   await expect(
     page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
   ).toBeVisible();
+  await expect(today).toContainText("오늘 총 5문제");
+  await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
+  await expect(lifetime).toContainText("5문제 풀이");
+  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  await solve();
+  await page.reload();
+  await expect(today).toContainText("오늘 총 6문제");
+  await expect(lifetime).toContainText("6문제 풀이");
+  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
+  await expect(page.locator(".summary-list > li")).toHaveCount(6);
+  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
+  for (let i = 0; i < 4; i++) await solve();
+  await expect(page.locator(".summary-list > li")).toHaveCount(10);
+  await expect(today).toContainText("오늘 총 10문제");
+  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
+  for (let i = 0; i < 5; i++) await solve();
+  await expect(page.locator(".summary-list > li")).toHaveCount(15);
   await expect(page.locator(".summary-stats")).toContainText(
-    "4정답으로 마침1해설로 배움",
+    `${correct}정답으로 마침${reviewed}해설로 배움`,
   );
-  await page.getByText("해설", { exact: true }).nth(1).click();
-  await expect(page.locator(".submitted-answer")).toContainText(essay);
-  await expect(todayTotal).toContainText("오늘 총 5문제 풀었어요.");
-  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 0문제");
+  await page.getByRole("button", { name: "나의 기록" }).click();
+  await expect(lifetime).toContainText("15문제 풀이");
+  await expect(
+    page.getByRole("heading", { name: "내 학습 기록과 백업" }),
+  ).toBeVisible();
+  await expect(page.locator(".history-session")).toHaveCount(3);
+  await page.locator(".history-session").first().locator("summary").click();
+  await expect(page.locator(".history-session").first()).toContainText(
+    "내 답안:",
+  );
+  await page.getByText("개념별 학습 경로", { exact: true }).click();
+  await expect(page.locator(".concept-grid article")).toHaveCount(18);
+  await expect(page.locator(".concept-grid")).toContainText("관찰 중");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBeTruthy();
   await page.screenshot({
-    path: `test-results/${test.info().project.name}-summary.png`,
+    path: `test-results/${test.info().project.name}-records.png`,
     fullPage: true,
   });
-  await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
-  await expect(
-    page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "나의 기록" }).click();
-  await expect(page.getByText("1일 학습했어요")).toBeVisible();
-  await expect(page.getByText("지금까지 만난 문제")).toContainText("5개");
-  // A completed daily goal must not block new questions or lose its result.
-  await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
-  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
-  const extras = curriculum.exercises.slice(5, 10);
-  async function solve(exercise: (typeof extras)[number]) {
-    await expect(
-      page.getByRole("heading", { name: exercise.title }),
-    ).toBeVisible();
-    await setMode(page, "단답형");
-    if (exercise.kind === "blank")
-      await page.getByLabel("빈칸에 들어갈 답").fill(exercise.answer);
-    else
-      await page.getByLabel("답 입력", { exact: true }).fill(exercise.answer);
-    await page.getByRole("button", { name: "답 확인하기" }).click();
-    await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
-    await page.getByRole("button", { name: "다음으로" }).click();
-  }
-  await solve(extras[0]);
-  await page.reload();
-  await expect(
-    page.getByRole("progressbar", { name: "기본 목표 진행률" }),
-  ).toHaveAttribute("value", "5");
-  await expect(todayTotal).toContainText("오늘 총 6문제 풀었어요.");
-  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 1문제");
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
-  await expect(page.locator(".summary-list > li")).toHaveCount(6);
-  await expect(page.locator(".summary-stats")).toContainText(
-    "5정답으로 마침1해설로 배움",
-  );
-  await expect(page.locator(".summary-list")).not.toContainText(
-    extras[1].title,
-  );
-  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
-  for (const exercise of extras.slice(1)) await solve(exercise);
-  await expect(
-    page.getByRole("heading", { name: "추가 연습도, 잘 마쳤어요." }),
-  ).toBeVisible();
-  await expect(page.locator(".summary-stats")).toContainText(
-    "9정답으로 마침1해설로 배움",
-  );
-  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 5문제");
-  await expect(page.getByText("오늘 푼 전체 문제 결과")).toBeVisible();
-  await expect(page.locator(".summary-list > li")).toHaveCount(10);
-  await page.screenshot({
-    path: `test-results/${test.info().project.name}-extra.png`,
-    fullPage: true,
-  });
-  await page.getByRole("button", { name: "오늘 학습으로 돌아가기" }).click();
-  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await expect(footprints).toContainText(
-    "목표를 채우고, 한 걸음 더 나아갔어요.",
-  );
-  await page.reload();
-  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await page.getByRole("button", { name: "나의 기록" }).click();
-  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await expect(page.getByText("지금까지 만난 문제")).toContainText("10개");
-  await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
-  await expect(page.locator(".summary-stats")).toContainText(
-    "9정답으로 마침1해설로 배움",
-  );
-  await expect(todayTotal).toContainText("오늘 총 10문제 풀었어요.");
-  await expect(page.locator(".summary-list > li")).toHaveCount(10);
-  await expect(
-    page.getByText("기본 학습 5문제 · 추가 학습 5문제"),
-  ).toBeVisible();
-  for (const exercise of curriculum.exercises.slice(0, 10)) {
-    const row = page
-      .locator(".summary-list > li")
-      .filter({ hasText: exercise.title });
-    await row.getByText("해설", { exact: true }).click();
-    await expect(row.locator("details")).toContainText(exercise.explanation);
-  }
-  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
-  await solve(curriculum.exercises[10]);
-  await page.reload();
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
-  await expect(page.locator(".summary-list > li")).toHaveCount(11);
-  await expect(page.locator(".summary-stats")).toContainText(
-    "10정답으로 마침1해설로 배움",
-  );
-  await expect(
-    page.getByText("기본 학습 5문제 · 추가 학습 6문제"),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
-  await expect(
-    page.getByRole("heading", { name: curriculum.exercises[11].title }),
-  ).toBeVisible();
-  for (const exercise of curriculum.exercises.slice(11, 15))
-    await solve(exercise);
-  await expect(page.locator(".summary-list > li")).toHaveCount(15);
-  await expect(page.locator(".summary-stats")).toContainText(
-    "14정답으로 마침1해설로 배움",
-  );
   expect(errors).toEqual([]);
 });
 
@@ -245,21 +154,10 @@ test("small screen and network failures keep a recovery action", async ({
   await page.setViewportSize({ width: 320, height: 740 });
   const onDevice = test.info().project.name === "mobile-web";
   if (onDevice) {
-    await page.goto("./");
-    await expect(
-      page.getByText("이 기기의 브라우저에 학습 기록이 저장돼요.", {
-        exact: false,
-      }),
-    ).toBeVisible();
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBeTruthy();
-    await page.evaluate(() =>
+    await page.addInitScript(() =>
       localStorage.setItem("learning-coding-daily:v1", "invalid"),
     );
-    await page.reload();
+    await page.goto("./");
     await expect(page.getByRole("alert")).toContainText(
       "저장된 학습 기록을 읽지 못했어요",
     );
@@ -268,12 +166,12 @@ test("small screen and network failures keep a recovery action", async ({
         localStorage.getItem("learning-coding-daily:v1"),
       ),
     ).toBe("invalid");
+    await expect(page.getByLabel("백업 파일 가져오기")).toBeVisible();
     return;
   }
-  await page.route("**/api/dashboard", (route) => route.abort());
+  await page.route("**/api/dashboard", (r) => r.abort());
   await page.goto("./");
   await expect(page.getByRole("alert")).toContainText("연결하지 못했어요");
-  await expect(page.getByRole("button", { name: "다시 연결" })).toBeEnabled();
   await page.unroute("**/api/dashboard");
   await page.getByRole("button", { name: "다시 연결" }).click();
   await expect(

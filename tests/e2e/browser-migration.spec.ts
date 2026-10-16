@@ -72,7 +72,7 @@ async function seedLegacy(page: Page, completed: number) {
   return exercises;
 }
 
-test("older completed records survive while pending instructions refresh", async ({
+test("older completed and pending snapshots survive an app update", async ({
   page,
 }) => {
   const exercises = await seedLegacy(page, 1);
@@ -80,9 +80,9 @@ test("older completed records survive while pending instructions refresh", async
   await page.goto("./");
   await page.getByRole("button", { name: "이어서 학습하기" }).click();
   await expect(
-    page.getByRole("heading", { name: pending.title }),
+    page.getByRole("heading", { name: "예전 지문 제목" }),
   ).toBeVisible();
-  await expect(page.getByText("이전에 저장된 안내")).toHaveCount(0);
+  await expect(page.getByText("이전에 저장된 안내")).toBeVisible();
   await expect(page.locator(".lesson-meta")).not.toContainText(pending.concept);
   await page.getByLabel(pending.answer, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
@@ -95,7 +95,7 @@ test("older completed records survive while pending instructions refresh", async
   expect(stored.sessions[0].completed_count).toBe(2);
   expect(stored.sessions[0].items[0].title).toBe("기존에 완료한 문제 제목");
   expect(stored.sessions[0].items[0].explanation).toBe("기존에 저장한 해설");
-  expect(stored.sessions[0].items[1].version).toBe(2);
+  expect(stored.sessions[0].items[1].version).toBe(1);
   expect(stored.progress[exercises[0].id].completed).toBe(1);
 });
 
@@ -127,8 +127,14 @@ test("already completed legacy daily goal opens unseen extra questions without a
     ),
   ).toBe(true);
   expect(
-    stored.sessions[1].items.map((item: { id: string }) => item.id),
-  ).toEqual(unseen.map((ex) => ex.id));
+    stored.sessions[1].items.every(
+      (item: { id: string }) => !old.some((done) => done.id === item.id),
+    ),
+  ).toBe(true);
+  expect(
+    new Set(stored.sessions[1].items.map((item: { id: string }) => item.id))
+      .size,
+  ).toBe(5);
   const extraId = stored.sessions[1].id;
   await page.reload();
   await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();

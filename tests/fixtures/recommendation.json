@@ -1,0 +1,163 @@
+[
+  {
+    "name": "new learner",
+    "day": "2026-10-20",
+    "records": [],
+    "expected": {
+      "concept": "pandas-select",
+      "level": 1,
+      "independent_count": 0,
+      "evidence_days": 0
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  },
+  {
+    "name": "same day varied questions",
+    "day": "2026-10-20",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-19"
+      },
+      {
+        "id": "pandas-select-02",
+        "day": "2026-10-19"
+      },
+      {
+        "id": "pandas-select-03",
+        "day": "2026-10-19"
+      }
+    ],
+    "expected": {
+      "concept": "pandas-select",
+      "level": 1,
+      "independent_count": 1,
+      "evidence_days": 1
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  },
+  {
+    "name": "different days and questions",
+    "day": "2026-10-20",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "pandas-select-02",
+        "day": "2026-10-19"
+      }
+    ],
+    "expected": {
+      "concept": "pandas-select",
+      "level": 2,
+      "independent_count": 2,
+      "evidence_days": 2
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  },
+  {
+    "name": "two days same question is probe only",
+    "day": "2026-10-20",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-19"
+      }
+    ],
+    "expected": {
+      "concept": "pandas-select",
+      "level": 1,
+      "independent_count": 1,
+      "evidence_days": 2
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  },
+  {
+    "name": "hints and retries do not prove mastery",
+    "day": "2026-10-20",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-17",
+        "hints": 1
+      },
+      {
+        "id": "pandas-select-02",
+        "day": "2026-10-18",
+        "attempts": 2
+      }
+    ],
+    "expected": {
+      "concept": "pandas-select",
+      "level": 1,
+      "independent_count": 0,
+      "evidence_days": 0
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  },
+  {
+    "name": "essay is comparison evidence only",
+    "day": "2026-10-20",
+    "records": [
+      {
+        "id": "ml-leakage-01",
+        "day": "2026-10-18",
+        "essay": true
+      },
+      {
+        "id": "ml-leakage-02",
+        "day": "2026-10-19",
+        "essay": true
+      }
+    ],
+    "expected": {
+      "concept": "ml-evaluation",
+      "level": 1,
+      "independent_count": 0,
+      "evidence_days": 0
+    },
+    "selected": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
+  }
+]

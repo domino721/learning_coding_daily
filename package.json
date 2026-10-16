@@ -11,12 +11,13 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
-    "format": "prettier --write src scripts/*.mjs tests/e2e *.ts *.json index.html",
-    "format:check": "prettier --check src scripts/*.mjs tests/e2e *.ts *.json index.html",
+    "format": "prettier --write src scripts/*.mjs tests/e2e tests/*.ts *.ts *.json index.html",
+    "format:check": "prettier --check src scripts/*.mjs tests/e2e tests/*.ts *.ts *.json index.html",
     "start": "node scripts/start.mjs",
     "build:web": "tsc --noEmit && vite build --mode web --outDir web-dist",
     "plan:check": "python3 scripts/planning.py check",
-    "plan:render": "python3 scripts/planning.py render"
+    "plan:render": "python3 scripts/planning.py render",
+    "test:contracts": "node --experimental-strip-types --test tests/recommendation.test.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

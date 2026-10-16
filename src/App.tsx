@@ -1,3 +1,4 @@
+import { Lifetime, LearningRecord } from "./LearningRecord";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   api,
@@ -6,56 +7,10 @@ import {
   type Exercise,
   type Session,
   type Track,
-  type ResponseMode,
 } from "./api";
 
 type Screen = "home" | "lesson" | "summary" | "record";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
-
-const modes: { value: ResponseMode; label: string; detail: string }[] = [
-  { value: "choice", label: "객관식", detail: "보기에서 답을 골라요." },
-  {
-    value: "short",
-    label: "단답형",
-    detail: "보기 없이 결과값이나 코드를 직접 입력해요.",
-  },
-  {
-    value: "essay",
-    label: "서술형",
-    detail:
-      "답과 이유를 적고 해설과 비교해요. 자동 채점 없이 ‘해설로 배움’으로 기록해요.",
-  },
-];
-function ModePicker({
-  value,
-  disabled,
-  onChange,
-}: {
-  value: ResponseMode;
-  disabled: boolean;
-  onChange: (mode: ResponseMode) => void;
-}) {
-  return (
-    <div className="mode-picker">
-      <div className="mode-options" role="group" aria-label="풀이 모드">
-        {modes.map((mode) => (
-          <button
-            key={mode.value}
-            type="button"
-            disabled={disabled}
-            aria-pressed={value === mode.value}
-            onClick={() => onChange(mode.value)}
-          >
-            {mode.label}
-          </button>
-        ))}
-      </div>
-      <p className="mode-note">
-        {modes.find((mode) => mode.value === value)?.detail}
-      </p>
-    </div>
-  );
-}
 
 function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
   const basic = dashboard.today?.completed_count ?? 0;
@@ -118,7 +73,7 @@ function ExerciseCard({
   total,
   busy,
   onAnswer,
-  onMode,
+  onDraft,
   onHint,
   onReveal,
   onNext,
@@ -128,23 +83,35 @@ function ExerciseCard({
   total: number;
   busy: boolean;
   onAnswer: (answer: string, seconds: number) => void;
-  onMode: (mode: ResponseMode) => void;
+  onDraft: (draft: string) => Promise<void>;
   onHint: () => void;
   onReveal: () => void;
   onNext: () => void;
 }) {
   const [draft, setDraft] = useState(
-    item.status === "pending" ? "" : (item.last_answer ?? ""),
+    item.status === "pending" ? (item.draft ?? "") : (item.last_answer ?? ""),
   );
   const mode =
     item.response_mode ?? (item.kind === "choice" ? "choice" : "short");
-  const priorMode = useRef(mode);
+  const [draftStatus, setDraftStatus] = useState("");
   useEffect(() => {
-    if (priorMode.current !== mode) {
-      setDraft("");
-      priorMode.current = mode;
-    }
-  }, [mode]);
+    if (
+      item.status !== "pending" ||
+      mode === "choice" ||
+      draft === (item.draft ?? "")
+    )
+      return;
+    const timer = setTimeout(() => {
+      void onDraft(draft)
+        .then(() => setDraftStatus("입력한 답을 저장했어요."))
+        .catch(() =>
+          setDraftStatus(
+            "임시 답안 저장에 실패했어요. 입력 내용은 화면에 유지됩니다.",
+          ),
+        );
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [draft, item.id, item.status, mode]);
   const seconds = useActiveTime(item.id, item.active_seconds);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -187,17 +154,22 @@ function ExerciseCard({
         <p className="prompt">
           {mode === "choice"
             ? item.prompt
+                .replaceAll("입력하세요", "고르세요")
+                .replaceAll("구하세요", "고르세요")
             : item.prompt.replaceAll("고르세요", "입력하세요")}
         </p>
         <pre>
           <code>{item.code}</code>
         </pre>
-        <ModePicker value={mode} disabled={busy || done} onChange={onMode} />
-        {!done && (
-          <p className="mode-note">
-            변경하면 입력 중인 답은 초기화되고, 미완료 문제에도 적용돼요.
-          </p>
-        )}
+        <p className="question-format">
+          {mode === "choice"
+            ? "객관식"
+            : mode === "essay"
+              ? "서술형"
+              : "단답형"}{" "}
+          ·{" "}
+          {item.difficulty?.label ?? (item.level === 2 ? "적용" : "기초 확인")}
+        </p>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -263,6 +235,11 @@ function ExerciseCard({
                 maxLength={200}
               />
             </label>
+          )}
+          {draftStatus && (
+            <p className="mode-note" role="status">
+              {draftStatus}
+            </p>
           )}
           {wrong && (
             <div className="feedback retry" role="status">
@@ -367,13 +344,13 @@ function ExerciseCard({
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("home");
-  const [newMode, setNewMode] = useState<ResponseMode>("short");
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [index, setIndex] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [recordNotice, setRecordNotice] = useState("");
   const [loading, setLoading] = useState(true);
   const guard = useRef(false);
   const pendingSubmission = useRef<{
@@ -439,7 +416,6 @@ export default function App() {
         extra ? "/sessions/extra" : "/sessions/today",
         {
           track_id: "pandas",
-          response_mode: newMode,
         },
       );
       if (data.finished) await refresh();
@@ -478,17 +454,11 @@ export default function App() {
       pendingSubmission.current = null;
     });
   }
-  function changeMode(mode: ResponseMode) {
-    if (!session || session.items[index].response_mode === mode) return;
-    void action(async () => {
-      setSession(
-        await api<Session>(`/sessions/${session.id}/mode`, {
-          exercise_id: session.items[index].id,
-          response_mode: mode,
-        }),
-      );
-      setNewMode(mode);
-      pendingSubmission.current = null;
+  async function saveDraft(draft: string) {
+    if (!session) return;
+    await api(`/sessions/${session.id}/draft`, {
+      exercise_id: session.items[index].id,
+      draft,
     });
   }
   function hint() {
@@ -526,6 +496,12 @@ export default function App() {
       setIndex(pending);
       pendingSubmission.current = null;
     }
+  }
+  async function recordsRestored() {
+    await refresh();
+    setError("");
+    setRecordNotice("백업 기록을 합쳤어요. 기존 완료 기록은 유지됩니다.");
+    setScreen("record");
   }
   function home(target: "home" | "record" = "home") {
     setScreen(target);
@@ -587,6 +563,19 @@ export default function App() {
             </button>
           </div>
         )}
+        {recordNotice && (
+          <p className="record-message" role="status">
+            {recordNotice}
+          </p>
+        )}
+        {dashboard?.storage_notice && (
+          <p className="storage-notice" role="status">
+            {dashboard.storage_notice}
+          </p>
+        )}
+        {!loading && !dashboard && (
+          <LearningRecord dashboard={null} refresh={recordsRestored} />
+        )}
         {loading ? (
           <section className="loading" role="status">
             <span className="loader" />
@@ -617,6 +606,13 @@ export default function App() {
                       : "하루 10분의 연습이 내일의 자신감이 되도록."}
                   </p>
                 </div>
+                {dashboard && <Lifetime dashboard={dashboard} />}
+                {screen === "record" && (
+                  <LearningRecord
+                    dashboard={dashboard}
+                    refresh={recordsRestored}
+                  />
+                )}
                 {dashboard && (
                   <section
                     className="activity"
@@ -729,17 +725,10 @@ export default function App() {
                           />
                         </div>
                       )}
-                      <div className="new-mode">
-                        <p>새 학습의 풀이 모드</p>
-                        <ModePicker
-                          value={newMode}
-                          disabled={busy}
-                          onChange={setNewMode}
-                        />
-                        <p className="mode-note">
-                          진행 중인 학습의 모드는 문제 화면에서 바꿀 수 있어요.
-                        </p>
-                      </div>
+                      <p className="recommended-note">
+                        개념과 난이도에 맞춰 객관식·단답형·짧은 서술형을 골라
+                        드려요. 힌트가 필요하면 기초를 다시 확인해요.
+                      </p>
                       <button
                         className="light-button"
                         disabled={busy || !dashboard}
@@ -832,7 +821,7 @@ export default function App() {
                   onAnswer={(value, seconds) => {
                     void answer(value, seconds);
                   }}
-                  onMode={changeMode}
+                  onDraft={saveDraft}
                   onHint={hint}
                   onReveal={reveal}
                   onNext={next}

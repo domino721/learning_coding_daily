@@ -51,6 +51,18 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
     if exercise.choices:
         assert exercise.answer in exercise.choices
         assert len(set(exercise.choices)) == len(exercise.choices) == 4
+    if exercise.reference_output:
+        if exercise.domain=='SQL':
+            with sqlite3.connect(':memory:') as db:
+                db.executescript(exercise.reference_setup)
+                rows=db.execute(exercise.code).fetchall()
+                actual=str([r[0] for r in rows]) if exercise.answer.startswith('[') else str(rows[0]) if exercise.answer.startswith('(') else str(rows[0][0])
+        else:
+            output=StringIO()
+            with redirect_stdout(output):exec(compile(exercise.code,'<trusted authored transfer>','exec'),{})
+            actual=output.getvalue().strip()
+        assert actual==exercise.reference_output==exercise.answer
+        return
     if exercise.domain == 'SQL':
         run_sql(exercise)
         return

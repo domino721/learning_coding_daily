@@ -10,6 +10,19 @@ export type Track = {
 };
 export type ResponseMode = "choice" | "short" | "essay";
 export type Exercise = {
+  concept_id?: string;
+  difficulty?: {
+    level: number;
+    label: string;
+    reasoning_steps: number;
+    code_load: number;
+    transfer: number;
+    distractor_strength: number;
+    rationale: string;
+    calibration: string;
+  };
+  draft?: string;
+  completed_at?: string;
   response_mode?: ResponseMode;
   domain?: string;
   level?: number;
@@ -45,7 +58,24 @@ export type Session = {
   total: number;
   finished: boolean;
 };
+export type ConceptState = {
+  id: string;
+  name: string;
+  domain: string;
+  prerequisites: string[];
+  level: number;
+  label: string;
+  independent_count: number;
+  evidence_days: number;
+  observed_count: number;
+  status: string;
+};
 export type Dashboard = {
+  learner_id?: string;
+  storage_notice?: string;
+  storage_copies?: number;
+  all_time_completed_count?: number;
+  concepts?: ConceptState[];
   storage_mode?: "server" | "device";
   local_day: string;
   timezone: string;
