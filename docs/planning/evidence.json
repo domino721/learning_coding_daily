@@ -230,6 +230,18 @@
         "tests/test_planning.py"
       ],
       "code_reference": "plan-v1.4.0"
+    },
+    {
+      "id": "EV-018",
+      "record": "docs/planning/evidence/EV-018.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "docs/INTEGRATION.md",
+        "src/App.tsx",
+        "src/style.css",
+        "src/ExerciseReview.tsx"
+      ],
+      "code_reference": "0ffc70b0c7ec5babd0fd81942e52d654c774b869"
     }
   ]
 }

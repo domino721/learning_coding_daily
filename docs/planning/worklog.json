@@ -296,6 +296,18 @@
       ],
       "summary": "Python/SQL·추천·백업/복구·snapshot 계층을 유지하고 테마·코드 색상·활성 타이머·완료 효과·기본/추가 및 과거 문제 복습 통합. Python173/Node14/모바일15 검증 EV-017. 발자국 카드 다크 대비 확인, 중첩 UI 및 비동기 저장 테스트 대기 보완. 같은 main/build:web/기존 Pages 경로로 게시 예정이며 원격 성공은 아직 미기록.",
       "commit": null
+    },
+    {
+      "id": "LOG-025",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-290"
+      ],
+      "changes": [
+        "CR-008"
+      ],
+      "summary": "앱 0ffc70b와 설계/계획1.4.0 tags 원격 저장. Pages38857677989/job116832692675 및 관리38857677854 success, JS index-D6O9iFVe.js·CSS index-CFN8USwe.css 최종 빌드 일치 확인(EV-018). 기존 테스트 HTML은 보존 후 사이트 안내로 대체, main/Pages 경로로 통합. WBS-290 완료, 다음 WBS-510. 운영 URL 직접 읽기는 환경 제한이므로 실제 기기 확인과 구분. 문서 전용 [skip ci] 후속 저장.",
+      "commit": "0ffc70b0c7ec5babd0fd81942e52d654c774b869"
     }
   ]
 }
