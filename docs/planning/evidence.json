@@ -197,6 +197,17 @@
         "tests/e2e/records.spec.ts"
       ],
       "code_reference": "plan-v1.3.0"
+    },
+    {
+      "id": "EV-016",
+      "record": "docs/planning/evidence/EV-016.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "src/App.tsx",
+        "src/browserApi.ts",
+        "backend/main.py"
+      ],
+      "code_reference": "283efdd5b5999144c0f2cc12c1178f420363ea85"
     }
   ]
 }
