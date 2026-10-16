@@ -40,7 +40,9 @@ function shift(date: string, days: number) {
   result.setUTCDate(result.getUTCDate() + days);
   return result.toISOString().slice(0, 10);
 }
+let readOnlyNotice = "";
 async function read(): Promise<Store> {
+  readOnlyNotice = "";
   const data = await loadRecords();
   let dirty = !data.catalog;
   data.catalog ??= {};
@@ -68,7 +70,16 @@ async function read(): Promise<Store> {
       };
     });
   }
-  if (dirty || !data.updated_at) await saveRecords(data);
+  if (dirty || !data.updated_at) {
+    try {
+      await saveRecords(data);
+    } catch (error) {
+      if (!(error instanceof ApiError) || error.status !== 500) throw error;
+      // A readable legacy snapshot must remain exportable even when migration cannot be written.
+      readOnlyNotice =
+        "기존 기록은 읽었지만 새 기록을 저장할 공간이 부족해요. 백업 파일을 먼저 내려받아 주세요.";
+    }
+  }
   return data;
 }
 function refresh(session: Session) {
@@ -243,7 +254,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
       local_day: today,
       timezone: TIMEZONE,
       learner_id: data.learner_id,
-      storage_notice: storageNotice,
+      storage_notice: readOnlyNotice || storageNotice,
       storage_copies: storageCopies,
       all_time_completed_count: Math.max(
         data.sessions.reduce((sum, s) => sum + s.completed_count, 0),

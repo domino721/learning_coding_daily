@@ -355,3 +355,51 @@ test("midnight starts a new daily goal while lifetime and earlier history remain
   await page.getByRole("button", { name: "나의 기록" }).click();
   await expect(page.locator(".history-session")).toContainText("2026-10-20");
 });
+
+test("readable legacy records remain visible and exportable when migration writes fail", async ({
+  page,
+}) => {
+  test.skip(
+    test.info().project.name !== "mobile-web",
+    "Browser-only read-only migration",
+  );
+  const old = session(
+    "readonly-legacy",
+    "2026-10-01",
+    curriculum.exercises.slice(0, 5).map((e) => item(e)),
+  );
+  const data = {
+    version: 1,
+    sessions: [old],
+    progress: Object.fromEntries(
+      old.items.map((i) => [i.id, { completed: 1, due: "2026-10-02" }]),
+    ),
+    attempts: {},
+  };
+  await page.addInitScript((data) => {
+    localStorage.setItem("learning-coding-daily:v1", JSON.stringify(data));
+    Object.defineProperty(window, "indexedDB", { value: undefined });
+    Storage.prototype.setItem = function () {
+      throw new DOMException("Full", "QuotaExceededError");
+    };
+  }, data);
+  await page.goto("./");
+  await expect.poll(() => total(page)).toBe(5);
+  await expect(
+    page.getByText(/기존 기록은 읽었지만 새 기록을 저장할 공간이 부족해요/),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "나의 기록" }).click();
+  const pending = page.waitForEvent("download");
+  await page.getByRole("button", { name: "백업 파일 내려받기" }).click();
+  const file = await pending;
+  const saved = JSON.parse(await readFile((await file.path())!, "utf8"));
+  expect(saved.data.sessions[0].completed_count).toBe(5);
+  expect(saved.data.sessions[0].id).toBe("readonly-legacy");
+  expect(
+    await page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem("learning-coding-daily:v1")!)
+          .sessions[0].completed_count,
+    ),
+  ).toBe(5);
+});

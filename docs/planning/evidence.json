@@ -156,6 +156,16 @@
         ".github/workflows/pages.yml"
       ],
       "code_reference": "plan-v1.2.0"
+    },
+    {
+      "id": "EV-013",
+      "record": "docs/planning/evidence/EV-013.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "src/App.tsx",
+        "src/records.ts"
+      ],
+      "code_reference": "5f34518a5558fd32339fa395eabb488a859d5f6b"
     }
   ]
 }
