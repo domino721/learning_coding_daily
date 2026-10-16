@@ -92,10 +92,14 @@ def concept_states(sessions, by_id):
             'status':'관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 보완 중'}
     return result
 
-def select_exercises(exercises, sessions, progress, today, extra=False):
+def in_track(ex, track):
+    return (ex.domain == 'SQL') if track == 'sql' else (ex.domain != 'SQL') if track == 'python' else True
+
+
+def select_exercises(exercises, sessions, progress, today, extra=False, track=None):
     by_id={ex.id:ex for ex in exercises};states=concept_states(sessions,by_id)
-    completed=[o for o in observations(sessions,by_id)]; last={o['id']:i for i,o in enumerate(completed)}
-    done_today={o['id'] for o in completed if o['day']==today}
+    exercises=[ex for ex in exercises if ex.response_mode != 'essay' and in_track(ex,track)]
+    done_today={i['id'] for s in sessions if s['local_day']==today for i in s['items']}
     def eligible(ex):
         state=states[ex.concept_id]
         prereq=all(states[c]['independent_count']>0 for c in state['prerequisites'])
@@ -108,7 +112,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False):
     selected=[] if extra else [(ex,'review') for ex in due[:3]]
     counts={c['domain']:0 for c in CONCEPTS}
     for ex,_ in selected:counts[ex.domain]+=1
-    pool=[ex for ex in exercises if ex.id not in progress and eligible(ex)]
+    pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
     while pool and len(selected)<5:
         ex=min(pool,key=lambda ex:(counts[ex.domain],ex.level,exercises.index(ex)))
         selected.append((ex,'new'));counts[ex.domain]+=1;pool.remove(ex)
@@ -117,8 +121,6 @@ def select_exercises(exercises, sessions, progress, today, extra=False):
         for ex in due:
             if len(selected)>=5:break
             if ex.id not in {x.id for x,_ in selected}:selected.append((ex,'review'))
-    practice=sorted([ex for ex in exercises if eligible(ex) and ex.id not in {x.id for x,_ in selected}],key=lambda ex:(last.get(ex.id,-1),exercises.index(ex)))
-    selected += [(ex,'practice') for ex in practice[:5-len(selected)]]
     return selected
 
 def review_due(today, prior, independent):

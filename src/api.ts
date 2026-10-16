@@ -36,7 +36,7 @@ export type Exercise = {
   choices: string[];
   estimated_seconds: number;
   category: "new" | "review" | "practice";
-  status: "pending" | "correct" | "revealed";
+  status: "pending" | "correct" | "revealed" | "incorrect";
   hints: string[];
   hints_used: number;
   attempts_count: number;
@@ -71,6 +71,9 @@ export type ConceptState = {
   status: string;
 };
 export type Dashboard = {
+  track_id?: string;
+  available_count?: number;
+  legacy_session?: Session | null;
   learner_id?: string;
   storage_notice?: string;
   storage_copies?: number;

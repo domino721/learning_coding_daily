@@ -335,8 +335,11 @@ EXERCISES += authored_extras(Exercise)
 from backend.curriculum import attach_metadata
 EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}
+# Stable catalog IDs and unique authored question bodies. Historical snapshots stay untouched.
+assert len(BY_ID) == len(EXERCISES), "Duplicate exercise ID"
+assert len({(ex.domain, ex.prompt.strip(), ex.code.strip()) for ex in EXERCISES}) == len(EXERCISES), "Duplicate question body"
 TRACKS = [
-    # This storage ID is retained for compatibility with existing personal learning records.
-    {"id": "pandas", "name": "데이터 분석", "description": "NumPy · pandas · SQL · 통계 · 머신러닝", "available": True, "exercise_count": len(EXERCISES)},
+    {"id": "python", "name": "Python 데이터 분석", "description": "pandas · NumPy · 통계 · 머신러닝", "available": True, "exercise_count": sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)},
+    {"id": "sql", "name": "SQL", "description": "행 조건 · 집계 · 테이블 연결", "available": True, "exercise_count": sum(ex.domain == 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "algorithms", "name": "코딩테스트", "description": "문자열부터 탐색까지, 한 단계씩", "available": False, "exercise_count": 0},
 ]

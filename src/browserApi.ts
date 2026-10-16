@@ -126,7 +126,7 @@ function complete(
   data: Store,
   session: Session,
   item: Exercise,
-  status: "correct" | "revealed",
+  status: "correct" | "revealed" | "incorrect",
   assisted: boolean,
 ) {
   const source =
@@ -195,6 +195,9 @@ function normalizeAnswer(value: string): string {
 }
 
 async function handle(path: string, payload?: unknown): Promise<unknown> {
+  const url = new URL(path, "https://local.invalid");
+  path = url.pathname;
+  const track = url.searchParams.get("track_id") ?? "python";
   const body = (payload ?? {}) as Record<string, unknown>;
   let data: Store;
   try {
@@ -250,7 +253,26 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
       events: [...(data.events ?? [])].reverse(),
     };
   if (path === "/dashboard") {
+    const legacy = data.sessions
+      .filter((s) => s.track_id === "pandas" && s.local_day === today)
+      .sort((a, b) => (b.batch ?? 0) - (a.batch ?? 0));
     const dashboard: Dashboard = {
+      track_id: track,
+      available_count: selectExercises(
+        data.sessions,
+        data.progress,
+        today,
+        true,
+        track,
+      ).length,
+      legacy_session:
+        legacy.find((s) =>
+          s.items.some(
+            (i) => i.status === "pending" && i.response_mode !== "essay",
+          ),
+        ) ??
+        legacy.at(-1) ??
+        null,
       local_day: today,
       timezone: TIMEZONE,
       learner_id: data.learner_id,
@@ -276,14 +298,14 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
         ),
       ].sort(),
       today_sessions: data.sessions
-        .filter((s) => s.local_day === today && s.track_id === "pandas")
+        .filter((s) => s.local_day === today)
         .sort((a, b) => (a.batch ?? 0) - (b.batch ?? 0)),
       extra:
         data.sessions
           .filter(
             (s) =>
               s.local_day === today &&
-              s.track_id === "pandas" &&
+              s.track_id === track &&
               (s.batch ?? 0) > 0,
           )
           .sort((a, b) => b.batch! - a.batch!)[0] ?? null,
@@ -292,7 +314,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
         .reduce((total, s) => total + s.completed_count, 0),
       today:
         data.sessions.find(
-          (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
+          (s) => s.track_id === track && s.local_day === today && !s.batch,
         ) ?? null,
     };
     return dashboard;
@@ -307,20 +329,35 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     !validMode(requestedMode)
   )
     throw new ApiError("풀이 모드를 확인해 주세요.", 422);
+  if (requestedMode === "essay")
+    throw new ApiError(
+      "서술형은 안정화할 때까지 보류 중이에요. 새로고침 후 학습을 시작해 주세요.",
+      422,
+    );
   const mode = requestedMode as ResponseMode | undefined;
+  const course = body.track_id === "pandas" ? "python" : body.track_id;
   if (path === "/sessions/today") {
-    if (body.track_id !== "pandas")
+    if (!["python", "sql"].includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const existing = data.sessions.find(
-      (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
+      (s) => s.track_id === course && s.local_day === today && !s.batch,
     );
     if (existing) return existing;
-    const selected = selectExercises(data.sessions, data.progress, today).map(
-      ([ex, category]) => makeItem(ex, category, mode),
-    );
+    const selected = selectExercises(
+      data.sessions,
+      data.progress,
+      today,
+      false,
+      course as string,
+    ).map(([ex, category]) => makeItem(ex, category, mode));
+    if (!selected.length)
+      throw new ApiError(
+        "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.",
+        422,
+      );
     const session: Session = {
       id: crypto.randomUUID(),
-      track_id: "pandas",
+      track_id: course as string,
       local_day: today,
       timezone: TIMEZONE,
       batch: 0,
@@ -339,10 +376,10 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     return session;
   }
   if (path === "/sessions/extra") {
-    if (body.track_id !== "pandas")
+    if (!["python", "sql"].includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const daily = data.sessions.find(
-      (s) => s.track_id === "pandas" && s.local_day === today && !s.batch,
+      (s) => s.track_id === course && s.local_day === today && !s.batch,
     );
     if (!daily?.finished)
       throw new ApiError(
@@ -350,7 +387,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
         409,
       );
     const latest = data.sessions
-      .filter((s) => s.track_id === "pandas" && s.local_day === today)
+      .filter((s) => s.track_id === course && s.local_day === today)
       .sort((a, b) => (b.batch ?? 0) - (a.batch ?? 0))[0];
     if (latest.batch && !latest.finished) return latest;
     const selected = selectExercises(
@@ -358,10 +395,16 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
       data.progress,
       today,
       true,
+      course as string,
     ).map(([ex, category]) => makeItem(ex, category, mode));
+    if (!selected.length)
+      throw new ApiError(
+        "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.",
+        422,
+      );
     const session: Session = {
       id: crypto.randomUUID(),
-      track_id: "pandas",
+      track_id: course as string,
       local_day: today,
       timezone: TIMEZONE,
       batch: (latest.batch ?? 0) + 1,
@@ -427,7 +470,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     return session;
   }
   if (route[2] === "mode") {
-    if (!validMode(body.response_mode))
+    if (!validMode(body.response_mode) || body.response_mode === "essay")
       throw new ApiError("풀이 모드를 확인해 주세요.", 422);
     for (const pending of session.items)
       if (pending.status === "pending")
@@ -435,6 +478,11 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     await saveRecords(data);
     return session;
   }
+  if (item.response_mode === "essay")
+    throw new ApiError(
+      "서술형은 보류 중이에요. 작성한 답안은 학습 기록에 보관됩니다.",
+      422,
+    );
   if (route[2] === "hint") {
     item.hints_used = Math.min(item.hints_used + 1, 2);
     item.hints = source.hints.slice(0, item.hints_used);
@@ -463,24 +511,28 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
   if (
     typeof body.answer !== "string" ||
     !body.answer.trim() ||
-    body.answer.length > (item.response_mode === "essay" ? 2000 : 200) ||
+    body.answer.length > 200 ||
     typeof body.attempt_id !== "string"
   )
     throw new ApiError("문제에 맞는 답안을 입력해 주세요.", 422);
   if (item.response_mode === "choice" && !source.choices.includes(body.answer))
     throw new ApiError("보기에서 답을 골라 주세요.", 422);
+  if (item.response_mode === "choice" && item.attempts_count >= 2) {
+    complete(data, session, item, "incorrect", true);
+    await saveRecords(data);
+    return { correct: false, session };
+  }
   const proposed = body.answer.trim();
   const correct =
-    item.response_mode !== "essay" &&
-    (source.domain === "SQL" && source.kind === "blank"
+    source.domain === "SQL" && source.kind === "blank"
       ? proposed.toUpperCase() === source.answer.toUpperCase()
       : [source.answer, ...source.accepted].some(
           (value) => normalizeAnswer(value) === normalizeAnswer(proposed),
-        ));
+        );
   const assisted = item.hints_used > 0 || item.attempts_count > 0;
   item.attempts_count++;
   item.last_answer = body.answer;
-  item.last_correct = item.response_mode === "essay" ? null : correct;
+  item.last_correct = correct;
   if (typeof body.active_seconds === "number")
     item.active_seconds = Math.max(
       item.active_seconds,
@@ -490,7 +542,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     session: session.id,
     exercise: item.id,
     answer: body.answer,
-    correct: item.response_mode === "essay" ? null : correct,
+    correct: correct,
     response_mode: item.response_mode,
     created_at: new Date().toISOString(),
     hints_used: item.hints_used,
@@ -502,17 +554,13 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     session.id,
     item.id,
     body.attempt_id,
-    item.response_mode === "essay"
-      ? "서술 답안 저장"
-      : correct
-        ? "정답"
-        : "다시 시도",
+    correct ? "정답" : "오답",
   );
-  if (item.response_mode === "essay")
-    complete(data, session, item, "revealed", true);
-  else if (correct) complete(data, session, item, "correct", assisted);
+  if (correct) complete(data, session, item, "correct", assisted);
+  else if (item.response_mode === "choice" && item.attempts_count >= 2)
+    complete(data, session, item, "incorrect", true);
   await saveRecords(data);
-  return { correct: item.response_mode === "essay" ? null : correct, session };
+  return { correct: correct, session };
 }
 
 let queue: Promise<unknown> = Promise.resolve();

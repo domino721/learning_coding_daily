@@ -172,3 +172,50 @@ test("damaged snapshots and prototype keys cannot enter a backup", () => {
   };
   assert.throws(() => validateStore(bad));
 });
+
+test("course pools exclude pending legacy IDs and suspended essays", () => {
+  const day = "2026-10-20";
+  const legacy = {
+    id: "legacy",
+    local_day: day,
+    items: curriculum.exercises.map((ex) => ({ id: ex.id, status: "pending" })),
+  };
+  assert.deepEqual(selectExercises([legacy] as any, {}, day, true), []);
+  for (const track of ["python", "sql"]) {
+    const selected = selectExercises([], {}, day, false, track);
+    assert.ok(selected.length > 0);
+    assert.equal(new Set(selected.map(([ex]) => ex.id)).size, selected.length);
+    assert.ok(
+      selected.every(
+        ([ex]) =>
+          ex.response_mode !== "essay" &&
+          (ex.domain === "SQL") === (track === "sql"),
+      ),
+    );
+  }
+  const progress = Object.fromEntries(
+    curriculum.exercises.map((ex) => [
+      ex.id,
+      { due: "2026-10-23", completed: 1 },
+    ]),
+  );
+  assert.deepEqual(selectExercises([], progress, day, true), []);
+});
+
+test("final incorrect outcomes survive verified backup and idempotent merge", async () => {
+  const data = sample();
+  const item = data.sessions[0].items[0];
+  item.status = "incorrect";
+  item.last_correct = false;
+  item.attempts_count = 2;
+  data.sessions[0].correct_count = 0;
+  const original = JSON.stringify(data);
+  const parsed = await parseBackup(
+    JSON.stringify(await createBackup(data as any)),
+  );
+  const merged = mergeRecords(data as any, parsed.data);
+  assert.equal(merged.sessions[0].items[0].status, "incorrect");
+  assert.equal(merged.sessions[0].completed_count, 1);
+  assert.equal(merged.sessions[0].correct_count, 0);
+  assert.equal(JSON.stringify(data), original);
+});

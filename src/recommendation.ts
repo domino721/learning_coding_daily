@@ -76,17 +76,29 @@ export function conceptStates(sessions: Session[]) {
     };
   });
 }
+export function inTrack(ex: { domain?: string }, track: string) {
+  return track === "sql"
+    ? ex.domain === "SQL"
+    : track === "python"
+      ? ex.domain !== "SQL"
+      : true;
+}
 export function selectExercises(
   sessions: Session[],
   progress: Record<string, Progress>,
   today: string,
   extra = false,
+  track?: string,
 ): [Source, "new" | "review" | "practice"][] {
-  const exercises = curriculum.exercises,
+  const exercises = curriculum.exercises.filter(
+      (ex) => ex.response_mode !== "essay" && (!track || inTrack(ex, track)),
+    ),
     states = new Map(conceptStates(sessions).map((s) => [s.id, s])),
-    obs = observations(sessions),
-    last = new Map(obs.map((o, i) => [o.id, i])),
-    doneToday = new Set(obs.filter((o) => o.day === today).map((o) => o.id));
+    doneToday = new Set(
+      sessions
+        .filter((s) => s.local_day === today)
+        .flatMap((s) => s.items.map((i) => i.id)),
+    );
   const eligible = (ex: Source) => {
     const s = states.get(ex.concept_id)!;
     const limit =
@@ -117,7 +129,9 @@ export function selectExercises(
   const counts = new Map(curriculum.concepts.map((c) => [c.domain, 0]));
   for (const [ex] of selected)
     counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
-  const pool = exercises.filter((ex) => !progress[ex.id] && eligible(ex));
+  const pool = exercises.filter(
+    (ex) => !progress[ex.id] && !doneToday.has(ex.id) && eligible(ex),
+  );
   while (pool.length && selected.length < 5) {
     pool.sort(
       (a, b) =>
@@ -138,18 +152,6 @@ export function selectExercises(
       if (!selected.some(([x]) => x.id === ex.id))
         selected.push([ex, "review"]);
     }
-  const practice = exercises
-    .filter((ex) => eligible(ex) && !selected.some(([x]) => x.id === ex.id))
-    .sort(
-      (a, b) =>
-        (last.get(a.id) ?? -1) - (last.get(b.id) ?? -1) ||
-        exercises.indexOf(a) - exercises.indexOf(b),
-    );
-  selected.push(
-    ...practice
-      .slice(0, 5 - selected.length)
-      .map((ex) => [ex, "practice"] as [Source, "practice"]),
-  );
   return selected;
 }
 export function reviewDue(

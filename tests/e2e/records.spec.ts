@@ -155,56 +155,50 @@ test("past logs and checked backup merge survive repeat import and corrupted fil
   await expect.poll(() => total(page)).toBe(before + 5);
 });
 
-test("authored essay keeps draft and original answer across reload and records", async ({
+test("legacy essays remain ungraded with drafts preserved and excluded from new pools", async ({
   page,
 }) => {
-  test.setTimeout(90_000);
   const day = new Intl.DateTimeFormat("sv-SE", {
-      timeZone: "Asia/Seoul",
-    }).format(new Date()),
-    essay = curriculum.exercises.find((e) => e.id === "numpy-view-03")!;
-  const basic = session(
-      "essay-baseline",
-      day,
-      curriculum.exercises.slice(0, 5).map((e) => item(e)),
-    ),
-    extra = session(
-      "essay-extra",
-      day,
-      [
-        item(essay, "pending"),
-        ...curriculum.exercises.slice(0, 4).map((e) => item(e)),
-      ],
-      99,
-    );
+    timeZone: "Asia/Seoul",
+  }).format(new Date());
+  const essay = curriculum.exercises.find((e) => e.id === "numpy-view-03")!;
+  const draft = {
+    ...item(essay, "pending"),
+    draft: "이전에 입력한 답안과 이유",
+  };
+  const completed = {
+    ...item(curriculum.exercises[1], "revealed"),
+    response_mode: "essay",
+    last_correct: null,
+  };
   await page.goto("./");
   await page.getByRole("button", { name: "나의 기록" }).click();
-  await upload(page, backup([basic, extra], "essay-tester"));
+  const value = backup([session("paused-essay", day, [draft, completed])]);
+  await upload(page, value);
   await confirm(page);
-  await page.getByRole("button", { name: "오늘 학습", exact: true }).click();
-  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
-  await expect(page.locator(".question-format")).toContainText("서술형");
-  await expect(page.getByRole("group", { name: "풀이 모드" })).toHaveCount(0);
-  const text =
-    "슬라이스는 원본 메모리를 공유하고 인덱스 목록으로 만든 배열은 복사입니다.";
-  await page.getByLabel("답과 풀이 이유").fill(text);
-  await expect(page.getByText("입력한 답을 저장했어요.")).toBeVisible();
-  await page.reload();
-  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
-  await expect(page.getByLabel("답과 풀이 이유")).toHaveValue(text);
-  await page.getByRole("button", { name: "답 저장하고 해설 비교하기" }).click();
-  await expect(page.locator(".submitted-answer")).toContainText(text);
-  await expect(
-    page.getByText("서술형은 자동 채점하지 않아요.", { exact: false }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "다음으로" }).click();
-  await page.getByRole("button", { name: "나의 기록" }).click();
-  const row = page
-    .locator(".history-session")
-    .filter({ hasText: "추가 학습 99" });
+  const row = page.locator(".history-session").filter({ hasText: draft.draft });
   await row.locator("summary").click();
-  await expect(row).toContainText(text);
-  await expect(row).toContainText("해설로 배움");
+  await expect(row).toContainText("서술형 보류 · 미채점");
+  await expect(row).toContainText(draft.draft);
+  await page.reload();
+  if (test.info().project.name === "mobile-web") {
+    await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
+    await expect(page.locator(".question-format")).not.toContainText("서술형");
+    await page.getByRole("button", { name: "← 오늘 학습" }).click();
+  }
+  await page.getByRole("button", { name: "나의 기록" }).click();
+  const pending = page.waitForEvent("download");
+  await page.getByRole("button", { name: "백업 파일 내려받기" }).click();
+  const file = await pending;
+  const saved = JSON.parse(await readFile((await file.path())!, "utf8"));
+  const original = saved.data.sessions.find(
+    (s: { id: string }) => s.id === "paused-essay",
+  );
+  expect(original.items[0].draft).toBe(draft.draft);
+  expect(original.items[0].status).toBe("pending");
+  expect(original.items[1].last_answer).toBe(completed.last_answer);
+  expect(original.items[1].last_correct).toBeNull();
+  expect(original.completed_count).toBe(1);
 });
 
 test("a missing or damaged primary store recovers from IndexedDB without resetting", async ({

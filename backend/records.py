@@ -44,7 +44,7 @@ def validate_records(data):
         item_ids=set()
         for i in s['items']:
             require(isinstance(i,dict) and isinstance(i.get('id'),str) and i['id'] not in item_ids and i['id'] not in ('__proto__','constructor','prototype'))
-            item_ids.add(i['id']);require(i.get('status') in ('pending','correct','revealed'))
+            item_ids.add(i['id']);require(i.get('status') in ('pending','correct','revealed','incorrect'))
             require(all(count(i.get(k)) for k in ('hints_used','attempts_count','active_seconds')) and i['hints_used']<=2)
             require(all(isinstance(i.get(k),str) for k in ('title','prompt','code','kind','concept')))
             require(isinstance(i.get('hints'),list) and isinstance(i.get('choices'),list))

@@ -61,3 +61,14 @@ def test_review_intervals_do_not_grow_with_same_day_repeats():
     assert review_due('2026-10-20',{'streak':1,'last_day':'2026-10-19'},True)==('2026-10-27',2)
     assert review_due('2026-10-20',{'streak':2,'last_day':'2026-10-19'},True)==('2026-11-03',3)
     assert review_due('2026-10-20',{'streak':2,'last_day':'2026-10-20','due':'2026-10-27'},True)==('2026-10-27',2)
+
+
+def test_pending_legacy_cards_and_essays_never_enter_new_pool():
+    day='2026-10-20'
+    session={'id':'old','local_day':day,'items':[{'id':ex.id,'status':'pending'} for ex in EXERCISES]}
+    assert select_exercises(EXERCISES,[session],{},day,True)==[]
+    for track in ('python','sql'):
+        result=select_exercises(EXERCISES,[],{},day,track=track)
+        assert result
+        assert all(ex.response_mode!='essay' and ((ex.domain=='SQL')==(track=='sql')) for ex,_ in result)
+    assert len({(ex.domain,ex.prompt.strip(),ex.code.strip()) for ex in EXERCISES})==60

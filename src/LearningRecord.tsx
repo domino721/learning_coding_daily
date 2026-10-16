@@ -17,7 +17,7 @@ export function Lifetime({ dashboard }: { dashboard: Dashboard }) {
         {dashboard.all_time_completed_count ?? 0}
         <span>문제 풀이</span>
       </strong>
-      <p>오늘의 목표가 새로 시작해도 누적 기록은 이어져요.</p>
+      <p>트랙을 바꾸거나 업데이트해도 전체 누적 기록은 이어져요.</p>
     </section>
   );
 }
@@ -235,50 +235,59 @@ export function LearningRecord({
           확인해 주세요.
         </p>
       )}
-      {history?.sessions
-        .filter((s) => s.completed_count > 0)
-        .slice(0, visible)
-        .map((s) => (
-          <details className="history-session" key={s.id}>
-            <summary>
-              {s.local_day} · {s.batch ? `추가 학습 ${s.batch}` : "기본 학습"} ·{" "}
-              {s.completed_count}문제
-            </summary>
-            <ul>
-              {s.items
-                .filter((i) => i.status !== "pending")
-                .map((i) => (
-                  <li key={i.id}>
-                    <strong>{i.title}</strong>
-                    <span>
-                      {i.status === "correct" ? "정답으로 마침" : "해설로 배움"}{" "}
-                      · {i.attempts_count}회 제출 · 힌트 {i.hints_used}개
-                    </span>
-                    {i.last_answer && (
-                      <p className="submitted-answer">
-                        내 답안: {i.last_answer}
-                      </p>
-                    )}
-                    <p>
-                      정답: <code>{i.answer}</code>
-                    </p>
-                    <p>{i.explanation}</p>
-                  </li>
-                ))}
-            </ul>
-          </details>
-        ))}
-      {history &&
-        history.sessions.filter((s) => s.completed_count > 0).length >
-          visible && (
-          <button
-            type="button"
-            className="text-button"
-            onClick={() => setVisible((v) => v + 20)}
-          >
-            이전 기록 더 보기
-          </button>
-        )}
+      {history?.sessions.slice(0, visible).map((s) => (
+        <details className="history-session" key={s.id}>
+          <summary>
+            {s.local_day} ·{" "}
+            {s.track_id === "sql"
+              ? "SQL"
+              : s.track_id === "python"
+                ? "Python 데이터 분석"
+                : "이전 통합 학습"}{" "}
+            · {s.batch ? `추가 학습 ${s.batch}` : "기본 학습"} ·{" "}
+            {s.completed_count}문제
+          </summary>
+          <ul>
+            {s.items.map((i) => (
+              <li key={i.id}>
+                <strong>{i.title}</strong>
+                <span>
+                  {i.response_mode === "essay"
+                    ? "서술형 보류 · 미채점"
+                    : i.status === "pending"
+                      ? "학습 중"
+                      : i.status === "incorrect"
+                        ? "오답으로 마침"
+                        : i.status === "correct"
+                          ? "정답으로 마침"
+                          : "해설로 배움"}{" "}
+                  · {i.attempts_count}회 제출 · 힌트 {i.hints_used}개
+                </span>
+                {(i.last_answer || i.draft) && (
+                  <p className="submitted-answer">
+                    내 답안: {i.last_answer || i.draft}
+                  </p>
+                )}
+                {i.answer && (
+                  <p>
+                    정답: <code>{i.answer}</code>
+                  </p>
+                )}
+                <p>{i.explanation}</p>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ))}
+      {history && history.sessions.length > visible && (
+        <button
+          type="button"
+          className="text-button"
+          onClick={() => setVisible((v) => v + 20)}
+        >
+          이전 기록 더 보기
+        </button>
+      )}
       {history && (
         <details className="event-view">
           <summary>학습 활동 로그 {history.events.length}개</summary>

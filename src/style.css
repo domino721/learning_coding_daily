@@ -1216,3 +1216,26 @@ pre {
   margin-bottom: 12px;
   overflow-wrap: anywhere;
 }
+
+.track-card[aria-pressed="true"] {
+  border: 2px solid #255a44;
+  background: #f0f5e9;
+}
+.attempt-note {
+  color: #6b5832;
+  font-weight: 600;
+}
+.feedback.incorrect {
+  background: #fff0eb;
+  color: #803c2c;
+}
+.legacy-note {
+  padding: 16px;
+  border: 1px solid #d4ddce;
+  border-radius: 16px;
+  margin: 20px 0;
+}
+.pool-notice {
+  font-weight: 600;
+  line-height: 1.6;
+}

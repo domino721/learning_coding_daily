@@ -2078,11 +2078,18 @@
   ],
   "tracks": [
     {
-      "id": "pandas",
-      "name": "데이터 분석",
-      "description": "NumPy · pandas · SQL · 통계 · 머신러닝",
+      "id": "python",
+      "name": "Python 데이터 분석",
+      "description": "pandas · NumPy · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 60
+      "exercise_count": 45
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "description": "행 조건 · 집계 · 테이블 연결",
+      "available": true,
+      "exercise_count": 10
     },
     {
       "id": "algorithms",

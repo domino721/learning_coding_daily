@@ -78,7 +78,7 @@ test("older completed and pending snapshots survive an app update", async ({
   const exercises = await seedLegacy(page, 1);
   const pending = exercises[1];
   await page.goto("./");
-  await page.getByRole("button", { name: "이어서 학습하기" }).click();
+  await page.getByRole("button", { name: "이전 통합 학습 이어서" }).click();
   await expect(
     page.getByRole("heading", { name: "예전 지문 제목" }),
   ).toBeVisible();
@@ -103,18 +103,11 @@ test("already completed legacy daily goal opens unseen extra questions without a
   page,
 }) => {
   const old = await seedLegacy(page, 5);
-  const unseen = curriculum.exercises
-    .filter((ex) => !old.some((done) => done.id === ex.id))
-    .slice(0, 5);
   await page.goto("./");
-  await page.getByRole("button", { name: "오늘 학습 돌아보기" }).click();
-  await expect(
-    page.getByRole("heading", { name: "오늘의 한 걸음, 잘 마쳤어요." }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "추가로 5문제 풀기" }).click();
-  await expect(
-    page.getByRole("heading", { name: unseen[0].title }),
-  ).toBeVisible();
+  await expect(page.getByRole("region", { name: "누적 학습" })).toContainText(
+    "5문제 풀이",
+  );
+  await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
   let stored = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("learning-coding-daily:v1")!),
   );
@@ -136,11 +129,10 @@ test("already completed legacy daily goal opens unseen extra questions without a
       .size,
   ).toBe(5);
   const extraId = stored.sessions[1].id;
+  const pendingTitle = stored.sessions[1].items[0].title;
   await page.reload();
-  await page.getByRole("button", { name: "추가 학습 이어서 풀기" }).click();
-  await expect(
-    page.getByRole("heading", { name: unseen[0].title }),
-  ).toBeVisible();
+  await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
+  await expect(page.getByRole("heading", { name: pendingTitle })).toBeVisible();
   stored = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("learning-coding-daily:v1")!),
   );

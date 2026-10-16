@@ -236,6 +236,30 @@
       ],
       "summary": "최종 앱 79e6058 Pages 38836156167 및 관리 검사 38836156337 success. publish job 전체와 Deploy 성공, JS index-84vIBHZF.js·CSS index-DeUVarVe.css가 읽기 전용 백업 추가 E2E 빌드와 일치(EV-014). Python 170·Node 12·모바일 통합14+후속1 검증 근거 보존. 실제 유실 원인/학습 효과·계정 동기화는 미확정/후속이며 다음 WBS-510. 문서 전용 [skip ci]로 추가 배포 생략.",
       "commit": "79e605828aa4e826c6084e6b8069949733f4b693"
+    },
+    {
+      "id": "LOG-020",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-280"
+      ],
+      "changes": [
+        "CR-007"
+      ],
+      "summary": "사용자 보고를 반영한 설계/계획 1.3.0 채택. 원격 main 3f12abf와 checkout 일치 확인. 중복 채우기 제거·서술형 보류·객관식 2회·독립 트랙 착수.",
+      "commit": null
+    },
+    {
+      "id": "LOG-021",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-280"
+      ],
+      "changes": [
+        "CR-007"
+      ],
+      "summary": "Python/SQL 독립 트랙·당일 배정 중복/기한 전 반복 차단·서술형 보류 및 기존 답안 보존·객관식 두 번째 오답 완료 구현. Python172/Node14, 모바일15개 고유 성공 시나리오와 최종 호환4개 확인 EV-015. 전체 모바일의 서버 locator 중복을 수정 후 재검증했으며 배포 완료는 별도 확인 전까지 진행 중 유지.",
+      "commit": null
     }
   ]
 }

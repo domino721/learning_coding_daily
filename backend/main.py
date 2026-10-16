@@ -27,7 +27,7 @@ ResponseMode = Literal["choice", "short", "essay"]
 
 class StartSession(RequestModel):
     response_mode: ResponseMode | None = None
-    track_id: Literal["pandas", "algorithms", "statistics"] = "pandas"
+    track_id: Literal["python", "sql", "pandas", "algorithms", "statistics"] = "python"
 
 
 class ExerciseAction(RequestModel):
@@ -137,29 +137,33 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         return TRACKS
 
     @app.get("/api/dashboard")
-    def dashboard():
+    def dashboard(track_id: Literal["python", "sql"] = "python"):
         with connect(path) as db:
             day = today().isoformat()
-            record = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND batch=0 AND local_day=?", (day,)).fetchone()
-            extra = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=? AND batch>0 ORDER BY batch DESC LIMIT 1", (day,)).fetchone()
-            sessions = db.execute("SELECT id FROM sessions WHERE track_id='pandas' AND local_day=? ORDER BY batch", (day,)).fetchall()
+            record = db.execute("SELECT id FROM sessions WHERE track_id=? AND batch=0 AND local_day=?", (track_id,day,)).fetchone()
+            extra = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? AND batch>0 ORDER BY batch DESC LIMIT 1", (track_id,day,)).fetchone()
+            sessions = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? ORDER BY batch", (track_id,day,)).fetchall()
             total_done = db.execute("SELECT count(*) FROM session_items i JOIN sessions s ON i.session_id=s.id WHERE s.local_day=? AND i.status!='pending'", (day,)).fetchone()[0]
             learned = db.execute("SELECT count(*) FROM progress").fetchone()[0]
             start = (today() - timedelta(days=6)).isoformat()
             days = db.execute("""SELECT DISTINCT s.local_day FROM sessions s JOIN session_items i ON i.session_id=s.id
                 WHERE i.status != 'pending' AND s.local_day BETWEEN ? AND ? ORDER BY s.local_day""", (start, day)).fetchall()
-            return {"local_day": day, "timezone": str(zone), "learned_count": learned,
+            legacy = [s for s in all_sessions(db) if s['track_id']=='pandas' and s['local_day']==day]
+            progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
+            return {"track_id":track_id,"available_count":len(select_exercises(EXERCISES,all_sessions(db),progress,day,True,track_id)),"legacy_session":next((s for s in reversed(legacy) if any(i["status"]=="pending" and i["response_mode"]!="essay" for i in s["items"])),legacy[-1] if legacy else None),"local_day": day, "timezone": str(zone), "learned_count": learned,
                     "weekly_days": [row[0] for row in days],
                     "today": snapshot(db, record[0]) if record else None,
                     "learner_id": db.execute("SELECT value FROM metadata WHERE key='learner_id'").fetchone()[0],
                     "all_time_completed_count":max(db.execute("SELECT count(*) FROM session_items WHERE status!='pending'").fetchone()[0],db.execute('SELECT coalesce(sum(completed_count),0) FROM progress').fetchone()[0]),
                     "concepts":list(concept_states(all_sessions(db),BY_ID).values()),
-                    "today_sessions": [snapshot(db, row[0]) for row in sessions],
+                    "today_sessions": [s for s in all_sessions(db) if s["local_day"]==day],
                     "extra": snapshot(db, extra[0]) if extra else None, "today_completed_count": total_done}
 
     @app.post("/api/sessions/today")
     def start(body: StartSession):
-        if body.track_id != "pandas":
+        if body.track_id == "pandas": body.track_id = "python"
+        if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
+        if body.track_id not in ("python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
         with connect(path) as db:
             day = today().isoformat()
@@ -167,7 +171,8 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             if existing:
                 return snapshot(db, existing[0])
             progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
-            selected=select_exercises(EXERCISES,all_sessions(db),progress,day)
+            selected=select_exercises(EXERCISES,all_sessions(db),progress,day,track=body.track_id)
+            if not selected: raise HTTPException(422, "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.")
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at) VALUES(?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat()))
@@ -178,7 +183,9 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.post("/api/sessions/extra")
     def start_extra(body: StartSession):
-        if body.track_id != "pandas":
+        if body.track_id == "pandas": body.track_id = "python"
+        if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
+        if body.track_id not in ("python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
         with connect(path) as db:
             day = today().isoformat()
@@ -189,7 +196,8 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             if latest["batch"] > 0 and not snapshot(db, latest["id"])["finished"]:
                 return snapshot(db, latest["id"])
             progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
-            selected=select_exercises(EXERCISES,all_sessions(db),progress,day,extra=True)
+            selected=select_exercises(EXERCISES,all_sessions(db),progress,day,extra=True,track=body.track_id)
+            if not selected: raise HTTPException(422, "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.")
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at, batch) VALUES(?, ?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat(), latest["batch"] + 1))
@@ -228,6 +236,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.post("/api/sessions/{session_id}/mode")
     def change_mode(session_id: str, body: ModeChange):
+        if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
         with connect(path) as db:
             pending_item(db, session_id, body.exercise_id)
             db.execute("UPDATE session_items SET response_mode=? WHERE session_id=? AND status='pending'",
@@ -249,7 +258,11 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             if (not body.answer.strip() or (mode != "essay" and len(body.answer) > 200)
                     or (mode == "choice" and body.answer not in exercise.choices)):
                 raise HTTPException(422, "문제에 맞는 답안을 입력해 주세요.")
-            correct = mode != "essay" and exercise.matches(body.answer)
+            if mode == "essay": raise HTTPException(422, "서술형은 보류 중이에요. 작성한 답안은 학습 기록에 보관됩니다.")
+            if mode == "choice" and item["attempts_count"] >= 2:
+                finish(db,session_id,exercise.id,"incorrect",True)
+                return {"correct":False,"session":snapshot(db,session_id)}
+            correct = exercise.matches(body.answer)
             db.execute("INSERT INTO attempts VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
                        (str(body.attempt_id), session_id, exercise.id, body.answer, int(correct), item["hints_used"], body.active_seconds, clock().isoformat(),mode))
             db.execute("""UPDATE session_items SET attempts_count=attempts_count+1, last_answer=?, last_correct=?,
@@ -260,6 +273,8 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                 finish(db, session_id, exercise.id, "revealed", True)
             elif correct:
                 finish(db, session_id, exercise.id, "correct", item["hints_used"] > 0 or item["attempts_count"] > 0)
+            elif mode == "choice" and item["attempts_count"] + 1 >= 2:
+                finish(db,session_id,exercise.id,"incorrect",True)
             return {"correct": None if mode == "essay" else correct, "session": snapshot(db, session_id)}
 
     @app.post("/api/sessions/{session_id}/hint")

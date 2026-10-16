@@ -131,7 +131,9 @@ export function validateStore(input: unknown): Store {
         typeof item.id !== "string" ||
         ["__proto__", "constructor", "prototype"].includes(item.id) ||
         ids.has(item.id) ||
-        !["pending", "correct", "revealed"].includes(item.status as string) ||
+        !["pending", "correct", "revealed", "incorrect"].includes(
+          item.status as string,
+        ) ||
         !count(item.hints_used) ||
         (item.hints_used as number) > 2 ||
         !count(item.attempts_count) ||

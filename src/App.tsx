@@ -9,11 +9,29 @@ import {
   type Track,
 } from "./api";
 
+const trackName = (id: string) =>
+  id === "sql"
+    ? "SQL"
+    : id === "python"
+      ? "Python 데이터 분석"
+      : "이전 통합 학습";
+const playable = (item: Exercise) =>
+  item.status === "pending" && item.response_mode !== "essay";
+const outcome = (item: Exercise) =>
+  item.response_mode === "essay"
+    ? "미채점 · 해설 비교"
+    : item.status === "correct"
+      ? "정답"
+      : item.status === "incorrect"
+        ? "오답"
+        : "해설 학습";
 type Screen = "home" | "lesson" | "summary" | "record";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
 
 function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
-  const basic = dashboard.today?.completed_count ?? 0;
+  const basic = dashboard.today_sessions
+    .filter((s) => !s.batch)
+    .reduce((n, s) => n + s.completed_count, 0);
   const total = dashboard.today_completed_count ?? basic;
   return (
     <div className="today-completed" role="group" aria-label="오늘 누적 학습">
@@ -21,7 +39,8 @@ function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
         오늘 총 <strong>{total}문제</strong> 풀었어요.
       </p>
       <span>
-        기본 학습 {basic}문제 · 추가 학습 {total - basic}문제
+        전체 트랙 합계 · 기본 학습 {basic}문제 · 추가·이전 학습 {total - basic}
+        문제
       </span>
     </div>
   );
@@ -170,6 +189,11 @@ function ExerciseCard({
           ·{" "}
           {item.difficulty?.label ?? (item.level === 2 ? "적용" : "기초 확인")}
         </p>
+        {mode === "choice" && !done && (
+          <p className="attempt-note">
+            최대 2회 제출 · 남은 기회 {Math.max(0, 2 - item.attempts_count)}회
+          </p>
+        )}
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -245,8 +269,9 @@ function ExerciseCard({
             <div className="feedback retry" role="status">
               <strong>한 번 더 생각해 볼까요?</strong>
               <p>
-                아직 마친 문제로 처리되지 않았어요. 다른 답을 시도하거나 힌트를
-                열어 보세요.
+                {mode === "choice"
+                  ? `남은 기회는 ${Math.max(0, 2 - item.attempts_count)}회예요. 다시 틀리면 오답으로 마치고 해설을 보여드려요.`
+                  : "아직 마친 문제로 처리되지 않았어요. 다른 답을 시도하거나 힌트를 열어 보세요."}
               </p>
             </div>
           )}
@@ -261,16 +286,26 @@ function ExerciseCard({
           )}
           {done ? (
             <div
-              className={`feedback ${item.status === "correct" ? "success" : "reviewed"}`}
+              className={`feedback ${item.status === "correct" ? "success" : item.status === "incorrect" ? "incorrect" : "reviewed"}`}
               role="status"
             >
               <span className="eyebrow">
-                {item.status === "correct" ? "잘 풀었어요" : "해설로 배웠어요"}
+                {item.status === "incorrect"
+                  ? "오답으로 기록했어요"
+                  : mode === "essay"
+                    ? "미채점 · 답안 보관"
+                    : item.status === "correct"
+                      ? "잘 풀었어요"
+                      : "해설로 배웠어요"}
               </span>
               <h2>
                 {item.status === "correct"
                   ? "작은 한 걸음, 완료!"
-                  : "다음에 다시 꺼내 볼게요."}
+                  : item.status === "incorrect"
+                    ? "두 번의 기회를 모두 사용했어요."
+                    : mode === "essay"
+                      ? "작성한 답과 해설을 비교해 보세요."
+                      : "다음에 다시 꺼내 볼게요."}
               </h2>
               {mode === "essay" && item.last_answer && (
                 <>
@@ -345,6 +380,23 @@ function ExerciseCard({
 export default function App() {
   const [screen, setScreen] = useState<Screen>("home");
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
+  const [trackId, setTrackId] = useState(() => {
+    try {
+      return localStorage.getItem("learning-coding-daily:track") === "sql"
+        ? "sql"
+        : "python";
+    } catch {
+      return "python";
+    }
+  });
+  const refreshSequence = useRef(0);
+  useEffect(() => {
+    try {
+      localStorage.setItem("learning-coding-daily:track", trackId);
+    } catch {
+      /* Preferences do not block record recovery. */
+    }
+  }, [trackId]);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [index, setIndex] = useState(0);
@@ -360,14 +412,17 @@ export default function App() {
   const focusTarget = useRef<HTMLHeadingElement>(null);
 
   const refresh = useCallback(async () => {
+    const sequence = ++refreshSequence.current;
     const [data, available] = await Promise.all([
-      api<Dashboard>("/dashboard"),
+      api<Dashboard>(`/dashboard?track_id=${trackId}`),
       api<Track[]>("/tracks"),
     ]);
-    setDashboard(data);
-    setTracks(available);
+    if (sequence === refreshSequence.current) {
+      setDashboard(data);
+      setTracks(available);
+    }
     return data;
-  }, []);
+  }, [trackId]);
   useEffect(() => {
     refresh()
       .catch((e) => setError(e.message))
@@ -410,24 +465,23 @@ export default function App() {
   function startExtra() {
     openSession(true);
   }
-  function openSession(extra: boolean) {
+  function openSession(extra: boolean, previous?: Session) {
     void action(async () => {
       const data = await api<Session>(
-        extra ? "/sessions/extra" : "/sessions/today",
-        {
-          track_id: "pandas",
-        },
+        previous
+          ? `/sessions/${previous.id}`
+          : extra
+            ? "/sessions/extra"
+            : "/sessions/today",
+        previous ? undefined : { track_id: trackId },
       );
       if (data.finished) await refresh();
       setSession(data);
-      setIndex(
-        Math.max(
-          0,
-          data.items.findIndex((item) => item.status === "pending"),
-        ),
-      );
+      setIndex(Math.max(0, data.items.findIndex(playable)));
       pendingSubmission.current = null;
-      setScreen(data.finished ? "summary" : "lesson");
+      setScreen(
+        data.finished || !data.items.some(playable) ? "summary" : "lesson",
+      );
     });
   }
   async function answer(value: string, activeSeconds: number) {
@@ -484,9 +538,7 @@ export default function App() {
   }
   function next() {
     if (!session) return;
-    const pending = session.items.findIndex(
-      (item) => item.status === "pending",
-    );
+    const pending = session.items.findIndex(playable);
     if (pending < 0) {
       void action(async () => {
         await refresh();
@@ -515,7 +567,10 @@ export default function App() {
   const summarySessions = session
     ? [
         ...(dashboard?.today_sessions ?? []).filter(
-          (s) => s.local_day === session.local_day && s.id !== session.id,
+          (s) =>
+            s.local_day === session.local_day &&
+            s.id !== session.id &&
+            s.track_id === session.track_id,
         ),
         session,
       ].sort((a, b) => (a.batch ?? 0) - (b.batch ?? 0))
@@ -531,7 +586,7 @@ export default function App() {
   const extraLabel =
     dashboard?.extra && !dashboard.extra.finished
       ? "추가 학습 이어서 풀기"
-      : "추가로 5문제 풀기";
+      : "추천 문제 더 풀기";
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -654,12 +709,7 @@ export default function App() {
                         지금까지 만난 문제{" "}
                         <strong>{dashboard.learned_count}개</strong>
                       </p>
-                      <span>
-                        총{" "}
-                        {tracks.find((t) => t.id === "pandas")
-                          ?.exercise_count ?? 10}
-                        개 중
-                      </span>
+                      <span>총 {60}개 중</span>
                     </div>
                     {screen === "record" && (
                       <p className="record-note">
@@ -672,6 +722,63 @@ export default function App() {
                 {screen === "home" && (
                   <>
                     <section
+                      className="tracks-section"
+                      aria-labelledby="tracks-title"
+                    >
+                      <div className="section-heading">
+                        <h2 id="tracks-title">어떤 실력을 키워 볼까요?</h2>
+                        <span>학습 트랙</span>
+                      </div>
+                      <div className="track-list">
+                        {tracks.map((track, i) => (
+                          <button
+                            key={track.id}
+                            disabled={!track.available || busy}
+                            onClick={() => setTrackId(track.id)}
+                            aria-pressed={
+                              track.available ? trackId === track.id : undefined
+                            }
+                            className={`track-card ${track.available ? "available" : ""}`}
+                          >
+                            <span className="track-icon" aria-hidden="true">
+                              {["▥", "⌘", "∿"][i]}
+                            </span>
+                            <span className="track-copy">
+                              <strong>{track.name}</strong>
+                              <span>{track.description}</span>
+                            </span>
+                            <span
+                              className={`track-tag ${track.available ? "green" : ""}`}
+                            >
+                              {track.available
+                                ? `${track.exercise_count}문제`
+                                : "준비 중"}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                    {dashboard?.legacy_session && (
+                      <div className="legacy-note">
+                        <p>
+                          이전 통합 학습 기록과 답안은 그대로 보관했어요. 새
+                          트랙의 목표는 별도로 시작하며 전체 누적은 이어져요.
+                          서술형 답안은 보류·미채점으로 남깁니다.
+                        </p>
+                        {dashboard.legacy_session.items.some(playable) && (
+                          <button
+                            className="extra-button"
+                            disabled={busy}
+                            onClick={() =>
+                              openSession(false, dashboard.legacy_session!)
+                            }
+                          >
+                            이전 통합 학습 이어서
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    <section
                       className="daily-card"
                       aria-labelledby="daily-title"
                     >
@@ -682,15 +789,13 @@ export default function App() {
                       <div className="daily-card-content">
                         <div>
                           <p className="daily-kicker">DATA ANALYSIS PRACTICE</p>
-                          <h2 id="daily-title">
-                            데이터를 읽는
-                            <br />
-                            작은 습관
-                          </h2>
+                          <h2 id="daily-title">{trackName(trackId)}</h2>
                           <p>
-                            NumPy부터 SQL·머신러닝까지,
+                            {trackId === "sql"
+                              ? "SQL 기초부터 조건·집계·조인을 연습해요."
+                              : "pandas·NumPy와 통계·머신러닝을 연습해요."}
                             <br />
-                            작은 실무 문제로 연습해요.
+                            다른 트랙과 실력을 따로 확인해요.
                           </p>
                         </div>
                         <div className="data-art" aria-hidden="true">
@@ -725,13 +830,31 @@ export default function App() {
                           />
                         </div>
                       )}
+                      {todaySession && todaySession.total < 5 && (
+                        <p>
+                          오늘 추천 가능한 {todaySession.total}문제로 시작해요.
+                        </p>
+                      )}
+                      {(!todaySession || todaySession.finished) &&
+                        !dashboard?.available_count &&
+                        (!dashboard?.extra || dashboard.extra.finished) && (
+                          <p className="pool-notice" role="status">
+                            오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요.
+                            다른 트랙을 연습하거나 다음 복습 때 만나요.
+                          </p>
+                        )}
                       <p className="recommended-note">
-                        개념과 난이도에 맞춰 객관식·단답형·짧은 서술형을 골라
-                        드려요. 힌트가 필요하면 기초를 다시 확인해요.
+                        실력에 맞춰 객관식·단답형을 추천해요. 같은 날 나온
+                        문제는 다시 내지 않아요. 서술형은 안정화 중이에요.
                       </p>
                       <button
                         className="light-button"
-                        disabled={busy || !dashboard}
+                        disabled={
+                          busy ||
+                          !dashboard ||
+                          dashboard.track_id !== trackId ||
+                          (!todaySession && !dashboard.available_count)
+                        }
                         onClick={start}
                       >
                         {todaySession?.finished
@@ -746,7 +869,11 @@ export default function App() {
                       <div className="extra-prompt">
                         <button
                           className="extra-button"
-                          disabled={busy}
+                          disabled={
+                            busy ||
+                            (!dashboard?.available_count &&
+                              (!dashboard?.extra || dashboard.extra.finished))
+                          }
                           onClick={startExtra}
                         >
                           {extraLabel} <span aria-hidden="true">→</span>
@@ -756,40 +883,6 @@ export default function App() {
                         </p>
                       </div>
                     )}
-                    <section
-                      className="tracks-section"
-                      aria-labelledby="tracks-title"
-                    >
-                      <div className="section-heading">
-                        <h2 id="tracks-title">어떤 실력을 키워 볼까요?</h2>
-                        <span>학습 트랙</span>
-                      </div>
-                      <div className="track-list">
-                        {tracks.map((track, i) => (
-                          <button
-                            key={track.id}
-                            disabled={!track.available || busy}
-                            onClick={start}
-                            className={`track-card ${track.available ? "available" : ""}`}
-                          >
-                            <span className="track-icon" aria-hidden="true">
-                              {["▥", "⌘", "∿"][i]}
-                            </span>
-                            <span className="track-copy">
-                              <strong>{track.name}</strong>
-                              <span>{track.description}</span>
-                            </span>
-                            <span
-                              className={`track-tag ${track.available ? "green" : ""}`}
-                            >
-                              {track.available
-                                ? `${track.exercise_count}문제`
-                                : "준비 중"}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </section>
                   </>
                 )}
                 <p className="gentle-note">
@@ -810,7 +903,7 @@ export default function App() {
                   >
                     ← 오늘 학습
                   </button>
-                  <span>데이터 분석</span>
+                  <span>{trackName(session.track_id)}</span>
                 </div>
                 <ExerciseCard
                   key={item.id}
@@ -848,29 +941,61 @@ export default function App() {
                   오늘 배운 개념을 잠깐 돌아볼까요?
                 </p>
                 {dashboard && <TodayCompleted dashboard={dashboard} />}
-                <p className="batch-result-label">오늘 푼 전체 문제 결과</p>
+                <p className="batch-result-label">
+                  {trackName(session.track_id)} · 오늘 풀이 결과
+                </p>
                 <div className="summary-stats">
                   <div>
                     <strong>{summaryCorrect}</strong>
                     <span>정답으로 마침</span>
                   </div>
                   <div>
-                    <strong>{summaryItems.length - summaryCorrect}</strong>
-                    <span>해설로 배움</span>
+                    <strong>
+                      {
+                        summaryItems.filter(
+                          ({ exercise }) => exercise.status === "incorrect",
+                        ).length
+                      }
+                    </strong>
+                    <span>오답으로 마침</span>
+                  </div>
+                  <div>
+                    <strong>
+                      {
+                        summaryItems.filter(
+                          ({ exercise }) => exercise.status === "revealed",
+                        ).length
+                      }
+                    </strong>
+                    <span>해설 학습·미채점</span>
                   </div>
                 </div>
-                <div className="extra-prompt">
-                  <button
-                    className="primary"
-                    disabled={busy}
-                    onClick={startExtra}
-                  >
-                    {extraLabel} <span aria-hidden="true">→</span>
-                  </button>
-                  <p className="gentle-note">
-                    안 푼 문제를 먼저 드리고, 모두 풀면 기존 문제로 연습해요.
-                  </p>
-                </div>
+                {session.track_id !== "pandas" && (
+                  <div className="extra-prompt">
+                    <button
+                      className="primary"
+                      disabled={
+                        busy ||
+                        (!dashboard?.available_count &&
+                          (!dashboard?.extra || dashboard.extra.finished))
+                      }
+                      onClick={startExtra}
+                    >
+                      {extraLabel} <span aria-hidden="true">→</span>
+                    </button>
+                    <p className="gentle-note">
+                      새 문제와 예정된 복습을 추천해요. 오늘 나온 문제는
+                      반복하지 않아요.
+                    </p>
+                    {!dashboard?.available_count &&
+                      (!dashboard?.extra || dashboard.extra.finished) && (
+                        <p role="status">
+                          오늘 추천할 문제를 모두 풀었어요. 다른 트랙도 연습할
+                          수 있어요.
+                        </p>
+                      )}
+                  </div>
+                )}
                 <ul className="summary-list">
                   {summaryItems.map(({ exercise: ex, sessionId, batch }) => (
                     <li key={`${sessionId}:${ex.id}`}>
@@ -880,11 +1005,13 @@ export default function App() {
                             ? "outcome-correct"
                             : "outcome-reviewed"
                         }
-                        aria-label={
-                          ex.status === "correct" ? "정답" : "해설 학습"
-                        }
+                        aria-label={outcome(ex)}
                       >
-                        {ex.status === "correct" ? "✓" : "↺"}
+                        {ex.status === "correct"
+                          ? "✓"
+                          : ex.status === "incorrect"
+                            ? "×"
+                            : "↺"}
                       </span>
                       <span>
                         <strong>{ex.title}</strong>

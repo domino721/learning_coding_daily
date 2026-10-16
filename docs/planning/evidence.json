@@ -176,6 +176,27 @@
         ".github/workflows/pages.yml"
       ],
       "code_reference": "79e605828aa4e826c6084e6b8069949733f4b693"
+    },
+    {
+      "id": "EV-015",
+      "record": "docs/planning/evidence/EV-015.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/browserApi.ts",
+        "src/recommendation.ts",
+        "src/records.ts",
+        "backend/content.py",
+        "backend/curriculum.py",
+        "backend/main.py",
+        "backend/records.py",
+        "tests/test_api.py",
+        "tests/test_recommendation.py",
+        "tests/recommendation.test.ts",
+        "tests/e2e/learning.spec.ts",
+        "tests/e2e/browser-migration.spec.ts",
+        "tests/e2e/records.spec.ts"
+      ],
+      "code_reference": "plan-v1.3.0"
     }
   ]
 }
