@@ -121,6 +121,43 @@
       "changes": [],
       "summary": "Pages 원격 배포 성공: 4fc8877, Publish mobile web 38737408611 전체 및 Deploy 단계 success 확인. 사이트 https://domino721.github.io/learning_coding_daily/ 확인 근거 EV-007. 배포된 JS는 로컬 E2E 산출물과 같은 index-DyUGiCSg.js. 이 후속 커밋은 검증 문서만 기록하며 [skip ci]로 동일 앱 재배포를 생략한다. 실제 기기 관찰은 미실시, 다음 WBS-210 유지.",
       "commit": "4fc887745aae3d18d6bfcfc8419fc6197eb3c67c"
+    },
+    {
+      "id": "LOG-012",
+      "date": "2026-10-15",
+      "tasks": [
+        "WBS-040"
+      ],
+      "changes": [
+        "CR-005"
+      ],
+      "summary": "사용자 요청을 승인 근거로 설계/계획 1.1.0 및 WBS-040 추가. 단답형 기본·객관식 보기·서술형 해설 비교, 두 저장 모드 호환 구현 착수.",
+      "commit": null
+    },
+    {
+      "id": "LOG-013",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-040",
+        "WBS-110"
+      ],
+      "changes": [
+        "CR-005"
+      ],
+      "summary": "중단 후 기존 요청 계속 진행. 실제 사이트 주소는 원격 EV-007에도 이미 기록돼 있었으며 README·AGENTS·PHONE_SETUP에 발견하기 쉽게 명시. 최신 main의 오늘 전체 학습 돌아보기·Pages 재시도 artifact 수정과 통합. 완료 검증은 새 EV-008로 기록 예정.",
+      "commit": null
+    },
+    {
+      "id": "LOG-014",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-040"
+      ],
+      "changes": [
+        "CR-005"
+      ],
+      "summary": "세 가지 모드 구현 완료 및 최신 main 통합 검증: pytest 96개·모바일 E2E 6개·빌드·포맷·콘텐츠/관리 검사 통과(EV-008). 새 학습 단답형 기본, 객관식 보기, 서술 답·이유 저장과 해설 비교. 완료 기록과 SQLite v1/v2·브라우저 호환 보존. 다음 WBS-210으로 복귀. 기존 Pages 주소에 게시하며 원격 결과는 별도 기록.",
+      "commit": null
     }
   ]
 }

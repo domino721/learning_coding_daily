@@ -58,7 +58,7 @@
         "행을 가져오는 단계에서 각 행의 조건을 검사해야 합니다.",
         "SELECT와 FROM 뒤에 오는 행 조건 절을 생각해 보세요. 그룹 결과를 검사하는 HAVING과는 다릅니다."
       ],
-      "choices": [],
+      "choices": ["HAVING", "WHERE", "ORDER BY", "GROUP BY"],
       "accepted": ["where", "Where"],
       "seconds": 120,
       "version": 2,
@@ -263,7 +263,7 @@
         "조건이 개별 거래에 관한 것인지, 한 팀의 여러 거래를 모은 결과에 관한 것인지 보세요.",
         "GROUP BY 뒤의 조건은 그룹 집계가 끝난 결과를 검사합니다."
       ],
-      "choices": [],
+      "choices": ["WHERE", "ORDER BY", "HAVING", "LIMIT"],
       "accepted": ["having", "Having"],
       "seconds": 120,
       "version": 2,
@@ -423,7 +423,7 @@
         "평균, 개수, 전체 금액 중 어떤 값을 만들어야 하는지 입력과 출력을 비교해 보세요.",
         "각 값이 결과에 한 번씩 기여해야 합니다. 평균을 내거나 개수를 세는 메서드는 맞지 않습니다."
       ],
-      "choices": [],
+      "choices": ["count", "mean", "sum", "max"],
       "accepted": [],
       "seconds": 120,
       "version": 2,
@@ -548,7 +548,7 @@
         "기준값과 똑같은 금액의 행이 결과에 포함되어야 하는지 보세요.",
         "방향뿐 아니라 같은 값도 포함하는지 결정해야 합니다."
       ],
-      "choices": [],
+      "choices": [">", "<=", "==", ">="],
       "accepted": [],
       "seconds": 120,
       "version": 2,
@@ -568,7 +568,7 @@
         "행 수를 줄이지 않고, 비어 있던 위치의 값만 달라져야 합니다.",
         "인수 0은 열 이름이나 위치가 아니라 비어 있던 곳에 넣을 값입니다."
       ],
-      "choices": [],
+      "choices": ["dropna", "fillna", "isna", "notna"],
       "accepted": [],
       "seconds": 120,
       "version": 2,
@@ -588,7 +588,7 @@
         "바뀌어야 하는 것은 행 라벨 자체인지, 금액의 순서인지 생각해 보세요.",
         "행 라벨을 정렬하는 메서드와 열 값을 정렬하는 메서드는 다릅니다."
       ],
-      "choices": [],
+      "choices": ["sort_index", "reset_index", "sort_values", "value_counts"],
       "accepted": [],
       "seconds": 120,
       "version": 2,

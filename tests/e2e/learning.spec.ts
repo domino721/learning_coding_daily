@@ -1,9 +1,20 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
+
+async function setMode(page: Page, name: string) {
+  const button = page
+    .getByRole("group", { name: "풀이 모드" })
+    .getByRole("button", { name, exact: true });
+  await button.click();
+  await expect(button).toHaveAttribute("aria-pressed", "true");
+  await expect(button).toBeEnabled();
+}
 
 test("daily analysis spans five areas without unsolicited solutions and resumes correctly", async ({
   page,
 }) => {
+  // This journey covers three modes, reloads and two full learning batches.
+  test.setTimeout(90_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const [first, second, ...remaining] = curriculum.exercises.slice(0, 5);
@@ -30,10 +41,22 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     path: `test-results/${test.info().project.name}-home.png`,
     fullPage: true,
   });
+  await page.setViewportSize({ width: 320, height: 740 });
   await page.getByRole("button", { name: "오늘 학습 시작하기" }).click();
   await expect(page.getByRole("heading", { name: first.title })).toBeVisible();
   await expect(page.locator(".lesson-meta")).not.toContainText(first.concept);
   await expect(page.getByText(first.hints[0], { exact: false })).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "단답형", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("radio")).toHaveCount(0);
+  await expect(page.getByLabel("빈칸에 들어갈 답")).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBeTruthy();
+  await setMode(page, "객관식");
   const wrong = first.choices.find((choice) => choice !== first.answer)!;
   await page.getByLabel(wrong, { exact: true }).check();
   await page.getByRole("button", { name: "답 확인하기" }).click();
@@ -55,7 +78,20 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await page.getByRole("button", { name: "이어서 학습하기" }).click();
   await expect(page.getByRole("heading", { name: second.title })).toBeVisible();
   await expect(page.locator(".lesson-meta")).toContainText("NumPy");
-  await page.getByRole("button", { name: "해설 보고 마치기" }).click();
+  await expect(
+    page.getByRole("button", { name: "객관식", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await setMode(page, "단답형");
+  await page.getByLabel("답 입력", { exact: true }).fill("(3,2)");
+  await page.getByRole("button", { name: "답 확인하기" }).click();
+  await expect(page.getByText("한 번 더 생각해 볼까요?")).toBeVisible();
+  await setMode(page, "서술형");
+  const essay = "(2, 3)입니다. 행이 두 개이고 각 행에는 세 값이 있습니다.";
+  await expect(page.getByLabel("답과 풀이 이유")).toHaveValue("");
+  await page.getByLabel("답과 풀이 이유").fill(essay);
+  await expect(page.getByText(/자동 채점 없이/)).toBeVisible();
+  await page.getByRole("button", { name: "답 저장하고 해설 비교하기" }).click();
+  await expect(page.locator(".submitted-answer")).toContainText(essay);
   await expect(
     page.getByRole("heading", { name: "다음에 다시 꺼내 볼게요." }),
   ).toBeVisible();
@@ -64,11 +100,15 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     await expect(
       page.getByRole("heading", { name: exercise.title }),
     ).toBeVisible();
+    await setMode(page, "단답형");
     if (exercise.kind === "blank")
       await page
         .getByLabel("빈칸에 들어갈 답")
         .fill(exercise.answer === "WHERE" ? "wHeRe" : exercise.answer);
-    else await page.getByLabel(exercise.answer, { exact: true }).check();
+    else
+      await page
+        .getByLabel("답 입력", { exact: true })
+        .fill(exercise.id === "stats-median-01" ? "3.0" : exercise.answer);
     await page.getByRole("button", { name: "답 확인하기" }).click();
     await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
     await page.getByRole("button", { name: "다음으로" }).click();
@@ -79,6 +119,8 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
   await expect(page.locator(".summary-stats")).toContainText(
     "4정답으로 마침1해설로 배움",
   );
+  await page.getByText("해설", { exact: true }).nth(1).click();
+  await expect(page.locator(".submitted-answer")).toContainText(essay);
   await expect(todayTotal).toContainText("오늘 총 5문제 풀었어요.");
   await expect(todayTotal).toContainText("기본 학습 5문제 · 추가 학습 0문제");
   expect(
@@ -106,9 +148,11 @@ test("daily analysis spans five areas without unsolicited solutions and resumes 
     await expect(
       page.getByRole("heading", { name: exercise.title }),
     ).toBeVisible();
+    await setMode(page, "단답형");
     if (exercise.kind === "blank")
       await page.getByLabel("빈칸에 들어갈 답").fill(exercise.answer);
-    else await page.getByLabel(exercise.answer, { exact: true }).check();
+    else
+      await page.getByLabel("답 입력", { exact: true }).fill(exercise.answer);
     await page.getByRole("button", { name: "답 확인하기" }).click();
     await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
     await page.getByRole("button", { name: "다음으로" }).click();

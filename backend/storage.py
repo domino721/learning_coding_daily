@@ -1,4 +1,4 @@
-"""SQLite schema v2 for a single-person local learning app."""
+"""SQLite schema v3 for a single-person local learning app."""
 from contextlib import contextmanager
 from pathlib import Path
 import sqlite3
@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS session_items (
     category TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending',
     hints_used INTEGER NOT NULL DEFAULT 0, attempts_count INTEGER NOT NULL DEFAULT 0,
     last_answer TEXT, last_correct INTEGER, active_seconds INTEGER NOT NULL DEFAULT 0,
+    response_mode TEXT,
     PRIMARY KEY(session_id, exercise_id), UNIQUE(session_id, position)
 );
 CREATE TABLE IF NOT EXISTS attempts (
@@ -38,7 +39,7 @@ def connect(path: Path):
     try:
         # v1 allowed exactly one session per day. Rebuild only that parent table,
         # retaining IDs so items, attempts and progress survive the upgrade.
-        if db.execute("PRAGMA user_version").fetchone()[0] != 2:
+        if db.execute("PRAGMA user_version").fetchone()[0] != 3:
             db.execute("PRAGMA foreign_keys=OFF")
             db.execute("BEGIN IMMEDIATE")
             version = db.execute("PRAGMA user_version").fetchone()[0]
@@ -55,11 +56,13 @@ def connect(path: Path):
                     SELECT id, track_id, local_day, timezone, created_at FROM sessions""")
                 db.execute("DROP TABLE sessions")
                 db.execute("ALTER TABLE sessions_v2 RENAME TO sessions")
-            elif version != 2:
+            elif version not in (2, 3):
                 raise RuntimeError(f"Unsupported database schema version: {version}")
+            if version in (1, 2):
+                db.execute("ALTER TABLE session_items ADD COLUMN response_mode TEXT")
             if db.execute("PRAGMA foreign_key_check").fetchall():
                 raise RuntimeError("Database migration failed foreign key validation")
-            db.execute("PRAGMA user_version=2")
+            db.execute("PRAGMA user_version=3")
             db.commit()
         db.execute("PRAGMA foreign_keys=ON")
         # Serialize creation/resumption of extra batches and answer retries.

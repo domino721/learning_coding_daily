@@ -83,6 +83,26 @@
         "src/browserApi.ts"
       ],
       "code_reference": "4fc887745aae3d18d6bfcfc8419fc6197eb3c67c"
+    },
+    {
+      "id": "EV-008",
+      "record": "docs/planning/evidence/EV-008.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/api.ts",
+        "src/browserApi.ts",
+        "src/style.css",
+        "backend/content.py",
+        "backend/main.py",
+        "backend/storage.py",
+        "tests/test_api.py",
+        "tests/test_curriculum.py",
+        "tests/e2e/learning.spec.ts",
+        "AGENTS.md",
+        "README.md",
+        "docs/PHONE_SETUP.md"
+      ],
+      "code_reference": "plan-v1.1.0"
     }
   ]
 }

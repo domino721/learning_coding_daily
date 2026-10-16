@@ -8,7 +8,9 @@ export type Track = {
   available: boolean;
   exercise_count: number;
 };
+export type ResponseMode = "choice" | "short" | "essay";
 export type Exercise = {
+  response_mode?: ResponseMode;
   domain?: string;
   level?: number;
   id: string;

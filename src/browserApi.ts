@@ -1,6 +1,6 @@
 import curriculum from "./curriculum.json";
 import { ApiError } from "./errors";
-import type { Dashboard, Exercise, Session } from "./api";
+import type { Dashboard, Exercise, Session, ResponseMode } from "./api";
 
 type Source = Omit<
   (typeof curriculum.exercises)[number],
@@ -63,12 +63,17 @@ function read(): Store {
         if (item.status !== "pending")
           return {
             ...item,
+            response_mode:
+              item.response_mode ??
+              (item.kind === "choice" ? "choice" : "short"),
             domain: item.domain ?? source.domain,
             level: item.level ?? source.level,
           };
         const updated = makeItem(source, item.category);
         return {
           ...updated,
+          response_mode:
+            item.response_mode ?? (item.kind === "choice" ? "choice" : "short"),
           hints_used: item.hints_used,
           hints: source.hints.slice(0, item.hints_used),
           attempts_count: item.attempts_count,
@@ -106,8 +111,13 @@ function refresh(session: Session) {
   session.finished = session.completed_count === session.total;
   return session;
 }
-function makeItem(source: Source, category: Exercise["category"]): Exercise {
+function makeItem(
+  source: Source,
+  category: Exercise["category"],
+  mode: ResponseMode = "short",
+): Exercise {
   return {
+    response_mode: mode,
     id: source.id,
     version: source.version,
     concept: source.concept,
@@ -147,6 +157,40 @@ function complete(
     completed: (data.progress[item.id]?.completed ?? 0) + 1,
   };
   refresh(session);
+}
+
+function normalizeAnswer(value: string): string {
+  let result = "",
+    quote: string | null = null,
+    escaped = false,
+    spacing = false;
+  const word = (char: string) => /[\p{L}\p{N}_]/u.test(char);
+  for (const char of value.trim()) {
+    if (spacing && !quote) {
+      if (result && word(result.at(-1)!) && word(char)) result += " ";
+      spacing = false;
+    }
+    if (escaped) {
+      result += char;
+      escaped = false;
+    } else if (quote) {
+      if (char === "\\") {
+        result += char;
+        escaped = true;
+      } else if (char === quote) {
+        result += '"';
+        quote = null;
+      } else result += char;
+    } else if (char === "'" || char === '"') {
+      quote = char;
+      result += '"';
+    } else if (/\s/u.test(char)) spacing = true;
+    else result += char;
+  }
+  if (quote || escaped) return "<unclosed string>" + value;
+  if (/^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/.test(result))
+    return String(Number(result));
+  return result;
 }
 
 function handle(path: string, payload?: unknown): unknown {
@@ -194,6 +238,15 @@ function handle(path: string, payload?: unknown): unknown {
     };
     return dashboard;
   }
+  const requestedMode = body.response_mode ?? "short";
+  const validMode = (mode: unknown): mode is ResponseMode =>
+    ["choice", "short", "essay"].includes(mode as string);
+  if (
+    (path === "/sessions/today" || path === "/sessions/extra") &&
+    !validMode(requestedMode)
+  )
+    throw new ApiError("풀이 모드를 확인해 주세요.", 422);
+  const mode = requestedMode as ResponseMode;
   if (path === "/sessions/today") {
     if (body.track_id !== "pandas")
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
@@ -207,10 +260,12 @@ function handle(path: string, payload?: unknown): unknown {
         data.progress[a.id].due.localeCompare(data.progress[b.id].due),
       )
       .slice(0, 3);
-    const selected = due.map((ex) => makeItem(ex, "review"));
+    const selected = due.map((ex) => makeItem(ex, "review", mode));
     const unseen = curriculum.exercises.filter((ex) => !data.progress[ex.id]);
     selected.push(
-      ...unseen.slice(0, 5 - selected.length).map((ex) => makeItem(ex, "new")),
+      ...unseen
+        .slice(0, 5 - selected.length)
+        .map((ex) => makeItem(ex, "new", mode)),
     );
     if (selected.length < 5) {
       const ids = new Set(selected.map((ex) => ex.id));
@@ -224,7 +279,7 @@ function handle(path: string, payload?: unknown): unknown {
       selected.push(
         ...practice
           .slice(0, 5 - selected.length)
-          .map((ex) => makeItem(ex, "practice")),
+          .map((ex) => makeItem(ex, "practice", mode)),
       );
     }
     const session: Session = {
@@ -261,7 +316,7 @@ function handle(path: string, payload?: unknown): unknown {
     const selected = curriculum.exercises
       .filter((ex) => !data.progress[ex.id])
       .slice(0, 5)
-      .map((ex) => makeItem(ex, "new"));
+      .map((ex) => makeItem(ex, "new", mode));
     const ids = new Set(selected.map((ex) => ex.id));
     const lastSeen = new Map<string, number>();
     const history = [...data.sessions].sort(
@@ -279,7 +334,7 @@ function handle(path: string, payload?: unknown): unknown {
     selected.push(
       ...practice
         .slice(0, 5 - selected.length)
-        .map((ex) => makeItem(ex, "practice")),
+        .map((ex) => makeItem(ex, "practice", mode)),
     );
     const session: Session = {
       id: crypto.randomUUID(),
@@ -297,7 +352,9 @@ function handle(path: string, payload?: unknown): unknown {
     save(data);
     return session;
   }
-  const route = path.match(/^\/sessions\/([^/]+)(?:\/(answers|hint|reveal))?$/);
+  const route = path.match(
+    /^\/sessions\/([^/]+)(?:\/(answers|hint|reveal|mode))?$/,
+  );
   if (!route) throw new ApiError("학습 요청을 찾을 수 없어요.", 404);
   const session = data.sessions.find((s) => s.id === route[1]);
   if (!session) throw new ApiError("학습 세션을 찾을 수 없어요.", 404);
@@ -319,12 +376,24 @@ function handle(path: string, payload?: unknown): unknown {
           "같은 제출 ID를 다른 답안에 사용할 수 없습니다.",
           409,
         );
-      return { correct: previous.correct, session };
+      return {
+        correct: item.response_mode === "essay" ? null : previous.correct,
+        session,
+      };
     }
   }
   if (route[2] === "reveal" && item.status === "revealed") return session;
   if (item.status !== "pending")
     throw new ApiError("이미 마친 문제입니다. 학습을 새로 불러와 주세요.", 409);
+  if (route[2] === "mode") {
+    if (!validMode(body.response_mode))
+      throw new ApiError("풀이 모드를 확인해 주세요.", 422);
+    for (const pending of session.items)
+      if (pending.status === "pending")
+        pending.response_mode = body.response_mode;
+    save(data);
+    return session;
+  }
   if (route[2] === "hint") {
     item.hints_used = Math.min(item.hints_used + 1, 2);
     item.hints = source.hints.slice(0, item.hints_used);
@@ -339,21 +408,24 @@ function handle(path: string, payload?: unknown): unknown {
   if (
     typeof body.answer !== "string" ||
     !body.answer.trim() ||
-    body.answer.length > 200 ||
+    body.answer.length > (item.response_mode === "essay" ? 2000 : 200) ||
     typeof body.attempt_id !== "string"
   )
     throw new ApiError("문제에 맞는 답안을 입력해 주세요.", 422);
-  if (item.kind === "choice" && !source.choices.includes(body.answer))
+  if (item.response_mode === "choice" && !source.choices.includes(body.answer))
     throw new ApiError("보기에서 답을 골라 주세요.", 422);
   const proposed = body.answer.trim();
   const correct =
-    source.domain === "SQL" && source.kind === "blank"
+    item.response_mode !== "essay" &&
+    (source.domain === "SQL" && source.kind === "blank"
       ? proposed.toUpperCase() === source.answer.toUpperCase()
-      : [source.answer, ...source.accepted].includes(proposed);
+      : [source.answer, ...source.accepted].some(
+          (value) => normalizeAnswer(value) === normalizeAnswer(proposed),
+        ));
   const assisted = item.hints_used > 0 || item.attempts_count > 0;
   item.attempts_count++;
   item.last_answer = body.answer;
-  item.last_correct = correct;
+  item.last_correct = item.response_mode === "essay" ? null : correct;
   if (typeof body.active_seconds === "number")
     item.active_seconds = Math.max(
       item.active_seconds,
@@ -365,9 +437,11 @@ function handle(path: string, payload?: unknown): unknown {
     answer: body.answer,
     correct,
   };
-  if (correct) complete(data, session, item, "correct", assisted);
+  if (item.response_mode === "essay")
+    complete(data, session, item, "revealed", true);
+  else if (correct) complete(data, session, item, "correct", assisted);
   save(data);
-  return { correct, session };
+  return { correct: item.response_mode === "essay" ? null : correct, session };
 }
 
 export async function browserApi<T>(path: string, body?: unknown): Promise<T> {

@@ -2,6 +2,14 @@
 
 사용자의 최신 명시적 지시가 이 문서보다 우선한다. 이미 승인된 작업을 다시 확인받기 위한 절차로 이 지침을 사용하지 않는다.
 
+## 연결된 저장소와 실제 사이트
+
+- 저장소: https://github.com/domino721/learning_coding_daily
+- 실제 사용 사이트: https://domino721.github.io/learning_coding_daily/
+- 배포: `.github/workflows/pages.yml`의 GitHub Pages 워크플로. main push 시 웹 빌드 후 게시한다.
+- 기존 앱 수정은 이 checkout과 위 사이트를 대상으로 진행한다. 환경이 시작 중이면 준비를 기다리고 README·Git remote·이 지침에서 대상을 확인한다. 이미 기록된 사이트 주소를 사용자에게 다시 묻지 않는다.
+- 사용자가 중단을 요청하지 않는 한 진행 중 요청은 구현·관련 검증·작업 기록까지 이어서 마무리한다. 로컬 변경·원격 저장·실제 배포 성공은 구분해 보고한다.
+
 ## 시작할 때
 
 1. `docs/PROJECT_PLAN.md`, `docs/planning/README.md`, `docs/planning/status.json`을 읽는다.

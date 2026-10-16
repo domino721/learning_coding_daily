@@ -6,10 +6,56 @@ import {
   type Exercise,
   type Session,
   type Track,
+  type ResponseMode,
 } from "./api";
 
 type Screen = "home" | "lesson" | "summary" | "record";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
+
+const modes: { value: ResponseMode; label: string; detail: string }[] = [
+  { value: "choice", label: "객관식", detail: "보기에서 답을 골라요." },
+  {
+    value: "short",
+    label: "단답형",
+    detail: "보기 없이 결과값이나 코드를 직접 입력해요.",
+  },
+  {
+    value: "essay",
+    label: "서술형",
+    detail:
+      "답과 이유를 적고 해설과 비교해요. 자동 채점 없이 ‘해설로 배움’으로 기록해요.",
+  },
+];
+function ModePicker({
+  value,
+  disabled,
+  onChange,
+}: {
+  value: ResponseMode;
+  disabled: boolean;
+  onChange: (mode: ResponseMode) => void;
+}) {
+  return (
+    <div className="mode-picker">
+      <div className="mode-options" role="group" aria-label="풀이 모드">
+        {modes.map((mode) => (
+          <button
+            key={mode.value}
+            type="button"
+            disabled={disabled}
+            aria-pressed={value === mode.value}
+            onClick={() => onChange(mode.value)}
+          >
+            {mode.label}
+          </button>
+        ))}
+      </div>
+      <p className="mode-note">
+        {modes.find((mode) => mode.value === value)?.detail}
+      </p>
+    </div>
+  );
+}
 
 function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
   const basic = dashboard.today?.completed_count ?? 0;
@@ -72,6 +118,7 @@ function ExerciseCard({
   total,
   busy,
   onAnswer,
+  onMode,
   onHint,
   onReveal,
   onNext,
@@ -81,6 +128,7 @@ function ExerciseCard({
   total: number;
   busy: boolean;
   onAnswer: (answer: string, seconds: number) => void;
+  onMode: (mode: ResponseMode) => void;
   onHint: () => void;
   onReveal: () => void;
   onNext: () => void;
@@ -88,6 +136,15 @@ function ExerciseCard({
   const [draft, setDraft] = useState(
     item.status === "pending" ? "" : (item.last_answer ?? ""),
   );
+  const mode =
+    item.response_mode ?? (item.kind === "choice" ? "choice" : "short");
+  const priorMode = useRef(mode);
+  useEffect(() => {
+    if (priorMode.current !== mode) {
+      setDraft("");
+      priorMode.current = mode;
+    }
+  }, [mode]);
   const seconds = useActiveTime(item.id, item.active_seconds);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -127,17 +184,27 @@ function ExerciseCard({
         <h1 ref={heading} tabIndex={-1} id="question-title">
           {item.title}
         </h1>
-        <p className="prompt">{item.prompt}</p>
+        <p className="prompt">
+          {mode === "choice"
+            ? item.prompt
+            : item.prompt.replaceAll("고르세요", "입력하세요")}
+        </p>
         <pre>
           <code>{item.code}</code>
         </pre>
+        <ModePicker value={mode} disabled={busy || done} onChange={onMode} />
+        {!done && (
+          <p className="mode-note">
+            변경하면 입력 중인 답은 초기화되고, 미완료 문제에도 적용돼요.
+          </p>
+        )}
         <form
           onSubmit={(event) => {
             event.preventDefault();
             if (!busy && !done && draft.trim()) onAnswer(draft, seconds());
           }}
         >
-          {item.kind === "choice" ? (
+          {mode === "choice" ? (
             <fieldset disabled={busy || done} className="choices">
               <legend className="sr-only">답안 선택</legend>
               {item.choices.map((choice, i) => (
@@ -159,15 +226,37 @@ function ExerciseCard({
                 </label>
               ))}
             </fieldset>
+          ) : mode === "essay" ? (
+            <label className="blank-label">
+              답과 풀이 이유
+              <textarea
+                className="blank-input essay-input"
+                value={draft}
+                onChange={(event) => setDraft(event.target.value)}
+                disabled={busy || done}
+                placeholder="답과 그렇게 생각한 이유를 적어 주세요."
+                rows={6}
+                maxLength={2000}
+                aria-describedby="essay-help"
+              />
+              <span id="essay-help" className="mode-note">
+                최대 2,000자 · 제출하면 작성한 답을 저장하고 정답·해설을
+                보여드려요.
+              </span>
+            </label>
           ) : (
             <label className="blank-label">
-              빈칸에 들어갈 답
+              {item.code.includes("____") ? "빈칸에 들어갈 답" : "답 입력"}
               <input
                 className="blank-input"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
                 disabled={busy || done}
-                placeholder="빈칸에 들어갈 답"
+                placeholder={
+                  item.code.includes("____")
+                    ? "빈칸에 들어갈 답"
+                    : "결과값이나 답을 입력하세요"
+                }
                 autoComplete="off"
                 autoCapitalize="none"
                 spellCheck={false}
@@ -206,6 +295,19 @@ function ExerciseCard({
                   ? "작은 한 걸음, 완료!"
                   : "다음에 다시 꺼내 볼게요."}
               </h2>
+              {mode === "essay" && item.last_answer && (
+                <>
+                  <p className="mode-note">
+                    서술형은 자동 채점하지 않아요. 작성한 답과 해설의 핵심을
+                    비교해 보세요.
+                  </p>
+                  <p className="submitted-answer">
+                    <strong>내 답안</strong>
+                    <br />
+                    {item.last_answer}
+                  </p>
+                </>
+              )}
               <p className="solution">
                 정답 <code>{item.answer}</code>
               </p>
@@ -245,7 +347,11 @@ function ExerciseCard({
                 type="submit"
                 disabled={busy || !draft.trim()}
               >
-                {busy ? "확인하는 중…" : "답 확인하기"}{" "}
+                {busy
+                  ? "확인하는 중…"
+                  : mode === "essay"
+                    ? "답 저장하고 해설 비교하기"
+                    : "답 확인하기"}{" "}
                 <span aria-hidden="true">→</span>
               </button>
             )}
@@ -261,6 +367,7 @@ function ExerciseCard({
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("home");
+  const [newMode, setNewMode] = useState<ResponseMode>("short");
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [session, setSession] = useState<Session | null>(null);
@@ -332,6 +439,7 @@ export default function App() {
         extra ? "/sessions/extra" : "/sessions/today",
         {
           track_id: "pandas",
+          response_mode: newMode,
         },
       );
       if (data.finished) await refresh();
@@ -358,7 +466,7 @@ export default function App() {
           attempt_id: crypto.randomUUID(),
         };
       }
-      const result = await api<{ correct: boolean; session: Session }>(
+      const result = await api<{ correct: boolean | null; session: Session }>(
         `/sessions/${session.id}/answers`,
         {
           exercise_id: session.items[index].id,
@@ -367,6 +475,19 @@ export default function App() {
         },
       );
       setSession(result.session);
+      pendingSubmission.current = null;
+    });
+  }
+  function changeMode(mode: ResponseMode) {
+    if (!session || session.items[index].response_mode === mode) return;
+    void action(async () => {
+      setSession(
+        await api<Session>(`/sessions/${session.id}/mode`, {
+          exercise_id: session.items[index].id,
+          response_mode: mode,
+        }),
+      );
+      setNewMode(mode);
       pendingSubmission.current = null;
     });
   }
@@ -608,6 +729,17 @@ export default function App() {
                           />
                         </div>
                       )}
+                      <div className="new-mode">
+                        <p>새 학습의 풀이 모드</p>
+                        <ModePicker
+                          value={newMode}
+                          disabled={busy}
+                          onChange={setNewMode}
+                        />
+                        <p className="mode-note">
+                          진행 중인 학습의 모드는 문제 화면에서 바꿀 수 있어요.
+                        </p>
+                      </div>
                       <button
                         className="light-button"
                         disabled={busy || !dashboard}
@@ -700,6 +832,7 @@ export default function App() {
                   onAnswer={(value, seconds) => {
                     void answer(value, seconds);
                   }}
+                  onMode={changeMode}
                   onHint={hint}
                   onReveal={reveal}
                   onNext={next}
@@ -773,6 +906,13 @@ export default function App() {
                       </span>
                       <details>
                         <summary>해설</summary>
+                        {ex.response_mode === "essay" && ex.last_answer && (
+                          <p className="submitted-answer">
+                            <strong>내 답안</strong>
+                            <br />
+                            {ex.last_answer}
+                          </p>
+                        )}
                         <p>
                           <code>{ex.answer}</code> · {ex.explanation}
                         </p>

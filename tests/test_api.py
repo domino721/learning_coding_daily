@@ -152,6 +152,7 @@ def test_retry_idempotency_and_invalid_submissions(learning):
     assert answer(client, session, item).status_code == 409
     other = session["items"][1]
     assert answer(client, session, other, attempt_id=attempt_id).status_code == 409
+    client.post(f"/api/sessions/{session['id']}/mode", json={"exercise_id": other["id"], "response_mode": "choice"})
     assert answer(client, session, other, "unknown").status_code == 422
     assert answer(client, session, {"id": "missing"}, "2").status_code == 404
     assert client.post("/api/sessions/today", json={"track_id": "algorithms"}).status_code == 409
@@ -320,8 +321,77 @@ def test_schema_v1_upgrade_preserves_completed_session_and_attempts(tmp_path):
         assert extra['batch'] == 1
         assert len(extra['items']) == 5
     with connect(path) as db:
-        assert db.execute('PRAGMA user_version').fetchone()[0] == 2
+        assert db.execute('PRAGMA user_version').fetchone()[0] == 3
         assert db.execute('PRAGMA foreign_keys').fetchone()[0] == 1
         assert not db.execute('PRAGMA foreign_key_check').fetchall()
         assert db.execute('SELECT count(*) FROM attempts').fetchone()[0] == 1
         assert db.execute('SELECT count(*) FROM progress').fetchone()[0] == 5
+
+
+def test_response_modes_persist_without_changing_completed_records(learning):
+    client, path, clock = learning
+    session = start(client)
+    first, second, third, *_ = session['items']
+    assert all(item['response_mode'] == 'short' for item in session['items'])
+    assert answer(client, session, first, " df [ 'amount' ] ").json()['correct'] is True
+    url = f"/api/sessions/{session['id']}"
+    changed = client.post(url + '/mode', json={'exercise_id': second['id'], 'response_mode': 'choice'}).json()
+    assert changed['items'][0]['response_mode'] == 'short'
+    assert all(item['response_mode'] == 'choice' for item in changed['items'][1:])
+    assert answer(client, session, second, '(2,3)').status_code == 422
+    assert answer(client, session, second).json()['correct'] is True
+    client.post(url + '/mode', json={'exercise_id': third['id'], 'response_mode': 'essay'})
+    essay = '답과 이유를 자유롭게 작성합니다.\n' + '설명 ' * 100
+    attempt = str(uuid4())
+    result = answer(client, session, third, essay, attempt).json()
+    assert result['correct'] is None
+    item = result['session']['items'][2]
+    assert item['status'] == 'revealed' and item['last_correct'] is None
+    assert item['last_answer'] == essay and item['explanation']
+    assert result['session']['completed_count'] == 3 and result['session']['correct_count'] == 2
+    assert answer(client, session, third, essay, attempt).json()['correct'] is None
+    assert client.post(url + '/mode', json={'exercise_id': third['id'], 'response_mode': 'short'}).status_code == 409
+    assert client.post(url + '/mode', json={'exercise_id': first['id'], 'response_mode': 'invalid'}).status_code == 422
+    with TestClient(create_app(path, now=lambda: clock[0])) as restarted:
+        restored = start(restarted)
+        assert restored['items'][2]['last_answer'] == essay
+        assert restored['items'][3]['response_mode'] == 'essay'
+    with connect(path) as db:
+        assert db.execute('SELECT count(*) FROM attempts').fetchone()[0] == 3
+        assert db.execute('SELECT due_day FROM progress WHERE exercise_id=?', (third['id'],)).fetchone()[0] == '2026-10-16'
+    clock[0] += timedelta(days=1)
+    assert client.post(url + '/mode', json={'exercise_id': session['items'][3]['id'], 'response_mode': 'short'}).status_code == 409
+
+
+def test_sqlite_v2_modes_upgrade_preserves_pending_attempts(learning):
+    import sqlite3
+    client, path, _ = learning
+    session = start(client)
+    item = session['items'][0]
+    answer(client, session, item, 'wrong code')
+    # Recreate the exact previous schema by dropping only the new v3 column.
+    with sqlite3.connect(path) as db:
+        db.execute('ALTER TABLE session_items DROP COLUMN response_mode')
+        db.execute('PRAGMA user_version=2')
+    restored = start(client)
+    assert restored['id'] == session['id']
+    assert restored['items'][0]['response_mode'] == 'choice'
+    assert restored['items'][0]['last_answer'] == 'wrong code'
+    assert restored['items'][0]['attempts_count'] == 1
+    assert restored['items'][2]['response_mode'] == 'short'
+    assert answer(client, restored, restored['items'][0]).json()['correct'] is True
+
+
+def test_start_modes_and_extra_mode_defaults(learning):
+    client, _, _ = learning
+    session = client.post('/api/sessions/today', json={'response_mode': 'choice'}).json()
+    assert all(item['response_mode'] == 'choice' for item in session['items'])
+    blank = next(item for item in session['items'] if item['kind'] == 'blank')
+    assert len(blank['choices']) == 4
+    assert answer(client, session, blank, 'not a choice').status_code == 422
+    for item in session['items']:
+        assert answer(client, session, item).json()['correct'] is True
+    extra = client.post('/api/sessions/extra', json={'response_mode': 'essay'}).json()
+    assert extra['batch'] == 1 and all(item['response_mode'] == 'essay' for item in extra['items'])
+    resumed = client.post('/api/sessions/extra', json={'response_mode': 'short'}).json()
+    assert resumed['id'] == extra['id'] and resumed['items'][0]['response_mode'] == 'essay'

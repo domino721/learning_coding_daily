@@ -1,5 +1,6 @@
 """Authored data-analysis exercises. Goals belong in prompts; methods belong in hints."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+import re
 
 
 @dataclass(frozen=True)
@@ -23,7 +24,43 @@ class Exercise:
     def matches(self, answer: str) -> bool:
         if self.domain == "SQL" and self.kind == "blank":
             return answer.strip().upper() == self.answer.upper()
-        return answer.strip() in (self.answer, *self.accepted)
+        return any(normalize_answer(answer) == normalize_answer(value)
+                   for value in (self.answer, *self.accepted))
+
+
+def normalize_answer(value: str) -> str:
+    # Ignore layout and quote style, preserving spaces and escapes inside strings.
+    result, quote, escaped, spacing = [], None, False, False
+    for char in value.strip():
+        if spacing and not quote:
+            if result and (result[-1].isalnum() or result[-1] == '_') and (char.isalnum() or char == '_'):
+                result.append(' ')
+            spacing = False
+        if escaped:
+            result.append(char)
+            escaped = False
+        elif quote:
+            if char == "\\":
+                result.append(char)
+                escaped = True
+            elif char == quote:
+                result.append('"')
+                quote = None
+            else:
+                result.append(char)
+        elif char in ("'", '"'):
+            quote = char
+            result.append('"')
+        elif char.isspace():
+            spacing = True
+        else:
+            result.append(char)
+    if quote or escaped:
+        return '<unclosed string>' + value
+    normalized = ''.join(result)
+    if re.fullmatch(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)", normalized):
+        return str(float(normalized))
+    return normalized
 
 
 PANDAS = [
@@ -278,6 +315,15 @@ MACHINE_LEARNING = [
 ]
 # Introduce all five areas early. Stable IDs keep existing progress and completed sessions valid.
 EXERCISES = [ex for row in zip(PANDAS[:5], NUMPY, SQL, STATISTICS, MACHINE_LEARNING) for ex in row] + PANDAS[5:]
+BLANK_CHOICES = {
+    'sql-where-01': ('HAVING', 'WHERE', 'ORDER BY', 'GROUP BY'),
+    'sql-having-01': ('WHERE', 'ORDER BY', 'HAVING', 'LIMIT'),
+    'pandas-group-01': ('count', 'mean', 'sum', 'max'),
+    'pandas-filter-02': ('>', '<=', '==', '>='),
+    'pandas-null-02': ('dropna', 'fillna', 'isna', 'notna'),
+    'pandas-sort-02': ('sort_index', 'reset_index', 'sort_values', 'value_counts'),
+}
+EXERCISES = [replace(ex, choices=BLANK_CHOICES[ex.id]) if ex.id in BLANK_CHOICES else ex for ex in EXERCISES]
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}
 TRACKS = [
     # This storage ID is retained for compatibility with existing personal learning records.

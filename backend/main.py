@@ -17,7 +17,11 @@ class RequestModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+ResponseMode = Literal["choice", "short", "essay"]
+
+
 class StartSession(RequestModel):
+    response_mode: ResponseMode = "short"
     track_id: Literal["pandas", "algorithms", "statistics"] = "pandas"
 
 
@@ -25,8 +29,12 @@ class ExerciseAction(RequestModel):
     exercise_id: str = Field(min_length=1, max_length=80)
 
 
+class ModeChange(ExerciseAction):
+    response_mode: ResponseMode
+
+
 class Answer(ExerciseAction):
-    answer: str = Field(min_length=1, max_length=200)
+    answer: str = Field(min_length=1, max_length=2000)
     attempt_id: UUID
     active_seconds: int = Field(default=0, ge=0, le=86400, strict=True)
 
@@ -56,7 +64,8 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             exercise = BY_ID[row["exercise_id"]]
             item = {"id": exercise.id, "version": row["version"], "concept": exercise.concept,
                     "domain": exercise.domain, "level": exercise.level,
-                    "kind": exercise.kind, "title": exercise.title, "prompt": exercise.prompt,
+                    "kind": exercise.kind, "response_mode": row["response_mode"] or ("choice" if exercise.kind == "choice" else "short"),
+                    "title": exercise.title, "prompt": exercise.prompt,
                     "code": exercise.code, "choices": exercise.choices, "estimated_seconds": exercise.seconds,
                     "category": row["category"], "status": row["status"],
                     "hints": exercise.hints[:row["hints_used"]], "hints_used": row["hints_used"],
@@ -143,8 +152,8 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at) VALUES(?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat()))
-            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category) VALUES(?, ?, ?, ?, ?)",
-                           [(session_id, pos, ex.id, ex.version, category) for pos, (ex, category) in enumerate(selected)])
+            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode) VALUES(?, ?, ?, ?, ?, ?)",
+                           [(session_id, pos, ex.id, ex.version, category, body.response_mode) for pos, (ex, category) in enumerate(selected)])
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/extra")
@@ -171,13 +180,21 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at, batch) VALUES(?, ?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat(), latest["batch"] + 1))
-            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category) VALUES(?, ?, ?, ?, ?)",
-                           [(session_id, pos, ex.id, ex.version, category) for pos, (ex, category) in enumerate(selected)])
+            db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode) VALUES(?, ?, ?, ?, ?, ?)",
+                           [(session_id, pos, ex.id, ex.version, category, body.response_mode) for pos, (ex, category) in enumerate(selected)])
             return snapshot(db, session_id)
 
     @app.get("/api/sessions/{session_id}")
     def read_session(session_id: str):
         with connect(path) as db:
+            return snapshot(db, session_id)
+
+    @app.post("/api/sessions/{session_id}/mode")
+    def change_mode(session_id: str, body: ModeChange):
+        with connect(path) as db:
+            pending_item(db, session_id, body.exercise_id)
+            db.execute("UPDATE session_items SET response_mode=? WHERE session_id=? AND status='pending'",
+                       (body.response_mode, session_id))
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/{session_id}/answers")
@@ -188,20 +205,26 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             if prior:
                 if (prior["session_id"], prior["exercise_id"], prior["answer"]) != (session_id, body.exercise_id, body.answer):
                     raise HTTPException(409, "같은 제출 ID를 다른 답안에 사용할 수 없습니다.")
-                return {"correct": bool(prior["correct"]), "session": snapshot(db, session_id)}
+                state = snapshot(db, session_id)
+                mode = next(item['response_mode'] for item in state['items'] if item['id'] == body.exercise_id)
+                return {"correct": None if mode == "essay" else bool(prior["correct"]), "session": state}
             item = pending_item(db, session_id, body.exercise_id)
             exercise = BY_ID[body.exercise_id]
-            if not body.answer.strip() or (exercise.kind == "choice" and body.answer not in exercise.choices):
+            mode = item["response_mode"] or ("choice" if exercise.kind == "choice" else "short")
+            if (not body.answer.strip() or (mode != "essay" and len(body.answer) > 200)
+                    or (mode == "choice" and body.answer not in exercise.choices)):
                 raise HTTPException(422, "문제에 맞는 답안을 입력해 주세요.")
-            correct = exercise.matches(body.answer)
+            correct = mode != "essay" and exercise.matches(body.answer)
             db.execute("INSERT INTO attempts VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
                        (str(body.attempt_id), session_id, exercise.id, body.answer, int(correct), item["hints_used"], body.active_seconds, clock().isoformat()))
             db.execute("""UPDATE session_items SET attempts_count=attempts_count+1, last_answer=?, last_correct=?,
                         active_seconds=max(active_seconds, ?) WHERE session_id=? AND exercise_id=?""",
-                       (body.answer, int(correct), body.active_seconds, session_id, exercise.id))
-            if correct:
+                       (body.answer, None if mode == "essay" else int(correct), body.active_seconds, session_id, exercise.id))
+            if mode == "essay":
+                finish(db, session_id, exercise.id, "revealed", True)
+            elif correct:
                 finish(db, session_id, exercise.id, "correct", item["hints_used"] > 0 or item["attempts_count"] > 0)
-            return {"correct": correct, "session": snapshot(db, session_id)}
+            return {"correct": None if mode == "essay" else correct, "session": snapshot(db, session_id)}
 
     @app.post("/api/sessions/{session_id}/hint")
     def hint(session_id: str, body: ExerciseAction):

@@ -48,7 +48,7 @@ def run_sql(exercise):
 @pytest.mark.parametrize('exercise', EXERCISES, ids=lambda ex: ex.id)
 def test_authored_exercise_with_real_library_or_sql(exercise):
     assert len(exercise.hints) == 2
-    if exercise.kind == 'choice':
+    if exercise.choices:
         assert exercise.answer in exercise.choices
         assert len(set(exercise.choices)) == len(exercise.choices) == 4
     if exercise.domain == 'SQL':
@@ -74,3 +74,28 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
         assert output.getvalue().strip() == EXPECTED[exercise.id]
         if exercise.kind == 'choice' and exercise.id != 'pandas-select-01':
             assert exercise.answer == EXPECTED[exercise.id]
+
+
+@pytest.mark.parametrize('exercise', EXERCISES, ids=lambda ex: ex.id)
+def test_every_exercise_supports_choice_and_direct_answer(exercise):
+    assert len(set(exercise.choices)) == len(exercise.choices) == 4
+    assert exercise.matches(exercise.answer)
+    assert all(not exercise.matches(choice) for choice in exercise.choices if choice != exercise.answer)
+
+
+@pytest.mark.parametrize(('exercise_id', 'proposed', 'correct'), [
+    ('pandas-select-01', "df [ 'amount' ]", True),
+    ('pandas-select-01', "df[' amount ' ]", False),
+    ('pandas-select-01', "d f['amount']", False),
+    ('pandas-select-01', "df['amount\"]", False),
+    ('pandas-filter-01', '0 2', False),
+    ('numpy-shape-01', '(2,3)', True),
+    ('numpy-shape-01', '(3,2)', False),
+    ('numpy-mask-01', '[7,10]', True),
+    ('stats-std-01', '1', True),
+    ('stats-std-01', '1.01', False),
+    ('pandas-filter-01', "__import__('os').getcwd()", False),
+])
+def test_direct_answer_formatting(exercise_id, proposed, correct):
+    from backend.content import BY_ID
+    assert BY_ID[exercise_id].matches(proposed) is correct

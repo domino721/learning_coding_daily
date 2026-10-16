@@ -2,6 +2,10 @@
 
 이 버전은 GitHub Pages에 올려 사용하는 모바일 웹입니다. 별도 Python 서버나 유료 호스팅 계정 없이 기존 GitHub 계정으로 게시할 수 있습니다. GitHub Pages를 무료로 쓰려면 저장소가 공개 상태여야 합니다. 사이트 자체도 공개됩니다.
 
+## 현재 사이트
+
+**[매일코딩 열기](https://domino721.github.io/learning_coding_daily/)** — 사용자가 확인한 실제 주소입니다. 기존 앱 수정 때 새 사이트를 만들거나 주소를 다시 발급받을 필요가 없습니다. 저장소는 [domino721/learning_coding_daily](https://github.com/domino721/learning_coding_daily)이며 main push로 같은 주소를 갱신합니다.
+
 ## 최초 한 번만 할 설정
 
 소스가 GitHub 저장소의 main 브랜치에 올라간 다음 진행합니다.
