@@ -166,6 +166,16 @@
         "src/records.ts"
       ],
       "code_reference": "5f34518a5558fd32339fa395eabb488a859d5f6b"
+    },
+    {
+      "id": "EV-014",
+      "record": "docs/planning/evidence/EV-014.md",
+      "artifacts": [
+        "src/browserApi.ts",
+        "tests/e2e/records.spec.ts",
+        ".github/workflows/pages.yml"
+      ],
+      "code_reference": "79e605828aa4e826c6084e6b8069949733f4b693"
     }
   ]
 }
