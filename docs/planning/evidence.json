@@ -282,6 +282,18 @@
         "tests/e2e/learning.spec.ts"
       ],
       "code_reference": "9e0a35cafda84232a3a3afee0dc5b4da5a4102f3"
+    },
+    {
+      "id": "EV-022",
+      "record": "docs/planning/evidence/EV-022.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "fcb8f9dce092793cb4cffcff8219016a627df9e8"
     }
   ]
 }

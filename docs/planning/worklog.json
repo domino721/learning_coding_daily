@@ -367,6 +367,17 @@
       "changes": [],
       "summary": "최신 main 통합 UI: 트랙 선택/학습 시작을 기록보다 위로, 주간 발자국 패딩/숫자/요일 높이 축소, 기록 탭은 요약 후 상세. Python204/Node14/모바일17 통과(브라우저전용 서버5개 제외) EV-021. 320px 시작 버튼이 고정 메뉴 위에 있고 주간 카드240px미만이며 최신48/12·새문제5개·기존기록/백업 보존 확인. push 직전 main9e0a35c 동일 확인. 기존 Pages에 이번 검증 소스를 게시하며 원격/공개 자산 성공은 별도 EV로 기록한다.",
       "commit": null
+    },
+    {
+      "id": "LOG-031",
+      "date": "2026-10-17",
+      "tasks": [
+        "WBS-010",
+        "WBS-290"
+      ],
+      "changes": [],
+      "summary": "UI 앱 fcb8f9d를 기존 main으로 비강제 push하고 원격SHA 확인. Pages39028495587/job117384098807와 관리39028495614 모두 completed/success. GitHub runner가 실제 운영 HTML/JS/CSS bytes를 대조해 index-8ghuJ5Y_.js/index-BIbWAB0U.css 일치 확인 EV-022. 학습 시작 상단·발자국 높이 축소·기록 요약 순서 UI 배포 완료. 새5문제/기존기록 보존 EV-021, 실기기/학습효과는 별도. 다음 WBS-510 유지, 후속 문서만 [skip ci] 저장.",
+      "commit": "fcb8f9dce092793cb4cffcff8219016a627df9e8"
     }
   ]
 }
