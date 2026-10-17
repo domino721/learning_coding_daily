@@ -6,7 +6,7 @@
   "timezone": "Asia/Seoul",
   "focus": "WBS-510",
   "next_task": "WBS-510",
-  "code_reference": "fcb8f9dce092793cb4cffcff8219016a627df9e8",
+  "code_reference": "5e6660fec44769e51d5a7a5f4feb7d83829a47bb",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -330,9 +330,10 @@
       "evidence": [
         "EV-019",
         "EV-020",
-        "EV-023"
+        "EV-023",
+        "EV-024"
       ],
-      "note": "codex-2026-10-17 새5개·참조/경계·기존60불변 및 snapshot/기록 보존 검수 완료. Python204/Node14/모바일17 EV-019. main cd5e027·1.5.0 태그 원격 저장, Pages38985051216/관리38985051297 success, GitHub runner에서 실제 공개 HTML/JS/CSS bytes 일치 확인 EV-020. 다음 WBS-510; 실기기·학습효과는 별도. LOG-032·033: SQL 입력 누락6개 v2·새SQL5개·표시 입력 검증·과거 snapshot 보존 로컬 검증 EV-023. Python230/Node14/모바일20 및 최종 입력 표시1개 통과. 이번 원격 배포 결과는 별도 확인."
+      "note": "codex-2026-10-17 새5개·참조/경계·기존60불변 및 snapshot/기록 보존 검수 완료. Python204/Node14/모바일17 EV-019. main cd5e027·1.5.0 태그 원격 저장, Pages38985051216/관리38985051297 success, GitHub runner에서 실제 공개 HTML/JS/CSS bytes 일치 확인 EV-020. 다음 WBS-510; 실기기·학습효과는 별도. LOG-032·033: SQL 입력 누락6개 v2·새SQL5개·표시 입력 검증·과거 snapshot 보존 로컬 검증 EV-023. Python230/Node14/모바일20 및 최종 입력 표시1개 통과. 이번 원격 배포 결과는 별도 확인. LOG-034: main5e6660f 저장·Pages39044173402/관리39044173394 success. 공개 HTML/JS/CSS index-iBII2PR6.js/index-D6v8TWnn.css 일치 확인 EV-024로 이번 SQL 유지보수 배포 완료. 다음 WBS-510 유지."
     }
   }
 }

@@ -310,6 +310,17 @@
         "tests/e2e/daily-content.spec.ts"
       ],
       "code_reference": "WBS-350 SQL input corrections and 2026-10-18 batch (accompanying commit)"
+    },
+    {
+      "id": "EV-024",
+      "record": "docs/planning/evidence/EV-024.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "backend/content_batches/2026-10-18.json",
+        "src/CodeBlock.tsx",
+        "scripts/validate_sql_content.py"
+      ],
+      "code_reference": "5e6660fec44769e51d5a7a5f4feb7d83829a47bb"
     }
   ]
 }

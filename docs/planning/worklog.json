@@ -399,6 +399,16 @@
       "changes": [],
       "summary": "SQL 누락6개 v2·10월18일 새SQL5개·전체18개 표시 입력 검증과 게시 차단·동일 과거 쿼리 주석 보충을 구현. Python230/Node14/모바일20(브라우저전용 서버5개 제외), 최종 저장SQL6개 표시/해설/답안·v1 snapshot 보존 재검증1개 통과 EV-023. 320px에서 전체 환불 입력을 직접 확인. 최종 웹 index-iBII2PR6.js/index-D6v8TWnn.css. 기존 main에 비강제 게시하며 원격 성공은 별도 기록한다. 다음 WBS-510과 기준선1.5.0 유지.",
       "commit": null
+    },
+    {
+      "id": "LOG-034",
+      "date": "2026-10-18",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [],
+      "summary": "검증된 SQL 입력 보완6개/새5개/표시 입력 검사/과거 snapshot 보존을 main5e6660f로 비강제 push. Pages39044173402/job117429497791와 관리39044173394/job117429497504 success. GitHub runner의 실제 운영 HTML/JS/CSS SHA256 대조가 index-iBII2PR6.js/index-D6v8TWnn.css 일치 확인 EV-024. 요청 범위 구현·원격 저장·실제 배포 완료. 다음 WBS-510 및 기준선1.5.0 유지, 배포 후 근거만 [skip ci]로 저장.",
+      "commit": "5e6660fec44769e51d5a7a5f4feb7d83829a47bb"
     }
   ]
 }
