@@ -224,6 +224,14 @@ export function LearningRecord({
                   다른 문제 {c.independent_count}개 · {c.evidence_days}일의 독립
                   풀이
                 </small>
+                {c.family_count !== undefined && (
+                  <small>
+                    확인한 유형 {c.family_count}개 ·{" "}
+                    {c.retention_observed
+                      ? "지연 복습 확인"
+                      : "지연 복습 확인 대기"}
+                  </small>
+                )}
               </article>
             ))}
           </div>

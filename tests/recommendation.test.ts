@@ -32,14 +32,15 @@ for (const fixture of cases)
         ],
       };
     });
+    const expected = fixture.expected_v2 ?? fixture.expected;
     const state = conceptStates(sessions as any).find(
-      (s) => s.id === fixture.expected.concept,
+      (s) => s.id === expected.concept,
     )!;
     for (const key of ["level", "independent_count", "evidence_days"] as const)
-      assert.equal(state[key], fixture.expected[key]);
+      assert.equal(state[key], expected[key]);
     assert.deepEqual(
       selectExercises(sessions as any, {}, fixture.day).map(([ex]) => ex.id),
-      fixture.selected,
+      fixture.selected_v2 ?? fixture.selected,
     );
   });
 test("review intervals and same-day cap", () => {

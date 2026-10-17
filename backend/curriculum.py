@@ -1,6 +1,10 @@
 """Authored curriculum and conservative, deterministic recommendation rules."""
 from dataclasses import replace
 from datetime import date, timedelta
+import json
+from pathlib import Path
+
+LEARNING_PATHS = json.loads(Path(__file__).with_name('learning_paths.json').read_text())
 
 CONCEPTS = [
     {'id':'pandas-select','name':'행·열 선택','domain':'pandas','prerequisites':[]},
@@ -65,14 +69,19 @@ def attach_metadata(exercises):
 
 
 def observations(sessions, by_id):
-    result=[]
+    result=[];seen=set()
     for s in sorted(sessions,key=lambda s:(s['local_day'],s.get('batch',0),s['id'])):
         for item in s['items']:
             if item['status']=='pending' or item['id'] not in by_id:continue
             source=by_id[item['id']]
+            if item.get('version',source.version)!=source.version:continue
+            key=(s['id'],item['id'],source.version)
+            if key in seen:continue
+            seen.add(key)
             mode=item.get('response_mode') or ('choice' if item.get('kind')=='choice' else 'short')
             result.append({'day':s['local_day'],'id':item['id'],'concept':source.concept_id,
                 'level':item.get('level',source.level), 'essay':mode=='essay',
+                'family':LEARNING_PATHS['items'][source.id]['family'],
                 'independent':item['status']=='correct' and item['hints_used']==0 and item['attempts_count']==1 and mode!='essay'})
     return result
 
@@ -81,15 +90,29 @@ def concept_states(sessions, by_id):
     for concept in CONCEPTS:
         daily={}
         for o in obs:
-            if o['concept']==concept['id'] and not o['essay']:daily.setdefault(o['day'],o)
+            if o['concept']==concept['id'] and not o['essay']:
+                previous=daily.get(o['day'])
+                if previous is None or (not previous['independent'] and o['independent']):daily[o['day']]=o
         rows=list(daily.values()); good=[o for o in rows if o['independent']]
         distinct=len({o['id'] for o in good}); days=len(good)
-        level=3 if distinct>=3 and days>=3 and sum(o['level']>=2 for o in good)>=2 else 2 if distinct>=2 and days>=2 else 1
-        if len(rows)>=2 and all(not o['independent'] for o in rows[-2:]):level=max(1,level-1)
+        all_rows=[o for o in obs if o['concept']==concept['id'] and not o['essay']]
+        all_good=[o for o in all_rows if o['independent']]
+        distinct=len({o['id'] for o in all_good});days=len({o['day'] for o in all_good})
+        families=len({o['family'] for o in all_good})
+        first={};retained=False
+        for o in all_good:
+            if o['day']>first.setdefault(o['id'],o['day']):retained=True
+        support=max((i for i,o in enumerate(all_rows) if not o['independent']),default=-1)
+        needs_support=support>=0 and len({o['id'] for o in all_rows[support+1:] if o['independent']})<LEARNING_PATHS['rules']['recovery_items']
+        rules=LEARNING_PATHS['rules']
+        transfer_days=len({o['day'] for o in all_good if o['level']>=2})
+        level=3 if distinct>=rules['level3_items'] and days>=rules['level3_days'] and transfer_days>=rules['level3_transfer_days'] and families>=3 and retained and not needs_support else 2 if distinct>=rules['level2_items'] and days>=rules['level2_days'] and families>=2 else 1
         result[concept['id']]={**concept,'level':level,'label':LEVELS[level],
             'independent_count':distinct,'evidence_days':days,'observed_count':len(rows),
+            'family_count':families,'retention_observed':retained,'needs_support':needs_support,
+            'evidence_status':'unassessed' if not all_rows else 'observed',
             'ready_for_probe':bool(rows and rows[-1]['independent'] and days>=2),
-            'status':'관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 보완 중'}
+            'status':'기초 보완 중' if needs_support else '진단 전' if not all_rows else '관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 확인 중'}
     return result
 
 def in_track(ex, track):
@@ -97,16 +120,23 @@ def in_track(ex, track):
 
 
 def select_exercises(exercises, sessions, progress, today, extra=False, track=None):
+    sessions=[s for s in sessions if s['local_day']<=today]
     by_id={ex.id:ex for ex in exercises};states=concept_states(sessions,by_id)
+    obs=observations(sessions,by_id)
+    latest={o['id']:o for o in obs if not o['essay']}
+    def known(identifier):
+        if identifier in latest and latest[identifier]['independent']:return True
+        cid=LEARNING_PATHS['items'][identifier]['concept_id']
+        state=states[cid]
+        return state['level']>=2 and not state['needs_support']
     exercises=[ex for ex in exercises if ex.response_mode != 'essay' and in_track(ex,track)]
     done_today={i['id'] for s in sessions if s['local_day']==today for i in s['items']}
     def eligible(ex):
         state=states[ex.concept_id]
         prereq=all(states[c]['independent_count']>0 for c in state['prerequisites'])
         # One independent foundation result permits a level-2 probe, not a mastery claim.
-        limit=3 if state['level']>=2 or state['ready_for_probe'] else 2 if state['independent_count']>0 else 1
-        minimum=min(x.level for x in exercises if x.concept_id==ex.concept_id)
-        return prereq and ex.level<=max(minimum,limit)
+        limit=1 if state['needs_support'] else 3 if state['level']>=2 else 2 if state['independent_count']>0 else 1
+        return prereq and ex.level<=limit and all(known(key) for key in LEARNING_PATHS['items'][ex.id]['requires'])
     due=sorted([ex for ex in exercises if ex.id in progress and progress[ex.id].get('due',progress[ex.id].get('due_day','9999'))<=today and ex.id not in done_today and eligible(ex)],
                key=lambda ex:(progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
     selected=[] if extra else [(ex,'review') for ex in due[:3]]
@@ -114,7 +144,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
     for ex,_ in selected:counts[ex.domain]+=1
     pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
     while pool and len(selected)<5:
-        ex=min(pool,key=lambda ex:(counts[ex.domain],ex.level,exercises.index(ex)))
+        ex=min(pool,key=lambda ex:(not states[ex.concept_id]['needs_support'],counts[ex.domain],ex.level,exercises.index(ex)))
         selected.append((ex,'new'));counts[ex.domain]+=1;pool.remove(ex)
         if ex.level==3:pool=[candidate for candidate in pool if candidate.level<3]
     if extra:
@@ -122,6 +152,56 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
             if len(selected)>=5:break
             if ex.id not in {x.id for x,_ in selected}:selected.append((ex,'review'))
     return selected
+
+
+def validate_learning_paths(exercises):
+    """Publishing fails before build if a target has no reviewed prerequisite path."""
+    from dataclasses import asdict
+    items=LEARNING_PATHS['items'];by_id={ex.id:ex for ex in exercises}
+    bank=json.loads((Path(__file__).resolve().parent.parent/'curriculum/problem_bank.json').read_text())
+    cards={card['id']:card for card in bank['exercises'] if card['source']=='app'}
+    if set(cards)!=set(by_id):raise ValueError('Every app exercise needs a design card')
+    if set(items)!=set(by_id):raise ValueError('Every exercise needs a learning path before release')
+    active=set();done=set()
+    def visit(identifier):
+        if identifier in active:raise ValueError('Learning path cycle')
+        if identifier in done:return
+        active.add(identifier)
+        for parent in items[identifier]['requires']:
+            if parent not in items:raise ValueError('Unknown prerequisite exercise')
+            visit(parent)
+        active.remove(identifier);done.add(identifier)
+    for ex in exercises:
+        node=items[ex.id]
+        card=cards[ex.id]
+        if ex.id not in LEARNING_PATHS['legacy_catalog'] and card['status']!='item_reviewed':raise ValueError('New design card needs item review')
+        for key,value in asdict(ex).items():
+            if key not in ('concept','difficulty') and card.get(key)!=(list(value) if isinstance(value,tuple) else value):raise ValueError('Stale design card: '+ex.id)
+        if card.get('requires')!=node['requires']:raise ValueError('Design card path mismatch')
+        if ex.response_mode!='essay' and any(by_id[key].response_mode=='essay' for key in node['requires'] if key in by_id):raise ValueError('An active target cannot require a suspended exercise')
+        if node['review_status']!='reviewed' or not node['objective'] or not node['family']:raise ValueError('Unreviewed learning path')
+        if node['level']!=ex.level or node['concept_id']!=ex.concept_id:raise ValueError('Learning path metadata mismatch')
+        visit(ex.id)
+        if ex.level>1 and not any(by_id[key].concept_id==ex.concept_id and by_id[key].level<ex.level for key in node['requires']):
+            raise ValueError('An advanced target needs a lower-level prerequisite in its concept')
+        if ex.level==3 and not any(by_id[key].concept_id==ex.concept_id and by_id[key].level==2 for key in node['requires']):
+            raise ValueError('A transfer target needs an application step')
+
+
+def recommendation_trace(selected, sessions, by_id):
+    states=concept_states(sessions,by_id)
+    return {'algorithm_version':LEARNING_PATHS['version'],'rules':LEARNING_PATHS['rules'],
+        'items':[{'id':ex.id,'version':ex.version,'concept_id':ex.concept_id,
+                  'role':LEARNING_PATHS['items'][ex.id]['role'],
+                  'requires':LEARNING_PATHS['items'][ex.id]['requires'],
+                  'level':states[ex.concept_id]['level'],
+                  'independent_count':states[ex.concept_id]['independent_count'],
+                  'evidence_days':states[ex.concept_id]['evidence_days'],
+                  'reason':'예정된 복습으로 기억을 다시 확인해요.' if category=='review' else
+                    '도움이 필요했던 개념의 기초를 먼저 확인해요.' if states[ex.concept_id]['needs_support'] else
+                    '다음 단계에 필요한 기초를 먼저 확인해요.' if ex.level==1 else
+                    '확인한 기초를 다른 조건에 적용해요.'}
+                 for ex,category in selected]}
 
 def review_due(today, prior, independent):
     streak=0 if not independent else prior.get('streak',0)+(prior.get('last_day')!=today)

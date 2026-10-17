@@ -1,0 +1,1095 @@
+{
+  "schema_version": 1,
+  "version": "learning-paths-2.0",
+  "rules": {
+    "level2_items": 2,
+    "level2_days": 2,
+    "level3_items": 3,
+    "level3_days": 3,
+    "level3_transfer_days": 2,
+    "recovery_items": 2,
+    "max_transfer_per_batch": 1
+  },
+  "items": {
+    "pandas-select-01": {
+      "concept_id": "pandas-select",
+      "level": 1,
+      "role": "foundation",
+      "family": "single-column",
+      "requires": [],
+      "remediation": ["pandas-select-02"],
+      "objective": "리포트 출력 점검: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-shape-01": {
+      "concept_id": "numpy-structure",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-structure:축과 배열 크기",
+      "requires": [],
+      "remediation": ["numpy-axis-01"],
+      "objective": "센서 배열 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "sql-where-01": {
+      "concept_id": "sql-rows",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-rows:SQL 필터 조건",
+      "requires": [],
+      "remediation": ["sql-where-01"],
+      "objective": "주문 조회 완성: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "stats-median-01": {
+      "concept_id": "stats-summaries",
+      "level": 1,
+      "role": "foundation",
+      "family": "stats-summaries:중앙값과 이상치",
+      "requires": [],
+      "remediation": ["stats-median-01"],
+      "objective": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "ml-split-01": {
+      "concept_id": "ml-evaluation",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-evaluation:학습·평가 데이터 분리",
+      "requires": [],
+      "remediation": ["ml-split-01"],
+      "objective": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-01": {
+      "concept_id": "pandas-filter",
+      "level": 1,
+      "role": "foundation",
+      "family": "mask-evaluation",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "점수 코드 검토: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-axis-01": {
+      "concept_id": "numpy-structure",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-structure:축별 연산",
+      "requires": [],
+      "remediation": ["numpy-shape-01"],
+      "objective": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "sql-count-01": {
+      "concept_id": "sql-aggregation",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-aggregation:NULL과 COUNT",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "주문 건수 검토: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "stats-weight-01": {
+      "concept_id": "stats-rates",
+      "level": 1,
+      "role": "foundation",
+      "family": "stats-rates:가중 평균",
+      "requires": ["stats-median-01"],
+      "remediation": ["stats-median-01"],
+      "objective": "전체 전환율 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "ml-scale-01": {
+      "concept_id": "ml-preprocessing",
+      "level": 2,
+      "role": "application",
+      "family": "ml-preprocessing:fit과 transform의 구분",
+      "requires": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "remediation": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "objective": "새 입력 처리 결과: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-01": {
+      "concept_id": "pandas-null",
+      "level": 1,
+      "role": "foundation",
+      "family": "missing-detection",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "주문 데이터 확인: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-broadcast-01": {
+      "concept_id": "numpy-broadcast",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-broadcast:브로드캐스팅",
+      "requires": ["numpy-shape-01", "numpy-broadcast-foundation-01"],
+      "remediation": ["numpy-shape-01", "numpy-broadcast-foundation-01"],
+      "objective": "보정값 적용 결과: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "sql-having-01": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:그룹 집계 후 조건",
+      "requires": ["sql-where-01", "sql-count-01"],
+      "remediation": ["sql-where-01", "sql-count-01"],
+      "objective": "팀별 조회 완성: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "stats-std-01": {
+      "concept_id": "stats-summaries",
+      "level": 2,
+      "role": "application",
+      "family": "stats-summaries:표본 표준편차",
+      "requires": ["stats-median-01"],
+      "remediation": ["stats-median-01"],
+      "objective": "변동성 수치 확인: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "ml-metric-01": {
+      "concept_id": "ml-metrics",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-metrics:불균형 데이터와 정확도",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01"],
+      "objective": "모델 점수 확인: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-01": {
+      "concept_id": "pandas-sort",
+      "level": 1,
+      "role": "foundation",
+      "family": "descending-order",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "주문 목록 출력: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-mask-01": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:마스크 인덱싱",
+      "requires": ["numpy-shape-01", "numpy-where-20261017"],
+      "remediation": ["numpy-shape-01", "numpy-where-20261017"],
+      "objective": "측정값 코드 검토: 원소별 조건과 단계별 인덱싱의 결과를 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-01": {
+      "concept_id": "sql-joins",
+      "level": 2,
+      "role": "application",
+      "family": "sql-joins:조인 행 수",
+      "requires": ["sql-where-01", "sql-join-foundation-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01"],
+      "objective": "고객 리포트 행 수: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "stats-ab-01": {
+      "concept_id": "stats-rates",
+      "level": 2,
+      "role": "application",
+      "family": "stats-rates:퍼센트와 퍼센트포인트",
+      "requires": ["stats-median-01", "stats-weight-01"],
+      "remediation": ["stats-median-01", "stats-weight-01"],
+      "objective": "실험 리포트 단위 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-01": {
+      "concept_id": "ml-neighbors",
+      "level": 2,
+      "role": "application",
+      "family": "ml-neighbors:최근접 이웃 예측",
+      "requires": ["ml-split-01", "ml-neighbor-foundation-01"],
+      "remediation": ["ml-split-01", "ml-neighbor-foundation-01"],
+      "objective": "예측 한 건 확인: 거리·이웃 수·레이블 결정을 순서대로 적용한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-01": {
+      "concept_id": "pandas-group",
+      "level": 1,
+      "role": "foundation",
+      "family": "aggregation-method",
+      "requires": ["pandas-filter-01"],
+      "remediation": ["pandas-filter-01"],
+      "objective": "일일 지표 완성: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-view-01": {
+      "concept_id": "numpy-memory",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-memory:뷰와 복사",
+      "requires": ["numpy-shape-01", "numpy-memory-foundation-01"],
+      "remediation": ["numpy-shape-01", "numpy-memory-foundation-01"],
+      "objective": "전처리 뒤 원본 확인: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "sql-null-01": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:NULL 비교의 삼치 논리",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "조회 누락 조사: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "stats-conditional-01": {
+      "concept_id": "stats-rates",
+      "level": 2,
+      "role": "application",
+      "family": "stats-rates:조건부 비율의 분모",
+      "requires": ["stats-median-01", "stats-weight-01"],
+      "remediation": ["stats-median-01", "stats-weight-01"],
+      "objective": "그룹 지표 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "ml-leakage-01": {
+      "concept_id": "ml-evaluation",
+      "level": 2,
+      "role": "application",
+      "family": "ml-evaluation:전처리 데이터 누수",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01"],
+      "objective": "평가 절차 리뷰: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-select-02": {
+      "concept_id": "pandas-select",
+      "level": 1,
+      "role": "foundation",
+      "family": "multi-column",
+      "requires": [],
+      "remediation": ["pandas-select-01"],
+      "objective": "출력 크기 확인: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-02": {
+      "concept_id": "pandas-filter",
+      "level": 2,
+      "role": "application",
+      "family": "boundary-operator",
+      "requires": ["pandas-select-01", "pandas-filter-01"],
+      "remediation": ["pandas-select-01", "pandas-filter-01"],
+      "objective": "대상 주문 추출: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-02": {
+      "concept_id": "pandas-null",
+      "level": 2,
+      "role": "application",
+      "family": "missing-fill",
+      "requires": ["pandas-select-01", "pandas-null-01"],
+      "remediation": ["pandas-select-01", "pandas-null-01"],
+      "objective": "입력 데이터 준비: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-02": {
+      "concept_id": "pandas-sort",
+      "level": 2,
+      "role": "application",
+      "family": "sort-method",
+      "requires": ["pandas-select-01", "pandas-sort-01"],
+      "remediation": ["pandas-select-01", "pandas-sort-01"],
+      "objective": "리포트 순서 맞추기: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-02": {
+      "concept_id": "pandas-group",
+      "level": 2,
+      "role": "application",
+      "family": "group-sum",
+      "requires": ["pandas-filter-01", "pandas-group-01"],
+      "remediation": ["pandas-filter-01", "pandas-group-01"],
+      "objective": "팀 리포트 검토: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-select-03": {
+      "concept_id": "pandas-select",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-select:조건과 열 선택",
+      "requires": ["pandas-select-01", "pandas-alignment-20261017"],
+      "remediation": ["pandas-select-01", "pandas-alignment-20261017"],
+      "objective": "품절 상품의 가격 합: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-03": {
+      "concept_id": "pandas-filter",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-filter:구간 경계 선택",
+      "requires": ["pandas-select-01", "pandas-filter-01", "pandas-filter-02"],
+      "remediation": [
+        "pandas-select-01",
+        "pandas-filter-01",
+        "pandas-filter-02"
+      ],
+      "objective": "허용 구간 점검: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-03": {
+      "concept_id": "pandas-null",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-null:결측치와 분모",
+      "requires": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
+      "remediation": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
+      "objective": "평균 계산 절차: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-03": {
+      "concept_id": "pandas-sort",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-sort:다중 정렬",
+      "requires": ["pandas-select-01", "pandas-sort-01", "pandas-sort-02"],
+      "remediation": ["pandas-select-01", "pandas-sort-01", "pandas-sort-02"],
+      "objective": "동점 순위 정리: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-03": {
+      "concept_id": "pandas-group",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-group:그룹 집계와 필터",
+      "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
+      "remediation": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
+      "objective": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-04": {
+      "concept_id": "pandas-group",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-group:그룹의 결측치 집계",
+      "requires": ["pandas-filter-01", "pandas-group-01"],
+      "remediation": ["pandas-filter-01", "pandas-group-01"],
+      "objective": "보고서 건수 차이: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-shape-02": {
+      "concept_id": "numpy-structure",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-structure:배열 변형",
+      "requires": ["numpy-shape-01", "numpy-shape-application-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "numpy-axis-02": {
+      "concept_id": "numpy-structure",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-structure:축 보존 집계",
+      "requires": ["numpy-shape-01", "numpy-shape-application-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "행 기준 보정: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "numpy-broadcast-02": {
+      "concept_id": "numpy-broadcast",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-broadcast:서로 다른 축의 확장",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-broadcast-foundation-01",
+        "numpy-broadcast-01"
+      ],
+      "remediation": [
+        "numpy-shape-01",
+        "numpy-broadcast-foundation-01",
+        "numpy-broadcast-01"
+      ],
+      "objective": "행과 열 보정값: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "numpy-mask-02": {
+      "concept_id": "numpy-mask",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-mask:원본 기준과 단계별 마스크",
+      "requires": ["numpy-shape-01", "numpy-where-20261017", "numpy-mask-01"],
+      "remediation": [
+        "numpy-shape-01",
+        "numpy-where-20261017",
+        "numpy-mask-01"
+      ],
+      "objective": "이중 조건 추적: 원소별 조건과 단계별 인덱싱의 결과를 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "numpy-view-02": {
+      "concept_id": "numpy-memory",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-memory:고급 인덱싱 복사",
+      "requires": ["numpy-shape-01", "numpy-memory-foundation-01"],
+      "remediation": ["numpy-shape-01", "numpy-memory-foundation-01"],
+      "objective": "인덱스 목록의 변경: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "numpy-view-03": {
+      "concept_id": "numpy-memory",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-memory:공유 메모리의 전이",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-memory-foundation-01",
+        "numpy-view-01"
+      ],
+      "remediation": [
+        "numpy-shape-01",
+        "numpy-memory-foundation-01",
+        "numpy-view-01"
+      ],
+      "objective": "두 경로의 변경 추적: 인덱싱 종류에 따른 메모리 공유와 변경의 전파를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-where-02": {
+      "concept_id": "sql-rows",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-rows:NULL과 제외 조건",
+      "requires": ["sql-where-01", "sql-null-01"],
+      "remediation": ["sql-where-01", "sql-null-01"],
+      "objective": "제외 목록 검토: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-having-02": {
+      "concept_id": "sql-aggregation",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-aggregation:그룹별 고유 개수",
+      "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
+      "remediation": ["sql-where-01", "sql-count-01", "sql-having-01"],
+      "objective": "재구매 고객 수: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-count-02": {
+      "concept_id": "sql-aggregation",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-aggregation:조건부 집계",
+      "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
+      "remediation": ["sql-where-01", "sql-count-01", "sql-having-01"],
+      "objective": "완료 주문 비율의 분자: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-02": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:외부 조인 후 조건",
+      "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "objective": "주문 없는 고객 찾기: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-03": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:외부 조인의 집계",
+      "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "objective": "빈 그룹의 두 건수: 일대다/미연결 행과 조인 이후 집계/조건을 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "sql-null-02": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:결측값 대체와 합계",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "환불 누락값 처리: 행 조건의 논리와 NULL의 Unknown 처리를 함께 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "stats-median-02": {
+      "concept_id": "stats-summaries",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-summaries:그룹 평균의 합성",
+      "requires": ["stats-median-01", "stats-std-01"],
+      "remediation": ["stats-median-01", "stats-std-01"],
+      "objective": "두 팀 지표 합치기: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "stats-std-02": {
+      "concept_id": "stats-summaries",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-summaries:표본과 모집단",
+      "requires": ["stats-median-01", "stats-std-01"],
+      "remediation": ["stats-median-01", "stats-std-01"],
+      "objective": "두 변동성의 비율: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "stats-weight-02": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:전체와 조건부 분모",
+      "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "remediation": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "objective": "전체 성공률 합치기: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "stats-ab-02": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:상대 변화",
+      "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "remediation": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "objective": "실험 개선율 검토: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "stats-conditional-02": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:조건부 확률의 방향",
+      "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "remediation": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "objective": "구매자 중 모바일 비율: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "stats-conditional-03": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:집단 구성과 전체 비율",
+      "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "remediation": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
+      "objective": "통합 지표 해석: 비율의 분모와 집단 크기·비교 단위를 구분한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "ml-split-02": {
+      "concept_id": "ml-evaluation",
+      "level": 2,
+      "role": "application",
+      "family": "ml-evaluation:계층 분할",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01"],
+      "objective": "클래스 비율 보존: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 여러 조건/연산을 연결하는 적용이다.",
+      "review_status": "reviewed"
+    },
+    "ml-scale-02": {
+      "concept_id": "ml-preprocessing",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-preprocessing:학습 기준의 재사용",
+      "requires": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-scale-01",
+        "ml-transform-foundation-01"
+      ],
+      "remediation": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-scale-01",
+        "ml-transform-foundation-01"
+      ],
+      "objective": "평가 입력 평균: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "ml-metric-02": {
+      "concept_id": "ml-metrics",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-metrics:재현율의 분모",
+      "requires": ["ml-split-01", "ml-metric-01", "ml-metric-application-01"],
+      "remediation": ["ml-split-01", "ml-metric-01"],
+      "objective": "양성 탐지 점검: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "ml-metric-03": {
+      "concept_id": "ml-metrics",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-metrics:정밀도와 재현율",
+      "requires": ["ml-split-01", "ml-metric-01", "ml-metric-application-01"],
+      "remediation": ["ml-split-01", "ml-metric-01"],
+      "objective": "양성 예측의 신뢰도: 실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-02": {
+      "concept_id": "ml-neighbors",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-neighbors:이웃 다수결",
+      "requires": [
+        "ml-split-01",
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-01"
+      ],
+      "remediation": [
+        "ml-split-01",
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-01"
+      ],
+      "objective": "세 이웃 예측: 거리·이웃 수·레이블 결정을 순서대로 적용한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "ml-leakage-02": {
+      "concept_id": "ml-evaluation",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-evaluation:결측치 대체의 누수",
+      "requires": ["ml-split-01", "ml-split-02"],
+      "remediation": ["ml-split-01", "ml-leakage-01"],
+      "objective": "평가 전처리 검토: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+      "review_status": "reviewed"
+    },
+    "pandas-alignment-20261017": {
+      "concept_id": "pandas-select",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-select:인덱스 정렬과 열 대입",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "행 이름을 맞춘 뒤 누락된 라벨을 찾아야 하므로 두 개념을 연결하는 적용 문제입니다.",
+      "review_status": "reviewed"
+    },
+    "numpy-where-20261017": {
+      "concept_id": "numpy-mask",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-mask:조건별 원소 선택",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "단일 np.where 연산의 True/False 위치별 선택을 확인하는 기초 문제입니다.",
+      "review_status": "reviewed"
+    },
+    "sql-exists-20261017": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:상관 서브쿼리와 NULL",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "고객별 상관 조건의 존재와 NULL 비교 결과를 함께 추적하는 적용 문제입니다.",
+      "review_status": "reviewed"
+    },
+    "sql-fanout-20261017": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:다중 조인의 집계 중복",
+      "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
+      "objective": "서로 다른 두 상세 표의 조합과 각 합산 대상의 반복 횟수를 추적하는 전이 문제입니다.",
+      "review_status": "reviewed"
+    },
+    "ml-category-20261017": {
+      "concept_id": "ml-preprocessing",
+      "level": 2,
+      "role": "application",
+      "family": "ml-preprocessing:학습하지 않은 범주의 변환",
+      "requires": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "remediation": [
+        "ml-split-01",
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "objective": "학습 범주와 평가 시 새 범주 처리 설정을 연결하는 적용 문제입니다.",
+      "review_status": "reviewed"
+    },
+    "sql-empty-sum-20261018": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:빈 집합과 집계 후 대체",
+      "requires": ["sql-where-01", "sql-count-01"],
+      "remediation": ["sql-where-01", "sql-count-01"],
+      "objective": "빈 집합에서 집계 전·후 NULL 대체를 구분해야 하므로 적용 수준이다.",
+      "review_status": "reviewed"
+    },
+    "sql-null-count-20261018": {
+      "concept_id": "sql-aggregation",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-aggregation:행 수와 유효값 수",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "주어진 두 행에서 행 수·비NULL 개수·대체 후 합계를 직접 확인하는 기초 문제이다.",
+      "review_status": "reviewed"
+    },
+    "sql-refund-average-20261018": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:결측값과 평균의 분모",
+      "requires": ["sql-where-01", "sql-count-01"],
+      "remediation": ["sql-where-01", "sql-count-01"],
+      "objective": "NULL 처리 시점이 평균의 분모를 바꾸는 과정을 연결하는 적용 문제이다.",
+      "review_status": "reviewed"
+    },
+    "sql-distinct-sum-20261018": {
+      "concept_id": "sql-aggregation",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-aggregation:중복값과 DISTINCT 집계",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "단일 열의 중복값을 집계에 넣는지 구별하는 기초 문제이다.",
+      "review_status": "reviewed"
+    },
+    "sql-qualified-join-20261018": {
+      "concept_id": "sql-joins",
+      "level": 2,
+      "role": "application",
+      "family": "sql-joins:외부 조인의 연결 조건",
+      "requires": ["sql-where-01", "sql-join-foundation-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01"],
+      "objective": "연결 전 조건과 연결 후 NULL 필터를 함께 추적하므로 적용 수준이다.",
+      "review_status": "reviewed"
+    },
+    "pandas-select-scaffold-01": {
+      "concept_id": "pandas-select",
+      "level": 1,
+      "role": "foundation",
+      "family": "selection-result",
+      "requires": [],
+      "remediation": ["pandas-select-01"],
+      "objective": "선택한 Series의 이름을 읽는다.",
+      "review_status": "reviewed"
+    },
+    "pandas-select-scaffold-02": {
+      "concept_id": "pandas-select",
+      "level": 2,
+      "role": "application",
+      "family": "shape-transfer",
+      "requires": ["pandas-select-01", "pandas-select-scaffold-01"],
+      "remediation": ["pandas-select-01", "pandas-select-scaffold-01"],
+      "objective": "열 선택 후 유지되는 행 개수를 예측한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-scaffold-01": {
+      "concept_id": "pandas-filter",
+      "level": 1,
+      "role": "foundation",
+      "family": "category-equality",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "문자열 조건과 일치하는 행 수를 구한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-scaffold-02": {
+      "concept_id": "pandas-filter",
+      "level": 2,
+      "role": "application",
+      "family": "combined-mask",
+      "requires": [
+        "pandas-select-01",
+        "pandas-filter-01",
+        "pandas-filter-scaffold-01"
+      ],
+      "remediation": [
+        "pandas-select-01",
+        "pandas-filter-01",
+        "pandas-filter-scaffold-01"
+      ],
+      "objective": "두 조건을 모두 만족하는 행을 찾는다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-scaffold-01": {
+      "concept_id": "pandas-null",
+      "level": 1,
+      "role": "foundation",
+      "family": "drop-missing",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "결측 행 제거 후 행 개수를 구한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-scaffold-02": {
+      "concept_id": "pandas-null",
+      "level": 2,
+      "role": "application",
+      "family": "fill-aggregate",
+      "requires": [
+        "pandas-select-01",
+        "pandas-null-01",
+        "pandas-null-scaffold-01"
+      ],
+      "remediation": [
+        "pandas-select-01",
+        "pandas-null-01",
+        "pandas-null-scaffold-01"
+      ],
+      "objective": "채운 뒤의 데이터로 평균을 계산한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-scaffold-01": {
+      "concept_id": "pandas-sort",
+      "level": 1,
+      "role": "foundation",
+      "family": "index-preservation",
+      "requires": ["pandas-select-01"],
+      "remediation": ["pandas-select-01"],
+      "objective": "값 정렬 후에도 유지되는 행 이름을 읽는다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-scaffold-02": {
+      "concept_id": "pandas-sort",
+      "level": 2,
+      "role": "application",
+      "family": "multi-key-order",
+      "requires": [
+        "pandas-select-01",
+        "pandas-sort-01",
+        "pandas-sort-scaffold-01"
+      ],
+      "remediation": [
+        "pandas-select-01",
+        "pandas-sort-01",
+        "pandas-sort-scaffold-01"
+      ],
+      "objective": "두 정렬 기준을 순서대로 적용한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-scaffold-01": {
+      "concept_id": "pandas-group",
+      "level": 1,
+      "role": "foundation",
+      "family": "group-count",
+      "requires": ["pandas-filter-01"],
+      "remediation": ["pandas-filter-01"],
+      "objective": "그룹별 유효한 값의 건수를 계산한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-scaffold-02": {
+      "concept_id": "pandas-group",
+      "level": 2,
+      "role": "application",
+      "family": "group-mean",
+      "requires": [
+        "pandas-filter-01",
+        "pandas-group-01",
+        "pandas-group-scaffold-01"
+      ],
+      "remediation": [
+        "pandas-filter-01",
+        "pandas-group-01",
+        "pandas-group-scaffold-01"
+      ],
+      "objective": "새 데이터에서 지정 그룹의 평균을 계산한다.",
+      "review_status": "reviewed"
+    },
+    "ml-fit-foundation-01": {
+      "concept_id": "ml-preprocessing",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-preprocessing:학습 호출과 객체 상태",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01"],
+      "objective": "학습 호출과 객체 상태의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-mean-foundation-01": {
+      "concept_id": "ml-preprocessing",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-preprocessing:학습한 평균 읽기",
+      "requires": ["ml-split-01", "ml-fit-foundation-01"],
+      "remediation": ["ml-split-01", "ml-fit-foundation-01"],
+      "objective": "학습한 평균 읽기의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-scale-foundation-01": {
+      "concept_id": "ml-preprocessing",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-preprocessing:학습한 표준편차 읽기",
+      "requires": ["ml-split-01", "ml-mean-foundation-01"],
+      "remediation": ["ml-split-01", "ml-mean-foundation-01"],
+      "objective": "학습한 표준편차 읽기의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-transform-foundation-01": {
+      "concept_id": "ml-preprocessing",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-preprocessing:학습 값에 기준 적용",
+      "requires": [
+        "ml-split-01",
+        "ml-scale-foundation-01",
+        "numpy-index-foundation-01"
+      ],
+      "remediation": [
+        "ml-split-01",
+        "ml-scale-foundation-01",
+        "numpy-index-foundation-01"
+      ],
+      "objective": "학습 값에 기준 적용의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-index-foundation-01": {
+      "concept_id": "numpy-structure",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-structure:배열의 행·열 인덱싱",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "배열의 행·열 인덱싱의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-broadcast-foundation-01": {
+      "concept_id": "numpy-broadcast",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-broadcast:배열과 단일 값의 연산",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "배열과 단일 값의 연산의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-memory-foundation-01": {
+      "concept_id": "numpy-memory",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-memory:같은 배열을 가리키는 참조",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01"],
+      "objective": "같은 배열을 가리키는 참조의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-foundation-01": {
+      "concept_id": "ml-neighbors",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-neighbors:가장 가까운 이웃 하나",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01"],
+      "objective": "가장 가까운 이웃 하나의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-foundation-01": {
+      "concept_id": "sql-joins",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-joins:연결 조건을 만족하는 행",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01"],
+      "objective": "연결 조건을 만족하는 행의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-shape-application-01": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:집계 뒤 배열 구조",
+      "requires": ["numpy-shape-01", "numpy-axis-01"],
+      "remediation": ["numpy-shape-01", "numpy-axis-01"],
+      "objective": "집계 뒤 배열 구조을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-metric-application-01": {
+      "concept_id": "ml-metrics",
+      "level": 2,
+      "role": "application",
+      "family": "ml-metrics:양성 예측의 분모",
+      "requires": ["ml-split-01", "ml-metric-01"],
+      "remediation": ["ml-split-01", "ml-metric-01"],
+      "objective": "양성 예측의 분모을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+      "review_status": "reviewed"
+    }
+  },
+  "legacy_catalog": [
+    "pandas-select-01",
+    "numpy-shape-01",
+    "sql-where-01",
+    "stats-median-01",
+    "ml-split-01",
+    "pandas-filter-01",
+    "numpy-axis-01",
+    "sql-count-01",
+    "stats-weight-01",
+    "ml-scale-01",
+    "pandas-null-01",
+    "numpy-broadcast-01",
+    "sql-having-01",
+    "stats-std-01",
+    "ml-metric-01",
+    "pandas-sort-01",
+    "numpy-mask-01",
+    "sql-join-01",
+    "stats-ab-01",
+    "ml-neighbor-01",
+    "pandas-group-01",
+    "numpy-view-01",
+    "sql-null-01",
+    "stats-conditional-01",
+    "ml-leakage-01",
+    "pandas-select-02",
+    "pandas-filter-02",
+    "pandas-null-02",
+    "pandas-sort-02",
+    "pandas-group-02",
+    "pandas-select-03",
+    "pandas-filter-03",
+    "pandas-null-03",
+    "pandas-sort-03",
+    "pandas-group-03",
+    "pandas-group-04",
+    "numpy-shape-02",
+    "numpy-axis-02",
+    "numpy-broadcast-02",
+    "numpy-mask-02",
+    "numpy-view-02",
+    "numpy-view-03",
+    "sql-where-02",
+    "sql-having-02",
+    "sql-count-02",
+    "sql-join-02",
+    "sql-join-03",
+    "sql-null-02",
+    "stats-median-02",
+    "stats-std-02",
+    "stats-weight-02",
+    "stats-ab-02",
+    "stats-conditional-02",
+    "stats-conditional-03",
+    "ml-split-02",
+    "ml-scale-02",
+    "ml-metric-02",
+    "ml-metric-03",
+    "ml-neighbor-02",
+    "ml-leakage-02",
+    "pandas-alignment-20261017",
+    "numpy-where-20261017",
+    "sql-exists-20261017",
+    "sql-fanout-20261017",
+    "ml-category-20261017",
+    "sql-empty-sum-20261018",
+    "sql-null-count-20261018",
+    "sql-refund-average-20261018",
+    "sql-distinct-sum-20261018",
+    "sql-qualified-join-20261018"
+  ]
+}

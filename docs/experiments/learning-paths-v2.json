@@ -1,0 +1,3056 @@
+{
+  "synthetic": true,
+  "algorithm_version": "learning-paths-2.0",
+  "source_hashes": {
+    "backend/curriculum.py": "211e59ed9e4e15ec8ca57bb7cf6a31e6767b9d46810b3e7be01eded9b2a65a78",
+    "backend/learning_paths.json": "31c172ba3e27aa04bc84af9f77f3e8cae8b2d89c8e518537aacb0b7b48419325",
+    "src/recommendation.ts": "01215d2d547c8642b39b45af38e8062ffa738a78c2d7471e81f0ec6c8acaa215"
+  },
+  "scenarios": [
+    {
+      "scenario": {
+        "name": "scaler target routes to fit foundation",
+        "track": "python",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "ml-split-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "numpy-shape-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "ml-scale-01",
+            "day": "2026-10-18",
+            "status": "revealed",
+            "hints": 1
+          }
+        ],
+        "first": "ml-fit-foundation-01",
+        "excluded": [
+          "ml-scale-01",
+          "ml-scale-02"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 1,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "ml-fit-foundation-01",
+            "version": 1,
+            "concept_id": "ml-preprocessing",
+            "role": "foundation",
+            "requires": [
+              "ml-split-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "pandas-select-01",
+            "version": 2,
+            "concept_id": "pandas-select",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "stats-median-01",
+            "version": 2,
+            "concept_id": "stats-summaries",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 1,
+            "evidence_days": 1,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-metric-01",
+            "version": 2,
+            "concept_id": "ml-metrics",
+            "role": "foundation",
+            "requires": [
+              "ml-split-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "fit success routes to learned mean",
+        "track": "python",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "ml-split-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "numpy-shape-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "ml-scale-01",
+            "day": "2026-10-18",
+            "status": "revealed",
+            "hints": 1
+          },
+          {
+            "id": "ml-fit-foundation-01",
+            "day": "2026-10-18"
+          }
+        ],
+        "first": "ml-mean-foundation-01",
+        "excluded": [
+          "ml-scale-01",
+          "ml-scale-02"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "ml-mean-foundation-01",
+            "version": 1,
+            "concept_id": "ml-preprocessing",
+            "role": "foundation",
+            "requires": [
+              "ml-split-01",
+              "ml-fit-foundation-01"
+            ],
+            "level": 1,
+            "independent_count": 1,
+            "evidence_days": 1,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "pandas-select-01",
+            "version": 2,
+            "concept_id": "pandas-select",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "stats-median-01",
+            "version": 2,
+            "concept_id": "stats-summaries",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 1,
+            "evidence_days": 1,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-metric-01",
+            "version": 2,
+            "concept_id": "ml-metrics",
+            "role": "foundation",
+            "requires": [
+              "ml-split-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "completed bridge opens original target review",
+        "track": "python",
+        "day": "2026-10-19",
+        "records": [
+          {
+            "id": "ml-split-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "numpy-shape-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "ml-scale-01",
+            "day": "2026-10-18",
+            "status": "revealed",
+            "hints": 1
+          },
+          {
+            "id": "ml-fit-foundation-01",
+            "day": "2026-10-18"
+          },
+          {
+            "id": "ml-mean-foundation-01",
+            "day": "2026-10-18"
+          },
+          {
+            "id": "ml-scale-foundation-01",
+            "day": "2026-10-18"
+          },
+          {
+            "id": "numpy-index-foundation-01",
+            "day": "2026-10-18"
+          },
+          {
+            "id": "ml-transform-foundation-01",
+            "day": "2026-10-18"
+          }
+        ],
+        "first": "ml-scale-01",
+        "excluded": []
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 2,
+          "label": "적용",
+          "independent_count": 2,
+          "evidence_days": 2,
+          "observed_count": 2,
+          "family_count": 2,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": true,
+          "status": "적용 연습 중"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 4,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 4,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "ml-scale-01",
+            "version": 2,
+            "concept_id": "ml-preprocessing",
+            "role": "application",
+            "requires": [
+              "ml-split-01",
+              "ml-fit-foundation-01",
+              "ml-transform-foundation-01"
+            ],
+            "level": 1,
+            "independent_count": 4,
+            "evidence_days": 1,
+            "reason": "예정된 복습으로 기억을 다시 확인해요."
+          },
+          {
+            "id": "pandas-select-01",
+            "version": 2,
+            "concept_id": "pandas-select",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "stats-median-01",
+            "version": 2,
+            "concept_id": "stats-summaries",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 2,
+            "independent_count": 2,
+            "evidence_days": 2,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-metric-01",
+            "version": 2,
+            "concept_id": "ml-metrics",
+            "role": "foundation",
+            "requires": [
+              "ml-split-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "broadcast requires scalar foundation",
+        "track": "python",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "numpy-shape-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "numpy-broadcast-01",
+            "day": "2026-10-18",
+            "status": "revealed"
+          }
+        ],
+        "first": "numpy-broadcast-foundation-01",
+        "excluded": [
+          "numpy-broadcast-02"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 1,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "numpy-broadcast-foundation-01",
+            "version": 1,
+            "concept_id": "numpy-broadcast",
+            "role": "foundation",
+            "requires": [
+              "numpy-shape-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "pandas-select-01",
+            "version": 2,
+            "concept_id": "pandas-select",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "stats-median-01",
+            "version": 2,
+            "concept_id": "stats-summaries",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-split-01",
+            "version": 2,
+            "concept_id": "ml-evaluation",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 1,
+            "evidence_days": 1,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "SQL join has its own foundation",
+        "track": "sql",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "sql-where-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "sql-join-01",
+            "day": "2026-10-18",
+            "status": "revealed"
+          }
+        ],
+        "first": "sql-join-foundation-01",
+        "excluded": [
+          "sql-join-02"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 1,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "sql-join-foundation-01",
+            "version": 1,
+            "concept_id": "sql-joins",
+            "role": "foundation",
+            "requires": [
+              "sql-where-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "sql-count-01",
+            "version": 2,
+            "concept_id": "sql-aggregation",
+            "role": "foundation",
+            "requires": [
+              "sql-where-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "sql-null-count-20261018",
+            "version": 1,
+            "concept_id": "sql-aggregation",
+            "role": "foundation",
+            "requires": [
+              "sql-where-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "sql-distinct-sum-20261018",
+            "version": 1,
+            "concept_id": "sql-aggregation",
+            "role": "foundation",
+            "requires": [
+              "sql-where-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "sql-null-01",
+            "version": 2,
+            "concept_id": "sql-rows",
+            "role": "application",
+            "requires": [
+              "sql-where-01"
+            ],
+            "level": 1,
+            "independent_count": 1,
+            "evidence_days": 1,
+            "reason": "확인한 기초를 다른 조건에 적용해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "pandas failure requests another foundation",
+        "track": "python",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "pandas-select-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "pandas-filter-01",
+            "day": "2026-10-18",
+            "status": "revealed"
+          }
+        ],
+        "first": "pandas-filter-scaffold-01",
+        "excluded": [
+          "pandas-filter-03"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 1,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "pandas-filter-scaffold-01",
+            "version": 1,
+            "concept_id": "pandas-filter",
+            "role": "foundation",
+            "requires": [
+              "pandas-select-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-shape-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "stats-median-01",
+            "version": 2,
+            "concept_id": "stats-summaries",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-split-01",
+            "version": 2,
+            "concept_id": "ml-evaluation",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "name": "statistics failure requests denominator foundation",
+        "track": "python",
+        "day": "2026-10-18",
+        "records": [
+          {
+            "id": "stats-median-01",
+            "day": "2026-10-17"
+          },
+          {
+            "id": "stats-conditional-01",
+            "day": "2026-10-18",
+            "status": "revealed"
+          }
+        ],
+        "first": "stats-weight-01",
+        "excluded": [
+          "stats-conditional-03"
+        ]
+      },
+      "states": [
+        {
+          "id": "pandas-select",
+          "name": "행·열 선택",
+          "domain": "pandas",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-filter",
+          "name": "조건 필터",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-null",
+          "name": "결측치 처리",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-sort",
+          "name": "정렬과 순서",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-select"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "pandas-group",
+          "name": "그룹 집계",
+          "domain": "pandas",
+          "prerequisites": [
+            "pandas-filter"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-structure",
+          "name": "배열 구조와 축",
+          "domain": "NumPy",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-broadcast",
+          "name": "브로드캐스팅",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-mask",
+          "name": "조건 마스크",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "numpy-memory",
+          "name": "뷰와 복사",
+          "domain": "NumPy",
+          "prerequisites": [
+            "numpy-structure"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-rows",
+          "name": "행 조건과 NULL",
+          "domain": "SQL",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-aggregation",
+          "name": "SQL 집계",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "sql-joins",
+          "name": "테이블 연결",
+          "domain": "SQL",
+          "prerequisites": [
+            "sql-rows"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "stats-summaries",
+          "name": "대표값과 변동",
+          "domain": "통계",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 1,
+          "evidence_days": 1,
+          "observed_count": 1,
+          "family_count": 1,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "관찰 중"
+        },
+        {
+          "id": "stats-rates",
+          "name": "비율과 비교",
+          "domain": "통계",
+          "prerequisites": [
+            "stats-summaries"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 1,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": true,
+          "evidence_status": "observed",
+          "ready_for_probe": false,
+          "status": "기초 보완 중"
+        },
+        {
+          "id": "ml-evaluation",
+          "name": "학습·평가 분리",
+          "domain": "scikit-learn",
+          "prerequisites": [],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-preprocessing",
+          "name": "전처리 기준",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-metrics",
+          "name": "모델 평가 지표",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        },
+        {
+          "id": "ml-neighbors",
+          "name": "이웃 기반 예측",
+          "domain": "scikit-learn",
+          "prerequisites": [
+            "ml-evaluation"
+          ],
+          "level": 1,
+          "label": "기초 확인",
+          "independent_count": 0,
+          "evidence_days": 0,
+          "observed_count": 0,
+          "family_count": 0,
+          "retention_observed": false,
+          "needs_support": false,
+          "evidence_status": "unassessed",
+          "ready_for_probe": false,
+          "status": "진단 전"
+        }
+      ],
+      "trace": {
+        "algorithm_version": "learning-paths-2.0",
+        "rules": {
+          "level2_items": 2,
+          "level2_days": 2,
+          "level3_items": 3,
+          "level3_days": 3,
+          "level3_transfer_days": 2,
+          "recovery_items": 2,
+          "max_transfer_per_batch": 1
+        },
+        "items": [
+          {
+            "id": "stats-weight-01",
+            "version": 2,
+            "concept_id": "stats-rates",
+            "role": "foundation",
+            "requires": [
+              "stats-median-01"
+            ],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "도움이 필요했던 개념의 기초를 먼저 확인해요."
+          },
+          {
+            "id": "pandas-select-01",
+            "version": 2,
+            "concept_id": "pandas-select",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-shape-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "ml-split-01",
+            "version": 2,
+            "concept_id": "ml-evaluation",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          },
+          {
+            "id": "numpy-axis-01",
+            "version": 2,
+            "concept_id": "numpy-structure",
+            "role": "foundation",
+            "requires": [],
+            "level": 1,
+            "independent_count": 0,
+            "evidence_days": 0,
+            "reason": "다음 단계에 필요한 기초를 먼저 확인해요."
+          }
+        ]
+      }
+    }
+  ]
+}

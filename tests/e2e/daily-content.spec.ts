@@ -80,7 +80,7 @@ for (const batch of [firstBatch, sqlBatch]) {
       return {
         id: `before-batch-${ex.id}`,
         track_id: "pandas",
-        local_day: new Date(Date.UTC(2026, 7, 1 + index))
+        local_day: new Date(Date.UTC(2025, 7, 1 + index))
           .toISOString()
           .slice(0, 10),
         timezone: "Asia/Seoul",

@@ -46,7 +46,13 @@
       "sql-where-01",
       "stats-median-01",
       "ml-split-01"
-    ]
+    ],
+    "expected_v2": {
+      "concept": "pandas-select",
+      "level": 1,
+      "independent_count": 3,
+      "evidence_days": 1
+    }
   },
   {
     "name": "different days and questions",
@@ -129,6 +135,13 @@
       "sql-where-01",
       "stats-median-01",
       "ml-split-01"
+    ],
+    "selected_v2": [
+      "pandas-select-01",
+      "pandas-select-02",
+      "pandas-select-scaffold-01",
+      "numpy-shape-01",
+      "sql-where-01"
     ]
   },
   {

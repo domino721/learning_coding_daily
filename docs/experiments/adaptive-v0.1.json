@@ -1,0 +1,1066 @@
+{
+  "synthetic": true,
+  "algorithm_version": "rules-0.1",
+  "bank_version": "0.1",
+  "day": "2026-10-18",
+  "scenarios": [
+    {
+      "name": "cold_start",
+      "observations": [],
+      "result": {
+        "algorithm_version": "rules-0.1",
+        "rules": {
+          "independent_items": 3,
+          "independent_families": 3,
+          "recovery_items": 2,
+          "stale_days": 14,
+          "daily_limit": 5,
+          "review_limit": 3,
+          "diagnostic_limit": 3,
+          "new_concept_limit": 2,
+          "review_intervals": [
+            1,
+            3,
+            7,
+            14
+          ]
+        },
+        "bank_version": "0.1",
+        "day": "2026-10-18",
+        "track_id": "pandas",
+        "profiles": {
+          "pandas-select": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-filter": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-null": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-sort": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-group": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-shape": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-fit": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-transform": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-state": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          }
+        },
+        "items": [
+          {
+            "exercise_id": "pandas-select-01",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-select-02",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-select-03",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          }
+        ],
+        "ignored_observations": [],
+        "note": ""
+      }
+    },
+    {
+      "name": "help_required",
+      "observations": [
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 1,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-02",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 1,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-03",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 1,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        }
+      ],
+      "result": {
+        "algorithm_version": "rules-0.1",
+        "rules": {
+          "independent_items": 3,
+          "independent_families": 3,
+          "recovery_items": 2,
+          "stale_days": 14,
+          "daily_limit": 5,
+          "review_limit": 3,
+          "diagnostic_limit": 3,
+          "new_concept_limit": 2,
+          "review_intervals": [
+            1,
+            3,
+            7,
+            14
+          ]
+        },
+        "bank_version": "0.1",
+        "day": "2026-10-18",
+        "track_id": "pandas",
+        "profiles": {
+          "pandas-select": {
+            "state": "learning",
+            "level": 1,
+            "evidence_count": 3,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": true,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "서로 다른 유형의 독립 풀이를 더 확인해요. 최근 도움이나 오답이 있어 작은 확인 문제를 먼저 풀어요."
+          },
+          "pandas-filter": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-null": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-sort": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-group": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-shape": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-fit": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-transform": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-state": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          }
+        },
+        "items": [
+          {
+            "exercise_id": "pandas-select-01",
+            "version": 1,
+            "category": "review",
+            "reason": "복습 예정일 2026-10-18이 되었어요.",
+            "concept_level": 1
+          },
+          {
+            "exercise_id": "pandas-select-02",
+            "version": 1,
+            "category": "review",
+            "reason": "복습 예정일 2026-10-18이 되었어요.",
+            "concept_level": 1
+          },
+          {
+            "exercise_id": "pandas-select-03",
+            "version": 1,
+            "category": "review",
+            "reason": "복습 예정일 2026-10-18이 되었어요.",
+            "concept_level": 1
+          }
+        ],
+        "ignored_observations": [],
+        "note": "현재 선수 조건에 맞는 문제 수만 제시해요."
+      }
+    },
+    {
+      "name": "independent_basics",
+      "observations": [
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-02",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-03",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        }
+      ],
+      "result": {
+        "algorithm_version": "rules-0.1",
+        "rules": {
+          "independent_items": 3,
+          "independent_families": 3,
+          "recovery_items": 2,
+          "stale_days": 14,
+          "daily_limit": 5,
+          "review_limit": 3,
+          "diagnostic_limit": 3,
+          "new_concept_limit": 2,
+          "review_intervals": [
+            1,
+            3,
+            7,
+            14
+          ]
+        },
+        "bank_version": "0.1",
+        "day": "2026-10-18",
+        "track_id": "pandas",
+        "profiles": {
+          "pandas-select": {
+            "state": "reviewing",
+            "level": 2,
+            "evidence_count": 3,
+            "independent_exercises": 3,
+            "independent_families": 3,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 2,
+            "reason": "기초 독립 풀이가 쌓였고 변형이나 지연 복습을 확인해요."
+          },
+          "pandas-filter": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-null": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-sort": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-group": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-shape": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-fit": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-transform": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-state": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          }
+        },
+        "items": [
+          {
+            "exercise_id": "pandas-select-04",
+            "version": 1,
+            "category": "new",
+            "reason": "기초 독립 풀이 뒤 변형 적용을 확인해요.",
+            "concept_level": 2
+          },
+          {
+            "exercise_id": "pandas-filter-01",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-null-01",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-filter-02",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-null-02",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          }
+        ],
+        "ignored_observations": [],
+        "note": ""
+      }
+    },
+    {
+      "name": "delayed_and_transfer",
+      "observations": [
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-02",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-03",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-04",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-18",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-18",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        }
+      ],
+      "result": {
+        "algorithm_version": "rules-0.1",
+        "rules": {
+          "independent_items": 3,
+          "independent_families": 3,
+          "recovery_items": 2,
+          "stale_days": 14,
+          "daily_limit": 5,
+          "review_limit": 3,
+          "diagnostic_limit": 3,
+          "new_concept_limit": 2,
+          "review_intervals": [
+            1,
+            3,
+            7,
+            14
+          ]
+        },
+        "bank_version": "0.1",
+        "day": "2026-10-18",
+        "track_id": "pandas",
+        "profiles": {
+          "pandas-select": {
+            "state": "stable",
+            "level": 3,
+            "evidence_count": 5,
+            "independent_exercises": 4,
+            "independent_families": 4,
+            "delayed_review": true,
+            "transfer_observed": true,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 3,
+            "reason": "다양한 독립 풀이·변형·다음날 이후 복습을 관찰했어요."
+          },
+          "pandas-filter": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-null": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-sort": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-group": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-shape": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-fit": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-transform": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-state": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          }
+        },
+        "items": [
+          {
+            "exercise_id": "pandas-filter-01",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-null-01",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-filter-02",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-null-02",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "pandas-filter-03",
+            "version": 1,
+            "category": "new",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          }
+        ],
+        "ignored_observations": [],
+        "note": ""
+      }
+    },
+    {
+      "name": "other_track_starts_fresh",
+      "observations": [
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-02",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-03",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-17",
+          "exercise_id": "pandas-select-04",
+          "version": 1,
+          "day": "2026-10-17",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        },
+        {
+          "session_id": "synthetic-2026-10-18",
+          "exercise_id": "pandas-select-01",
+          "version": 1,
+          "day": "2026-10-18",
+          "correct": true,
+          "hints_used": 0,
+          "attempts": 1,
+          "revealed": false,
+          "active_seconds": 0
+        }
+      ],
+      "result": {
+        "algorithm_version": "rules-0.1",
+        "rules": {
+          "independent_items": 3,
+          "independent_families": 3,
+          "recovery_items": 2,
+          "stale_days": 14,
+          "daily_limit": 5,
+          "review_limit": 3,
+          "diagnostic_limit": 3,
+          "new_concept_limit": 2,
+          "review_intervals": [
+            1,
+            3,
+            7,
+            14
+          ]
+        },
+        "bank_version": "0.1",
+        "day": "2026-10-18",
+        "track_id": "preprocessing",
+        "profiles": {
+          "pandas-select": {
+            "state": "stable",
+            "level": 3,
+            "evidence_count": 5,
+            "independent_exercises": 4,
+            "independent_families": 4,
+            "delayed_review": true,
+            "transfer_observed": true,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 3,
+            "reason": "다양한 독립 풀이·변형·다음날 이후 복습을 관찰했어요."
+          },
+          "pandas-filter": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-null": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-sort": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "pandas-group": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-shape": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-fit": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-transform": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          },
+          "scaler-state": {
+            "state": "unassessed",
+            "level": 0,
+            "evidence_count": 0,
+            "independent_exercises": 0,
+            "independent_families": 0,
+            "delayed_review": false,
+            "transfer_observed": false,
+            "needs_support": false,
+            "stale": false,
+            "max_difficulty": 1,
+            "reason": "아직 이 개념의 풀이 근거가 없어 기초부터 확인해요."
+          }
+        },
+        "items": [
+          {
+            "exercise_id": "scaler-shape-01",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "scaler-shape-02",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          },
+          {
+            "exercise_id": "scaler-shape-03",
+            "version": 1,
+            "category": "diagnostic",
+            "reason": "선수 개념과 현재 단계에 맞는 새 문제예요.",
+            "concept_level": 0
+          }
+        ],
+        "ignored_observations": [],
+        "note": ""
+      }
+    }
+  ]
+}

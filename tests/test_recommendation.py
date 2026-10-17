@@ -19,12 +19,12 @@ def sessions_from(records):
 
 @pytest.mark.parametrize('case',FIXTURES,ids=lambda c:c['name'])
 def test_declared_learning_rules(case):
-    sessions=sessions_from(case['records']);expected=case['expected'];state=concept_states(sessions,BY_ID)[expected['concept']]
+    sessions=sessions_from(case['records']);expected=case.get('expected_v2',case['expected']);state=concept_states(sessions,BY_ID)[expected['concept']]
     assert {k:state[k] for k in ('level','independent_count','evidence_days')}=={k:expected[k] for k in ('level','independent_count','evidence_days')}
-    # These historical contract fixtures describe the original catalog, before daily additions.
-    selected=select_exercises([ex for ex in EXERCISES if ex.id in BASELINE_IDS],sessions,{},case['day'])
+    # The v1 selection remains recorded; v2 adds targeted support before unrelated roots.
+    selected=select_exercises(EXERCISES,sessions,{},case['day'])
     assert len(selected)==len({e.id for e,_ in selected})==5
-    assert [e.id for e,_ in selected]==case['selected']
+    assert [e.id for e,_ in selected]==case.get('selected_v2',case['selected'])
 
 
 def test_curriculum_has_explicit_metadata_and_acyclic_prerequisites():

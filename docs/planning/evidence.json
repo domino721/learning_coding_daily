@@ -321,6 +321,21 @@
         "scripts/validate_sql_content.py"
       ],
       "code_reference": "5e6660fec44769e51d5a7a5f4feb7d83829a47bb"
+    },
+    {
+      "id": "EV-025",
+      "record": "docs/planning/evidence/EV-025.md",
+      "artifacts": [
+        "backend/learning_paths.json",
+        "backend/curriculum.py",
+        "backend/scaffold_content.json",
+        "curriculum/problem_bank.json",
+        "src/recommendation.ts",
+        "tests/test_learning_paths.py",
+        "tests/e2e/learning-paths.spec.ts",
+        "docs/experiments/learning-paths-v2.json"
+      ],
+      "code_reference": "WBS-360 accompanying implementation commit"
     }
   ]
 }

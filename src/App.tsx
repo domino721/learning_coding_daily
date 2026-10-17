@@ -12,6 +12,7 @@ import CodeBlock from "./CodeBlock";
 import ExerciseReview from "./ExerciseReview";
 import { readTheme, saveTheme } from "./theme";
 import { formatTime, useActiveTime } from "./useActiveTime";
+import { recommendationReason } from "./recommendation";
 
 const trackName = (id: string) =>
   id === "sql"
@@ -62,6 +63,7 @@ function week(day: string) {
 }
 
 function ExerciseCard({
+  recommendation,
   item,
   index,
   total,
@@ -72,6 +74,7 @@ function ExerciseCard({
   onReveal,
   onNext,
 }: {
+  recommendation?: string;
   item: Exercise;
   index: number;
   total: number;
@@ -161,6 +164,11 @@ function ExerciseCard({
         <h1 ref={heading} tabIndex={-1} id="question-title">
           {item.title}
         </h1>
+        {recommendation && (
+          <p className="recommended-note" aria-label="이 문제를 고른 이유">
+            {recommendation}
+          </p>
+        )}
         <p className="prompt">
           {mode === "choice"
             ? item.prompt
@@ -918,6 +926,7 @@ export default function App() {
                 </div>
                 <ExerciseCard
                   key={`${session.id}:${item.id}`}
+                  recommendation={recommendationReason(session, item.id)}
                   item={item}
                   index={index}
                   total={session.total}

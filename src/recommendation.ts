@@ -8,7 +8,17 @@ const labels: Record<number, string> = {
   3: "조건 변화·전이",
 };
 const byId = new Map(curriculum.exercises.map((ex) => [ex.id, ex]));
+type PathSpec = {
+  concept_id: string;
+  level: number;
+  role: string;
+  family: string;
+  requires: string[];
+};
+const policy = curriculum.learning_paths;
+const paths = policy.items as Record<string, PathSpec>;
 export function observations(sessions: Session[]) {
+  const seen = new Set<string>();
   return [...sessions]
     .sort(
       (a, b) =>
@@ -18,7 +28,19 @@ export function observations(sessions: Session[]) {
     )
     .flatMap((s) =>
       s.items
-        .filter((i) => i.status !== "pending" && byId.has(i.id))
+        .filter((i) => {
+          const source = byId.get(i.id);
+          if (
+            i.status === "pending" ||
+            !source ||
+            (i.version ?? source.version) !== source.version
+          )
+            return false;
+          const key = `${s.id}:${i.id}:${source.version}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
         .map((item) => {
           const source = byId.get(item.id)!;
           const mode =
@@ -29,6 +51,7 @@ export function observations(sessions: Session[]) {
             concept: source.concept_id,
             level: item.level ?? source.level,
             essay: mode === "essay",
+            family: paths[source.id].family,
             independent:
               item.status === "correct" &&
               item.hints_used === 0 &&
@@ -43,20 +66,52 @@ export function conceptStates(sessions: Session[]) {
   return curriculum.concepts.map((concept) => {
     const daily = new Map<string, (typeof obs)[number]>();
     for (const o of obs)
-      if (o.concept === concept.id && !o.essay && !daily.has(o.day))
+      if (
+        o.concept === concept.id &&
+        !o.essay &&
+        (!daily.has(o.day) || (!daily.get(o.day)!.independent && o.independent))
+      )
         daily.set(o.day, o);
     const rows = [...daily.values()],
-      good = rows.filter((o) => o.independent),
-      distinct = new Set(good.map((o) => o.id)).size,
-      days = good.length;
-    let level =
-      distinct >= 3 && days >= 3 && good.filter((o) => o.level >= 2).length >= 2
+      good = rows.filter((o) => o.independent);
+    const allRows = obs.filter((o) => o.concept === concept.id && !o.essay),
+      allGood = allRows.filter((o) => o.independent),
+      distinct = new Set(allGood.map((o) => o.id)).size,
+      days = new Set(allGood.map((o) => o.day)).size,
+      families = new Set(allGood.map((o) => o.family)).size,
+      first = new Map<string, string>();
+    let retained = false;
+    for (const o of allGood) {
+      if (!first.has(o.id)) first.set(o.id, o.day);
+      if (o.day > first.get(o.id)!) retained = true;
+    }
+    let support = -1;
+    allRows.forEach((o, index) => {
+      if (!o.independent) support = index;
+    });
+    const needsSupport =
+        support >= 0 &&
+        new Set(
+          allRows
+            .slice(support + 1)
+            .filter((o) => o.independent)
+            .map((o) => o.id),
+        ).size < policy.rules.recovery_items,
+      rules = policy.rules;
+    const level =
+      distinct >= rules.level3_items &&
+      days >= rules.level3_days &&
+      new Set(allGood.filter((o) => o.level >= 2).map((o) => o.day)).size >=
+        rules.level3_transfer_days &&
+      families >= 3 &&
+      retained &&
+      !needsSupport
         ? 3
-        : distinct >= 2 && days >= 2
+        : distinct >= rules.level2_items &&
+            days >= rules.level2_days &&
+            families >= 2
           ? 2
           : 1;
-    if (rows.length >= 2 && rows.slice(-2).every((o) => !o.independent))
-      level = Math.max(1, level - 1);
     return {
       ...concept,
       level,
@@ -64,15 +119,22 @@ export function conceptStates(sessions: Session[]) {
       independent_count: distinct,
       evidence_days: days,
       observed_count: rows.length,
+      family_count: families,
+      retention_observed: retained,
+      needs_support: needsSupport,
+      evidence_status: allRows.length ? "observed" : "unassessed",
       ready_for_probe: !!rows.length && rows.at(-1)!.independent && days >= 2,
-      status:
-        days < 2 || distinct < 2
-          ? "관찰 중"
-          : level === 2
-            ? "적용 연습 중"
-            : level === 3
-              ? "전이 연습 중"
-              : "기초 보완 중",
+      status: needsSupport
+        ? "기초 보완 중"
+        : !allRows.length
+          ? "진단 전"
+          : days < 2 || distinct < 2
+            ? "관찰 중"
+            : level === 2
+              ? "적용 연습 중"
+              : level === 3
+                ? "전이 연습 중"
+                : "기초 확인 중",
     };
   });
 }
@@ -90,6 +152,7 @@ export function selectExercises(
   extra = false,
   track?: string,
 ): [Source, "new" | "review" | "practice"][] {
+  sessions = sessions.filter((s) => s.local_day <= today);
   const exercises = curriculum.exercises.filter(
       (ex) => ex.response_mode !== "essay" && (!track || inTrack(ex, track)),
     ),
@@ -99,18 +162,29 @@ export function selectExercises(
         .filter((s) => s.local_day === today)
         .flatMap((s) => s.items.map((i) => i.id)),
     );
+  const latest = new Map(
+    observations(sessions)
+      .filter((o) => !o.essay)
+      .map((o) => [o.id, o]),
+  );
+  const known = (id: string) => {
+    if (latest.get(id)?.independent) return true;
+    const state = states.get(paths[id].concept_id)!;
+    return state.level >= 2 && !state.needs_support;
+  };
   const eligible = (ex: Source) => {
     const s = states.get(ex.concept_id)!;
-    const limit =
-      s.level >= 2 || s.ready_for_probe ? 3 : s.independent_count > 0 ? 2 : 1;
-    const min = Math.min(
-      ...exercises
-        .filter((x) => x.concept_id === ex.concept_id)
-        .map((x) => x.level),
-    );
+    const limit = s.needs_support
+      ? 1
+      : s.level >= 2
+        ? 3
+        : s.independent_count > 0
+          ? 2
+          : 1;
     return (
       s.prerequisites.every((c) => states.get(c)!.independent_count > 0) &&
-      ex.level <= Math.max(min, limit)
+      ex.level <= limit &&
+      paths[ex.id].requires.every(known)
     );
   };
   const due = exercises
@@ -135,6 +209,8 @@ export function selectExercises(
   while (pool.length && selected.length < 5) {
     pool.sort(
       (a, b) =>
+        Number(!states.get(a.concept_id)!.needs_support) -
+          Number(!states.get(b.concept_id)!.needs_support) ||
         (counts.get(a.domain) ?? 0) - (counts.get(b.domain) ?? 0) ||
         a.level - b.level ||
         exercises.indexOf(a) - exercises.indexOf(b),
@@ -153,6 +229,48 @@ export function selectExercises(
         selected.push([ex, "review"]);
     }
   return selected;
+}
+export function recommendationTrace(
+  selected: [Source, "new" | "review" | "practice"][],
+  sessions: Session[],
+) {
+  const states = new Map(
+    conceptStates(sessions).map((state) => [state.id, state]),
+  );
+  return {
+    algorithm_version: policy.version,
+    rules: policy.rules,
+    items: selected.map(([ex, category]) => {
+      const state = states.get(ex.concept_id)!;
+      return {
+        id: ex.id,
+        version: ex.version,
+        concept_id: ex.concept_id,
+        role: paths[ex.id].role,
+        requires: paths[ex.id].requires,
+        level: state.level,
+        independent_count: state.independent_count,
+        evidence_days: state.evidence_days,
+        reason:
+          category === "review"
+            ? "예정된 복습으로 기억을 다시 확인해요."
+            : state.needs_support
+              ? "도움이 필요했던 개념의 기초를 먼저 확인해요."
+              : ex.level === 1
+                ? "다음 단계에 필요한 기초를 먼저 확인해요."
+                : "확인한 기초를 다른 조건에 적용해요.",
+      };
+    }),
+  };
+}
+export function recommendationReason(
+  session: Session | null,
+  id: string,
+): string | undefined {
+  const items = session?.recommendation?.items;
+  if (!Array.isArray(items)) return undefined;
+  const match = items.find((item) => item && item.id === id);
+  return typeof match?.reason === "string" ? match.reason : undefined;
 }
 export function reviewDue(
   today: string,

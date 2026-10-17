@@ -334,6 +334,8 @@ from backend.extra_content import authored_extras
 EXERCISES += authored_extras(Exercise)
 from backend.daily_content import authored_batches
 EXERCISES += authored_batches(Exercise)
+from backend.scaffold_content import authored_scaffolds
+EXERCISES += authored_scaffolds(Exercise)
 from backend.curriculum import attach_metadata
 EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}

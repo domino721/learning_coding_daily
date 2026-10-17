@@ -1,0 +1,167 @@
+[
+  {
+    "name": "scaler target routes to fit foundation",
+    "track": "python",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "ml-split-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "ml-scale-01",
+        "day": "2026-10-18",
+        "status": "revealed",
+        "hints": 1
+      }
+    ],
+    "first": "ml-fit-foundation-01",
+    "excluded": ["ml-scale-01", "ml-scale-02"]
+  },
+  {
+    "name": "fit success routes to learned mean",
+    "track": "python",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "ml-split-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "ml-scale-01",
+        "day": "2026-10-18",
+        "status": "revealed",
+        "hints": 1
+      },
+      {
+        "id": "ml-fit-foundation-01",
+        "day": "2026-10-18"
+      }
+    ],
+    "first": "ml-mean-foundation-01",
+    "excluded": ["ml-scale-01", "ml-scale-02"]
+  },
+  {
+    "name": "completed bridge opens original target review",
+    "track": "python",
+    "day": "2026-10-19",
+    "records": [
+      {
+        "id": "ml-split-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "ml-scale-01",
+        "day": "2026-10-18",
+        "status": "revealed",
+        "hints": 1
+      },
+      {
+        "id": "ml-fit-foundation-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "ml-mean-foundation-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "ml-scale-foundation-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "numpy-index-foundation-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "ml-transform-foundation-01",
+        "day": "2026-10-18"
+      }
+    ],
+    "first": "ml-scale-01",
+    "excluded": []
+  },
+  {
+    "name": "broadcast requires scalar foundation",
+    "track": "python",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "numpy-broadcast-01",
+        "day": "2026-10-18",
+        "status": "revealed"
+      }
+    ],
+    "first": "numpy-broadcast-foundation-01",
+    "excluded": ["numpy-broadcast-02"]
+  },
+  {
+    "name": "SQL join has its own foundation",
+    "track": "sql",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "sql-where-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "sql-join-01",
+        "day": "2026-10-18",
+        "status": "revealed"
+      }
+    ],
+    "first": "sql-join-foundation-01",
+    "excluded": ["sql-join-02"]
+  },
+  {
+    "name": "pandas failure requests another foundation",
+    "track": "python",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "pandas-filter-01",
+        "day": "2026-10-18",
+        "status": "revealed"
+      }
+    ],
+    "first": "pandas-filter-scaffold-01",
+    "excluded": ["pandas-filter-03"]
+  },
+  {
+    "name": "statistics failure requests denominator foundation",
+    "track": "python",
+    "day": "2026-10-18",
+    "records": [
+      {
+        "id": "stats-median-01",
+        "day": "2026-10-17"
+      },
+      {
+        "id": "stats-conditional-01",
+        "day": "2026-10-18",
+        "status": "revealed"
+      }
+    ],
+    "first": "stats-weight-01",
+    "excluded": ["stats-conditional-03"]
+  }
+]

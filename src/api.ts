@@ -47,6 +47,11 @@ export type Exercise = {
   explanation?: string;
 };
 export type Session = {
+  recommendation?: {
+    algorithm_version: string;
+    rules: Record<string, number>;
+    items: { id: string; reason: string; role: string }[];
+  } | null;
   batch?: number;
   id: string;
   track_id: string;
@@ -59,6 +64,9 @@ export type Session = {
   finished: boolean;
 };
 export type ConceptState = {
+  family_count?: number;
+  retention_observed?: boolean;
+  needs_support?: boolean;
   id: string;
   name: string;
   domain: string;

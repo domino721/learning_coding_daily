@@ -18,7 +18,12 @@ import {
   storageCopies,
   type Store,
 } from "./records";
-import { selectExercises, conceptStates, reviewDue } from "./recommendation";
+import {
+  selectExercises,
+  conceptStates,
+  reviewDue,
+  recommendationTrace,
+} from "./recommendation";
 const TIMEZONE = "Asia/Seoul";
 const sources = new Map<string, Source>(
   curriculum.exercises.map((ex) => [ex.id, ex]),
@@ -358,6 +363,10 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     const session: Session = {
       id: crypto.randomUUID(),
       track_id: course as string,
+      recommendation: recommendationTrace(
+        selected.map((item) => [sources.get(item.id)!, item.category]),
+        data.sessions.filter((s) => s.local_day <= today),
+      ),
       local_day: today,
       timezone: TIMEZONE,
       batch: 0,
@@ -371,7 +380,14 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     data.catalog ??= {};
     for (const card of selected)
       data.catalog[`${session.id}:${card.id}`] = sources.get(card.id)!;
-    addEvent(data, "session_started", session.id);
+    addEvent(
+      data,
+      "session_started",
+      session.id,
+      undefined,
+      undefined,
+      JSON.stringify(session.recommendation),
+    );
     await saveRecords(data);
     return session;
   }
@@ -405,6 +421,10 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     const session: Session = {
       id: crypto.randomUUID(),
       track_id: course as string,
+      recommendation: recommendationTrace(
+        selected.map((item) => [sources.get(item.id)!, item.category]),
+        data.sessions.filter((s) => s.local_day <= today),
+      ),
       local_day: today,
       timezone: TIMEZONE,
       batch: (latest.batch ?? 0) + 1,
@@ -418,7 +438,14 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     data.catalog ??= {};
     for (const card of selected)
       data.catalog[`${session.id}:${card.id}`] = sources.get(card.id)!;
-    addEvent(data, "session_started", session.id);
+    addEvent(
+      data,
+      "session_started",
+      session.id,
+      undefined,
+      undefined,
+      JSON.stringify(session.recommendation),
+    );
     await saveRecords(data);
     return session;
   }

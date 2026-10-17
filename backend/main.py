@@ -3,7 +3,7 @@ import os
 import json
 from dataclasses import asdict
 from backend.content import Exercise
-from backend.curriculum import select_exercises, concept_states, review_due
+from backend.curriculum import select_exercises, concept_states, review_due, recommendation_trace
 from backend.records import event, export_records, restore_records
 from pathlib import Path
 from typing import Callable, Literal
@@ -102,7 +102,15 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             items.append(item)
         completed = sum(item["status"] != "pending" for item in items)
         correct = sum(item["status"] == "correct" for item in items)
+        trace_row=db.execute("SELECT detail FROM learning_events WHERE session_id=? AND kind='session_started' AND detail IS NOT NULL ORDER BY rowid LIMIT 1",(session_id,)).fetchone()
+        recommendation=None
+        if trace_row:
+            try:
+                candidate=json.loads(trace_row['detail'])
+                if isinstance(candidate,dict) and isinstance(candidate.get('items'),list):recommendation=candidate
+            except (ValueError,TypeError):pass
         return {"id": record["id"], "track_id": record["track_id"], "local_day": record["local_day"],
+                "recommendation":recommendation,
                 "timezone": record["timezone"], "batch": record["batch"], "items": items, "completed_count": completed,
                 "correct_count": correct, "total": len(items), "finished": completed == len(items)}
 
@@ -175,13 +183,14 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                 return snapshot(db, existing[0])
             progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
             selected=select_exercises(EXERCISES,all_sessions(db),progress,day,track=body.track_id)
+            trace=recommendation_trace(selected,[s for s in all_sessions(db) if s["local_day"]<=day],BY_ID)
             if not selected: raise HTTPException(422, "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.")
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at) VALUES(?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat()))
             db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode, snapshot) VALUES(?, ?, ?, ?, ?, ?, ?)",
                            [(session_id, pos, ex.id, ex.version, category, body.response_mode or ex.response_mode, json.dumps(asdict(ex),ensure_ascii=False)) for pos, (ex, category) in enumerate(selected)])
-            event(db,'session_started',session_id,occurred_at=clock().isoformat())
+            event(db,'session_started',session_id,detail=json.dumps(trace,ensure_ascii=False),occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/extra")
@@ -200,13 +209,14 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                 return snapshot(db, latest["id"])
             progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
             selected=select_exercises(EXERCISES,all_sessions(db),progress,day,extra=True,track=body.track_id)
+            trace=recommendation_trace(selected,[s for s in all_sessions(db) if s["local_day"]<=day],BY_ID)
             if not selected: raise HTTPException(422, "오늘 추천할 새 문제와 예정된 복습을 모두 풀었어요. 다른 트랙을 연습하거나 다음 복습 때 만나요.")
             session_id = str(uuid4())
             db.execute("INSERT INTO sessions(id, track_id, local_day, timezone, created_at, batch) VALUES(?, ?, ?, ?, ?, ?)",
                        (session_id, body.track_id, day, str(zone), clock().isoformat(), latest["batch"] + 1))
             db.executemany("INSERT INTO session_items(session_id, position, exercise_id, version, category, response_mode, snapshot) VALUES(?, ?, ?, ?, ?, ?, ?)",
                            [(session_id, pos, ex.id, ex.version, category, body.response_mode or ex.response_mode, json.dumps(asdict(ex),ensure_ascii=False)) for pos, (ex, category) in enumerate(selected)])
-            event(db,'session_started',session_id,occurred_at=clock().isoformat())
+            event(db,'session_started',session_id,detail=json.dumps(trace,ensure_ascii=False),occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
     @app.get('/api/history')
