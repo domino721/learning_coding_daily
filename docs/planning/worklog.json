@@ -433,6 +433,18 @@
       ],
       "summary": "모든91개 목표의 선수 경로·출시 게이트와 유형/날짜/지연 복습/도움 회복 기반 운영 추천을 웹/서버에 적용. 공백용21개 신규 자원·이유/버전/근거 이벤트 저장. 기존70불변·전체 활성 도달·7공통가상 이력 일치, Python313/Node14/모바일21 및 비해당6건 제외 EV-025. 기존 origin/key/진도/snapshot 보존. 이번 원격 게시와 공개 자산 일치는 후속 EV에서 확인한다.",
       "commit": null
+    },
+    {
+      "id": "LOG-037",
+      "date": "2026-10-18",
+      "tasks": [
+        "WBS-360"
+      ],
+      "changes": [
+        "CR-010"
+      ],
+      "summary": "main4456c1c와 design/plan1.6.0 태그 비강제 atomic push 성공. Pages39051537721(job117450967998)·관리39051537733 success, 실제 공개 HTML/JS/CSS index-B-i0buKv.js/index-D6v8TWnn.css의 SHA256 일치 EV-026. 전 문항 경로/출시 게이트/실제 추천 적용과 게시 완료. 기존70문항 및 기록 보존. WBS-360 완료, 다음 WBS-510. 실제 학습 효과는 후속 관찰. 배포 후 근거만 [skip ci]로 저장.",
+      "commit": "4456c1c12710dec53fbeada489c30d63cd61f673"
     }
   ]
 }

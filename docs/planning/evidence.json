@@ -336,6 +336,17 @@
         "docs/experiments/learning-paths-v2.json"
       ],
       "code_reference": "WBS-360 accompanying implementation commit"
+    },
+    {
+      "id": "EV-026",
+      "record": "docs/planning/evidence/EV-026.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "backend/learning_paths.json",
+        "src/recommendation.ts",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "4456c1c12710dec53fbeada489c30d63cd61f673"
     }
   ]
 }
