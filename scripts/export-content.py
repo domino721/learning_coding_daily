@@ -8,6 +8,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from backend.content import EXERCISES, TRACKS
 from backend.curriculum import CONCEPTS
+from validate_sql_content import validate_all
+
+validate_all(EXERCISES)
 
 path = ROOT / "src/curriculum.json"
 serialized = json.dumps({"exercises": [asdict(ex) for ex in EXERCISES], "tracks": TRACKS, "concepts": CONCEPTS}, ensure_ascii=False, indent=2) + "\n"

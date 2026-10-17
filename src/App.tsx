@@ -168,7 +168,11 @@ function ExerciseCard({
                 .replaceAll("구하세요", "고르세요")
             : item.prompt.replaceAll("고르세요", "입력하세요")}
         </p>
-        <CodeBlock code={item.code} language={item.domain} />
+        <CodeBlock
+          code={item.code}
+          language={item.domain}
+          exerciseId={item.id}
+        />
         <p className="question-format">
           {mode === "choice"
             ? "객관식"

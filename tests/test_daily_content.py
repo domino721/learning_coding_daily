@@ -13,17 +13,27 @@ from sklearn.preprocessing import OneHotEncoder
 from backend.content import BY_ID, EXERCISES
 
 
-def test_previous_catalog_and_content_versions_are_unchanged():
+def test_previous_catalog_is_preserved_except_versioned_sql_input_corrections():
     saved = json.loads(Path('tests/fixtures/catalog-before-codex-20261016.json').read_text())
     for exercise_id, digest in saved['exercises'].items():
-        current = json.dumps(asdict(BY_ID[exercise_id]), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+        entry = asdict(BY_ID[exercise_id])
+        corrected = {'sql-where-02', 'sql-having-02', 'sql-count-02', 'sql-join-02', 'sql-join-03', 'sql-null-02'}
+        if exercise_id in corrected:
+            assert entry['version'] == 2
+            lines = entry['code'].splitlines()
+            assert lines[0] == '-- 입력 데이터 전체 (SQLite)'
+            while lines and lines[0].startswith('--'):
+                lines.pop(0)
+            entry['code'] = '\n'.join(lines)
+            entry['version'] = 1
+        current = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
         assert hashlib.sha256(current.encode()).hexdigest() == digest, exercise_id
 
 
-def test_daily_batch_has_unique_identity_and_complete_metadata():
-    path = Path('backend/content_batches/2026-10-17.json')
+@pytest.mark.parametrize('path', sorted(Path('backend/content_batches').glob('*.json')), ids=lambda path: path.stem)
+def test_daily_batch_has_unique_identity_and_complete_metadata(path):
     batch = json.loads(path.read_text())
-    assert batch['date'] == path.stem and batch['batch_id'] == 'codex-2026-10-17'
+    assert batch['date'] == path.stem and batch['batch_id'] == f'codex-{path.stem}'
     assert batch['status'] == 'reviewed' and len(batch['exercises']) == 5
     assert Path(batch['review_record']).is_file()
     for raw in batch['exercises']:

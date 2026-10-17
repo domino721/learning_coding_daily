@@ -1535,3 +1535,7 @@ pre {
 .home-main .lifetime-card p {
   font-size: 11px;
 }
+.sql-code .syntax-comment {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

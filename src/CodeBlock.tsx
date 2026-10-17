@@ -1,12 +1,32 @@
-// Small Python examples only; render tokens as text, never as HTML or code.
+import curriculum from "./curriculum.json";
+
+// Render tokens as text, never as HTML or executable code.
 export default function CodeBlock({
   code,
   language,
+  exerciseId,
 }: {
   code: string;
   language?: string;
+  exerciseId?: string;
 }) {
   const sql = language === "SQL";
+  if (sql && exerciseId && !code.includes("--")) {
+    const corrected = curriculum.exercises.find(
+      (item) => item.id === exerciseId,
+    );
+    // Supply missing inputs for the identical saved query without changing its snapshot.
+    if (corrected?.domain === "SQL" && corrected.code.endsWith("\n" + code)) {
+      const prefix = corrected.code.slice(0, -code.length);
+      if (
+        prefix
+          .trim()
+          .split("\n")
+          .every((line) => line.startsWith("--"))
+      )
+        code = corrected.code;
+    }
+  }
   const pattern = sql
     ? /--[^\n]*|'(?:''|[^'])*'|"(?:""|[^"])*"|\b(?:SELECT|FROM|WHERE|GROUP|BY|ORDER|HAVING|AS|JOIN|LEFT|RIGHT|INNER|ON|AND|OR|NOT|NULL|IS|IN|DISTINCT|WITH|OVER|PARTITION|ASC|DESC|CASE|WHEN|THEN|ELSE|END|LIMIT|COUNT|SUM|AVG|MIN|MAX|COALESCE|ROW_NUMBER)\b|\b\d+(?:\.\d+)?\b/gi
     : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
@@ -37,7 +57,7 @@ export default function CodeBlock({
   }
   parts.push(code.slice(offset));
   return (
-    <pre>
+    <pre className={sql ? "sql-code" : undefined}>
       <code>{parts}</code>
     </pre>
   );

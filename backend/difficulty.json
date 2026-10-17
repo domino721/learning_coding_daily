@@ -778,5 +778,65 @@
     "distractor_strength": 0,
     "rationale": "학습 범주와 평가 시 새 범주 처리 설정을 연결하는 적용 문제입니다.",
     "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-empty-sum-20261018": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "빈 집합에서 집계 전·후 NULL 대체를 구분해야 하므로 적용 수준이다.",
+    "calibration": "editorial-codex-20261018; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-null-count-20261018": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "choice",
+    "level": 1,
+    "label": "기초 확인",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 1,
+    "distractor_strength": 2,
+    "rationale": "주어진 두 행에서 행 수·비NULL 개수·대체 후 합계를 직접 확인하는 기초 문제이다.",
+    "calibration": "editorial-codex-20261018; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-refund-average-20261018": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "NULL 처리 시점이 평균의 분모를 바꾸는 과정을 연결하는 적용 문제이다.",
+    "calibration": "editorial-codex-20261018; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-distinct-sum-20261018": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "choice",
+    "level": 1,
+    "label": "기초 확인",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 1,
+    "distractor_strength": 2,
+    "rationale": "단일 열의 중복값을 집계에 넣는지 구별하는 기초 문제이다.",
+    "calibration": "editorial-codex-20261018; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-qualified-join-20261018": {
+    "concept_id": "sql-joins",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "연결 전 조건과 연결 후 NULL 필터를 함께 추적하므로 적용 수준이다.",
+    "calibration": "editorial-codex-20261018; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
   }
 }

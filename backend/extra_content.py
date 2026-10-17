@@ -1,9 +1,12 @@
 """Thirty authored transfer exercises; reference programs are repository-owned only."""
 def authored_extras(Exercise):
     def q(id, concept, title, prompt, code, answer, explanation, choices, domain, level=3, setup=''):
+        if domain == 'SQL':
+            inputs = '\n'.join('-- ' + statement.strip() + ';' for statement in setup.split(';') if statement.strip())
+            code = '-- 입력 데이터 전체 (SQLite)\n' + inputs + '\n' + code
         return Exercise(id, concept, 'choice', title, prompt, code, answer, explanation,
                         HINTS[id],
-                        tuple(choices), domain=domain, level=level, version=1,
+                        tuple(choices), domain=domain, level=level, version=2 if domain == 'SQL' else 1,
                         reference_setup=setup, reference_output=answer, seconds=180)
     return [
         q('pandas-select-03','조건과 열 선택','품절 상품의 가격 합', '아래 코드의 출력값을 구하세요.',

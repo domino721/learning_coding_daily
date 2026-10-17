@@ -294,6 +294,22 @@
         "scripts/verify-published-site.py"
       ],
       "code_reference": "fcb8f9dce092793cb4cffcff8219016a627df9e8"
+    },
+    {
+      "id": "EV-023",
+      "record": "docs/planning/evidence/EV-023.md",
+      "artifacts": [
+        "backend/extra_content.py",
+        "backend/content_batches/2026-10-18.json",
+        "scripts/validate_sql_content.py",
+        "scripts/export-content.py",
+        "src/CodeBlock.tsx",
+        "src/curriculum.json",
+        "tests/test_sql_inputs.py",
+        "tests/e2e/browser-migration.spec.ts",
+        "tests/e2e/daily-content.spec.ts"
+      ],
+      "code_reference": "WBS-350 SQL input corrections and 2026-10-18 batch (accompanying commit)"
     }
   ]
 }

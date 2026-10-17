@@ -16,7 +16,11 @@ export default function ExerciseReview({
       <summary>문제와 해설 보기</summary>
       <div className="review-content">
         <p className="prompt">{item.prompt}</p>
-        <CodeBlock code={item.code} language={item.domain} />
+        <CodeBlock
+          code={item.code}
+          language={item.domain}
+          exerciseId={item.id}
+        />
         {choice && (
           <ol className="review-choices" aria-label="문제 보기">
             {item.choices.map((value) => (

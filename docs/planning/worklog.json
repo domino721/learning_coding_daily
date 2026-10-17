@@ -378,6 +378,27 @@
       "changes": [],
       "summary": "UI 앱 fcb8f9d를 기존 main으로 비강제 push하고 원격SHA 확인. Pages39028495587/job117384098807와 관리39028495614 모두 completed/success. GitHub runner가 실제 운영 HTML/JS/CSS bytes를 대조해 index-8ghuJ5Y_.js/index-BIbWAB0U.css 일치 확인 EV-022. 학습 시작 상단·발자국 높이 축소·기록 요약 순서 UI 배포 완료. 새5문제/기존기록 보존 EV-021, 실기기/학습효과는 별도. 다음 WBS-510 유지, 후속 문서만 [skip ci] 저장.",
       "commit": "fcb8f9dce092793cb4cffcff8219016a627df9e8"
+    },
+    {
+      "id": "LOG-032",
+      "date": "2026-10-18",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [],
+      "action": "maintenance",
+      "summary": "사용자 지적에 따라 SQL 입력 누락6개를 같은 ID의 v2로 수정하고 SQLite 전체 입력을 표시한다. 기존 snapshot은 변경하지 않고 동일 저장 쿼리의 표시만 보완한다. codex-2026-10-18 새 SQL5개·표시 입력 검증/게시 차단을 추가하고 실제 계산·모바일·기록 보존을 검증한 뒤 기존 Pages에 게시한다. 기준선1.5.0·origin·저장 키·과거 근거를 유지하며 검증/배포 결과는 새 EV로 기록한다.",
+      "commit": null
+    },
+    {
+      "id": "LOG-033",
+      "date": "2026-10-18",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [],
+      "summary": "SQL 누락6개 v2·10월18일 새SQL5개·전체18개 표시 입력 검증과 게시 차단·동일 과거 쿼리 주석 보충을 구현. Python230/Node14/모바일20(브라우저전용 서버5개 제외), 최종 저장SQL6개 표시/해설/답안·v1 snapshot 보존 재검증1개 통과 EV-023. 320px에서 전체 환불 입력을 직접 확인. 최종 웹 index-iBII2PR6.js/index-D6v8TWnn.css. 기존 main에 비강제 게시하며 원격 성공은 별도 기록한다. 다음 WBS-510과 기준선1.5.0 유지.",
+      "commit": null
     }
   ]
 }
