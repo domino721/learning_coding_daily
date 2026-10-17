@@ -43,8 +43,7 @@ function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
         오늘 총 <strong>{total}문제</strong> 풀었어요.
       </p>
       <span>
-        전체 트랙 합계 · 기본 학습 {basic}문제 · 추가·이전 학습 {total - basic}
-        문제
+        전체 트랙 · 기본 {basic}문제 · 추가·이전 {total - basic}문제
       </span>
     </div>
   );
@@ -613,7 +612,15 @@ export default function App() {
           {theme === "dark" ? "다크" : "라이트"}
         </button>
       </header>
-      <main className={screen === "lesson" ? "lesson-main" : ""}>
+      <main
+        className={
+          screen === "lesson"
+            ? "lesson-main"
+            : screen === "home"
+              ? "home-main"
+              : ""
+        }
+      >
         {error && (
           <div className="error-banner" role="alert">
             <p>{error}</p>
@@ -657,14 +664,9 @@ export default function App() {
                     {screen === "record" ? "MY LEARNING" : "DAILY PRACTICE"}
                   </p>
                   <h1 ref={focusTarget} tabIndex={-1}>
-                    {screen === "record" ? (
-                      "쌓여 가는 작은 실력."
-                    ) : (
-                      <>
-                        오늘도, 가볍게
-                        <br />한 걸음 더.
-                      </>
-                    )}
+                    {screen === "record"
+                      ? "쌓여 가는 작은 실력."
+                      : "오늘도, 한 걸음 더."}
                   </h1>
                   <p>
                     {screen === "record"
@@ -672,64 +674,6 @@ export default function App() {
                       : "하루 10분의 연습이 내일의 자신감이 되도록."}
                   </p>
                 </div>
-                {dashboard && <Lifetime dashboard={dashboard} />}
-                {screen === "record" && (
-                  <LearningRecord
-                    dashboard={dashboard}
-                    refresh={recordsRestored}
-                  />
-                )}
-                {dashboard && (
-                  <section
-                    className="activity"
-                    aria-labelledby="activity-title"
-                  >
-                    <div className="section-heading">
-                      <h2 id="activity-title">최근 7일의 발자국</h2>
-                      <span>{dashboard.weekly_days.length}일 학습했어요</span>
-                    </div>
-                    <TodayCompleted dashboard={dashboard} />
-                    <p className="achievement-note">
-                      {todaySession?.finished
-                        ? (dashboard.today_completed_count ?? 0) >
-                          todaySession.total
-                          ? "목표를 채우고, 한 걸음 더 나아갔어요."
-                          : "오늘의 목표를 채웠어요. 차곡차곡 쌓이고 있어요."
-                        : (dashboard.today_completed_count ?? 0) > 0
-                          ? "오늘도 한 걸음을 남겼어요."
-                          : "작은 한 문제부터, 오늘의 발자국을 남겨 봐요."}
-                    </p>
-                    <div className="week">
-                      {week(dashboard.local_day).map((d) => (
-                        <div
-                          className={`day ${dashboard.weekly_days.includes(d.key) ? "practiced" : ""}`}
-                          key={d.key}
-                        >
-                          <span>{d.label}</span>
-                          <span
-                            className="day-circle"
-                            aria-label={`${d.key} ${dashboard.weekly_days.includes(d.key) ? "학습함" : "학습 전"}`}
-                          >
-                            {dashboard.weekly_days.includes(d.key) ? "✓" : "·"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="activity-bottom">
-                      <p>
-                        지금까지 만난 문제{" "}
-                        <strong>{dashboard.learned_count}개</strong>
-                      </p>
-                      <span>총 {60}개 중</span>
-                    </div>
-                    {screen === "record" && (
-                      <p className="record-note">
-                        정답과 해설 학습을 모두 기록해요. 도움을 받은 문제는
-                        다음날, 혼자 푼 문제는 3일 뒤 복습 후보로 돌아옵니다.
-                      </p>
-                    )}
-                  </section>
-                )}
                 {screen === "home" && (
                   <>
                     <section
@@ -737,87 +681,51 @@ export default function App() {
                       aria-labelledby="tracks-title"
                     >
                       <div className="section-heading">
-                        <h2 id="tracks-title">어떤 실력을 키워 볼까요?</h2>
-                        <span>학습 트랙</span>
+                        <h2 id="tracks-title">오늘 학습</h2>
+                        <span>학습 트랙 선택</span>
                       </div>
                       <div className="track-list">
-                        {tracks.map((track, i) => (
-                          <button
-                            key={track.id}
-                            disabled={!track.available || busy}
-                            onClick={() => setTrackId(track.id)}
-                            aria-pressed={
-                              track.available ? trackId === track.id : undefined
-                            }
-                            className={`track-card ${track.available ? "available" : ""}`}
-                          >
-                            <span className="track-icon" aria-hidden="true">
-                              {["▥", "⌘", "∿"][i]}
-                            </span>
-                            <span className="track-copy">
-                              <strong>{track.name}</strong>
-                              <span>{track.description}</span>
-                            </span>
-                            <span
-                              className={`track-tag ${track.available ? "green" : ""}`}
+                        {tracks
+                          .filter((track) => track.available)
+                          .map((track) => (
+                            <button
+                              key={track.id}
+                              disabled={!track.available || busy}
+                              onClick={() => setTrackId(track.id)}
+                              aria-pressed={
+                                track.available
+                                  ? trackId === track.id
+                                  : undefined
+                              }
+                              className={`track-card ${track.available ? "available" : ""}`}
                             >
-                              {track.available
-                                ? `${track.exercise_count}문제`
-                                : "준비 중"}
-                            </span>
-                          </button>
-                        ))}
+                              <span className="track-copy">
+                                <strong>{track.name}</strong>
+                                <span>{track.description}</span>
+                              </span>
+                              <span
+                                className={`track-tag ${track.available ? "green" : ""}`}
+                              >
+                                {track.available
+                                  ? `${track.exercise_count}문제`
+                                  : "준비 중"}
+                              </span>
+                            </button>
+                          ))}
                       </div>
                     </section>
-                    {dashboard?.legacy_session && (
-                      <div className="legacy-note">
-                        <p>
-                          이전 통합 학습 기록과 답안은 그대로 보관했어요. 새
-                          트랙의 목표는 별도로 시작하며 전체 누적은 이어져요.
-                          서술형 답안은 보류·미채점으로 남깁니다.
-                        </p>
-                        {dashboard.legacy_session.items.some(playable) && (
-                          <button
-                            className="extra-button"
-                            disabled={busy}
-                            onClick={() =>
-                              openSession(false, dashboard.legacy_session!)
-                            }
-                          >
-                            이전 통합 학습 이어서
-                          </button>
-                        )}
-                      </div>
-                    )}
                     <section
                       className="daily-card"
                       aria-labelledby="daily-title"
                     >
-                      <div className="daily-top">
-                        <span className="pill">오늘의 루틴</span>
-                        <span>01 / DATA</span>
-                      </div>
                       <div className="daily-card-content">
                         <div>
-                          <p className="daily-kicker">DATA ANALYSIS PRACTICE</p>
                           <h2 id="daily-title">{trackName(trackId)}</h2>
                           <p>
                             {trackId === "sql"
                               ? "SQL 기초부터 조건·집계·조인을 연습해요."
                               : "pandas·NumPy와 통계·머신러닝을 연습해요."}
-                            <br />
-                            다른 트랙과 실력을 따로 확인해요.
                           </p>
-                        </div>
-                        <div className="data-art" aria-hidden="true">
-                          <div className="art-label">one step a day</div>
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <div className="art-check">✓</div>
                         </div>
                       </div>
                       <div className="daily-details">
@@ -854,10 +762,6 @@ export default function App() {
                             다른 트랙을 연습하거나 다음 복습 때 만나요.
                           </p>
                         )}
-                      <p className="recommended-note">
-                        실력에 맞춰 객관식·단답형을 추천해요. 같은 날 나온
-                        문제는 다시 내지 않아요. 서술형은 안정화 중이에요.
-                      </p>
                       <button
                         className="light-button"
                         disabled={
@@ -875,7 +779,19 @@ export default function App() {
                             : "오늘 학습 시작하기"}
                         <span aria-hidden="true">↗</span>
                       </button>
+                      <p className="recommended-note">
+                        실력에 맞는 객관식·단답형 문제를 추천해요.
+                      </p>
                     </section>
+                    {tracks.some((track) => !track.available) && (
+                      <p className="upcoming-note">
+                        {tracks
+                          .filter((track) => !track.available)
+                          .map((track) => track.name)
+                          .join(" · ")}{" "}
+                        트랙은 준비 중이에요.
+                      </p>
+                    )}
                     {todaySession?.finished && (
                       <div className="extra-prompt">
                         <button
@@ -894,7 +810,87 @@ export default function App() {
                         </p>
                       </div>
                     )}
+                    {dashboard?.legacy_session && (
+                      <div className="legacy-note">
+                        <p>
+                          이전 통합 학습 기록과 답안은 그대로 보관했어요. 새
+                          트랙의 목표는 별도로 시작하며 전체 누적은 이어져요.
+                          서술형 답안은 보류·미채점으로 남깁니다.
+                        </p>
+                        {dashboard.legacy_session.items.some(playable) && (
+                          <button
+                            className="extra-button"
+                            disabled={busy}
+                            onClick={() =>
+                              openSession(false, dashboard.legacy_session!)
+                            }
+                          >
+                            이전 통합 학습 이어서
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </>
+                )}
+                {dashboard && <Lifetime dashboard={dashboard} />}
+                {dashboard && (
+                  <section
+                    className="activity"
+                    aria-labelledby="activity-title"
+                  >
+                    <div className="section-heading">
+                      <h2 id="activity-title">최근 7일의 발자국</h2>
+                      <span>{dashboard.weekly_days.length}일 학습했어요</span>
+                    </div>
+                    <TodayCompleted dashboard={dashboard} />
+                    {screen === "record" && (
+                      <p className="achievement-note">
+                        {todaySession?.finished
+                          ? (dashboard.today_completed_count ?? 0) >
+                            todaySession.total
+                            ? "목표를 채우고, 한 걸음 더 나아갔어요."
+                            : "오늘의 목표를 채웠어요. 차곡차곡 쌓이고 있어요."
+                          : (dashboard.today_completed_count ?? 0) > 0
+                            ? "오늘도 한 걸음을 남겼어요."
+                            : "작은 한 문제부터, 오늘의 발자국을 남겨 봐요."}
+                      </p>
+                    )}
+                    <div className="week">
+                      {week(dashboard.local_day).map((d) => (
+                        <div
+                          className={`day ${dashboard.weekly_days.includes(d.key) ? "practiced" : ""}`}
+                          key={d.key}
+                        >
+                          <span>{d.label}</span>
+                          <span
+                            className="day-circle"
+                            aria-label={`${d.key} ${dashboard.weekly_days.includes(d.key) ? "학습함" : "학습 전"}`}
+                          >
+                            {dashboard.weekly_days.includes(d.key) ? "✓" : "·"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="activity-bottom">
+                      <p>
+                        지금까지 만난 문제{" "}
+                        <strong>{dashboard.learned_count}개</strong>
+                      </p>
+                      <span>총 {60}개 중</span>
+                    </div>
+                    {screen === "record" && (
+                      <p className="record-note">
+                        정답과 해설 학습을 모두 기록해요. 도움을 받은 문제는
+                        다음날, 혼자 푼 문제는 3일 뒤 복습 후보로 돌아옵니다.
+                      </p>
+                    )}
+                  </section>
+                )}
+                {screen === "record" && (
+                  <LearningRecord
+                    dashboard={dashboard}
+                    refresh={recordsRestored}
+                  />
                 )}
                 <p className="gentle-note">
                   {dashboard?.timezone ?? "Asia/Seoul"} 기준 ·{" "}

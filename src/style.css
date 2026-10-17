@@ -467,32 +467,44 @@ progress::-moz-progress-bar {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: linear-gradient(135deg, var(--soft), var(--surface) 75%);
-  padding: 22px;
+  padding: 16px;
   margin: 0 0 24px;
 }
+.activity .section-heading {
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
 .activity .today-completed {
-  margin: 12px 0 8px;
+  margin: 8px 0 4px;
+}
+.activity .today-completed p {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+.activity .today-completed > span {
+  font-size: 11px;
 }
 .activity .today-completed strong {
-  font-size: 32px;
+  font-size: 18px;
 }
 .achievement-note {
   color: var(--accent-text);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.7;
-  margin: 0 0 18px;
+  margin: 4px 0 8px;
 }
 .week {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 0 20px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px 0 10px;
 }
 .day {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   font-size: 10px;
   color: var(--muted);
 }
@@ -500,8 +512,8 @@ progress::-moz-progress-bar {
   display: grid;
   place-items: center;
   background: var(--soft);
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   font-size: 18px;
   color: var(--muted);
@@ -512,7 +524,7 @@ progress::-moz-progress-bar {
 }
 .activity-bottom {
   border-top: 1px solid var(--border);
-  padding-top: 16px;
+  padding-top: 8px;
   display: flex;
   justify-content: space-between;
   font-size: 11px;
@@ -1047,11 +1059,11 @@ pre {
     font-size: 9px;
   }
   .activity {
-    padding: 18px;
+    padding: 14px;
   }
   .day-circle {
-    width: 29px;
-    height: 29px;
+    width: 26px;
+    height: 26px;
   }
   .week {
     gap: 5px;
@@ -1433,4 +1445,93 @@ pre {
 .lifetime-card > strong,
 .backup-upload {
   color: var(--accent-text);
+}
+
+.home-main {
+  padding-top: 22px;
+}
+.home-main .page-heading {
+  margin-bottom: 20px;
+}
+.home-main .page-heading h1 {
+  font-size: 26px;
+  line-height: 1.3;
+  margin: 8px 0;
+  letter-spacing: -1px;
+  word-break: keep-all;
+}
+.home-main .tracks-section {
+  margin: 0 0 12px;
+}
+.home-main .section-heading {
+  margin-bottom: 10px;
+}
+.home-main .track-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.home-main .track-card {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 10px 12px;
+  min-height: 64px;
+  border-width: 2px;
+}
+.home-main .track-copy strong {
+  word-break: keep-all;
+}
+.home-main .track-copy > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.home-main .track-tag {
+  display: block;
+  margin-left: 0;
+}
+.home-main .upcoming-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin: -8px 0 20px;
+}
+.home-main .daily-card {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.home-main .daily-card-content {
+  padding: 0 0 12px;
+}
+.home-main .daily-card h2 {
+  font-size: 22px;
+  line-height: 1.4;
+}
+.home-main .daily-card-content p:last-child {
+  margin-top: 4px;
+}
+.home-main .daily-details {
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding: 10px 0 14px;
+}
+.home-main .daily-progress {
+  padding-bottom: 12px;
+}
+.home-main .recommended-note {
+  margin: 10px 0 0;
+  font-size: 11px;
+}
+.home-main .lifetime-card {
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.home-main .lifetime-card > strong {
+  font-size: 26px;
+}
+.home-main .lifetime-card p {
+  font-size: 11px;
 }

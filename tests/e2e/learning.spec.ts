@@ -32,6 +32,16 @@ test("independent courses use unique pools, capped choices and preserved history
     lifetime = page.getByRole("region", { name: "누적 학습" });
   await expect(lifetime).toContainText("0문제 풀이");
   await page.setViewportSize({ width: 320, height: 740 });
+  const startButton = page.getByRole("button", {
+    name: "오늘 학습 시작하기",
+  });
+  const startBox = (await startButton.boundingBox())!;
+  const navBox = (await page.getByRole("navigation").boundingBox())!;
+  const activityBox = (await page.locator(".activity").boundingBox())!;
+  // The primary action must fit above the fixed navigation without scrolling.
+  expect(startBox.y + startBox.height).toBeLessThan(navBox.y);
+  expect(activityBox.y).toBeGreaterThan(startBox.y + startBox.height);
+  expect(activityBox.height).toBeLessThan(240);
   await page.screenshot({
     path: `test-results/${test.info().project.name}-home.png`,
     fullPage: true,
