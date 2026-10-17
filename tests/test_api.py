@@ -125,7 +125,7 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
         if seen==active:break
         clock[0]+=timedelta(days=1)
     assert seen==active
-    assert client.get('/api/dashboard').json()['learned_count']==55
+    assert client.get('/api/dashboard').json()['learned_count']==len(active)
 
 
 def test_retry_idempotency_and_invalid_submissions(learning):
@@ -197,7 +197,7 @@ def test_original_pandas_answers_remain_valid():
     assert BY_ID['pandas-sort-02'].answer == 'sort_values' and amounts.sort_values('amount')['amount'].tolist() == [3000, 5000, 9000]
     teams = pd.DataFrame({"team": ["A", "B", "A"], "amount": [3000, 4000, 5000]})
     assert str(teams.groupby('team')['amount'].sum()['A']) == BY_ID['pandas-group-02'].answer
-    assert len(EXERCISES) == len(BY_ID) == 60
+    assert len(EXERCISES) == len(BY_ID) >= 60
     assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn"}
 
 
@@ -212,7 +212,7 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert '매일코딩' in client.get("/").text
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/api/health").json() == {"status": "ok"}
-        assert client.get("/api/tracks").json()[0]["exercise_count"] == 45
+        assert client.get("/api/tracks").json()[0]["exercise_count"] == sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 

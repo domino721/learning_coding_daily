@@ -308,6 +308,30 @@
       ],
       "summary": "앱 0ffc70b와 설계/계획1.4.0 tags 원격 저장. Pages38857677989/job116832692675 및 관리38857677854 success, JS index-D6O9iFVe.js·CSS index-CFN8USwe.css 최종 빌드 일치 확인(EV-018). 기존 테스트 HTML은 보존 후 사이트 안내로 대체, main/Pages 경로로 통합. WBS-290 완료, 다음 WBS-510. 운영 URL 직접 읽기는 환경 제한이므로 실제 기기 확인과 구분. 문서 전용 [skip ci] 후속 저장.",
       "commit": "0ffc70b0c7ec5babd0fd81942e52d654c774b869"
+    },
+    {
+      "id": "LOG-026",
+      "date": "2026-10-16",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [
+        "CR-009"
+      ],
+      "summary": "구형 미커밋 API 초안 21개 파일을 source tar/patch/manifest와 Git stash로 보존하고 기존 checkout을 원격 05745dd로 fast-forward. 기존 활성 Python45/SQL10 및 보관60 기준을 확인. CR-009·설계/계획1.5.0으로 API 없는 Codex 5문제 배치·검수·게시 착수. 실제 검증·배포 완료 주장은 아직 하지 않음.",
+      "commit": null
+    },
+    {
+      "id": "LOG-027",
+      "date": "2026-10-17",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [
+        "CR-009"
+      ],
+      "summary": "이전 실행은 자동 승인 검토 사용량 한도로 마지막 명령 실행 전 중단되어 미게시. 미게시 변경을 tar/patch로 추가 보존하고 main05745dd 동일/게시배치 없음 확인. 오늘 배치5개로 확정·재검수, Python204/Node14/모바일17 및 기존60원본/snapshot 보존 통과 EV-019. Pages 공개 자산 검증 단계를 준비했으나 원격 게시 성공은 아직 미기록.",
+      "commit": null
     }
   ]
 }

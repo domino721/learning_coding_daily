@@ -6,6 +6,7 @@ from backend.content import EXERCISES,BY_ID
 from backend.curriculum import CONCEPTS,concept_states,select_exercises,review_due
 
 FIXTURES=json.loads(Path('tests/fixtures/recommendation.json').read_text())
+BASELINE_IDS=set(json.loads(Path('tests/fixtures/catalog-before-codex-20261016.json').read_text())['exercises'])
 
 def sessions_from(records):
     sessions=[]
@@ -20,13 +21,14 @@ def sessions_from(records):
 def test_declared_learning_rules(case):
     sessions=sessions_from(case['records']);expected=case['expected'];state=concept_states(sessions,BY_ID)[expected['concept']]
     assert {k:state[k] for k in ('level','independent_count','evidence_days')}=={k:expected[k] for k in ('level','independent_count','evidence_days')}
-    selected=select_exercises(EXERCISES,sessions,{},case['day'])
+    # These historical contract fixtures describe the original catalog, before daily additions.
+    selected=select_exercises([ex for ex in EXERCISES if ex.id in BASELINE_IDS],sessions,{},case['day'])
     assert len(selected)==len({e.id for e,_ in selected})==5
     assert [e.id for e,_ in selected]==case['selected']
 
 
 def test_curriculum_has_explicit_metadata_and_acyclic_prerequisites():
-    assert len(EXERCISES)==60
+    assert len(EXERCISES)>=60
     profiles=json.loads(Path('backend/difficulty.json').read_text())
     assert set(profiles)==set(BY_ID)
     ids={c['id'] for c in CONCEPTS};visited=set()
@@ -42,7 +44,7 @@ def test_curriculum_has_explicit_metadata_and_acyclic_prerequisites():
         assert 1<=ex.difficulty['reasoning_steps']<=4 and 1<=ex.difficulty['code_load']<=3
         assert 1<=ex.level<=3 and ex.difficulty['level']==ex.level
     assert {ex.response_mode for ex in EXERCISES}=={'choice','short','essay'}
-    assert all(sum(e.domain==domain for e in EXERCISES)==count for domain,count in [('pandas',16),('NumPy',11),('SQL',11),('통계',11),('scikit-learn',11)])
+    assert all(sum(e.domain==domain for e in EXERCISES)>=count for domain,count in [('pandas',16),('NumPy',11),('SQL',11),('통계',11),('scikit-learn',11)])
 
 
 def test_initial_mix_and_same_day_repetition_never_unlocks_advanced():
@@ -71,4 +73,4 @@ def test_pending_legacy_cards_and_essays_never_enter_new_pool():
         result=select_exercises(EXERCISES,[],{},day,track=track)
         assert result
         assert all(ex.response_mode!='essay' and ((ex.domain=='SQL')==(track=='sql')) for ex,_ in result)
-    assert len({(ex.domain,ex.prompt.strip(),ex.code.strip()) for ex in EXERCISES})==60
+    assert len({(ex.domain,ex.prompt.strip(),ex.code.strip()) for ex in EXERCISES})==len(EXERCISES)

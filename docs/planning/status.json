@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "design_version": "1.4.0",
-  "plan_version": "1.4.0",
-  "updated": "2026-10-16",
+  "design_version": "1.5.0",
+  "plan_version": "1.5.0",
+  "updated": "2026-10-17",
   "timezone": "Asia/Seoul",
-  "focus": "WBS-510",
-  "next_task": "WBS-510",
+  "focus": "WBS-350",
+  "next_task": "WBS-350",
   "code_reference": "0ffc70b0c7ec5babd0fd81942e52d654c774b869",
   "tasks": {
     "WBS-010": {
@@ -317,6 +317,16 @@
         "EV-018"
       ],
       "note": "배포본 기준 트랙·추천·기록 보존 및 테마·타이머·문제 복습 통합. Python173/Node14/모바일15, 최종 다크 대비 확인 EV-017. main/tags 원격 저장·Pages38857677989·관리38857677854 성공과 JS/CSS 일치 EV-018. 실제 운영 URL 직접 열람은 환경 접근 제한. 다음 WBS-510."
+    },
+    "WBS-350": {
+      "status": "in_progress",
+      "updated": "2026-10-17",
+      "actual_started": "2026-10-16",
+      "actual_finished": null,
+      "evidence": [
+        "EV-019"
+      ],
+      "note": "Codex codex-2026-10-17 5문제 작성·직접 재검수·실제 참조/경계 검증 완료. Python204/Node14/모바일17 통과 EV-019. 미게시 초안은 보존했고 기존60개 불변. 원격 커밋·Pages 및 공개 자산 확인 전이므로 진행 중 유지."
     }
   }
 }

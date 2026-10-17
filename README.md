@@ -22,8 +22,8 @@
 
 ## 현재 사용할 수 있는 기능
 
-- 독립 트랙: Python 데이터 분석 45문제, SQL 10문제. 코딩테스트는 준비 중
-- 보관 원본 60문제(서술형 5개는 추천 보류): pandas 16개, NumPy·SQL·통계·scikit-learn 각 11개. 코드 읽기·짧은 빈칸·평가 절차·조건 변화 판단
+- 독립 트랙: Python 데이터 분석 48문제, SQL 12문제. 코딩테스트는 준비 중
+- 보관 원본 65문제(서술형 5개는 추천 보류): pandas 17개, NumPy 12개, SQL 13개, 통계 11개, scikit-learn 12개. 코드 읽기·짧은 빈칸·평가 절차·조건 변화 판단
 - 오늘 학습 시작 한 경로: 문항마다 정한 객관식·단답형을 선택한 트랙의 개념·난이도에 맞춰 추천
 - 18개 개념·선행 조건·문항별 난이도 근거와 간단 승급/보완·1/3/7/14일 복습 규칙. 서술형은 안정화 전 추천 제외, 이전 답안은 미채점으로 보관
 - 하루 기본 목표 5문제, 같은 날 같은 기본 구성, 새로고침·서버 재시작 후 이어하기
@@ -93,7 +93,7 @@ npm run test:e2e       # 서버·기기 저장 모드의 모바일 Chromium 검�
 
 브라우저 테스트는 `/usr/bin/chromium`이 있으면 사용하며, `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`로 경로를 지정할 수 있습니다. 시스템 Chromium이 없는 로컬 환경은 `npx playwright install chromium`으로 Playwright 브라우저를 설치하세요. 테스트용 서버는 8001·5174·5175 포트를 사용하고 매 실행 별도의 임시 DB를 생성하므로 개인 진도를 변경하지 않습니다.
 
-서버 테스트는 재시작 후 복구, 한국 시간 자정 전환, 복습 수 제한, 동시 요청·중복 제출 방지, 입력 검증 및 60문제의 NumPy·pandas·SQL·scikit-learn 참조 결과를 확인합니다. 브라우저 테스트는 기존 기록 호환·풀이 전 개념/힌트 미노출·문제 풀이·힌트·해설·빈칸 입력·새로고침 후 이어하기·기록·320px 너비·통신 실패 복구를 확인합니다. Starlette의 httpx 사용 중단 예정 경고 1개가 발생하지만 테스트는 통과합니다.
+서버 테스트는 재시작 후 복구, 한국 시간 자정 전환, 복습 수 제한, 동시 요청·중복 제출 방지, 입력 검증 및 전체 문제의 NumPy·pandas·SQL·scikit-learn 참조 결과를 확인합니다. 브라우저 테스트는 기존 기록 호환·풀이 전 개념/힌트 미노출·문제 풀이·힌트·해설·빈칸 입력·새로고침 후 이어하기·기록·320px 너비·통신 실패 복구를 확인합니다. Starlette의 httpx 사용 중단 예정 경고 1개가 발생하지만 테스트는 통과합니다.
 
 ```bash
 curl --fail http://127.0.0.1:5173/api/health
@@ -106,7 +106,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 ## 구조
 
 - `src/`: 모바일 React 화면과 API 타입
-- `backend/content.py`, `backend/extra_content.py`: 60문제의 정답·힌트·해설·참조 코드 원본
+- `backend/content.py`, `backend/extra_content.py`, `backend/content_batches/`: 전체 문제의 정답·힌트·해설·참조 코드 원본
 - `backend/difficulty.json`, `backend/curriculum.py`: 문항별 상세 난이도·형식·개념 맵·추천 규칙
 - `src/records.ts`, `backend/records.py`: 버전 검증·복구본·파일 백업 병합·학습 로그
 - `backend/main.py`: 일일 학습·제출·복습·기록 API
@@ -132,3 +132,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 기존 풀이 모드 API는 이전 클라이언트 호환을 위해 유지하지만 현재 화면은 문항별 형식을 사용합니다. 이미 시작한 묶음은 보존합니다. `POST /api/sessions/{id}/mode`에 `exercise_id`, `response_mode`(`choice`/`short`; `essay` 신규 지정은 422로 거절)를 보내면 해당 묶음의 미완료 문제에 적용됩니다. 새 기본/추가 학습 생성에도 `response_mode`를 지정할 수 있으며, 이어하기 요청은 기존 모드를 보존합니다. 서술형 신규 지정/제출은 보류하며, 이미 저장된 최대 2,000자 답안은 미채점으로 열람·백업합니다.
 
 상세 입력과 규칙은 [커리큘럼](docs/CURRICULUM.md), 업데이트 후 기록 보존·파일 백업·계정 서버의 후속 구조는 [기록 안정성 설계](docs/RECORD_RELIABILITY.md)를 참고합니다. 현재 Pages는 계정/기기 간 자동 동기화 서버를 제공하지 않습니다.
+
+## Codex 문제 생성·검수·게시
+
+매일 한국 시간 오전 9시에 Codex가 최신 원격 커리큘럼에 맞는 새 문제 5개를 작성하고 직접 검수·참조 계산·모바일/기록 회귀를 수행한다. 통과한 변경만 기존 main/Pages로 게시한다. 별도 OpenAI/Gemini API 키가 필요하지 않으며 Gemini 검수는 현재 생략한다. 하루 생성 분량은 앱의 학습 상한이 아니다. [운영 안내](docs/CONTENT_AUTOMATION.md)와 [2026-10-17 배치 검수](docs/content_batches/2026-10-17.md)를 참고한다. 실제 게시 성공은 실행별 배포 근거로 확인한다.

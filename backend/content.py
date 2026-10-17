@@ -332,6 +332,8 @@ BLANK_CHOICES = {
 EXERCISES = [replace(ex, choices=BLANK_CHOICES[ex.id]) if ex.id in BLANK_CHOICES else ex for ex in EXERCISES]
 from backend.extra_content import authored_extras
 EXERCISES += authored_extras(Exercise)
+from backend.daily_content import authored_batches
+EXERCISES += authored_batches(Exercise)
 from backend.curriculum import attach_metadata
 EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}

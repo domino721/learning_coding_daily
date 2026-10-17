@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "batch_id": "codex-2026-10-17",
+  "date": "2026-10-17",
+  "status": "reviewed",
+  "review_method": "Codex editorial review and executed repository reference checks; no Gemini calls",
+  "review_record": "docs/content_batches/2026-10-17.md",
+  "exercises": [
+    {
+      "id": "pandas-alignment-20261017",
+      "concept": "인덱스 정렬과 열 대입",
+      "kind": "choice",
+      "title": "추가 열 코드 점검",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"sales\": [3, 5]}, index=[\"A\", \"B\"])\ndf[\"bonus\"] = pd.Series([10, 20], index=[\"B\", \"C\"])\nprint(int(df[\"bonus\"].isna().sum()))",
+      "answer": "1",
+      "explanation": "Series를 열에 대입하면 값의 위치가 아니라 인덱스 이름을 맞춥니다. A에 대응하는 값은 없어 결측치, B는 10이 됩니다. Series의 C는 df에 새 행을 만들지 않습니다. 따라서 결측치는 1개입니다. 위치 순서대로 10과 20이 들어간다고 보면 0으로 잘못 셉니다.",
+      "hints": [
+        "왼쪽 표와 오른쪽 Series에 붙은 인덱스 이름을 각각 확인하세요.",
+        "새 열의 각 행은 같은 인덱스 이름의 값을 찾습니다. 대응하는 이름이 없으면 결측치가 됩니다."
+      ],
+      "choices": [
+        "0",
+        "1",
+        "2",
+        "오류가 발생한다"
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "reference_output": "1"
+    },
+    {
+      "id": "numpy-where-20261017",
+      "concept": "조건별 원소 선택",
+      "kind": "choice",
+      "title": "측정값 코드 점검",
+      "prompt": "아래 코드의 출력값을 리스트로 적으세요.",
+      "code": "import numpy as np\nx = np.array([2, 4, 6])\nmask = np.array([True, False, True])\nprint(np.where(mask, x, 99).tolist())",
+      "answer": "[2, 99, 6]",
+      "explanation": "np.where는 각 위치의 조건이 True이면 x의 같은 위치 값을, False이면 세 번째 인수 99를 고릅니다. 결과는 [2, 99, 6]이며 행을 제거하는 필터 [2, 6]과 다릅니다. 결과의 길이는 3으로 유지됩니다.",
+      "hints": [
+        "조건의 각 위치마다 어떤 입력에서 값을 가져오는지 살펴보세요.",
+        "np.where의 두 번째 인수는 True일 때, 세 번째 인수는 False일 때 선택됩니다."
+      ],
+      "choices": [
+        "[2, 99, 6]",
+        "[2, 6]",
+        "[99, 4, 99]",
+        "[2, 4, 6]"
+      ],
+      "seconds": 90,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 1,
+      "reference_output": "[2, 99, 6]"
+    },
+    {
+      "id": "sql-exists-20261017",
+      "concept": "상관 서브쿼리와 NULL",
+      "kind": "choice",
+      "title": "대상 고객 조회",
+      "prompt": "아래 SQL이 반환하는 id를 순서대로 리스트로 적으세요. 주석의 표가 전체 입력입니다.",
+      "code": "-- customers(id): (1), (2), (3)\n-- refunds(customer_id): (1), (NULL)\nSELECT c.id\nFROM customers AS c\nWHERE NOT EXISTS (\n    SELECT 1 FROM refunds AS r\n    WHERE r.customer_id = c.id\n)\nORDER BY c.id;",
+      "answer": "[2, 3]",
+      "explanation": "고객 1은 같은 customer_id의 환불 행이 있어 제외됩니다. 고객 2와 3에는 조건이 True인 환불 행이 없으므로 남습니다. NULL = c.id는 True가 아니어서 그 환불 행은 일치를 만들지 않습니다. NOT IN의 NULL 함정과 달리 이 상관 NOT EXISTS는 모든 고객을 지우지 않습니다.",
+      "hints": [
+        "바깥 고객을 한 명씩 고정하고 안쪽 조건을 만족하는 행이 있는지 확인하세요.",
+        "EXISTS는 조건이 True인 행의 존재를 봅니다. NULL과의 등식이 True인지도 구분하세요."
+      ],
+      "choices": [
+        "[2, 3]",
+        "[]",
+        "[1]",
+        "[1, 2, 3]"
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE customers(id INTEGER); INSERT INTO customers VALUES(1),(2),(3); CREATE TABLE refunds(customer_id INTEGER); INSERT INTO refunds VALUES(1),(NULL);",
+      "reference_output": "[2, 3]"
+    },
+    {
+      "id": "sql-fanout-20261017",
+      "concept": "다중 조인의 집계 중복",
+      "kind": "choice",
+      "title": "집계 리포트 점검",
+      "prompt": "아래 SQL의 결과 한 행을 튜플로 고르세요. 주석의 표가 전체 입력입니다.",
+      "code": "-- orders(id, amount): (1, 10)\n-- line_items(order_id, sku): (1, 'A'), (1, 'B')\n-- payments(order_id, paid): (1, 4), (1, 6)\nSELECT SUM(o.amount), SUM(p.paid)\nFROM orders AS o\nJOIN line_items AS i ON i.order_id = o.id\nJOIN payments AS p ON p.order_id = o.id;",
+      "answer": "(40, 20)",
+      "explanation": "상품 행 2개와 결제 행 2개가 같은 주문에 연결되어 조인 결과는 4행입니다. 주문 금액 10은 네 번 더해져 40, 결제 금액 4와 6은 상품마다 반복되어 20입니다. 원본 주문·결제 합계인 (10, 10)이 아닙니다. 실무에서는 서로 다른 상세 표를 먼저 주문별로 집계하는 등 집계 단위를 맞춰야 합니다.",
+      "hints": [
+        "같은 주문에 연결되는 두 상세 표의 행 조합을 먼저 적어 보세요.",
+        "각 상품 행에 두 결제가 각각 연결됩니다. 조인 후에 각 금액이 몇 번 등장하는지 세어 보세요."
+      ],
+      "choices": [
+        "(40, 20)",
+        "(10, 10)",
+        "(20, 10)",
+        "(40, 40)"
+      ],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "reference_setup": "CREATE TABLE orders(id INTEGER, amount INTEGER); INSERT INTO orders VALUES(1,10); CREATE TABLE line_items(order_id INTEGER, sku TEXT); INSERT INTO line_items VALUES(1,'A'),(1,'B'); CREATE TABLE payments(order_id INTEGER, paid INTEGER); INSERT INTO payments VALUES(1,4),(1,6);",
+      "reference_output": "(40, 20)"
+    },
+    {
+      "id": "ml-category-20261017",
+      "concept": "학습하지 않은 범주의 변환",
+      "kind": "choice",
+      "title": "입력 변환 확인",
+      "prompt": "아래 코드의 출력값을 중첩 리스트로 적으세요.",
+      "code": "from sklearn.preprocessing import OneHotEncoder\nencoder = OneHotEncoder(\n    handle_unknown=\"ignore\", sparse_output=False\n)\nencoder.fit([[\"B\"], [\"A\"]])\nprint(encoder.transform([[\"C\"]]).astype(int).tolist())",
+      "answer": "[[0, 0]]",
+      "explanation": "fit에서 본 범주는 A와 B여서 출력 열은 두 개입니다. C는 새 범주이고 handle_unknown=\"ignore\"이므로 두 열이 모두 0인 [[0, 0]]으로 변환됩니다. 새 열을 자동으로 만들거나 평가 입력으로 다시 fit하는 동작이 아닙니다.",
+      "hints": [
+        "fit에 들어간 범주와 transform에 들어간 범주를 비교하세요.",
+        "학습 때 없던 범주의 처리 설정을 확인하세요. transform은 새 범주를 학습해 열을 추가하지 않습니다."
+      ],
+      "choices": [
+        "[[0, 0]]",
+        "[[1, 0]]",
+        "[[0, 1]]",
+        "오류가 발생한다"
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "reference_output": "[[0, 0]]"
+    }
+  ]
+}

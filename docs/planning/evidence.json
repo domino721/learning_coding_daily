@@ -242,6 +242,24 @@
         "src/ExerciseReview.tsx"
       ],
       "code_reference": "0ffc70b0c7ec5babd0fd81942e52d654c774b869"
+    },
+    {
+      "id": "EV-019",
+      "record": "docs/planning/evidence/EV-019.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-17.json",
+        "backend/daily_content.py",
+        "backend/difficulty.json",
+        "src/curriculum.json",
+        "tests/test_daily_content.py",
+        "tests/fixtures/catalog-before-codex-20261016.json",
+        "tests/e2e/daily-content.spec.ts",
+        "scripts/verify-published-site.py",
+        "tests/test_published_site.py",
+        ".github/workflows/pages.yml",
+        "docs/content_batches/2026-10-17.md"
+      ],
+      "code_reference": "plan-v1.5.0"
     }
   ]
 }

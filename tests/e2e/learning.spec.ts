@@ -20,8 +20,12 @@ test("independent courses use unique pools, capped choices and preserved history
     name: /Python 데이터 분석.*pandas/,
   });
   const sql = page.getByRole("button", { name: /SQL 행 조건/ });
-  await expect(python).toContainText("45문제");
-  await expect(sql).toContainText("10문제");
+  await expect(python).toContainText(
+    `${curriculum.tracks.find((track) => track.id === "python")!.exercise_count}문제`,
+  );
+  await expect(sql).toContainText(
+    `${curriculum.tracks.find((track) => track.id === "sql")!.exercise_count}문제`,
+  );
   await expect(python).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("group", { name: "풀이 모드" })).toHaveCount(0);
   const today = page.getByRole("group", { name: "오늘 누적 학습" }),

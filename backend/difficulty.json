@@ -718,5 +718,65 @@
     "distractor_strength": 0,
     "rationale": "평가 전처리 검토: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
     "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "pandas-alignment-20261017": {
+    "concept_id": "pandas-select",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "행 이름을 맞춘 뒤 누락된 라벨을 찾아야 하므로 두 개념을 연결하는 적용 문제입니다.",
+    "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "numpy-where-20261017": {
+    "concept_id": "numpy-mask",
+    "response_mode": "short",
+    "level": 1,
+    "label": "기초 확인",
+    "reasoning_steps": 1,
+    "code_load": 1,
+    "transfer": 1,
+    "distractor_strength": 0,
+    "rationale": "단일 np.where 연산의 True/False 위치별 선택을 확인하는 기초 문제입니다.",
+    "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-exists-20261017": {
+    "concept_id": "sql-rows",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "고객별 상관 조건의 존재와 NULL 비교 결과를 함께 추적하는 적용 문제입니다.",
+    "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "sql-fanout-20261017": {
+    "concept_id": "sql-joins",
+    "response_mode": "choice",
+    "level": 3,
+    "label": "조건 변화·전이",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 3,
+    "distractor_strength": 3,
+    "rationale": "서로 다른 두 상세 표의 조합과 각 합산 대상의 반복 횟수를 추적하는 전이 문제입니다.",
+    "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+  },
+  "ml-category-20261017": {
+    "concept_id": "ml-preprocessing",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "학습 범주와 평가 시 새 범주 처리 설정을 연결하는 적용 문제입니다.",
+    "calibration": "editorial-codex-20261017; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
   }
 }
