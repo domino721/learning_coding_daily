@@ -260,6 +260,18 @@
         "docs/content_batches/2026-10-17.md"
       ],
       "code_reference": "plan-v1.5.0"
+    },
+    {
+      "id": "EV-020",
+      "record": "docs/planning/evidence/EV-020.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "backend/content_batches/2026-10-17.json",
+        "src/curriculum.json",
+        "docs/content_batches/2026-10-17.md"
+      ],
+      "code_reference": "cd5e0273295cd6a737c751dc5d12bc12aeb99272"
     }
   ]
 }

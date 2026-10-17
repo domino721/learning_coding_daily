@@ -4,9 +4,9 @@
   "plan_version": "1.5.0",
   "updated": "2026-10-17",
   "timezone": "Asia/Seoul",
-  "focus": "WBS-350",
-  "next_task": "WBS-350",
-  "code_reference": "0ffc70b0c7ec5babd0fd81942e52d654c774b869",
+  "focus": "WBS-510",
+  "next_task": "WBS-510",
+  "code_reference": "cd5e0273295cd6a737c751dc5d12bc12aeb99272",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -319,14 +319,15 @@
       "note": "배포본 기준 트랙·추천·기록 보존 및 테마·타이머·문제 복습 통합. Python173/Node14/모바일15, 최종 다크 대비 확인 EV-017. main/tags 원격 저장·Pages38857677989·관리38857677854 성공과 JS/CSS 일치 EV-018. 실제 운영 URL 직접 열람은 환경 접근 제한. 다음 WBS-510."
     },
     "WBS-350": {
-      "status": "in_progress",
+      "status": "done",
       "updated": "2026-10-17",
       "actual_started": "2026-10-16",
-      "actual_finished": null,
+      "actual_finished": "2026-10-17",
       "evidence": [
-        "EV-019"
+        "EV-019",
+        "EV-020"
       ],
-      "note": "Codex codex-2026-10-17 5문제 작성·직접 재검수·실제 참조/경계 검증 완료. Python204/Node14/모바일17 통과 EV-019. 미게시 초안은 보존했고 기존60개 불변. 원격 커밋·Pages 및 공개 자산 확인 전이므로 진행 중 유지."
+      "note": "codex-2026-10-17 새5개·참조/경계·기존60불변 및 snapshot/기록 보존 검수 완료. Python204/Node14/모바일17 EV-019. main cd5e027·1.5.0 태그 원격 저장, Pages38985051216/관리38985051297 success, GitHub runner에서 실제 공개 HTML/JS/CSS bytes 일치 확인 EV-020. 다음 WBS-510; 실기기·학습효과는 별도."
     }
   }
 }
