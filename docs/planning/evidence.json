@@ -347,6 +347,19 @@
         "scripts/verify-published-site.py"
       ],
       "code_reference": "4456c1c12710dec53fbeada489c30d63cd61f673"
+    },
+    {
+      "id": "EV-027",
+      "record": "docs/planning/evidence/EV-027.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-18.json",
+        "docs/content_batches/2026-10-18.md",
+        "tests/test_sql_inputs.py",
+        "tests/e2e/daily-content.spec.ts",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json"
+      ],
+      "code_reference": "ad2729b85bbcd8516540f54e0e97bd4821f83f5e"
     }
   ]
 }
