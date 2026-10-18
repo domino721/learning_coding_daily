@@ -31,6 +31,11 @@ export default defineConfig({
   ],
   webServer: [
     {
+      command: "bash scripts/e2e-accounts.sh",
+      url: "http://127.0.0.1:8002/api/health",
+      reuseExistingServer: false,
+    },
+    {
       command: "npm run build:web && node scripts/preview-web.mjs",
       url: "http://127.0.0.1:5175/learning_coding_daily/",
       reuseExistingServer: false,

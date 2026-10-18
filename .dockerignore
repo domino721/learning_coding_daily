@@ -13,3 +13,11 @@
 !public/**
 !backend/
 !backend/*.py
+
+!design.html
+!backend/*.json
+!backend/content_batches/
+!backend/content_batches/**
+!tests/
+!tests/fixtures/
+!tests/fixtures/learning-paths.json

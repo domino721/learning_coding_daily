@@ -3,7 +3,7 @@
   "risks": [
     {
       "id": "R-001",
-      "title": "30개 기초 문항으로 전체 분석 역량을 대표할 수 없음",
+      "title": "다영역 문항의 실제 학습·전이 효과 미검증",
       "state": "open",
       "impact": "커버리지·전이 부족",
       "mitigation": [
@@ -61,7 +61,7 @@
         "WBS-110",
         "WBS-630"
       ],
-      "close_when": "협업/출시 정책에 필요한 원격 브랜치 보호를 실제 확인; 현재 설정은 확인하지 않음"
+      "close_when": "관리자 인증 환경에서 scripts/protect-main.sh 적용과 required quality context 확인. 현재 gh 인증 유효하지 않아 미적용."
     },
     {
       "id": "R-006",

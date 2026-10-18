@@ -10,7 +10,12 @@ from typing import Callable, Literal
 from uuid import UUID, uuid4
 from zoneinfo import ZoneInfo
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from contextvars import ContextVar
+import asyncio
+from backend.accounts import Accounts
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -42,6 +47,21 @@ class Draft(ExerciseAction):
     draft: str = Field(max_length=2000)
 
 
+class Credentials(RequestModel):
+    username: str = Field(min_length=3,max_length=40)
+    password: str = Field(min_length=12,max_length=128)
+
+class Recovery(Credentials):
+    recovery_code: str = Field(min_length=20,max_length=100)
+
+class DeleteAccount(RequestModel):
+    password: str = Field(min_length=12,max_length=128)
+
+class Observation(RequestModel):
+    kind: Literal["study_enrolled", "observation_note", "lesson_paused"]
+    detail: str = Field(max_length=2000)
+
+
 class Restore(RequestModel):
     data: dict
     confirm_owner: bool = False
@@ -58,11 +78,90 @@ class Answer(TimedExerciseAction):
 
 
 def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None = None,
-               time_zone: str | None = None, frontend_dir: Path | None = None) -> FastAPI:
+               time_zone: str | None = None, frontend_dir: Path | None = None,
+               require_auth: bool | None = None, accounts_dir: Path | None = None) -> FastAPI:
     app = FastAPI(title="Learning Coding Daily API", version="0.2.0")
     path = db_path or Path(os.environ.get("APP_DB_PATH", Path(__file__).resolve().parent.parent / ".data/learning.sqlite3"))
     zone = ZoneInfo(time_zone or os.environ.get("APP_TIMEZONE", "Asia/Seoul"))
     clock = now or (lambda: datetime.now(timezone.utc))
+    account_mode = require_auth if require_auth is not None else os.environ.get("APP_REQUIRE_AUTH") == "1"
+    accounts = Accounts(accounts_dir or path.parent / "accounts")
+    identity = ContextVar("account_identity", default=None)
+    account_locks = {}
+    def storage_path():
+        uid=identity.get()
+        if account_mode and not uid: raise HTTPException(401,"로그인이 필요합니다.")
+        return accounts.path(uid) if uid else path
+
+    @app.middleware("http")
+    async def account_boundary(request: Request, call_next):
+        context_token=None
+        account_lock=None
+        try:
+            if request.url.path.startswith('/api/') and request.method != 'OPTIONS':
+                if request.method == 'POST':
+                    chunks=[];size=0
+                    async for chunk in request.stream():
+                        size+=len(chunk)
+                        if size>12*1024*1024:return JSONResponse({'detail':'요청은 12MB까지 지원합니다.'},413)
+                        chunks.append(chunk)
+                    request._body=b''.join(chunks)
+                public=request.url.path in ('/api/health','/api/tracks') or request.url.path in ('/api/auth/register','/api/auth/login','/api/auth/recover')
+                if account_mode and not public:
+                    auth=request.headers.get('authorization','')
+                    uid=accounts.authenticate(auth[7:] if auth.startswith('Bearer ') else '')
+                    account_lock=account_locks.setdefault(uid,asyncio.Lock())
+                    await account_lock.acquire()
+                    accounts.authenticate(auth[7:])
+                    context_token=identity.set(uid)
+            response=await call_next(request)
+            response.headers['Cache-Control']='no-store' if request.url.path.startswith('/api/') else 'no-cache'
+            response.headers['X-Content-Type-Options']='nosniff'
+            return response
+        except HTTPException as e:
+            return JSONResponse({'detail':e.detail},e.status_code,headers=e.headers)
+        finally:
+            if context_token is not None:identity.reset(context_token)
+            if account_lock is not None and account_lock.locked():account_lock.release()
+
+    def enabled():
+        if not account_mode: raise HTTPException(404,"계정 서버 모드가 아닙니다.")
+
+    @app.post('/api/auth/register')
+    def register(body:Credentials,request:Request):
+        enabled();accounts.throttle(request.client.host if request.client else 'unknown')
+        return accounts.register(body.username,body.password)
+
+    @app.post('/api/auth/login')
+    def login(body:Credentials,request:Request):
+        enabled();accounts.throttle(request.client.host if request.client else 'unknown')
+        return accounts.login(body.username,body.password)
+
+    @app.post('/api/auth/recover')
+    def recover(body:Recovery,request:Request):
+        enabled();accounts.throttle(request.client.host if request.client else 'unknown')
+        return accounts.recover(body.username,body.recovery_code,body.password)
+
+    @app.post('/api/auth/logout')
+    def logout(request:Request):
+        enabled();accounts.logout(request.headers.get('authorization','')[7:]);return {'logged_out':True}
+
+    @app.post('/api/auth/delete')
+    def delete_account(body:DeleteAccount):
+        enabled();accounts.delete(identity.get(),body.password);return {'deleted':True}
+
+    @app.post('/api/sync')
+    def synchronize(body:Restore):
+        enabled()
+        with connect(storage_path()) as db:
+            restore_records(db,body.data,snapshot,body.confirm_owner)
+            return export_records(db,snapshot)
+
+    origins=[x.strip() for x in os.environ.get('APP_ALLOWED_ORIGINS','').split(',') if x.strip()]
+    if origins:
+        if '*' in origins:raise ValueError('Explicit CORS origins required')
+        app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET','POST'],allow_headers=['Authorization','Content-Type'])
+
 
     def today():
         return clock().astimezone(zone).date()
@@ -138,8 +237,11 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.get("/api/health")
     def health():
+        if account_mode:
+            with accounts.db() as db:db.execute("SELECT count(*) FROM users").fetchone()
+            return {"status":"ok","account_mode":True}
         # A healthy learning app must be able to read its persistent store.
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             db.execute("SELECT count(*) FROM sessions").fetchone()
         return {"status": "ok"}
 
@@ -149,8 +251,9 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.get("/api/dashboard")
     def dashboard(track_id: Literal["python", "sql"] = "python"):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             day = today().isoformat()
+            history = all_sessions(db)
             record = db.execute("SELECT id FROM sessions WHERE track_id=? AND batch=0 AND local_day=?", (track_id,day,)).fetchone()
             extra = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? AND batch>0 ORDER BY batch DESC LIMIT 1", (track_id,day,)).fetchone()
             sessions = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? ORDER BY batch", (track_id,day,)).fetchall()
@@ -159,15 +262,15 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             start = (today() - timedelta(days=6)).isoformat()
             days = db.execute("""SELECT DISTINCT s.local_day FROM sessions s JOIN session_items i ON i.session_id=s.id
                 WHERE i.status != 'pending' AND s.local_day BETWEEN ? AND ? ORDER BY s.local_day""", (start, day)).fetchall()
-            legacy = [s for s in all_sessions(db) if s['track_id']=='pandas' and s['local_day']==day]
+            legacy = [s for s in history if s['track_id']=='pandas' and s['local_day']==day]
             progress = {row['exercise_id']:dict(row) for row in db.execute('SELECT * FROM progress')}
-            return {"track_id":track_id,"available_count":len(select_exercises(EXERCISES,all_sessions(db),progress,day,True,track_id)),"legacy_session":next((s for s in reversed(legacy) if any(i["status"]=="pending" and i["response_mode"]!="essay" for i in s["items"])),legacy[-1] if legacy else None),"local_day": day, "timezone": str(zone), "learned_count": learned,
+            return {"track_id":track_id,"available_count":len(select_exercises(EXERCISES,history,progress,day,True,track_id)),"legacy_session":next((s for s in reversed(legacy) if any(i["status"]=="pending" and i["response_mode"]!="essay" for i in s["items"])),legacy[-1] if legacy else None),"local_day": day, "timezone": str(zone), "learned_count": learned,
                     "weekly_days": [row[0] for row in days],
                     "today": snapshot(db, record[0]) if record else None,
                     "learner_id": db.execute("SELECT value FROM metadata WHERE key='learner_id'").fetchone()[0],
                     "all_time_completed_count":max(db.execute("SELECT count(*) FROM session_items WHERE status!='pending'").fetchone()[0],db.execute('SELECT coalesce(sum(completed_count),0) FROM progress').fetchone()[0]),
-                    "concepts":list(concept_states(all_sessions(db),BY_ID).values()),
-                    "today_sessions": [s for s in all_sessions(db) if s["local_day"]==day],
+                    "concepts":list(concept_states(history,BY_ID).values()),
+                    "today_sessions": [s for s in history if s["local_day"]==day],
                     "extra": snapshot(db, extra[0]) if extra else None, "today_completed_count": total_done}
 
     @app.post("/api/sessions/today")
@@ -176,7 +279,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
         if body.track_id not in ("python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             day = today().isoformat()
             existing = db.execute("SELECT id FROM sessions WHERE track_id=? AND batch=0 AND local_day=?", (body.track_id, day)).fetchone()
             if existing:
@@ -199,7 +302,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
         if body.track_id not in ("python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             day = today().isoformat()
             daily = db.execute("SELECT id FROM sessions WHERE track_id=? AND local_day=? AND batch=0", (body.track_id, day)).fetchone()
             if not daily or not snapshot(db, daily[0])["finished"]:
@@ -219,38 +322,44 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             event(db,'session_started',session_id,detail=json.dumps(trace,ensure_ascii=False),occurred_at=clock().isoformat())
             return snapshot(db, session_id)
 
+    @app.post("/api/observations")
+    def observation(body: Observation):
+        with connect(storage_path()) as db:
+            event(db,body.kind,detail=body.detail,occurred_at=clock().isoformat())
+        return {"saved": True}
+
     @app.get('/api/history')
     def history():
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             data=export_records(db,snapshot)
             return {'sessions':list(reversed(data['sessions'])),'events':list(reversed(data['events']))}
 
     @app.get('/api/backup')
     def backup():
-        with connect(path) as db:return export_records(db,snapshot)
+        with connect(storage_path()) as db:return export_records(db,snapshot)
 
     @app.post('/api/restore')
     def restore(body:Restore):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             restore_records(db,body.data,snapshot,body.confirm_owner)
             return {'restored':True}
 
     @app.post('/api/sessions/{session_id}/draft')
     def draft(session_id:str,body:Draft):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             pending_item(db,session_id,body.exercise_id)
             db.execute('UPDATE session_items SET draft=? WHERE session_id=? AND exercise_id=?',(body.draft,session_id,body.exercise_id))
             return snapshot(db,session_id)
 
     @app.get("/api/sessions/{session_id}")
     def read_session(session_id: str):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/{session_id}/mode")
     def change_mode(session_id: str, body: ModeChange):
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             pending_item(db, session_id, body.exercise_id)
             db.execute("UPDATE session_items SET response_mode=? WHERE session_id=? AND status='pending'",
                        (body.response_mode, session_id))
@@ -258,7 +367,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.post("/api/sessions/{session_id}/answers")
     def answer(session_id: str, body: Answer):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             session_record(db, session_id, mutable=True)
             prior = db.execute("SELECT * FROM attempts WHERE id=?", (str(body.attempt_id),)).fetchone()
             if prior:
@@ -292,7 +401,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.post("/api/sessions/{session_id}/hint")
     def hint(session_id: str, body: ExerciseAction):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             item = pending_item(db, session_id, body.exercise_id)
             count = min(item["hints_used"] + 1, len(authored(item).hints))
             db.execute("UPDATE session_items SET hints_used=? WHERE session_id=? AND exercise_id=?", (count, session_id, body.exercise_id))
@@ -301,7 +410,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
 
     @app.post("/api/sessions/{session_id}/reveal")
     def reveal(session_id: str, body: TimedExerciseAction):
-        with connect(path) as db:
+        with connect(storage_path()) as db:
             session_record(db, session_id, mutable=True)
             item = db.execute("SELECT status FROM session_items WHERE session_id=? AND exercise_id=?", (session_id, body.exercise_id)).fetchone()
             if item and item["status"] == "revealed":

@@ -82,6 +82,8 @@ def connect(path: Path):
             db.execute("PRAGMA user_version=4")
             db.commit()
         db.execute("PRAGMA foreign_keys=ON")
+        db.execute("CREATE INDEX IF NOT EXISTS events_session_kind ON learning_events(session_id,kind)")
+        db.execute("CREATE INDEX IF NOT EXISTS missing_snapshots ON session_items(snapshot) WHERE snapshot IS NULL")
         # Serialize creation/resumption of extra batches and answer retries.
         db.execute("BEGIN IMMEDIATE")
         from dataclasses import asdict

@@ -1,0 +1,41 @@
+name: Quality gate
+on:
+  workflow_call:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    name: Required quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+          enable-cache: true
+      - run: npm ci
+      - run: uv sync --frozen
+      - run: npx playwright install --with-deps chromium
+      - name: Planning, content, contracts, typecheck, build and Python regressions
+        run: bash scripts/check.sh
+      - name: Mobile learning, records, migrations and recovery
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: mobile-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: test-results/
+          retention-days: 7

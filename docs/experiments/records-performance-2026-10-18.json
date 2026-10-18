@@ -1,0 +1,33 @@
+{
+  "synthetic": true,
+  "description": "5 answers/day; retained per-session question snapshots; Node timings are not real-device latency",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "days": 90,
+      "sessions": 90,
+      "answers": 450,
+      "utf8_bytes": 1252658,
+      "local_storage_utf16_bytes": 1971490,
+      "timings": {
+        "stringify_ms": 6.91,
+        "parse_validate_ms": 9.25,
+        "merge_ms": 19.61,
+        "metrics_ms": 7.27
+      }
+    },
+    {
+      "days": 365,
+      "sessions": 365,
+      "answers": 1825,
+      "utf8_bytes": 5066408,
+      "local_storage_utf16_bytes": 7968694,
+      "timings": {
+        "stringify_ms": 29.94,
+        "parse_validate_ms": 36.85,
+        "merge_ms": 69.07,
+        "metrics_ms": 18.12
+      }
+    }
+  ]
+}

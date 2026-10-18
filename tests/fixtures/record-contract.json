@@ -1,0 +1,6 @@
+[
+  {"name":"reordered keys", "a":{"session":"s","exercise":"e","answer":"2","correct":true}, "b":{"correct":true,"answer":"2","exercise":"e","session":"s"},"error":false},
+  {"name":"optional metadata", "a":{"session":"s","exercise":"e","answer":"2","correct":true,"active_seconds":9}, "b":{"session":"s","exercise":"e","answer":"2","correct":true,"hints_used":1,"active_seconds":12,"response_mode":"short"},"error":false},
+  {"name":"different answer", "a":{"session":"s","exercise":"e","answer":"2","correct":true}, "b":{"session":"s","exercise":"e","answer":"3","correct":true},"error":true},
+  {"name":"different mode", "a":{"session":"s","exercise":"e","answer":"2","correct":true,"response_mode":"short"}, "b":{"session":"s","exercise":"e","answer":"2","correct":true,"response_mode":"choice"},"error":true}
+]

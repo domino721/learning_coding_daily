@@ -1539,3 +1539,55 @@ pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.quality-panel {
+  margin: 24px 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow-wrap: anywhere;
+}
+.quality-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 44px;
+}
+.quality-panel p,
+.quality-panel li {
+  font-size: 13px;
+  margin: 12px 0;
+}
+.quality-panel label {
+  display: block;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.quality-panel input:not([type="checkbox"]),
+.quality-panel textarea,
+.quality-panel select {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font: inherit;
+  color: inherit;
+  background: var(--surface, #f7f8f4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.quality-panel input[type="checkbox"] {
+  min-width: 24px;
+  min-height: 24px;
+  vertical-align: middle;
+}
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.quality-grid dt {
+  font-size: 12px;
+}
+.quality-grid dd {
+  margin: 0;
+  font-weight: bold;
+}

@@ -78,6 +78,7 @@ def test_sqlite_v3_automatic_backup_and_upgrade(tmp_path):
         wrong=next(c for c in item['choices'] if c!=BY_ID[item['id']].answer)
         assert submit(client,s,item,wrong).json()['correct'] is False
     with sqlite3.connect(path) as db:
+        db.execute('DROP INDEX IF EXISTS missing_snapshots')
         for column in ('snapshot','draft','completed_at'):db.execute('ALTER TABLE session_items DROP COLUMN '+column)
         db.execute('ALTER TABLE attempts DROP COLUMN response_mode');db.execute('ALTER TABLE progress DROP COLUMN streak')
         db.execute('DROP TABLE learning_events');db.execute('DROP TABLE metadata');db.execute('PRAGMA user_version=3')

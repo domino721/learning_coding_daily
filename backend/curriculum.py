@@ -174,7 +174,7 @@ def validate_learning_paths(exercises):
     for ex in exercises:
         node=items[ex.id]
         card=cards[ex.id]
-        if ex.id not in LEARNING_PATHS['legacy_catalog'] and card['status']!='item_reviewed':raise ValueError('New design card needs item review')
+        if card['status'] not in ('item_reviewed','code_verified_design_reviewed'):raise ValueError('Every design card needs item review')
         for key,value in asdict(ex).items():
             if key not in ('concept','difficulty') and card.get(key)!=(list(value) if isinstance(value,tuple) else value):raise ValueError('Stale design card: '+ex.id)
         if card.get('requires')!=node['requires']:raise ValueError('Design card path mismatch')

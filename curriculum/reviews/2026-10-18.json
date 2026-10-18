@@ -1,0 +1,846 @@
+{
+  "version": 1,
+  "scope": "60 existing app cards, manual per-item reasoning; not a learner-effect study",
+  "items": [
+    {
+      "exercise_id": "numpy-shape-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "행·열 순서 (2,3)와 원소수 (6,)를 구분. 3차원 오답은 중첩 깊이 오해를 드러냄.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-shape-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "9e22fc674368a7dd68c2eb16574e8192e15bda9c15c06a4880c2861e656a1c8e"
+    },
+    {
+      "exercise_id": "sql-where-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "행 조건 WHERE와 집계 조건 HAVING 구분. 입력 전체와 ORDER BY가 있어 결과가 재현됨.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-where-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "7de00e0a2d8957c7c8770dc1bda02a4ed14ee874eaac2bc8813afeb1fe43b9a9"
+    },
+    {
+      "exercise_id": "stats-median-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "중앙 위치 3과 평균22를 구분. 극단값100의 영향을 설명하되 일반적 강건성을 과장하지 않음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-median-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "5a6bff3c993ad47bc47e463774728333e096121d23f6beb0b9321d0f0f4df216"
+    },
+    {
+      "exercise_id": "ml-split-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "test_size가 평가측 비율임을 확인. random_state와 개수 계산을 분리함.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-split-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "f0475c87a417c34d7a9b0c28e6da514b03467ea0b8769e921db85f54fd3fa2e7"
+    },
+    {
+      "exercise_id": "numpy-axis-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "axis0이 소거되어 열별4,6이 남음. 행합3,7 오답과 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-axis-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "292da2eb29a71d84908ad80b1a31ff7046cd3c03ed489f4f14ee77a997978b53"
+    },
+    {
+      "exercise_id": "sql-count-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "COUNT(*)3과 COUNT(amount)2를 구분. NULL은 행 삭제가 아님.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-count-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "27ee0be30cbfd7931e01e4cad08abc73d18adcaf1c58916f850a880d4ff01079"
+    },
+    {
+      "exercise_id": "stats-weight-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "그룹별 전환18,8을 합산해26/100. 비율 단순평균0.5 오개념을 진단.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-weight-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "7c0114e4676c7d92331d4bbcf164096cfc21211c0ff2bf8f75a9be9b56c1cef9"
+    },
+    {
+      "exercise_id": "ml-scale-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "학습평균15·모표준편차5를 새30에 재사용해3.0. 새입력 재학습과 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-scale-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "7c0f5e6ce2f8bfbaed33f9864b48497fbe5bb396b878600b27ac8881f5416462"
+    },
+    {
+      "exercise_id": "numpy-broadcast-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "마지막축 정렬로 열별10,20 반복. 행별 상수 적용 오답을 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-broadcast-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "0112dfad47c1903c0b75909d257a110f9d1d5f6f34b98d22325fc348fc155aa4"
+    },
+    {
+      "exercise_id": "sql-having-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "그룹 합계7000을 만든 뒤 HAVING. WHERE의 행 금액 필터와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-having-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "45263e082eec328a310c999ec75a0100913d955152abd2583f27a752dbd89d74"
+    },
+    {
+      "exercise_id": "stats-std-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "편차제곱합2·분모2·제곱근1. ddof0의0.82를 진단.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-std-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "0956c62431de50c444a90e22ffaf34f102e13465d38f2af6aec4ecc43592b8a1"
+    },
+    {
+      "exercise_id": "ml-metric-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "19/20 정확도와 양성 미탐지를 구분. 높은 정확도를 효용으로 단정하지 않음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-metric-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "ccc7b5636154a18d502582cbc9c5c770d3d9ab895acca6d10380d88b3b5d6d34"
+    },
+    {
+      "exercise_id": "numpy-mask-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "두 조건의 원소별 AND와 엄격한12 경계 제외. OR·경계 포함 오답을 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-mask-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "435c85df04bf502e85c4892593a61220c9dfcfdb6c9565eb96c0704145fe2a7a"
+    },
+    {
+      "exercise_id": "sql-join-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "고객1의2행+미연결고객2의1행. LEFT JOIN 보존과 일대다 증식을 함께 확인.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-join-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "490f97d3ac9437d645ae8ae943bb75c06e55d3365fd31490b594074155218121"
+    },
+    {
+      "exercise_id": "stats-ab-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "비율차0.02에100을 곱한2.0은 퍼센트포인트. 상대20%와 명확히 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-ab-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "19e591aee19d76cec5fefee14d8f6074d02edd140ee4f0a43fe97852022f12a7"
+    },
+    {
+      "exercise_id": "ml-neighbor-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "8에서0·10까지 거리8·2를 비교한 뒤 레이블1. 값8 자체를 예측하지 않음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-neighbor-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "2bad66e7e948e8bc20867e3f62aea9e817877759bf3a2a08319df3ae360ed34a"
+    },
+    {
+      "exercise_id": "numpy-view-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "기본슬라이스의 공유 메모리와 명시적copy 대조. y길이와 x길이를 혼동하지 않음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-view-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "c71483916081ba3b87347e04bd6ba3e6e1a58eb1d244da9ee948b240cb1d882e"
+    },
+    {
+      "exercise_id": "sql-null-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "NULL<>1은 Unknown. 명시적 OR IS NULL 보충으로 일반 비교와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-null-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "05a95c840aaa1b70d4dfd3590189a8e549efe5410c44a7970111a96eb62ae3e8"
+    },
+    {
+      "exercise_id": "stats-conditional-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "A그룹3명 중1명. 전체3/5와 다른 조건부 분모를 진단.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-conditional-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "3a4f52c42ea0d64caa7a265b9a4e6fe20feb0bf9ab20271ac6c520fc96f9a2f8"
+    },
+    {
+      "exercise_id": "ml-leakage-01",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "평가100이 fit 기준에 섞인 누수. 분리 후 학습측 fit과 양측 transform 순서가 유일하게 적절.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-leakage-01",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed; essay remains suspended",
+      "content_digest": "58746f7a445a63e07d4c681ed6927bcb02359c210a6d1668d52bfe6b7a862260"
+    },
+    {
+      "exercise_id": "pandas-select-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "불리언 행선택과 price열선택 후30+70. 비연속 라벨과 위치를 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-select-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "19e970921636e47f828698523eae1371bef97fad83e629d122dfca73b121c0db"
+    },
+    {
+      "exercise_id": "pandas-filter-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "inclusive left로10포함30제외. 내부20도 남는지 확인.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-filter-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "07c7be688b317613955515c17e1324e798f3e31c6dc2e9afc86618f66adf528c"
+    },
+    {
+      "exercise_id": "pandas-null-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "결측제외 평균6/2와0대체 평균6/3. 합은 같고 분모가 바뀜.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-null-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "4b62129585d0d3850ccbbda58796e652d0e60ac22f3a284b4870eb59a301cfea"
+    },
+    {
+      "exercise_id": "pandas-sort-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "점수 내림차순 뒤 동점 이름오름차순. 키 우선순위와 정렬 방향을 분리.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-sort-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "75560524ccc51834843c695bfef349f5047e7b81091af163ac172cc8a566f9cd"
+    },
+    {
+      "exercise_id": "pandas-group-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "count는 금액크기와 무관한 거래수. 조건은 집계후 Series에 적용.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-group-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "8a4111558023a3b0fb3662d5a3c06de07c3a213888b050c05c1df14dbd4f1d67"
+    },
+    {
+      "exercise_id": "pandas-group-04",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "A그룹 행수2·유효값1. size와count의 결측취급을 비교.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-group-04",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "9f4b960e883bc186a463dd0a2660e7231de934fc3e11558d17fc59371be53db5"
+    },
+    {
+      "exercise_id": "numpy-shape-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "원소12개 보존 후4행으로 나눠3열. reshape의 -1은 추론축.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-shape-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "1ce74d229d152df2d757909256baacf63a2d192cc599c0b857abd96c9c074df0"
+    },
+    {
+      "exercise_id": "numpy-axis-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "행평균2·4를 (2,1)로 유지. keepdims와 브로드캐스트를 순서대로 추적.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-axis-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "4fdd7565549d0604f4afc50bacb768da7243088120aed17bd84d432d94b19327"
+    },
+    {
+      "exercise_id": "numpy-broadcast-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "(3,1)+(2,)가(3,2)로 확장. 원소쌍 더하기와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-broadcast-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "0020a6e3b08ad68df6c10a8a9c437a486e0bc16bb7b80fb5a6970f64ba26feff"
+    },
+    {
+      "exercise_id": "numpy-mask-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "첫마스크 뒤5,8,11에 두번째 짝수마스크 적용. 원본 인덱스 재사용과 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-mask-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "5130426ec4629042e11f41b16190d4373a35d64b73c63d6b4cc37dfeeed018e7"
+    },
+    {
+      "exercise_id": "numpy-view-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "정수배열 고급인덱싱은 복사. 기본슬라이스와 대조하되 원본수정없음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-view-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "c39b7f2828dbfcdbbb6c7e1bb21a39c85af2654182d2ba5b4197f966950a9f43"
+    },
+    {
+      "exercise_id": "numpy-view-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "a뷰수정만 x에 전파되고 b복사수정은 제외. 서술형 보류 유지, 이유 자동채점 안함.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-view-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed; essay remains suspended",
+      "content_digest": "5fccebee5e8023d873049ec068fd47e79bfb2063fe4f607e9f49329ec5bf814c"
+    },
+    {
+      "exercise_id": "sql-where-02",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "NOT IN의 NULL 때문에 불일치행도 Unknown. 빈목록이 정답이며 SQL3값논리를 설명.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-where-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "75d82d1b459e5667b54385d665e05cdc45026f97335192135c8aec1d1a62f7da"
+    },
+    {
+      "exercise_id": "sql-having-02",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "A중복고객1명과B서로다른2명. 거래수와 distinct고객수 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-having-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "89e5d3f7c59926f61429e66a49e8de4b28dfa282047b13cbd0d894099fc0a8fd"
+    },
+    {
+      "exercise_id": "sql-count-02",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "CASE의1,0,1을 합산. 조건부 건수와 전체3행을 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-count-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "42835525394868ee038760b00a63d07ae969a6b3c8ef769b3ce44c70b788717c"
+    },
+    {
+      "exercise_id": "sql-join-02",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "LEFT JOIN 미연결 오른쪽id NULL만 선택. 입력id NULL없어 의미 모호성 없음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-join-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "296dbe42c93ecfa658bd72fd30dddfb165c070a7696f93caaec0aa3f5ac71d18"
+    },
+    {
+      "exercise_id": "sql-join-03",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "미연결 고객은 보존1행이나 o.id유효값0개. 서술형보류 유지.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-join-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed; essay remains suspended",
+      "content_digest": "643d6502fe2a65201db1651e812248f1fc0cf5fcc0c76b180217c7ee6a2fd71e"
+    },
+    {
+      "exercise_id": "sql-null-02",
+      "version": 2,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "COALESCE 후2+0+3. 결측치와 행수혼동 진단. 빈테이블 차이는 별도문항 연결.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-null-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "3e8bd68b186d1c32e1b8cc07d05d1b1b5c6d54405170f33d90f357f615e599b7"
+    },
+    {
+      "exercise_id": "stats-median-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "그룹합계12/전체4개=3. 평균들의 단순평균5와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-median-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "77a196198c6739dd781ce2a6bfe3582c9dd387a460d79d743c726d06d34b9ad1"
+    },
+    {
+      "exercise_id": "stats-std-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "같은편차제곱합을 분모1·2로 나눈 분산비2. 표준편차비와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-std-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "86c209cf540d7f3fad812e0d480ac986118a172b246e5744217fbb9047a5d0e5"
+    },
+    {
+      "exercise_id": "stats-weight-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "성공합10/시도합30. 비율별 단순평균0.45와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-weight-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "9e38ebfc9bc9ab9405041a41f3234633bf653f370cf245553609c23111156d85"
+    },
+    {
+      "exercise_id": "stats-ab-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "after/before-1의 상대증가20%. 절대차2퍼센트포인트와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-ab-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "917db6f5d09aca7361846f029496dbbe44abcbaa6f9250e762f787683ea33ebb"
+    },
+    {
+      "exercise_id": "stats-conditional-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "구매자2명이 분모이고 그중mobile1명. 방문자중 구매율과 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-conditional-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "6d5ace04d292ec52be74f01c1c3d07f6b77b2f5649a19c250ce4372a040b23ac"
+    },
+    {
+      "exercise_id": "stats-conditional-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "집단별비율불변·구성비변경. 전체지표차이를 성능변화로 단정하지 않음. 서술보류 유지.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "stats-conditional-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed; essay remains suspended",
+      "content_digest": "2042328f6332c0a5d11d0735dd716f4e8c1bdb2ea3b9ae87461c22916f2d0bdb"
+    },
+    {
+      "exercise_id": "ml-split-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "평가3개에 원래2:1클래스비 보존. 작은표본 일반적 완전비율보장으로 확대하지 않음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-split-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "bfe060d8dbcf7e3fc17b3c115ec87f9cd7f9dec7cab2f25989b28b3893bbe6bd"
+    },
+    {
+      "exercise_id": "ml-scale-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "학습평균1·표준편차1을4·6에 재사용. 평가측 재fit의[-1,1]과 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-scale-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "d14e077e1442f7dc6f824431cc79a09c36eb77ad57b05a711e5af3e2d063c6e9"
+    },
+    {
+      "exercise_id": "ml-metric-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "recall의 분모실제양성3·참양성1. precision분모와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-metric-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "3241969d7cf80894849de33bd3c4f0ea9176204383e421e22d539fd9044779e3"
+    },
+    {
+      "exercise_id": "ml-metric-03",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "precision의 분모예측양성2·참양성1. 전체정확도와 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-metric-03",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "3479616ef72708345bb21c078b29fce867b8cb5c3c5e6d152be7ed2511d3246b"
+    },
+    {
+      "exercise_id": "ml-neighbor-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "거리순 세 이웃 레이블1,0,1 다수결. 이웃값·개수·레이블을 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-neighbor-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "71cdab08283db2cef1e3230ffb72ea91e22ebf692a5bc08bded2371447835dcd"
+    },
+    {
+      "exercise_id": "ml-leakage-02",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "전체관측0,2,100 평균34와학습0,2 평균1. 결측대체누수 진단. 서술보류 유지.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-leakage-02",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed; essay remains suspended",
+      "content_digest": "2ecd2dcf70a01332600a6fc8849a70ee887d1d925d93b16722c3a279403b7f9b"
+    },
+    {
+      "exercise_id": "pandas-alignment-20261017",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "Series대입은 인덱스정렬. A결측·B10이고C새행생성안함. 위치대입오답0 구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "pandas-alignment-20261017",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "4a381c670c058f3596f9b74894c5e09e9228c3c91cc74573e5325d7168d0e3ff"
+    },
+    {
+      "exercise_id": "numpy-where-20261017",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "where는각위치 선택해길이3유지. True만필터한[2,6]과구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "numpy-where-20261017",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "88842709f663e6f0e9527ee657ced80855f93351bf0b86e28cf8455654e8a80f"
+    },
+    {
+      "exercise_id": "sql-exists-20261017",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "상관 NOT EXISTS에서NULL등식은일치안함. NOT IN과달리2,3보존.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-exists-20261017",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "d4a95f3469f28c1a0bde282f80cca8910eb7de032738457849c09aa077691d8c"
+    },
+    {
+      "exercise_id": "sql-fanout-20261017",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "상품2×결제2=4행으로주문40·결제20. 원본합계와조인후합계구분.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-fanout-20261017",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "ca410009ce7e9d7b3ee5687c85d2014fd74aec08daf60f00756e30a9186f8b1e"
+    },
+    {
+      "exercise_id": "ml-category-20261017",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "학습범주A,B두열고정·미지C는ignore로모두0. 새열생성·재fit없음.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "ml-category-20261017",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "d2fc6d32f4a72d4e36964caf6670ec66638745e795d556a3d43f5464bb37dde0"
+    },
+    {
+      "exercise_id": "sql-empty-sum-20261018",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "행이없어내부COALESCE실행없음→SUM NULL. 집계후COALESCE는0.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-empty-sum-20261018",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "a9c5d0590e031aa7634b5611cdc5a8dd8c2e58e429609d40b1ae900174589424"
+    },
+    {
+      "exercise_id": "sql-null-count-20261018",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "NULL인2행은존재해COUNT(*)2·COUNT열0·대체후SUM0. 빈테이블과대조.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-null-count-20261018",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "e19d9eef6b41723507d12152b4150bf43d49463e4aeee009c22053c366948be4"
+    },
+    {
+      "exercise_id": "sql-refund-average-20261018",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "NULL제외분모2와0대체분모3. 같은합계6의평균3·2를비교.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-refund-average-20261018",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "3127cbebc3d3e1b7c9635a45f741d41e0a021b1def1e54188e45394909b22afc"
+    },
+    {
+      "exercise_id": "sql-distinct-sum-20261018",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "SUM7과중복값2제거후5. DISTINCT대상은행ID가아닌집계열값.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-distinct-sum-20261018",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "495615b607f15526574e3a01e53014747ccf4ee445fd154ec5c0e1aebbdf06fa"
+    },
+    {
+      "exercise_id": "sql-qualified-join-20261018",
+      "version": 1,
+      "reviewer": "Codex item-by-item editorial review",
+      "date": "2026-10-18",
+      "finding": "ON done조건불일치고객2와미주문고객3모두NULL확장. WHERE와ON의단계차이진단.",
+      "hint_policy": "첫 힌트는 판단 대상, 두 번째는 연산·조건을 구체화. 요청 전에 노출하지 않음.",
+      "transfer_check": {
+        "exercise_id": "sql-qualified-join-20261018",
+        "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
+      },
+      "outcome": "reviewed",
+      "content_digest": "4d6368fa49568b9d26d7f2d99d62b3fb62c616401e7d8e7c3eb09b563aa774b9"
+    }
+  ]
+}

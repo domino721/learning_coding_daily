@@ -1,3 +1,5 @@
+import LearningQuality from "./LearningQuality";
+import SyncPanel from "./SyncPanel";
 import { useEffect, useState } from "react";
 import { api, type Dashboard, type Session } from "./api";
 import ExerciseReview from "./ExerciseReview";
@@ -237,6 +239,8 @@ export function LearningRecord({
           </div>
         </details>
       )}
+      {dashboard && <LearningQuality today={dashboard.local_day} />}
+      <SyncPanel refresh={refresh} />
       <h3>날짜별 전체 풀이</h3>
       {!history?.sessions.some((s) => s.completed_count > 0) && (
         <p>

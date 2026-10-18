@@ -360,6 +360,23 @@
         "curriculum/problem_bank.json"
       ],
       "code_reference": "ad2729b85bbcd8516540f54e0e97bd4821f83f5e"
+    },
+    {
+      "id": "EV-028",
+      "record": "docs/planning/evidence/EV-028.md",
+      "artifacts": [
+        "src/recordContract.ts",
+        "src/learningMetrics.ts",
+        "src/LearningQuality.tsx",
+        "src/SyncPanel.tsx",
+        "backend/accounts.py",
+        "compose.yaml",
+        "design.html",
+        ".github/workflows/quality.yml",
+        "curriculum/reviews/2026-10-18.json",
+        "docs/experiments/records-performance-2026-10-18.json"
+      ],
+      "code_reference": "WBS-540/510/610/620 accompanying implementation commit"
     }
   ]
 }

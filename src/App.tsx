@@ -1,3 +1,5 @@
+import { SyncAgent } from "./SyncPanel";
+import Activity, { TodayCompleted } from "./Activity";
 import { Lifetime, LearningRecord } from "./LearningRecord";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -8,10 +10,9 @@ import {
   type Session,
   type Track,
 } from "./api";
-import CodeBlock from "./CodeBlock";
+import ExerciseCard from "./ExerciseCard";
 import ExerciseReview from "./ExerciseReview";
 import { readTheme, saveTheme } from "./theme";
-import { formatTime, useActiveTime } from "./useActiveTime";
 import { recommendationReason } from "./recommendation";
 
 const trackName = (id: string) =>
@@ -31,359 +32,6 @@ const outcome = (item: Exercise) =>
         ? "오답"
         : "해설 학습";
 type Screen = "home" | "lesson" | "summary" | "record";
-const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
-
-function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
-  const basic = dashboard.today_sessions
-    .filter((s) => !s.batch)
-    .reduce((n, s) => n + s.completed_count, 0);
-  const total = dashboard.today_completed_count ?? basic;
-  return (
-    <div className="today-completed" role="group" aria-label="오늘 누적 학습">
-      <p>
-        오늘 총 <strong>{total}문제</strong> 풀었어요.
-      </p>
-      <span>
-        전체 트랙 · 기본 {basic}문제 · 추가·이전 {total - basic}문제
-      </span>
-    </div>
-  );
-}
-
-function week(day: string) {
-  const date = new Date(`${day}T12:00:00Z`);
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(date);
-    d.setUTCDate(d.getUTCDate() - 6 + i);
-    return {
-      key: d.toISOString().slice(0, 10),
-      label: ["일", "월", "화", "수", "목", "금", "토"][d.getUTCDay()],
-    };
-  });
-}
-
-function ExerciseCard({
-  recommendation,
-  item,
-  index,
-  total,
-  busy,
-  onAnswer,
-  onDraft,
-  onHint,
-  onReveal,
-  onNext,
-}: {
-  recommendation?: string;
-  item: Exercise;
-  index: number;
-  total: number;
-  busy: boolean;
-  onAnswer: (answer: string, seconds: number) => void;
-  onDraft: (draft: string) => Promise<void>;
-  onHint: () => void;
-  onReveal: (seconds: number) => void;
-  onNext: () => void;
-}) {
-  const [draft, setDraft] = useState(
-    item.status === "pending" ? (item.draft ?? "") : (item.last_answer ?? ""),
-  );
-  const mode =
-    item.response_mode ?? (item.kind === "choice" ? "choice" : "short");
-  const [draftStatus, setDraftStatus] = useState("");
-  useEffect(() => {
-    if (
-      item.status !== "pending" ||
-      mode === "choice" ||
-      draft === (item.draft ?? "")
-    )
-      return;
-    const timer = setTimeout(() => {
-      void onDraft(draft)
-        .then(() => setDraftStatus("입력한 답을 저장했어요."))
-        .catch(() =>
-          setDraftStatus(
-            "임시 답안 저장에 실패했어요. 입력 내용은 화면에 유지됩니다.",
-          ),
-        );
-    }, 700);
-    return () => clearTimeout(timer);
-  }, [draft, item.id, item.status, mode]);
-  const done = item.status !== "pending";
-  const { seconds, readSeconds } = useActiveTime(
-    item.id,
-    item.active_seconds,
-    !done && !busy,
-  );
-  const heading = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    heading.current?.focus();
-  }, []);
-  const wrong = !done && item.last_correct === false;
-  return (
-    <>
-      <div className="lesson-meta">
-        <span>
-          {labels[item.category]} · {item.domain ?? "데이터 분석"}
-          {done ? ` · ${item.concept}` : ""}
-        </span>
-        <span>
-          {index + 1} / {total}
-        </span>
-      </div>
-      <div
-        className="step-dots"
-        aria-label={`${total}문제 중 ${index + 1}번째`}
-      >
-        {Array.from({ length: total }, (_, i) => (
-          <span
-            key={i}
-            className={i < index ? "done" : i === index ? "current" : ""}
-          />
-        ))}
-      </div>
-      <section className="exercise-card" aria-labelledby="question-title">
-        <div className="exercise-heading">
-          <p className="eyebrow">
-            {item.kind === "choice"
-              ? "결과를 생각해 보세요"
-              : "작은 빈칸을 채워 보세요"}
-          </p>
-          <div className="exercise-time">
-            <span>예상 {Math.ceil(item.estimated_seconds / 60)}분</span>
-            <span
-              className="elapsed-time"
-              role="timer"
-              aria-label="풀이 경과 시간"
-            >
-              {done ? "풀이" : "경과"}{" "}
-              {formatTime(done ? item.active_seconds : seconds)}
-            </span>
-          </div>
-        </div>
-        <h1 ref={heading} tabIndex={-1} id="question-title">
-          {item.title}
-        </h1>
-        {recommendation && (
-          <p className="recommended-note" aria-label="이 문제를 고른 이유">
-            {recommendation}
-          </p>
-        )}
-        <p className="prompt">
-          {mode === "choice"
-            ? item.prompt
-                .replaceAll("입력하세요", "고르세요")
-                .replaceAll("구하세요", "고르세요")
-            : item.prompt.replaceAll("고르세요", "입력하세요")}
-        </p>
-        <CodeBlock
-          code={item.code}
-          language={item.domain}
-          exerciseId={item.id}
-        />
-        <p className="question-format">
-          {mode === "choice"
-            ? "객관식"
-            : mode === "essay"
-              ? "서술형"
-              : "단답형"}{" "}
-          ·{" "}
-          {item.difficulty?.label ?? (item.level === 2 ? "적용" : "기초 확인")}
-        </p>
-        {mode === "choice" && !done && (
-          <p className="attempt-note">
-            최대 2회 제출 · 남은 기회 {Math.max(0, 2 - item.attempts_count)}회
-          </p>
-        )}
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!busy && !done && draft.trim()) onAnswer(draft, readSeconds());
-          }}
-        >
-          {mode === "choice" ? (
-            <fieldset disabled={busy || done} className="choices">
-              <legend className="sr-only">답안 선택</legend>
-              {item.choices.map((choice, i) => (
-                <label
-                  key={choice}
-                  className={`choice ${draft === choice ? "selected" : ""} ${done && item.answer === choice ? "answer" : ""}`}
-                >
-                  <input
-                    aria-label={choice}
-                    type="radio"
-                    name="answer"
-                    value={choice}
-                    checked={draft === choice}
-                    onChange={() => setDraft(choice)}
-                  />
-                  <span className="choice-letter">{i + 1}</span>
-                  <code>{choice}</code>
-                  <span className="radio-mark" aria-hidden="true" />
-                </label>
-              ))}
-            </fieldset>
-          ) : mode === "essay" ? (
-            <label className="blank-label">
-              답과 풀이 이유
-              <textarea
-                className="blank-input essay-input"
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                disabled={busy || done}
-                placeholder="답과 그렇게 생각한 이유를 적어 주세요."
-                rows={6}
-                maxLength={2000}
-                aria-describedby="essay-help"
-              />
-              <span id="essay-help" className="mode-note">
-                최대 2,000자 · 제출하면 작성한 답을 저장하고 정답·해설을
-                보여드려요.
-              </span>
-            </label>
-          ) : (
-            <label className="blank-label">
-              {item.code.includes("____") ? "빈칸에 들어갈 답" : "답 입력"}
-              <input
-                className="blank-input"
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                disabled={busy || done}
-                placeholder={
-                  item.code.includes("____")
-                    ? "빈칸에 들어갈 답"
-                    : "결과값이나 답을 입력하세요"
-                }
-                autoComplete="off"
-                autoCapitalize="none"
-                spellCheck={false}
-                maxLength={200}
-              />
-            </label>
-          )}
-          {draftStatus && (
-            <p className="mode-note" role="status">
-              {draftStatus}
-            </p>
-          )}
-          {wrong && (
-            <div className="feedback retry" role="status">
-              <strong>한 번 더 생각해 볼까요?</strong>
-              <p>
-                {mode === "choice"
-                  ? `남은 기회는 ${Math.max(0, 2 - item.attempts_count)}회예요. 다시 틀리면 오답으로 마치고 해설을 보여드려요.`
-                  : "아직 마친 문제로 처리되지 않았어요. 다른 답을 시도하거나 힌트를 열어 보세요."}
-              </p>
-            </div>
-          )}
-          {item.hints.length > 0 && (
-            <aside className="hints" aria-label="문제 힌트">
-              {item.hints.map((hint, i) => (
-                <p key={i}>
-                  <strong>힌트 {i + 1}</strong> {hint}
-                </p>
-              ))}
-            </aside>
-          )}
-          {done ? (
-            <div
-              className={`feedback ${item.status === "correct" ? "success" : item.status === "incorrect" ? "incorrect" : "reviewed"}`}
-              role="status"
-            >
-              <span className="result-symbol" aria-hidden="true">
-                {item.status === "correct"
-                  ? "○"
-                  : item.status === "incorrect"
-                    ? "×"
-                    : "↺"}
-              </span>
-              <span className="eyebrow">
-                {item.status === "incorrect"
-                  ? "오답으로 기록했어요"
-                  : mode === "essay"
-                    ? "미채점 · 답안 보관"
-                    : item.status === "correct"
-                      ? "정답이에요"
-                      : "해설로 배웠어요"}
-              </span>
-              <h2>
-                {item.status === "correct"
-                  ? "작은 한 걸음, 완료!"
-                  : item.status === "incorrect"
-                    ? "두 번의 기회를 모두 사용했어요."
-                    : mode === "essay"
-                      ? "작성한 답과 해설을 비교해 보세요."
-                      : "다음에 다시 꺼내 볼게요."}
-              </h2>
-              {mode === "essay" && item.last_answer && (
-                <>
-                  <p className="mode-note">
-                    서술형은 자동 채점하지 않아요. 작성한 답과 해설의 핵심을
-                    비교해 보세요.
-                  </p>
-                  <p className="submitted-answer">
-                    <strong>내 답안</strong>
-                    <br />
-                    {item.last_answer}
-                  </p>
-                </>
-              )}
-              <p className="solution">
-                정답 <code>{item.answer}</code>
-              </p>
-              <p>{item.explanation}</p>
-            </div>
-          ) : (
-            <div className="learning-tools">
-              <button
-                type="button"
-                className="text-button"
-                disabled={busy || item.hints_used >= 2}
-                onClick={onHint}
-              >
-                ✦{" "}
-                {item.hints_used >= 2
-                  ? "힌트를 모두 봤어요"
-                  : `힌트 보기 (${item.hints_used}/2)`}
-              </button>
-              <button
-                type="button"
-                className="text-button muted"
-                disabled={busy}
-                onClick={() => onReveal(readSeconds())}
-              >
-                해설 보고 마치기
-              </button>
-            </div>
-          )}
-          <div className="lesson-action">
-            {done ? (
-              <button type="button" className="primary" onClick={onNext}>
-                다음으로 <span aria-hidden="true">→</span>
-              </button>
-            ) : (
-              <button
-                className="primary"
-                type="submit"
-                disabled={busy || !draft.trim()}
-              >
-                {busy
-                  ? "확인하는 중…"
-                  : mode === "essay"
-                    ? "답 저장하고 해설 비교하기"
-                    : "답 확인하기"}{" "}
-                <span aria-hidden="true">→</span>
-              </button>
-            )}
-          </div>
-        </form>
-      </section>
-      <p className="gentle-note">
-        시간 제한은 없어요. 다른 탭을 보는 동안에는 잠시 멈춰요.
-      </p>
-    </>
-  );
-}
 
 export default function App() {
   const [theme, setTheme] = useState(readTheme);
@@ -566,6 +214,14 @@ export default function App() {
     setScreen("record");
   }
   function home(target: "home" | "record" = "home") {
+    if (screen === "lesson" && session && !session.finished)
+      void api("/observations", {
+        kind: "lesson_paused",
+        detail: JSON.stringify({
+          session_id: session.id,
+          exercise_id: session.items[index]?.id,
+        }),
+      }).catch(() => {});
     setScreen(target);
     setError("");
     void refresh().catch((e) => setError(e.message));
@@ -599,6 +255,7 @@ export default function App() {
       : "추천 문제 더 풀기";
   return (
     <div className="app-shell">
+      <SyncAgent />
       <header className="app-header">
         <button
           className="brand"
@@ -846,57 +503,15 @@ export default function App() {
                 )}
                 {dashboard && <Lifetime dashboard={dashboard} />}
                 {dashboard && (
-                  <section
-                    className="activity"
-                    aria-labelledby="activity-title"
-                  >
-                    <div className="section-heading">
-                      <h2 id="activity-title">최근 7일의 발자국</h2>
-                      <span>{dashboard.weekly_days.length}일 학습했어요</span>
-                    </div>
-                    <TodayCompleted dashboard={dashboard} />
-                    {screen === "record" && (
-                      <p className="achievement-note">
-                        {todaySession?.finished
-                          ? (dashboard.today_completed_count ?? 0) >
-                            todaySession.total
-                            ? "목표를 채우고, 한 걸음 더 나아갔어요."
-                            : "오늘의 목표를 채웠어요. 차곡차곡 쌓이고 있어요."
-                          : (dashboard.today_completed_count ?? 0) > 0
-                            ? "오늘도 한 걸음을 남겼어요."
-                            : "작은 한 문제부터, 오늘의 발자국을 남겨 봐요."}
-                      </p>
+                  <Activity
+                    dashboard={dashboard}
+                    todaySession={todaySession}
+                    recordMode={screen === "record"}
+                    activeCount={tracks.reduce(
+                      (n, t) => n + t.exercise_count,
+                      0,
                     )}
-                    <div className="week">
-                      {week(dashboard.local_day).map((d) => (
-                        <div
-                          className={`day ${dashboard.weekly_days.includes(d.key) ? "practiced" : ""}`}
-                          key={d.key}
-                        >
-                          <span>{d.label}</span>
-                          <span
-                            className="day-circle"
-                            aria-label={`${d.key} ${dashboard.weekly_days.includes(d.key) ? "학습함" : "학습 전"}`}
-                          >
-                            {dashboard.weekly_days.includes(d.key) ? "✓" : "·"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="activity-bottom">
-                      <p>
-                        지금까지 만난 문제{" "}
-                        <strong>{dashboard.learned_count}개</strong>
-                      </p>
-                      <span>총 {60}개 중</span>
-                    </div>
-                    {screen === "record" && (
-                      <p className="record-note">
-                        정답과 해설 학습을 모두 기록해요. 도움을 받은 문제는
-                        다음날, 혼자 푼 문제는 3일 뒤 복습 후보로 돌아옵니다.
-                      </p>
-                    )}
-                  </section>
+                  />
                 )}
                 {screen === "record" && (
                   <LearningRecord
@@ -1059,6 +674,11 @@ export default function App() {
           </>
         )}
       </main>
+      {screen !== "lesson" && (
+        <p className="gentle-note">
+          <a href="./design.html">커리큘럼·추천·저장 작동 원리 보기</a>
+        </p>
+      )}
       {screen !== "lesson" && (
         <nav className="bottom-nav" aria-label="주 메뉴">
           <button

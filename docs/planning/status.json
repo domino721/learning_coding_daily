@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "design_version": "1.6.0",
-  "plan_version": "1.6.0",
+  "design_version": "1.7.0",
+  "plan_version": "1.7.0",
   "updated": "2026-10-18",
   "timezone": "Asia/Seoul",
-  "focus": "WBS-510",
-  "next_task": "WBS-510",
+  "focus": "WBS-520",
+  "next_task": "WBS-520",
   "code_reference": "4456c1c12710dec53fbeada489c30d63cd61f673",
   "tasks": {
     "WBS-010": {
@@ -216,52 +216,58 @@
       "note": ""
     },
     "WBS-510": {
-      "status": "ready",
-      "updated": "2026-10-16",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": "이벤트·파일 백업·기초 관찰 지표는 확보. 실제 자료를 바탕으로 시간·힌트·재시도·복습의 보정/누락을 검토하는 다음 작업."
+      "status": "done",
+      "updated": "2026-10-18",
+      "actual_started": "2026-10-18",
+      "actual_finished": "2026-10-18",
+      "evidence": [
+        "EV-028"
+      ],
+      "note": "개인·문항별 독립/도움/복습/다른유형·시간누락·D1/D7·중단관찰·내보내기·실제기기7일기록 구현. 실제 학습효과는 미확인."
     },
     "WBS-520": {
-      "status": "planned",
-      "updated": "2026-10-15",
+      "status": "ready",
+      "updated": "2026-10-18",
       "actual_started": null,
       "actual_finished": null,
       "evidence": [],
-      "note": ""
+      "note": "도구와 절차 준비 완료. 실제 사용자 휴대폰7일 관찰 자료가 필요해 미완료. 개발 테스트를 사용자 관찰로 대체하지 않음."
     },
     "WBS-530": {
       "status": "planned",
-      "updated": "2026-10-15",
+      "updated": "2026-10-18",
       "actual_started": null,
       "actual_finished": null,
       "evidence": [],
-      "note": ""
+      "note": "관찰 지표·문항별표·검토 기준 제공. 실제7일 자료 확보 후 유지/변경/보류 판단."
     },
     "WBS-610": {
-      "status": "deferred",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-18",
+      "actual_started": "2026-10-18",
+      "actual_finished": "2026-10-18",
+      "evidence": [
+        "EV-028"
+      ],
+      "note": "사용자 호스팅 미보유 답변을 반영한 무료 웹 유지·선택적 계정 서버 로컬/컨테이너 범위 ADR 확정. 공개 API 운영 아님."
     },
     "WBS-620": {
-      "status": "deferred",
-      "updated": "2026-10-15",
-      "actual_started": null,
-      "actual_finished": null,
-      "evidence": [],
-      "note": ""
+      "status": "done",
+      "updated": "2026-10-18",
+      "actual_started": "2026-10-18",
+      "actual_finished": "2026-10-18",
+      "evidence": [
+        "EV-028"
+      ],
+      "note": "인증·사용자별 DB·동의후 동기화·복구/폐기/삭제·체크섬 서버백업/복원 구현. 실제 Docker 빌드와 외부망 없는 격리 실행 확인. 사용자 지시의 로컬/컨테이너 범위 완료."
     },
     "WBS-630": {
-      "status": "deferred",
-      "updated": "2026-10-15",
+      "status": "blocked",
+      "updated": "2026-10-18",
       "actual_started": null,
       "actual_finished": null,
       "evidence": [],
-      "note": ""
+      "note": "사용자가 공개 API 호스팅을 보유하지 않음. 원격 브랜치 보호에 필요한 관리자 인증도 이 환경에서 유효하지 않음. 컨테이너·운영절차와 보호 적용 스크립트 준비 완료. 공개 운영/실기기 효과 완료를 주장하지 않음."
     },
     "WBS-640": {
       "status": "deferred",
@@ -346,6 +352,16 @@
         "EV-026"
       ],
       "note": "운영 경로·출시 게이트·웹/서버 추천·근거 저장 구현. Python313/Node14/모바일21(서버 비해당6 제외) 로컬 검증 EV-025. 기존70불변과 전체 활성 문항 도달 확인. 원격 Pages 게시·공개 파일 확인 진행. main4456c1c 및 1.6.0 태그 원격 저장. Pages39051537721/관리39051537733 success와 공개 자산 일치 EV-026로 배포 완료. 다음 WBS-510."
+    },
+    "WBS-540": {
+      "status": "done",
+      "updated": "2026-10-18",
+      "actual_started": "2026-10-18",
+      "actual_finished": "2026-10-18",
+      "evidence": [
+        "EV-028"
+      ],
+      "note": "백업 의미 비교·동적총수·공통계약·전체CI 선행·60문항 항목검토·화면분리·장기측정·HTML 실험실 구현. 원격 보호는 관리자 인증 부재로 미적용."
     }
   }
 }

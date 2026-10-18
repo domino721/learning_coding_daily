@@ -38,12 +38,12 @@ class PlanningValidationTests(unittest.TestCase):
         self.project = Path(self.temp.name)
         for directory in ('docs','backend','src','scripts','tests','.github','public','curriculum'):
             shutil.copytree(ROOT / directory, self.project / directory, ignore=shutil.ignore_patterns('__pycache__','.pytest_cache'))
-        for name in ('README.md','AGENTS.md','.gitignore'):
+        for name in ('README.md','AGENTS.md','.gitignore','design.html'):
             shutil.copy2(ROOT / name, self.project / name)
 
     def test_current_governance_is_consistent(self):
         project = self.project
-        assert len(validate(project)['plan']['tasks']) == 33
+        assert len(validate(project)['plan']['tasks']) == 34
 
 
     def test_changed_baseline_requires_new_digest_and_version(self):

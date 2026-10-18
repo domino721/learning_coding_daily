@@ -1231,10 +1231,11 @@
         "exercise_id": "numpy-shape-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": [],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-where-01",
@@ -1282,10 +1283,11 @@
         "exercise_id": "sql-where-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": [],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-median-01",
@@ -1333,10 +1335,11 @@
         "exercise_id": "stats-median-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": [],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-split-01",
@@ -1384,10 +1387,11 @@
         "exercise_id": "ml-split-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": [],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-axis-01",
@@ -1435,10 +1439,11 @@
         "exercise_id": "numpy-axis-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": [],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-count-01",
@@ -1486,10 +1491,11 @@
         "exercise_id": "sql-count-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-weight-01",
@@ -1537,10 +1543,11 @@
         "exercise_id": "stats-weight-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-scale-01",
@@ -1588,14 +1595,15 @@
         "exercise_id": "ml-scale-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": [
         "ml-split-01",
         "ml-fit-foundation-01",
         "ml-transform-foundation-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-broadcast-01",
@@ -1648,10 +1656,11 @@
         "exercise_id": "numpy-broadcast-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01", "numpy-broadcast-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-having-01",
@@ -1699,10 +1708,11 @@
         "exercise_id": "sql-having-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-count-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-std-01",
@@ -1750,10 +1760,11 @@
         "exercise_id": "stats-std-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["stats-median-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-metric-01",
@@ -1801,10 +1812,11 @@
         "exercise_id": "ml-metric-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": ["ml-split-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-mask-01",
@@ -1852,10 +1864,11 @@
         "exercise_id": "numpy-mask-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01", "numpy-where-20261017"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-join-01",
@@ -1903,10 +1916,11 @@
         "exercise_id": "sql-join-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-join-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-ab-01",
@@ -1954,10 +1968,11 @@
         "exercise_id": "stats-ab-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-neighbor-01",
@@ -2005,10 +2020,11 @@
         "exercise_id": "ml-neighbor-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": ["ml-split-01", "ml-neighbor-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-view-01",
@@ -2056,10 +2072,11 @@
         "exercise_id": "numpy-view-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01", "numpy-memory-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-null-01",
@@ -2107,10 +2124,11 @@
         "exercise_id": "sql-null-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-conditional-01",
@@ -2158,10 +2176,11 @@
         "exercise_id": "stats-conditional-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-leakage-01",
@@ -2214,10 +2233,11 @@
         "exercise_id": "ml-leakage-01",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["ml-split-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-select-03",
@@ -2265,10 +2285,11 @@
         "exercise_id": "pandas-select-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["pandas-select-01", "pandas-alignment-20261017"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-filter-03",
@@ -2316,10 +2337,11 @@
         "exercise_id": "pandas-filter-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["pandas-select"],
       "requires": ["pandas-select-01", "pandas-filter-01", "pandas-filter-02"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-null-03",
@@ -2367,10 +2389,11 @@
         "exercise_id": "pandas-null-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["pandas-select"],
       "requires": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-sort-03",
@@ -2423,10 +2446,11 @@
         "exercise_id": "pandas-sort-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["pandas-select"],
       "requires": ["pandas-select-01", "pandas-sort-01", "pandas-sort-02"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-group-03",
@@ -2474,10 +2498,11 @@
         "exercise_id": "pandas-group-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["pandas-filter"],
       "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-group-04",
@@ -2525,10 +2550,11 @@
         "exercise_id": "pandas-group-04",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["pandas-filter"],
       "requires": ["pandas-filter-01", "pandas-group-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-shape-02",
@@ -2576,10 +2602,11 @@
         "exercise_id": "numpy-shape-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["numpy-shape-01", "numpy-shape-application-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-axis-02",
@@ -2632,10 +2659,11 @@
         "exercise_id": "numpy-axis-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["numpy-shape-01", "numpy-shape-application-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-broadcast-02",
@@ -2688,14 +2716,15 @@
         "exercise_id": "numpy-broadcast-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": [
         "numpy-shape-01",
         "numpy-broadcast-foundation-01",
         "numpy-broadcast-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-mask-02",
@@ -2743,10 +2772,11 @@
         "exercise_id": "numpy-mask-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01", "numpy-where-20261017", "numpy-mask-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-view-02",
@@ -2794,10 +2824,11 @@
         "exercise_id": "numpy-view-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01", "numpy-memory-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-view-03",
@@ -2850,14 +2881,15 @@
         "exercise_id": "numpy-view-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": [
         "numpy-shape-01",
         "numpy-memory-foundation-01",
         "numpy-view-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-where-02",
@@ -2905,10 +2937,11 @@
         "exercise_id": "sql-where-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["sql-where-01", "sql-null-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-having-02",
@@ -2956,10 +2989,11 @@
         "exercise_id": "sql-having-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-count-02",
@@ -3007,10 +3041,11 @@
         "exercise_id": "sql-count-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-join-02",
@@ -3058,10 +3093,11 @@
         "exercise_id": "sql-join-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-join-03",
@@ -3109,10 +3145,11 @@
         "exercise_id": "sql-join-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-null-02",
@@ -3160,10 +3197,11 @@
         "exercise_id": "sql-null-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-median-02",
@@ -3211,10 +3249,11 @@
         "exercise_id": "stats-median-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["stats-median-01", "stats-std-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-std-02",
@@ -3262,10 +3301,11 @@
         "exercise_id": "stats-std-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["stats-median-01", "stats-std-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-weight-02",
@@ -3313,10 +3353,11 @@
         "exercise_id": "stats-weight-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-ab-02",
@@ -3364,10 +3405,11 @@
         "exercise_id": "stats-ab-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-conditional-02",
@@ -3415,10 +3457,11 @@
         "exercise_id": "stats-conditional-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "stats-conditional-03",
@@ -3466,10 +3509,11 @@
         "exercise_id": "stats-conditional-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["stats-summaries"],
       "requires": ["stats-median-01", "stats-weight-01", "stats-ab-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-split-02",
@@ -3517,10 +3561,11 @@
         "exercise_id": "ml-split-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["ml-split-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-scale-02",
@@ -3568,7 +3613,7 @@
         "exercise_id": "ml-scale-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": [
         "ml-split-01",
@@ -3576,7 +3621,8 @@
         "ml-scale-01",
         "ml-transform-foundation-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-metric-02",
@@ -3624,10 +3670,11 @@
         "exercise_id": "ml-metric-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": ["ml-split-01", "ml-metric-01", "ml-metric-application-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-metric-03",
@@ -3675,10 +3722,11 @@
         "exercise_id": "ml-metric-03",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": ["ml-split-01", "ml-metric-01", "ml-metric-application-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-neighbor-02",
@@ -3726,14 +3774,15 @@
         "exercise_id": "ml-neighbor-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": [
         "ml-split-01",
         "ml-neighbor-foundation-01",
         "ml-neighbor-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-leakage-02",
@@ -3781,10 +3830,11 @@
         "exercise_id": "ml-leakage-02",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["ml-split-01", "ml-split-02"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "pandas-alignment-20261017",
@@ -3832,10 +3882,11 @@
         "exercise_id": "pandas-alignment-20261017",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["pandas-select-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "numpy-where-20261017",
@@ -3883,10 +3934,11 @@
         "exercise_id": "numpy-where-20261017",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["numpy-structure"],
       "requires": ["numpy-shape-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-exists-20261017",
@@ -3934,10 +3986,11 @@
         "exercise_id": "sql-exists-20261017",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": [],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-fanout-20261017",
@@ -3985,10 +4038,11 @@
         "exercise_id": "sql-fanout-20261017",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-join-foundation-01", "sql-join-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "ml-category-20261017",
@@ -4036,14 +4090,15 @@
         "exercise_id": "ml-category-20261017",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["ml-evaluation"],
       "requires": [
         "ml-split-01",
         "ml-fit-foundation-01",
         "ml-transform-foundation-01"
       ],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-empty-sum-20261018",
@@ -4091,10 +4146,11 @@
         "exercise_id": "sql-empty-sum-20261018",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-count-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-null-count-20261018",
@@ -4142,10 +4198,11 @@
         "exercise_id": "sql-null-count-20261018",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-refund-average-20261018",
@@ -4193,10 +4250,11 @@
         "exercise_id": "sql-refund-average-20261018",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-count-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-distinct-sum-20261018",
@@ -4244,10 +4302,11 @@
         "exercise_id": "sql-distinct-sum-20261018",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "sql-qualified-join-20261018",
@@ -4295,10 +4354,11 @@
         "exercise_id": "sql-qualified-join-20261018",
         "criterion": "같은 개념의 다른 상황과 다음날 복습에서 독립 해결을 확인한다. 추가 변형 연결은 검토 대기."
       },
-      "status": "existing_metadata_imported_needs_item_review",
+      "status": "item_reviewed",
       "prerequisite_concepts": ["sql-rows"],
       "requires": ["sql-where-01", "sql-join-foundation-01"],
-      "release_path_version": "learning-paths-2.0"
+      "release_path_version": "learning-paths-2.0",
+      "editorial_review": "curriculum/reviews/2026-10-18.json"
     },
     {
       "id": "scaler-shape-01",

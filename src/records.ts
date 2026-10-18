@@ -1,4 +1,5 @@
 import { ApiError } from "./errors.ts";
+import { mergeSubmission } from "./recordContract.ts";
 import type { Session } from "./api";
 
 export type Progress = {
@@ -572,12 +573,13 @@ export function mergeRecords(current: Store, incoming: Store): Store {
     existing.finished = existing.completed_count === existing.total;
   }
   for (const [id, attempt] of Object.entries(incoming.attempts)) {
-    if (
-      merged.attempts[id] &&
-      JSON.stringify(merged.attempts[id]) !== JSON.stringify(attempt)
-    )
+    try {
+      merged.attempts[id] = merged.attempts[id]
+        ? mergeSubmission(merged.attempts[id], attempt)
+        : structuredClone(attempt);
+    } catch {
       throw new ApiError("같은 제출 ID의 답안이 달라 가져오지 않았어요.", 422);
-    merged.attempts[id] ??= structuredClone(attempt);
+    }
   }
   const submissionCounts = new Map<string, number>();
   for (const a of Object.values(merged.attempts)) {

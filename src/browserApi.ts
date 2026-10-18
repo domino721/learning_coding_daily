@@ -223,6 +223,26 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     });
   }
   const today = day();
+  if (path === "/observations") {
+    if (
+      !["study_enrolled", "observation_note", "lesson_paused"].includes(
+        String(body.kind),
+      ) ||
+      typeof body.detail !== "string" ||
+      body.detail.length > 2000
+    )
+      throw new ApiError("관찰 입력을 확인해 주세요.", 422);
+    addEvent(
+      data,
+      String(body.kind),
+      undefined,
+      undefined,
+      undefined,
+      body.detail,
+    );
+    await saveRecords(data);
+    return { saved: true };
+  }
   if (path === "/tracks") return curriculum.tracks;
   if (path === "/backup") return data;
   if (path === "/restore") {
@@ -604,11 +624,19 @@ let queue: Promise<unknown> = Promise.resolve();
 export async function browserApi<T>(path: string, body?: unknown): Promise<T> {
   // HTTPS browsers serialize updates from different tabs using Web Locks.
   const work = async () => structuredClone(await handle(path, body)) as T;
-  if (navigator.locks) return navigator.locks.request(KEY, work);
+  if (navigator.locks) {
+    const result = await navigator.locks.request(KEY, work);
+    if (body && path !== "/restore")
+      window.dispatchEvent(new Event("learning-record-saved"));
+    return result;
+  }
   const result = queue.then(work, work);
   queue = result.then(
     () => undefined,
     () => undefined,
   );
-  return result;
+  const value = await result;
+  if (body && path !== "/restore")
+    window.dispatchEvent(new Event("learning-record-saved"));
+  return value;
 }

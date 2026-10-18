@@ -350,6 +350,7 @@ def test_sqlite_v2_modes_upgrade_preserves_pending_attempts(learning):
     assert answer(client, session, item, wrong).json()['correct'] is False
     # Recreate the exact previous schema by dropping only the new v3 column.
     with sqlite3.connect(path) as db:
+        db.execute('DROP INDEX IF EXISTS missing_snapshots')
         db.execute('ALTER TABLE session_items DROP COLUMN response_mode')
         for column in ('snapshot','draft','completed_at'):db.execute('ALTER TABLE session_items DROP COLUMN '+column)
         db.execute('ALTER TABLE attempts DROP COLUMN response_mode')

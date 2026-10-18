@@ -4,6 +4,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 import json
 from fastapi import HTTPException
+from backend.record_contract import merge_submission
 
 
 def event(db,kind,session_id=None,exercise_id=None,event_id=None,detail=None,occurred_at=None):
@@ -83,8 +84,10 @@ def merge_records(current,incoming):
                 'draft':(before.get('draft') or item.get('draft')) if chosen['status']=='pending' else chosen.get('draft')}
         old['completed_count']=sum(i['status']!='pending' for i in old['items']);old['correct_count']=sum(i['status']=='correct' for i in old['items']);old['finished']=old['completed_count']==old['total']
     for key,a in incoming['attempts'].items():
-        if key in merged['attempts'] and any(merged['attempts'][key].get(k)!=a.get(k) for k in ('session','exercise','answer','correct')):raise HTTPException(422,'같은 제출 ID의 답안이 달라 가져오지 않았어요.')
-        merged['attempts'].setdefault(key,deepcopy(a))
+        try:
+            merged['attempts'][key] = merge_submission(merged['attempts'][key],a) if key in merged['attempts'] else deepcopy(a)
+        except ValueError:
+            raise HTTPException(422,'같은 제출 ID의 답안이 달라 가져오지 않았어요.')
     attempts=Counter((a['session'],a['exercise']) for a in merged['attempts'].values())
     for session in merged['sessions']:
         for item in session['items']:item['attempts_count']=max(item['attempts_count'],attempts[(session['id'],item['id'])])

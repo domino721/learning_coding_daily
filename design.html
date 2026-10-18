@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#102622" />
+    <title>매일코딩 — 설계와 작동 원리</title>
+    <link rel="stylesheet" href="/src/design.css" />
+  </head>
+  <body>
+    <header>
+      <a href="./">← 매일코딩</a><span>DESIGN EXPLORER · 1.7.0</span>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">문제 → 관찰 → 다음 학습</p>
+        <h1>매일코딩은<br />어떻게 다음 문제를 고를까?</h1>
+        <p>
+          커리큘럼, 편집 난이도, 사용자별 추천 단계, 저장과 배포를 한 흐름으로
+          읽는 설명서입니다. 아래 실험실은 실제 앱의 추천 함수를 사용합니다.
+          가상 이력만 계산하며 개인 학습 기록을 읽거나 바꾸지 않습니다.
+        </p>
+        <div id="catalog-stats" class="stats"></div>
+      </section>
+      <nav aria-label="설명서 목차">
+        <a href="#architecture">전체 구조</a
+        ><a href="#curriculum">커리큘럼 탐색</a
+        ><a href="#difficulty">난이도 기준</a><a href="#model">수준 판단</a
+        ><a href="#lab">추천 실험실</a><a href="#daily">일일 구성</a
+        ><a href="#records">기록·동기화</a><a href="#quality">검증과 관찰</a
+        ><a href="#source">코드 지도</a>
+      </nav>
+
+      <section id="architecture">
+        <p class="eyebrow">01 / ARCHITECTURE</p>
+        <h2>하나의 문제 원본, 두 실행 경로</h2>
+        <p>
+          Python이 문제 원본·편집 난이도·선수 경로를 읽고 검사한 뒤
+          <code>src/curriculum.json</code>으로 내보냅니다. GitHub Pages에서는
+          브라우저가 추천·채점·저장을 수행하고, 개발/계정 서버에서는 FastAPI와
+          SQLite가 같은 계약을 수행합니다.
+        </p>
+        <div class="flow">
+          <div>문제 원본<br /><small>content / batches / scaffold</small></div>
+          <b>→</b>
+          <div>
+            편집 검수 + 경로 검사<br /><small
+              >problem_bank / learning_paths</small
+            >
+          </div>
+          <b>→</b>
+          <div>참조 계산 + 내보내기<br /><small>export-content.py</small></div>
+        </div>
+        <div class="columns">
+          <article>
+            <h3>기기 저장형 웹</h3>
+            <p>
+              React → api(web) → browserApi → recommendation → records →
+              IndexedDB·localStorage
+            </p>
+            <p>
+              서버 없이 풀이 가능. 계정 미연결 시 개인 기록 외부 전송 없음. 파일
+              백업을 직접 보관합니다.
+            </p>
+          </article>
+          <article>
+            <h3>계정 서버</h3>
+            <p>
+              명시적 연결 → HTTPS API → 계정 인증 → 사용자별 DB → 병합·서버 백업
+            </p>
+            <p>
+              로그인 토큰은 해시로 저장하고 계정별 경로를 서버가 결정합니다.
+              현재 준비된 실행형 서버이며 실제 공개 호스팅은 별도입니다.
+            </p>
+          </article>
+        </div>
+        <p class="note">
+          클라이언트에 정답이 포함되는 자기 학습 도구입니다. 순위·시험의
+          부정행위 방지 시스템이나 사용자 코드를 실행하는 채점 서버가 아닙니다.
+        </p>
+      </section>
+
+      <section id="curriculum">
+        <p class="eyebrow">02 / CURRICULUM</p>
+        <h2>트랙 → 개념 → 선수 문항 → 목표 문항</h2>
+        <p>
+          트랙은 Python 데이터 분석과 SQL입니다. 개념 간 선수 조건과 개별 문항
+          간 선수 조건을 함께 확인합니다. 예를 들어 전처리의 새 입력 변환 전에
+          fit의 반환, 저장한 평균·표준편차, 배열 인덱싱, 학습 입력 변환을
+          확인합니다.
+        </p>
+        <label>탐색할 개념<select id="concept-select"></select></label>
+        <div id="concept-detail"></div>
+        <label>문항 선택<select id="exercise-select"></select></label>
+        <div id="exercise-detail"></div>
+        <details>
+          <summary>문제 설계 카드에 필요한 정보</summary>
+          <dl>
+            <dt>objective / new_concept</dt>
+            <dd>이번 문항에서 확인할 목표와 새 개념</dd>
+            <dt>family</dt>
+            <dd>
+              과제 유형군. 숫자만 바꾼 반복을 다양한 능력 증거로 세지 않기 위한
+              편집 분류
+            </dd>
+            <dt>requires / prerequisite_concepts</dt>
+            <dd>문항과 개념 각각의 선수 조건</dd>
+            <dt>misconception / diagnostic_question</dt>
+            <dd>
+              틀린 이유의 가설과 확인 질문. 앱이 원인을 자동 확정하는 것은 아님
+            </dd>
+            <dt>hints / remediation / advancement</dt>
+            <dd>
+              요청 시 제시하는 두 단계 도움, 돌아갈 기초 자원, 다음 확인 과제
+            </dd>
+            <dt>version / status</dt>
+            <dd>과거 풀이와 원본을 구분하는 버전 및 검수 상태</dd>
+          </dl>
+        </details>
+      </section>
+
+      <section id="difficulty">
+        <p class="eyebrow">03 / EDITORIAL DIFFICULTY</p>
+        <h2>문제의 난이도와 사용자의 단계는 별개</h2>
+        <p>
+          <strong>문항 난이도</strong>는 제작자가 코드와 추론 부담을 보고 정한
+          초기 기준입니다. <strong>사용자 추천 단계</strong>는 그 사람이 남긴
+          날짜·문항·유형·도움 기록으로 계산합니다. 현재 IRT·BKT·신경망을
+          학습하거나 정답 확률을 추정하지 않습니다.
+        </p>
+        <div class="columns">
+          <article>
+            <h3>1 · 기초 확인</h3>
+            <p>
+              주된 연산·조건 하나를 확인합니다. 예: 열 하나 선택, 배열 shape,
+              NULL 아닌 값 세기.
+            </p>
+          </article>
+          <article>
+            <h3>2 · 적용</h3>
+            <p>
+              기초를 연결하거나 다른 입력에서 사용합니다. 예: 학습 기준을 새
+              데이터에 재사용하기.
+            </p>
+          </article>
+          <article>
+            <h3>3 · 조건 변화·전이</h3>
+            <p>
+              경계·순서·분모·연결 구조가 달라져도 판단하는 과제입니다. 코드
+              길이만으로 결정하지 않습니다.
+            </p>
+          </article>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>필드</th>
+                <th>무엇을 기록하나</th>
+                <th>해석 한계</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>reasoning_steps</td>
+                <td>연결해야 할 추론 단계 부담</td>
+                <td>문항별 편집 판단</td>
+              </tr>
+              <tr>
+                <td>code_load</td>
+                <td>읽어야 할 코드·자료 구조 부담</td>
+                <td>줄 수와 같지 않음</td>
+              </tr>
+              <tr>
+                <td>transfer</td>
+                <td>기초에서 조건을 바꾸는 정도</td>
+                <td>실제 전이 효과는 관찰 필요</td>
+              </tr>
+              <tr>
+                <td>distractor_strength</td>
+                <td>오답 보기의 혼동 가능성</td>
+                <td>단답형은 0일 수 있음</td>
+              </tr>
+              <tr>
+                <td>rationale / calibration</td>
+                <td>책정 이유와 보정 상태</td>
+                <td>현재 editorial-v1, 실측 보정 전</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          이 축들을 단순 합산해 자동으로 수준을 정하는 공식은 없습니다. 실제
+          값은 위 문항 탐색에서 확인할 수 있습니다. 예상 풀이 시간도 편집
+          추정이며 실제 활성 시간과 구분합니다.
+        </p>
+      </section>
+
+      <section id="model">
+        <p class="eyebrow">04 / LEARNER MODEL</p>
+        <h2>무엇을 실력의 근거로 인정할까?</h2>
+        <div class="formula">
+          독립 해결 = 정답 완료 ∧ 힌트 0 ∧ 시도 1 ∧ 서술형 아님
+        </div>
+        <p>
+          현재 카탈로그와 버전이 다른 기록, 미완료, 중복 세션·문항·버전은 승급
+          근거에서 제외합니다. 원래 기록은 삭제하지 않습니다. 여러 문제를 같은
+          날 풀어도 관찰 날짜는 하루입니다.
+        </p>
+        <div id="rules" class="columns"></div>
+        <p>
+          단계 2는 서로 다른 문항·날짜·유형군이 각각 2개 이상일 때입니다. 단계
+          3은 서로 다른 문항 3개·날짜 3일·유형군 3개, 단계 2 이상 독립 풀이가
+          2일, 같은 문항의 다른 날 독립 복습, 미해결 보충 필요 없음이 모두
+          필요합니다.
+        </p>
+        <p>
+          최근 도움·오답 뒤에 서로 다른 문항 2개를 독립 해결하기 전까지 보충을
+          우선합니다. 과거 성공 자체는 지우지 않습니다. 도움 필요가 있어도 축적
+          근거에 따른 표시 단계가 2일 수 있으나 실제 새 추천의 난이도 상한은
+          기초로 내려갑니다.
+        </p>
+        <p class="note">
+          이 임계값은 설명 가능한 초기 규칙입니다. 검증된 능력 점수·정답
+          확률·학습 효과를 의미하지 않습니다. 느리게 푼다는 이유로 감점하지
+          않습니다.
+        </p>
+      </section>
+
+      <section id="lab">
+        <p class="eyebrow">05 / LIVE RULE LAB</p>
+        <h2>이력을 바꾸면 다음 문제가 어떻게 달라질까?</h2>
+        <p>
+          실제 <code>conceptStates</code>, <code>selectExercises</code>,
+          <code>reviewDue</code>, <code>recommendationTrace</code>를 호출합니다.
+          계산은 이 설명서 안에서만 일어나며 저장·서버 전송하지 않습니다.
+        </p>
+        <label>가상 시나리오<select id="scenario-select"></select></label
+        ><label
+          >트랙<select id="lab-track">
+            <option value="python">Python 데이터 분석</option>
+            <option value="sql">SQL</option>
+          </select></label
+        ><label
+          >학습 기준일<input
+            id="lab-day"
+            type="date"
+            value="2026-10-18" /></label
+        ><label
+          >가상 이력 JSON<textarea
+            id="lab-records"
+            rows="12"
+            spellcheck="false"
+          ></textarea></label
+        ><button id="simulate">운영 규칙으로 계산하기</button>
+        <p id="lab-error" role="alert"></p>
+        <div id="simulation-result" aria-live="polite"></div>
+        <details>
+          <summary>실험 기록 필드</summary>
+          <p>
+            id: 실제 문항 ID / day: YYYY-MM-DD / status:
+            correct·revealed·incorrect / hints: 0~2 / attempts: 제출 수. 생략 시
+            correct·힌트0·시도1입니다. 미래 이력은 추천에서 제외합니다.
+          </p>
+        </details>
+      </section>
+
+      <section id="daily">
+        <p class="eyebrow">06 / NEXT EXERCISE WORKFLOW</p>
+        <h2>일일 묶음이 만들어지는 순서</h2>
+        <ol class="steps">
+          <li>
+            한국 시간 날짜를 결정하고 같은 날짜·트랙의 기존 묶음이 있으면 그대로
+            복구합니다.
+          </li>
+          <li>
+            미래 기록을 제외한 이력으로 개념별 관찰과 도움 필요를 계산합니다.
+          </li>
+          <li>
+            트랙에 맞고 서술형이 아니며 오늘 이미 제시하지 않은 문항만 남깁니다.
+          </li>
+          <li>
+            선수 개념의 독립 근거·문항별 requires·사용자 단계의 난이도 상한을
+            확인합니다. 보충 중에는 단계1을 우선합니다.
+          </li>
+          <li>
+            기본 묶음은 기한이 된 적격 복습을 최대3개 선택합니다. 나머지는 보충
+            필요 → 영역 균형 → 낮은 수준 → 원본 순서로 새 문항을 고릅니다.
+          </li>
+          <li>
+            새 단계3 문항을 고르면 그 묶음의 나머지 새 후보에서는 단계3을
+            제외합니다. 예정 복습은 별도이므로 전체 단계3 복습까지 1개로
+            제한하는 규칙은 아닙니다.
+          </li>
+          <li>
+            선택 결과·이유·알고리즘 버전·규칙을 기록하고 문항 원본 snapshot과
+            함께 저장합니다.
+          </li>
+        </ol>
+        <p>
+          기본 목표는 5문제이며 상한이 아닙니다. 완료 후 추가 묶음은 적격 새
+          문항을 먼저, 남는 칸에 예정 복습을 넣습니다. 당일 중복과 기한 전
+          반복으로 채우지 않으며 부족하면 짧은 묶음이나 후보 소진 안내를
+          제공합니다.
+        </p>
+        <div class="flow">
+          <div>도움·오답·해설<br /><strong>다음날</strong></div>
+          <div>첫 독립 성공<br /><strong>3일 뒤</strong></div>
+          <div>다른 날 독립 복습<br /><strong>7일 → 14일</strong></div>
+        </div>
+        <p>
+          같은 날 반복은 간격을 늘리는 근거가 아닙니다. 자정 이후 과거 날짜에
+          대한 제출은 거절하고 오늘 학습으로 돌아가도록 합니다.
+        </p>
+      </section>
+
+      <section id="records">
+        <p class="eyebrow">07 / TRUST & STORAGE</p>
+        <h2>답안을 눌렀을 때 실제로 저장되는 것</h2>
+        <div class="flow">
+          <div>답안·활성 시간<br /><small>제출 UUID 생성</small></div>
+          <b>→</b>
+          <div>
+            문항 snapshot으로 비교<br /><small>선택/정규화 문자열</small>
+          </div>
+          <b>→</b>
+          <div>시도·이벤트·진도 저장<br /><small>성공 후 완료 UI</small></div>
+        </div>
+        <p>
+          객관식은 최대2회이며 두 번째 오답은 incorrect로 완료합니다. 단답형은
+          재시도할 수 있습니다. 힌트·재시도가 있는 정답은 독립 성공으로 세지
+          않습니다. API는 사용자 Python/SQL 코드를 실행하지 않습니다.
+        </p>
+        <p>
+          문항 코드·보기·정답·해설을 당시 snapshot으로 보관해 콘텐츠 업데이트가
+          과거 풀이를 바꾸지 않게 합니다. 풀이 타이머는 탭 비활성·통신 중·완료
+          후 멈추며 제출/해설 확인 때 저장합니다. 제출 없이 종료한 시간은 누락될
+          수 있습니다.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>저장 수단</th>
+                <th>보호하는 것</th>
+                <th>보호하지 못하는 것</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>localStorage + IndexedDB</td>
+                <td>한 저장본 손상·한 저장소 쓰기 실패 시 복구</td>
+                <td>기기 분실·origin 전체 삭제</td>
+              </tr>
+              <tr>
+                <td>검증 파일 백업</td>
+                <td>체크섬·버전 검증과 중복/충돌 보존 병합</td>
+                <td>사용자가 저장하지 않은 파일</td>
+              </tr>
+              <tr>
+                <td>선택적 계정 서버</td>
+                <td>인증된 사용자별 DB·기기 간 명시적 동기화</td>
+                <td>운영자가 만들지 않은 서버 백업</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          동기화는 기기 기록을 서버와 합친 뒤 다시 현재 기기 기록에 병합합니다.
+          충돌은 숨기거나 한쪽을 덮어쓰지 않고 중단합니다. 네트워크 실패 시 기기
+          기록을 유지하고 다음 동기화를 기다립니다. 토큰은 현재 탭 저장소에만
+          보관되며 만료·로그아웃·복구 시 폐기됩니다.
+        </p>
+        <p>
+          서버 계정 삭제는 기기 기록과 내려받은 파일을 지우지 않습니다. 운영
+          백업의 보존·삭제 책임은 운영 문서를 따라야 합니다.
+        </p>
+      </section>
+
+      <section id="quality">
+        <p class="eyebrow">08 / EVIDENCE</p>
+        <h2>코드 검증과 학습 효과 관찰을 구분합니다</h2>
+        <div class="columns">
+          <article>
+            <h3>게시 전 자동 검사</h3>
+            <p>
+              관리·문항 경로·편집 검수 → 실제 라이브러리 참조 → Python/Node 공통
+              계약 → 타입·빌드 → 모바일 풀이·이전·복구 → Pages 게시 → 공개 자산
+              대조.
+            </p>
+            <p>
+              배포 작업은 전체 품질 검사의 성공을 기다립니다. 브랜치 보호는 별도
+              GitHub 관리자 설정이며 저장소의 적용 도구로 확인해야 합니다.
+            </p>
+          </article>
+          <article>
+            <h3>실제 사용 관찰</h3>
+            <p>
+              나의 기록 → 학습 품질과 7일 관찰에서 시작합니다. 문항별 표본·독립
+              정답·힌트 후 성공·지연 복습·다른 유형·시간 누락·D1/D7 재방문을
+              봅니다.
+            </p>
+            <p>
+              실제 휴대폰 후기와 기기를 직접 기록하고 자료를 내보냅니다. 7일
+              자료가 아직 없으면 관찰 대기로 남습니다.
+            </p>
+          </article>
+        </div>
+        <p>
+          90일·365일 하루5문항 가상 기록으로 JSON 직렬화·검증·병합·지표 계산
+          비용을 측정합니다. 실기기 지연이나 실제 학습 성과로 해석하지 않습니다.
+          장기 기록은 localStorage 한도를 넘을 수 있으므로 IndexedDB 복구 경로와
+          파일 백업이 중요합니다.
+        </p>
+        <details>
+          <summary>현재 서비스의 약속과 경계</summary>
+          <p>
+            Python 기초를 아는 개인의 데이터 분석 회상·코드 읽기 연습을 위한
+            무료 베타입니다. 자격·취업 성과·검증된 숙련도 향상을 보증하지
+            않습니다. 계정 연결은 선택이며 유료 외부 서비스나 분석 추적을 기본
+            도입하지 않습니다. 공개 API 호스팅·실제 7일 관찰·스토어 배포는 완료
+            증거가 필요합니다.
+          </p>
+        </details>
+      </section>
+
+      <section id="source">
+        <p class="eyebrow">09 / SOURCE MAP</p>
+        <h2>설명을 코드와 대조하는 지도</h2>
+        <div id="source-map"></div>
+        <p>
+          이 설명서는 별도 학습 앱이 아니라 같은 저장소·같은 배포 안의
+          안내입니다. 숫자는 내보낸 카탈로그에서 계산하고, 실험은 앱의 운영 추천
+          함수를 직접 사용합니다.
+        </p>
+        <a href="./">매일코딩으로 돌아가기 →</a>
+      </section>
+    </main>
+    <footer>
+      매일코딩 · 설계 1.7.0 · <span id="algorithm-version"></span> · 모든 실험은
+      가상 이력
+    </footer>
+    <script type="module" src="/src/design.ts"></script>
+  </body>
+</html>
