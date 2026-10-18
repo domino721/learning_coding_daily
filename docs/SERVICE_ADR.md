@@ -38,4 +38,4 @@ python3 scripts/account-backup.py --source /safe/location/backup-YYYYMMDD --dest
 
 복구 대상은 비어 있어야 한다. 체크섬·SQLite 무결성을 검사하고 기존 파일을 덮어쓰지 않는다. 복구 때 모든 토큰을 폐기해 재로그인을 요구한다. 복구 DB로 임시 서버를 띄워 로그인·과거 snapshot·중복 제출을 확인한 뒤 영속 볼륨 전환을 수행한다. 삭제 요청 이후의 오래된 백업을 운영에 복원하지 않는다. 배포 코드는 이전 이미지로 되돌릴 수 있지만 DB를 무조건 과거 버전으로 내리지 않는다.
 
-GitHub 관리자 자격 증명을 갖춘 환경에서는 `bash scripts/protect-main.sh`로 강제 검사·PR·force-push 금지를 적용한다. 이 환경의 gh 인증은 유효하지 않아 원격 적용 성공을 가정하지 않는다. 적용 후 required context가 실제 품질 job 이름과 일치하는지 확인한다.
+GitHub 관리자 자격 증명을 갖춘 환경에서는 `bash scripts/protect-main.sh`로 강제 검사·PR·force-push 금지를 적용한다. 이 환경의 실제 관리 API PUT은 Forbidden이어서 원격 보호는 미적용이다. 적용 후 required context가 실제 품질 job 이름과 일치하는지 확인한다.

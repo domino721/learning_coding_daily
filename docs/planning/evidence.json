@@ -377,6 +377,19 @@
         "docs/experiments/records-performance-2026-10-18.json"
       ],
       "code_reference": "WBS-540/510/610/620 accompanying implementation commit"
+    },
+    {
+      "id": "EV-029",
+      "record": "docs/planning/evidence/EV-029.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/quality.yml",
+        "design.html",
+        "src/LearningQuality.tsx",
+        "src/SyncPanel.tsx",
+        "scripts/protect-main.sh"
+      ],
+      "code_reference": "fc382a58dd43f318ce1c433d33164d67a94f49fd"
     }
   ]
 }
