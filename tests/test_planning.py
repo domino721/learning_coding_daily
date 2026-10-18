@@ -38,7 +38,7 @@ class PlanningValidationTests(unittest.TestCase):
         self.project = Path(self.temp.name)
         for directory in ('docs','backend','src','scripts','tests','.github','public','curriculum'):
             shutil.copytree(ROOT / directory, self.project / directory, ignore=shutil.ignore_patterns('__pycache__','.pytest_cache'))
-        for name in ('README.md','AGENTS.md','.gitignore','design.html'):
+        for name in ('README.md','AGENTS.md','.gitignore','design.html','compose.yaml'):
             shutil.copy2(ROOT / name, self.project / name)
 
     def test_current_governance_is_consistent(self):
