@@ -6,4 +6,4 @@ python3 scripts/export-content.py --check
 npm run format:check
 npm run build
 node --experimental-strip-types --test tests/*.test.ts
-UV_CACHE_DIR=/workspace/.cache/uv uv run --frozen pytest
+UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/learning-coding-uv}" uv run --frozen pytest
