@@ -1018,6 +1018,318 @@
       "remediation": ["ml-split-01", "ml-metric-01"],
       "objective": "양성 예측의 분모을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
       "review_status": "reviewed"
+    },
+    "pandas-select-transfer-02": {
+      "concept_id": "pandas-select",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-select:라벨 슬라이스와 복수 열 선택",
+      "requires": ["pandas-select-01", "pandas-select-scaffold-02"],
+      "remediation": ["pandas-select-01", "pandas-select-scaffold-02"],
+      "objective": "구간과 열 동시 추출: 라벨 슬라이스와 복수 열 선택을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-filter-transfer-02": {
+      "concept_id": "pandas-filter",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-filter:부정 마스크와 후보군 필터",
+      "requires": ["pandas-select-01", "pandas-filter-01", "pandas-filter-02"],
+      "remediation": ["pandas-filter-01", "pandas-filter-scaffold-02"],
+      "objective": "제외 등급과 최소 실적 조건: 부정 마스크와 후보군 필터을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-transfer-02": {
+      "concept_id": "pandas-null",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-null:특정 열 결측 제거 후 대체 연산",
+      "requires": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
+      "remediation": ["pandas-null-scaffold-01", "pandas-null-02"],
+      "objective": "부분 결측 제거와 대체 비교: 특정 열 결측 제거 후 대체 연산을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-group-transfer-02": {
+      "concept_id": "pandas-group",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-group:그룹 합계 브로드캐스트 비중",
+      "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
+      "remediation": ["pandas-group-01", "pandas-group-02"],
+      "objective": "팀 내 매출 비중 계산: 그룹 합계 브로드캐스트 비중을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-broadcast-foundation-02": {
+      "concept_id": "numpy-broadcast",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-broadcast:행벡터와 1차원 배열 차원 결합",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01", "numpy-broadcast-foundation-01"],
+      "objective": "행벡터와 1차원 배열 차원 결합의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-broadcast-application-02": {
+      "concept_id": "numpy-broadcast",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-broadcast:축 집계 후 브로드캐스트 차감",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-axis-01",
+        "numpy-broadcast-foundation-01"
+      ],
+      "remediation": ["numpy-axis-01", "numpy-broadcast-foundation-01"],
+      "objective": "축 집계 후 브로드캐스트 차감을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-mask-foundation-02": {
+      "concept_id": "numpy-mask",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-mask:불리언 마스크의 참 개수 집계",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01", "numpy-where-20261017"],
+      "objective": "불리언 마스크의 참 개수 집계의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-mask-application-02": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:마스크 위치 선택 대입",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-where-20261017",
+        "numpy-mask-foundation-02"
+      ],
+      "remediation": ["numpy-where-20261017", "numpy-mask-foundation-02"],
+      "objective": "마스크 위치 선택 대입을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-memory-foundation-02": {
+      "concept_id": "numpy-memory",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-memory:명시적 복사본 분리",
+      "requires": ["numpy-shape-01"],
+      "remediation": ["numpy-shape-01", "numpy-memory-foundation-01"],
+      "objective": "명시적 복사본 분리의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-memory-transfer-01": {
+      "concept_id": "numpy-memory",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-memory:재배열 뷰와 열 슬라이스 전파",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-memory-foundation-01",
+        "numpy-view-01",
+        "numpy-view-02"
+      ],
+      "remediation": ["numpy-memory-foundation-01", "numpy-view-01"],
+      "objective": "재배열 뷰와 슬라이스 수정 전파: 재배열 뷰와 열 슬라이스 전파을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-memory-transfer-02": {
+      "concept_id": "numpy-memory",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-memory:불리언 복사본과 슬라이스 뷰 대조",
+      "requires": [
+        "numpy-shape-01",
+        "numpy-memory-foundation-02",
+        "numpy-view-01",
+        "numpy-view-02"
+      ],
+      "remediation": ["numpy-memory-foundation-02", "numpy-view-02"],
+      "objective": "조건 추출 수정과 슬라이스 수정 비교: 불리언 복사본과 슬라이스 뷰 대조을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "sql-rows-foundation-01": {
+      "concept_id": "sql-rows",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-rows:경계값 포함 비교 조건",
+      "requires": [],
+      "remediation": ["sql-where-01"],
+      "objective": "경계값 포함 비교 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-rows-foundation-02": {
+      "concept_id": "sql-rows",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-rows:IS NULL 기초 확인",
+      "requires": [],
+      "remediation": ["sql-where-01"],
+      "objective": "IS NULL 기초 확인의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-rows-foundation-03": {
+      "concept_id": "sql-rows",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-rows:정렬과 상위 행 선택",
+      "requires": [],
+      "remediation": ["sql-where-01"],
+      "objective": "정렬과 상위 행 선택의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-rows-foundation-04": {
+      "concept_id": "sql-rows",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-rows:후보 목록 포함 조건",
+      "requires": [],
+      "remediation": ["sql-where-01"],
+      "objective": "후보 목록 포함 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-rows-transfer-02": {
+      "concept_id": "sql-rows",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-rows:COALESCE 치환 후 불일치 비교",
+      "requires": ["sql-where-01", "sql-null-01", "sql-null-02"],
+      "remediation": ["sql-null-01", "sql-null-02"],
+      "objective": "NULL 포함 불일치 조건의 함정: COALESCE 치환 후 불일치 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-foundation-02": {
+      "concept_id": "sql-joins",
+      "level": 1,
+      "role": "foundation",
+      "family": "sql-joins:외부 조인 행 보존 기초",
+      "requires": ["sql-where-01"],
+      "remediation": ["sql-where-01", "sql-join-foundation-01"],
+      "objective": "외부 조인 행 보존 기초의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-join-transfer-02": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:미매칭 외부 조인의 COUNT(*)와 COUNT(열)",
+      "requires": [
+        "sql-where-01",
+        "sql-join-foundation-01",
+        "sql-join-01",
+        "sql-count-01"
+      ],
+      "remediation": ["sql-join-foundation-02", "sql-count-01"],
+      "objective": "주문 없는 고객의 집계 값 비교: 미매칭 외부 조인의 COUNT(*)와 COUNT(열)을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "sql-agg-transfer-02": {
+      "concept_id": "sql-aggregation",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-aggregation:WHERE 선필터와 HAVING 합계 결합",
+      "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
+      "remediation": ["sql-where-01", "sql-having-01"],
+      "objective": "정상 주문만 모은 뒤 팀 합계 필터링: WHERE 선필터와 HAVING 합계 결합을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "stats-summary-foundation-02": {
+      "concept_id": "stats-summaries",
+      "level": 1,
+      "role": "foundation",
+      "family": "stats-summaries:짝수 표본의 중앙값",
+      "requires": [],
+      "remediation": ["stats-median-01"],
+      "objective": "짝수 표본의 중앙값의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "stats-summary-application-02": {
+      "concept_id": "stats-summaries",
+      "level": 2,
+      "role": "application",
+      "family": "stats-summaries:평행이동에 따른 평균·표준편차 성질",
+      "requires": [
+        "stats-median-01",
+        "stats-summary-foundation-02",
+        "stats-std-01"
+      ],
+      "remediation": ["stats-median-01", "stats-std-01"],
+      "objective": "평행이동에 따른 평균·표준편차 성질을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+      "review_status": "reviewed"
+    },
+    "stats-rate-foundation-02": {
+      "concept_id": "stats-rates",
+      "level": 1,
+      "role": "foundation",
+      "family": "stats-rates:기초 비율의 분자와 분모",
+      "requires": ["stats-median-01"],
+      "remediation": ["stats-median-01", "stats-weight-01"],
+      "objective": "기초 비율의 분자와 분모의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "stats-rate-transfer-02": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:통합 분모 전환율과 심슨 역설",
+      "requires": [
+        "stats-median-01",
+        "stats-weight-01",
+        "stats-ab-01",
+        "stats-conditional-01"
+      ],
+      "remediation": ["stats-weight-01", "stats-ab-01"],
+      "objective": "세그먼트 비중 차이와 전체 전환율 역전: 통합 분모 전환율과 심슨 역설을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "ml-eval-foundation-02": {
+      "concept_id": "ml-evaluation",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-evaluation:계층화 분할 비율 유지",
+      "requires": [],
+      "remediation": ["ml-split-01"],
+      "objective": "계층화 분할 비율 유지의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-eval-transfer-01": {
+      "concept_id": "ml-evaluation",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-evaluation:전체 평균 누수와 학습 전용 평균 비교",
+      "requires": ["ml-split-01", "ml-eval-foundation-02", "ml-split-02"],
+      "remediation": ["ml-split-01", "ml-split-02"],
+      "objective": "분할 전후 기준 평균의 차이: 전체 평균 누수와 학습 전용 평균 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "ml-eval-transfer-02": {
+      "concept_id": "ml-evaluation",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-evaluation:K-겹 교차 검증 분할 크기",
+      "requires": ["ml-split-01", "ml-split-02", "ml-eval-transfer-01"],
+      "remediation": ["ml-split-01", "ml-split-02"],
+      "objective": "3-겹 교차 검증의 학습과 검증 크기: K-겹 교차 검증 분할 크기을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+      "review_status": "reviewed"
+    },
+    "ml-metric-foundation-02": {
+      "concept_id": "ml-metrics",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-metrics:실제 양성 분모와 재현율",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01", "ml-metric-01"],
+      "objective": "실제 양성 분모와 재현율의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-foundation-02": {
+      "concept_id": "ml-neighbors",
+      "level": 1,
+      "role": "foundation",
+      "family": "ml-neighbors:홀수 이웃 다수결 투표",
+      "requires": ["ml-split-01"],
+      "remediation": ["ml-split-01", "ml-neighbor-foundation-01"],
+      "objective": "홀수 이웃 다수결 투표의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

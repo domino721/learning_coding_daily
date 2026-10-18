@@ -390,6 +390,20 @@
         "scripts/protect-main.sh"
       ],
       "code_reference": "fc382a58dd43f318ce1c433d33164d67a94f49fd"
+    },
+    {
+      "id": "EV-030",
+      "record": "docs/planning/evidence/EV-030.md",
+      "artifacts": [
+        "backend/scaffold_content.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "src/curriculum.json",
+        "docs/CURRICULUM.md",
+        "docs/CURRICULUM_LOG.md"
+      ],
+      "code_reference": "WBS-360/WBS-540 curriculum diversification and 28 new exercises (accompanying commit)"
     }
   ]
 }

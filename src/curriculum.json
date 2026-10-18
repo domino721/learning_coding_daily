@@ -3128,6 +3128,983 @@
       },
       "reference_setup": "",
       "reference_output": "0.67"
+    },
+    {
+      "id": "pandas-select-transfer-02",
+      "concept": "열 선택",
+      "kind": "choice",
+      "title": "구간과 열 동시 추출",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"code\": [\"A\", \"B\", \"C\", \"D\"], \"price\": [100, 200, 300, 400], \"stock\": [5, 0, 8, 2]}, index=[10, 20, 30, 40])\nsub = df.loc[20:30, [\"price\", \"stock\"]]\nprint(list(sub.shape))",
+      "answer": "[2, 2]",
+      "explanation": "loc[20:30]은 끝 라벨 30까지 포함해 2개 행을 남기고, 두 열을 선택하므로 shape은 [2, 2]입니다.",
+      "hints": [
+        "loc의 행 슬라이스가 끝 라벨을 포함하는지 먼저 확인하세요.",
+        "라벨 20과 30 두 행에서 price와 stock 두 열을 선택했을 때의 (행, 열) 크기를 구합니다."
+      ],
+      "choices": ["[2, 2]", "[1, 2]", "[2, 3]", "[3, 2]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-select",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "구간과 열 동시 추출: 라벨 슬라이스와 복수 열 선택을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[2, 2]"
+    },
+    {
+      "id": "pandas-filter-transfer-02",
+      "concept": "행 필터링",
+      "kind": "choice",
+      "title": "제외 등급과 최소 실적 조건",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"grade\": [\"S\", \"A\", \"B\", \"A\"], \"score\": [95, 70, 88, 85]})\nkept = df[(~df[\"grade\"].isin([\"B\", \"C\"])) & (df[\"score\"] >= 80)]\nprint(kept[\"score\"].tolist())",
+      "answer": "[95, 85]",
+      "explanation": "B 등급(88)은 제외 조건에 걸리고, 첫 번째 A 등급(70)은 점수 조건 미만이라 제외되어 [95, 85]만 남습니다.",
+      "hints": [
+        "~ 연산자가 isin 결과를 어떻게 뒤집는지 각 행에서 확인하세요.",
+        "grade가 B나 C가 아니면서 동시에 score가 80 이상인 행의 score만 남깁니다."
+      ],
+      "choices": ["[95, 85]", "[95, 70, 85]", "[88]", "[95, 88, 85]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-filter",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "제외 등급과 최소 실적 조건: 부정 마스크와 후보군 필터을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[95, 85]"
+    },
+    {
+      "id": "pandas-null-transfer-02",
+      "concept": "결측치",
+      "kind": "choice",
+      "title": "부분 결측 제거와 대체 비교",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"price\": [100.0, None, 300.0], \"discount\": [10.0, 20.0, None]})\nvalid = df.dropna(subset=[\"price\"]).fillna({\"discount\": 0.0})\nprint((valid[\"price\"] - valid[\"discount\"]).tolist())",
+      "answer": "[90.0, 300.0]",
+      "explanation": "subset=[\"price\"]는 price가 비어 있는 두 번째 행만 제거합니다. 세 번째 행의 discount 결측치는 0.0으로 대체되어 [90.0, 300.0]이 됩니다.",
+      "hints": [
+        "dropna(subset=[\"price\"])가 어느 열의 결측치만 기준으로 행을 제거하는지 보세요.",
+        "남은 두 행에서 discount 결측치를 0.0으로 채운 뒤 price - discount를 계산합니다."
+      ],
+      "choices": [
+        "[90.0, 300.0]",
+        "[90.0]",
+        "[90.0, -20.0, 300.0]",
+        "[100.0, 300.0]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-null",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "부분 결측 제거와 대체 비교: 특정 열 결측 제거 후 대체 연산을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[90.0, 300.0]"
+    },
+    {
+      "id": "pandas-group-transfer-02",
+      "concept": "그룹 집계",
+      "kind": "choice",
+      "title": "팀 내 매출 비중 계산",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"team\": [\"A\", \"A\", \"B\"], \"sales\": [30, 70, 50]})\ntotals = df.groupby(\"team\")[\"sales\"].transform(\"sum\")\ndf[\"share\"] = df[\"sales\"] / totals\nprint(df[\"share\"].round(2).tolist())",
+      "answer": "[0.3, 0.7, 1.0]",
+      "explanation": "transform(\"sum\")은 원래 행 길이를 유지하며 소속 팀의 합계 [100, 100, 50]을 반환합니다. 각 행 매출을 나누면 [0.3, 0.7, 1.0]입니다.",
+      "hints": [
+        "transform(\"sum\")이 각 행에 어떤 그룹 합계를 대응시키는지 확인하세요.",
+        "A팀 행은 A팀 합계 100으로, B팀 행은 B팀 합계 50으로 각각 나눕니다."
+      ],
+      "choices": [
+        "[0.3, 0.7, 1.0]",
+        "[0.2, 0.47, 0.33]",
+        "[30.0, 70.0, 50.0]",
+        "[0.5, 0.5, 1.0]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-group",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "팀 내 매출 비중 계산: 그룹 합계 브로드캐스트 비중을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[0.3, 0.7, 1.0]"
+    },
+    {
+      "id": "numpy-broadcast-foundation-02",
+      "concept": "브로드캐스팅",
+      "kind": "choice",
+      "title": "2차원 행과 1차원 벡터의 합",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([[10, 20, 30]])\nbias = np.array([1, 2, 3])\nprint((x + bias).shape)",
+      "answer": "(1, 3)",
+      "explanation": "(1, 3) 배열과 (3,) 배열을 더하면 오른쪽 축 길이 3이 일치하여 결과 shape은 (1, 3)이 됩니다.",
+      "hints": [
+        "x의 차원 (1, 3)과 bias의 차원 (3,)을 오른쪽 축부터 맞춰 보세요.",
+        "1행 3열 배열에 길이 3 벡터를 더하면 2차원 구조 (1, 3)이 유지됩니다."
+      ],
+      "choices": ["(1, 3)", "(3,)", "(3, 3)", "(2, 3)"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 1,
+      "concept_id": "numpy-broadcast",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "행벡터와 1차원 배열 차원 결합의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(1, 3)"
+    },
+    {
+      "id": "numpy-broadcast-application-02",
+      "concept": "브로드캐스팅",
+      "kind": "choice",
+      "title": "열 평균 차감 정규화",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import numpy as np\nx = np.array([[2.0, 10.0], [6.0, 20.0]])\ncentered = x - x.mean(axis=0)\nprint(centered[0].tolist())",
+      "answer": "[-2.0, -5.0]",
+      "explanation": "axis=0 평균은 [4.0, 15.0]이고, 첫 행 [2.0, 10.0]에서 열별로 빼면 [-2.0, -5.0]입니다.",
+      "hints": [
+        "x.mean(axis=0)이 구하는 열별 평균 벡터를 먼저 계산해 보세요.",
+        "각 열 평균 [4.0, 15.0]을 첫 번째 행 [2.0, 10.0]에서 뺍니다."
+      ],
+      "choices": ["[-2.0, -5.0]", "[2.0, 5.0]", "[-4.0, 4.0]", "[0.0, 0.0]"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-broadcast",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "축 집계 후 브로드캐스트 차감을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[-2.0, -5.0]"
+    },
+    {
+      "id": "numpy-mask-foundation-02",
+      "concept": "불리언 마스크",
+      "kind": "choice",
+      "title": "임계값 초과 원소 개수",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([3, 8, 5, 12])\nmask = x >= 6\nprint(int(mask.sum()))",
+      "answer": "2",
+      "explanation": "6 이상인 원소는 8과 12 두 개이므로 mask는 [False, True, False, True]이고 합계는 2입니다. 원소 값의 합 20과 구별합니다.",
+      "hints": [
+        "mask에 들어 있는 True와 False를 원소별로 적어보세요.",
+        "불리언 배열의 sum()은 True를 1, False를 0으로 세어 개수를 구합니다."
+      ],
+      "choices": ["2", "20", "4", "1"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 1,
+      "concept_id": "numpy-mask",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "불리언 마스크의 참 개수 집계의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "2"
+    },
+    {
+      "id": "numpy-mask-application-02",
+      "concept": "불리언 마스크",
+      "kind": "choice",
+      "title": "음수 원소 상한 클리핑",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import numpy as np\nx = np.array([-3, 4, -1, 7])\nx[x < 0] = 0\nprint(x.tolist())",
+      "answer": "[0, 4, 0, 7]",
+      "explanation": "x[x < 0] = 0은 음수 위치에만 0을 대입하므로 원래 길이 4를 유지한 채 [0, 4, 0, 7]이 됩니다.",
+      "hints": [
+        "조건을 만족하는 원소만 골라내는 것과 그 위치에 새 값을 대입하는 것을 구별하세요.",
+        "음수인 첫 번째와 세 번째 위치만 0으로 바뀌고 배열 길이는 그대로 유지됩니다."
+      ],
+      "choices": ["[0, 4, 0, 7]", "[4, 7]", "[-3, 0, -1, 0]", "[0, 0]"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-mask",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "마스크 위치 선택 대입을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[0, 4, 0, 7]"
+    },
+    {
+      "id": "numpy-memory-foundation-02",
+      "concept": "뷰와 복사",
+      "kind": "choice",
+      "title": "복사본 수정과 원본 유지",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\na = np.array([4, 5, 6])\nb = a.copy()\nb[0] = 99\nprint(int(a[0]))",
+      "answer": "4",
+      "explanation": "a.copy()는 별도의 메모리에 새 배열을 만듭니다. 따라서 b[0]을 99로 바꾸어도 a[0]은 4로 유지됩니다.",
+      "hints": [
+        "copy()가 메모리를 공유하는지 독립된 배열을 만드는지 확인하세요.",
+        "독립된 복사본 b를 수정해도 원본 a의 첫 원소는 바뀌지 않습니다."
+      ],
+      "choices": ["4", "99", "5", "6"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 1,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "명시적 복사본 분리의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "4"
+    },
+    {
+      "id": "numpy-memory-transfer-01",
+      "concept": "뷰와 복사",
+      "kind": "choice",
+      "title": "재배열 뷰와 슬라이스 수정 전파",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([10, 20, 30, 40])\ngrid = x.reshape(2, 2)\npicked = grid[:, 0]\npicked[1] = 99\nprint(x.tolist())",
+      "answer": "[10, 20, 99, 40]",
+      "explanation": "연속된 배열의 reshape과 슬라이스는 모두 원본 x의 뷰입니다. 첫 열의 두 번째 행(grid[1, 0])을 수정하면 x[2]가 99로 바뀝니다.",
+      "hints": [
+        "reshape(2, 2)와 슬라이스 grid[:, 0]이 메모리를 공유하는 뷰인지 확인하세요.",
+        "grid의 첫 번째 열 [10, 30]에서 인덱스 1 위치는 원본 x의 세 번째 원소(30)입니다."
+      ],
+      "choices": [
+        "[10, 20, 99, 40]",
+        "[10, 20, 30, 40]",
+        "[99, 20, 30, 40]",
+        "[10, 99, 30, 40]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "재배열 뷰와 슬라이스 수정 전파: 재배열 뷰와 열 슬라이스 전파을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[10, 20, 99, 40]"
+    },
+    {
+      "id": "numpy-memory-transfer-02",
+      "concept": "뷰와 복사",
+      "kind": "choice",
+      "title": "조건 추출 수정과 슬라이스 수정 비교",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import numpy as np\nx = np.array([5, 15, 25])\nmasked = x[x >= 15]\nmasked[0] = 0\nsliced = x[1:]\nsliced[1] = 77\nprint(x.tolist())",
+      "answer": "[5, 15, 77]",
+      "explanation": "불리언 마스크 인덱싱은 복사본을 반환하므로 masked[0] = 0은 원본에 반영되지 않습니다. 반면 슬라이스 뷰 sliced[1] = 77은 x[2]를 변경합니다.",
+      "hints": [
+        "불리언 인덱싱 x[x >= 15]와 기본 슬라이싱 x[1:] 중 어느 쪽이 원본 메모리를 공유하는지 비교하세요.",
+        "masked는 복사본이라 원본을 바꾸지 않고, sliced[1]은 x[2]를 77로 바꿉니다."
+      ],
+      "choices": ["[5, 15, 77]", "[5, 0, 77]", "[5, 15, 25]", "[5, 0, 25]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-memory",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "조건 추출 수정과 슬라이스 수정 비교: 불리언 복사본과 슬라이스 뷰 대조을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[5, 15, 77]"
+    },
+    {
+      "id": "sql-rows-foundation-01",
+      "concept": "조건 필터링",
+      "kind": "choice",
+      "title": "이상·이하 구간 필터링",
+      "prompt": "아래 SQL의 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id, amount); INSERT INTO orders VALUES(1,1000),(2,3000),(3,5000);\nSELECT COUNT(*) FROM orders WHERE amount >= 3000;",
+      "answer": "2",
+      "explanation": "amount >= 3000은 경계값 3000과 5000 두 행에서 참이므로 COUNT(*)는 2입니다.",
+      "hints": [
+        ">= 비교 연산자가 경계값 3000을 포함하는지 확인하세요.",
+        "amount가 3000인 행과 5000인 행이 조건을 만족합니다."
+      ],
+      "choices": ["1", "2", "3", "0"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "경계값 포함 비교 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id, amount); INSERT INTO orders VALUES(1,1000),(2,3000),(3,5000);",
+      "reference_output": "2"
+    },
+    {
+      "id": "sql-rows-foundation-02",
+      "concept": "NULL 비교",
+      "kind": "choice",
+      "title": "비어 있는 쿠폰 행 찾기",
+      "prompt": "아래 SQL의 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id, coupon); INSERT INTO orders VALUES(1,'WELCOME'),(2,NULL),(3,NULL);\nSELECT COUNT(*) FROM orders WHERE coupon IS NULL;",
+      "answer": "2",
+      "explanation": "IS NULL은 값이 비어 있는 NULL 행을 찾습니다. 2번과 3번 두 행이 해당하므로 2입니다.",
+      "hints": [
+        "IS NULL이 어떤 상태의 칸을 참으로 판정하는지 보세요.",
+        "coupon 값이 NULL인 2번과 3번 행의 개수를 셉니다."
+      ],
+      "choices": ["0", "1", "2", "3"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "IS NULL 기초 확인의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id, coupon); INSERT INTO orders VALUES(1,'WELCOME'),(2,NULL),(3,NULL);",
+      "reference_output": "2"
+    },
+    {
+      "id": "sql-rows-foundation-03",
+      "concept": "조건 필터링",
+      "kind": "choice",
+      "title": "최고 금액 주문 번호 확인",
+      "prompt": "아래 SQL의 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id, amount); INSERT INTO orders VALUES(1,2000),(2,7000),(3,4000);\nSELECT id FROM orders ORDER BY amount DESC LIMIT 1;",
+      "answer": "2",
+      "explanation": "amount 내림차순 첫 번째 행은 (2, 7000)이며, SELECT id를 조회했으므로 2를 반환합니다.",
+      "hints": [
+        "ORDER BY amount DESC가 어떤 순서로 행을 줄 세우는지 확인하세요.",
+        "가장 큰 금액(7000) 행에서 SELECT절이 요청한 열(id)의 값을 확인합니다."
+      ],
+      "choices": ["1", "2", "3", "7000"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "정렬과 상위 행 선택의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id, amount); INSERT INTO orders VALUES(1,2000),(2,7000),(3,4000);",
+      "reference_output": "2"
+    },
+    {
+      "id": "sql-rows-foundation-04",
+      "concept": "조건 필터링",
+      "kind": "choice",
+      "title": "여러 상태 목록 필터링",
+      "prompt": "아래 SQL의 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id, status); INSERT INTO orders VALUES(1,'done'),(2,'cancel'),(3,'ready'),(4,'done');\nSELECT COUNT(*) FROM orders WHERE status IN ('done', 'ready');",
+      "answer": "3",
+      "explanation": "status가 done인 2개 행과 ready인 1개 행이 모두 조건을 만족하므로 총 3행입니다.",
+      "hints": [
+        "IN ('done', 'ready')는 두 값 중 하나라도 일치하는 행을 남깁니다.",
+        "cancel인 2번 행을 제외한 나머지 행의 개수를 세어 보세요."
+      ],
+      "choices": ["1", "2", "3", "4"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "후보 목록 포함 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id, status); INSERT INTO orders VALUES(1,'done'),(2,'cancel'),(3,'ready'),(4,'done');",
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-rows-transfer-02",
+      "concept": "NULL 비교",
+      "kind": "choice",
+      "title": "NULL 포함 불일치 조건의 함정",
+      "prompt": "반환되는 id 목록을 적으세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE users(id, tier); INSERT INTO users VALUES(1,'gold'),(2,'silver'),(3,NULL);\nSELECT id FROM users WHERE COALESCE(tier, 'none') <> 'gold' ORDER BY id;",
+      "answer": "[2, 3]",
+      "explanation": "단순 tier <> 'gold'에서는 NULL이 Unknown이 되어 빠지지만, COALESCE로 NULL을 'none'으로 치환한 뒤 비교하면 2번과 3번이 모두 선택됩니다.",
+      "hints": [
+        "COALESCE(tier, 'none')이 3번 행의 NULL을 어떤 문자열로 바꾸는지 먼저 확인하세요.",
+        "'silver'와 대체된 'none' 모두 'gold'와 다르므로 두 행이 모두 참이 됩니다."
+      ],
+      "choices": ["[2, 3]", "[2]", "[1, 2, 3]", "[]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-rows",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 1,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "NULL 포함 불일치 조건의 함정: COALESCE 치환 후 불일치 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE users(id, tier); INSERT INTO users VALUES(1,'gold'),(2,'silver'),(3,NULL);",
+      "reference_output": "[2, 3]"
+    },
+    {
+      "id": "sql-join-foundation-02",
+      "concept": "JOIN",
+      "kind": "choice",
+      "title": "왼쪽 테이블 기준 보존 행 수",
+      "prompt": "아래 SQL의 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2),(3); CREATE TABLE orders(customer_id); INSERT INTO orders VALUES(1);\nSELECT COUNT(*) FROM customers c LEFT JOIN orders o ON c.id=o.customer_id;",
+      "answer": "3",
+      "explanation": "LEFT JOIN은 왼쪽 테이블(customers)의 3개 행을 모두 유지하므로 결과 행 수는 3입니다.",
+      "hints": [
+        "LEFT JOIN이 주문이 없는 고객 행을 어떻게 처리하는지 떠올려 보세요.",
+        "왼쪽 customers의 세 행이 모두 보존되며 주문이 없는 고객 2, 3은 오른쪽 열이 NULL로 채워집니다."
+      ],
+      "choices": ["1", "2", "3", "4"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-joins",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "외부 조인 행 보존 기초의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2),(3); CREATE TABLE orders(customer_id); INSERT INTO orders VALUES(1);",
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-join-transfer-02",
+      "concept": "JOIN",
+      "kind": "choice",
+      "title": "주문 없는 고객의 집계 값 비교",
+      "prompt": "아래 SQL의 출력 튜플을 적으세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2); CREATE TABLE orders(id, customer_id); INSERT INTO orders VALUES(10,1),(11,1);\nSELECT COUNT(*), COUNT(o.id) FROM customers c LEFT JOIN orders o ON c.id=o.customer_id WHERE c.id=2;",
+      "answer": "(1, 0)",
+      "explanation": "고객 2는 LEFT JOIN으로 1행이 남으므로 COUNT(*)는 1이지만, 매칭된 주문이 없어 o.id가 NULL이므로 COUNT(o.id)는 0입니다.",
+      "hints": [
+        "고객 2는 LEFT JOIN 결과에 한 행으로 남지만 o.id 값은 NULL입니다.",
+        "COUNT(*)는 보존된 행 수를 세고, COUNT(o.id)는 NULL이 아닌 주문 id만 셉니다."
+      ],
+      "choices": ["(1, 0)", "(0, 0)", "(1, 1)", "(2, 0)"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-joins",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "주문 없는 고객의 집계 값 비교: 미매칭 외부 조인의 COUNT(*)와 COUNT(열)을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE customers(id); INSERT INTO customers VALUES(1),(2); CREATE TABLE orders(id, customer_id); INSERT INTO orders VALUES(10,1),(11,1);",
+      "reference_output": "(1, 0)"
+    },
+    {
+      "id": "sql-agg-transfer-02",
+      "concept": "WHERE와 HAVING",
+      "kind": "choice",
+      "title": "정상 주문만 모은 뒤 팀 합계 필터링",
+      "prompt": "반환되는 team 목록을 적으세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE sales(team, status, amount); INSERT INTO sales VALUES('A','done',4000),('A','cancel',5000),('A','done',3000),('B','done',6000);\nSELECT team FROM sales WHERE status='done' GROUP BY team HAVING SUM(amount) >= 7000 ORDER BY team;",
+      "answer": "['A']",
+      "explanation": "WHERE에서 cancel(5000)이 제외된 뒤 팀별 합계를 구하면 A는 7000, B는 6000입니다. 7000 이상인 팀은 ['A']입니다.",
+      "hints": [
+        "WHERE절이 그룹화 전에 cancel 행을 먼저 제외한다는 점에 유의하세요.",
+        "done 행만 합산하면 A팀은 4000+3000=7000, B팀은 6000이므로 HAVING 조건을 만족하는 팀을 고릅니다."
+      ],
+      "choices": ["['A']", "['A', 'B']", "['B']", "[]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-aggregation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "정상 주문만 모은 뒤 팀 합계 필터링: WHERE 선필터와 HAVING 합계 결합을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE sales(team, status, amount); INSERT INTO sales VALUES('A','done',4000),('A','cancel',5000),('A','done',3000),('B','done',6000);",
+      "reference_output": "['A']"
+    },
+    {
+      "id": "stats-summary-foundation-02",
+      "concept": "중앙값과 평균",
+      "kind": "choice",
+      "title": "네 관측값의 중앙값 계산",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\nvalues = np.array([10, 20, 40, 90])\nprint(float(np.median(values)))",
+      "answer": "30.0",
+      "explanation": "관측값이 4개(짝수)일 때 중앙값은 가운데 두 값 20과 40의 산술평균인 30.0입니다. 전체 평균 40.0과 구별합니다.",
+      "hints": [
+        "원소 개수가 짝수일 때 중앙값을 어떻게 정하는지 확인하세요.",
+        "정렬된 네 값 중 가운데 두 값 20과 40의 평균을 구합니다."
+      ],
+      "choices": ["30.0", "20.0", "40.0", "45.0"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "통계",
+      "level": 1,
+      "concept_id": "stats-summaries",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "짝수 표본의 중앙값의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "30.0"
+    },
+    {
+      "id": "stats-summary-application-02",
+      "concept": "표준편차",
+      "kind": "choice",
+      "title": "일괄 가산 후 평균과 표준편차 변화",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "import numpy as np\nbase = np.array([2.0, 4.0, 6.0])\nshifted = base + 10.0\nprint((float(shifted.mean() - base.mean()), round(float(shifted.std() - base.std()), 4)))",
+      "answer": "(10.0, 0.0)",
+      "explanation": "모든 관측값에 상수 10을 더하면 평균은 10.0 증가하지만, 평균으로부터의 편차는 변하지 않아 표준편차 차이는 0.0입니다.",
+      "hints": [
+        "모든 값에 같은 상수를 더하면 중심 위치(평균)와 퍼진 정도(표준편차)가 각각 어떻게 되는지 생각해보세요.",
+        "평균은 10만큼 커지지만 각 값과 평균 사이의 거리는 그대로이므로 표준편차 차이는 0.0입니다."
+      ],
+      "choices": ["(10.0, 0.0)", "(10.0, 10.0)", "(0.0, 10.0)", "(0.0, 0.0)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "평행이동에 따른 평균·표준편차 성질을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(10.0, 0.0)"
+    },
+    {
+      "id": "stats-rate-foundation-02",
+      "concept": "전환율 비교",
+      "kind": "choice",
+      "title": "방문자 대비 구매 전환율",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "visitors = 200\nbuyers = 30\nrate = buyers / visitors\nprint(round(rate, 2))",
+      "answer": "0.15",
+      "explanation": "구매자 30명을 전체 방문자 200명으로 나누면 30 / 200 = 0.15입니다.",
+      "hints": [
+        "전환율의 분자와 분모에 각각 어떤 수가 들어가는지 확인하세요.",
+        "30을 200으로 나눈 값을 소수 둘째 자리까지 구합니다."
+      ],
+      "choices": ["0.15", "0.3", "6.67", "0.13"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "통계",
+      "level": 1,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "기초 비율의 분자와 분모의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "0.15"
+    },
+    {
+      "id": "stats-rate-transfer-02",
+      "concept": "전환율 비교",
+      "kind": "choice",
+      "title": "세그먼트 비중 차이와 전체 전환율 역전",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "a_conv, a_total = 10 + 18, 100 + 30\nb_conv, b_total = 3 + 50, 20 + 100\nprint((round(a_conv / a_total, 2), round(b_conv / b_total, 2)))",
+      "answer": "(0.22, 0.44)",
+      "explanation": "A는 28/130 ≈ 0.22, B는 53/120 ≈ 0.44입니다. 세그먼트별 비율을 단순 평균한 (0.35, 0.33)과 결과가 역전되는 심슨 역설 사례입니다.",
+      "hints": [
+        "각 그룹의 전체 전환율은 세그먼트 전환율의 단순 평균이 아니라 전체 전환 수 / 전체 표본 수입니다.",
+        "A는 28/130, B는 53/120을 각각 계산해 반올림합니다."
+      ],
+      "choices": [
+        "(0.22, 0.44)",
+        "(0.35, 0.33)",
+        "(0.28, 0.53)",
+        "(0.1, 0.15)"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 4,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "세그먼트 비중 차이와 전체 전환율 역전: 통합 분모 전환율과 심슨 역설을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(0.22, 0.44)"
+    },
+    {
+      "id": "ml-eval-foundation-02",
+      "concept": "데이터 분리",
+      "kind": "choice",
+      "title": "계층화 분할의 평가셋 양성 개수",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "from sklearn.model_selection import train_test_split\nX = [[i] for i in range(10)]\ny = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]\n_, _, _, y_test = train_test_split(X, y, test_size=0.5, stratify=y, random_state=0)\nprint(sum(y_test))",
+      "answer": "1",
+      "explanation": "전체 10개 중 양성(1)이 2개이므로 test_size=0.5와 stratify=y로 나누면 학습셋과 평가셋(각 5개)에 양성이 1개씩 배정됩니다.",
+      "hints": [
+        "stratify=y는 전체 y의 클래스 비율(10개 중 양성 2개, 즉 20%)을 분할 후에도 유지합니다.",
+        "크기 5인 y_test에 양성(1)이 몇 개 포함되는지 계산해 보세요."
+      ],
+      "choices": ["1", "0", "2", "5"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 1,
+      "concept_id": "ml-evaluation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "계층화 분할 비율 유지의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "1"
+    },
+    {
+      "id": "ml-eval-transfer-01",
+      "concept": "데이터 누수",
+      "kind": "choice",
+      "title": "분할 전후 기준 평균의 차이",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([10.0, 20.0, 30.0, 100.0])\ntrain = x[:3]\nleaked_mean = float(x.mean())\nclean_mean = float(train.mean())\nprint((leaked_mean, clean_mean))",
+      "answer": "(40.0, 20.0)",
+      "explanation": "분할 전 전체로 구한 평균은 평가값 100.0이 섞여 40.0이 되지만, 학습 데이터 x[:3]만으로 구한 올바른 기준 평균은 20.0입니다.",
+      "hints": [
+        "평가 데이터(100.0)가 포함된 전체 평균과 학습 데이터 3개만의 평균을 각각 계산하세요.",
+        "(10+20+30+100)/4와 (10+20+30)/3을 비교합니다."
+      ],
+      "choices": [
+        "(40.0, 20.0)",
+        "(20.0, 20.0)",
+        "(40.0, 40.0)",
+        "(30.0, 20.0)"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-evaluation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "분할 전후 기준 평균의 차이: 전체 평균 누수와 학습 전용 평균 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(40.0, 20.0)"
+    },
+    {
+      "id": "ml-eval-transfer-02",
+      "concept": "데이터 누수",
+      "kind": "choice",
+      "title": "3-겹 교차 검증의 학습과 검증 크기",
+      "prompt": "아래 코드의 출력값을 적으세요.",
+      "code": "from sklearn.model_selection import KFold\nX = [[i] for i in range(6)]\nkf = KFold(n_splits=3)\ntrain_idx, val_idx = next(kf.split(X))\nprint((len(train_idx), len(val_idx)))",
+      "answer": "(4, 2)",
+      "explanation": "6개 데이터를 3등분하면 각 폴드는 2개입니다. 매 반복마다 학습에는 2개 폴드(4개), 검증에는 1개 폴드(2개)가 배정됩니다.",
+      "hints": [
+        "6개 표본을 3개 폴드로 균등 분할하면 폴드 하나당 표본이 몇 개인지 확인하세요.",
+        "3-겹 교차 검증에서는 1개 폴드(2개)를 검증에 쓰고 나머지 2개 폴드(4개)를 학습에 씁니다."
+      ],
+      "choices": ["(4, 2)", "(3, 3)", "(2, 4)", "(5, 1)"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-evaluation",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "3-겹 교차 검증의 학습과 검증 크기: K-겹 교차 검증 분할 크기을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(4, 2)"
+    },
+    {
+      "id": "ml-metric-foundation-02",
+      "concept": "불균형 지표",
+      "kind": "choice",
+      "title": "실제 양성 기준 탐지 비율 확인",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "from sklearn.metrics import recall_score\ny_true = [1, 1, 1, 0]\ny_pred = [1, 0, 1, 0]\nprint(round(float(recall_score(y_true, y_pred)), 2))",
+      "answer": "0.67",
+      "explanation": "실제 양성 3건 중 2건을 찾아냈으므로 재현율은 2/3 ≈ 0.67입니다. 전체 정확도(0.75)나 정밀도(1.0)와 구별합니다.",
+      "hints": [
+        "재현율(recall)의 분모는 실제 양성(y_true == 1) 전체 개수입니다.",
+        "실제 양성 3건 중 예측도 1로 맞힌 건수(2건)의 비율을 구합니다."
+      ],
+      "choices": ["0.67", "0.75", "1.0", "0.5"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 1,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "실제 양성 분모와 재현율의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "0.67"
+    },
+    {
+      "id": "ml-neighbor-foundation-02",
+      "concept": "거리 기반 모델",
+      "kind": "choice",
+      "title": "세 이웃의 다수결 레이블 예측",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "from sklearn.neighbors import KNeighborsClassifier\nX = [[0.0], [1.0], [2.0], [10.0]]\ny = [0, 1, 1, 0]\nmodel = KNeighborsClassifier(n_neighbors=3).fit(X, y)\nprint(model.predict([[1.2]]).tolist())",
+      "answer": "[1]",
+      "explanation": "1.2에서 가장 가까운 세 이웃은 0.0, 1.0, 2.0이고 각각의 레이블은 0, 1, 1이므로 다수결 예측값은 [1]입니다.",
+      "hints": [
+        "1.2에서 가장 가까운 학습점 세 개가 무엇인지 먼저 고르세요.",
+        "가장 가까운 세 점(0.0, 1.0, 2.0)의 레이블 [0, 1, 1] 중 다수결로 선택되는 값을 확인합니다."
+      ],
+      "choices": ["[1]", "[0]", "[0, 1]", "[1.2]"],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 1,
+      "concept_id": "ml-neighbors",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "홀수 이웃 다수결 투표의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "calibration": "learning-path-v2; 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[1]"
     }
   ],
   "tracks": [
@@ -3136,14 +4113,14 @@
       "name": "Python 데이터 분석",
       "description": "pandas · NumPy · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 68
+      "exercise_count": 88
     },
     {
       "id": "sql",
       "name": "SQL",
       "description": "행 조건 · 집계 · 테이블 연결",
       "available": true,
-      "exercise_count": 18
+      "exercise_count": 26
     },
     {
       "id": "algorithms",
@@ -4302,6 +5279,322 @@
         "requires": ["ml-split-01", "ml-metric-01"],
         "remediation": ["ml-split-01", "ml-metric-01"],
         "objective": "양성 예측의 분모을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-select-transfer-02": {
+        "concept_id": "pandas-select",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-select:라벨 슬라이스와 복수 열 선택",
+        "requires": ["pandas-select-01", "pandas-select-scaffold-02"],
+        "remediation": ["pandas-select-01", "pandas-select-scaffold-02"],
+        "objective": "구간과 열 동시 추출: 라벨 슬라이스와 복수 열 선택을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-filter-transfer-02": {
+        "concept_id": "pandas-filter",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-filter:부정 마스크와 후보군 필터",
+        "requires": [
+          "pandas-select-01",
+          "pandas-filter-01",
+          "pandas-filter-02"
+        ],
+        "remediation": ["pandas-filter-01", "pandas-filter-scaffold-02"],
+        "objective": "제외 등급과 최소 실적 조건: 부정 마스크와 후보군 필터을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-null-transfer-02": {
+        "concept_id": "pandas-null",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-null:특정 열 결측 제거 후 대체 연산",
+        "requires": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
+        "remediation": ["pandas-null-scaffold-01", "pandas-null-02"],
+        "objective": "부분 결측 제거와 대체 비교: 특정 열 결측 제거 후 대체 연산을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-group-transfer-02": {
+        "concept_id": "pandas-group",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-group:그룹 합계 브로드캐스트 비중",
+        "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
+        "remediation": ["pandas-group-01", "pandas-group-02"],
+        "objective": "팀 내 매출 비중 계산: 그룹 합계 브로드캐스트 비중을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-broadcast-foundation-02": {
+        "concept_id": "numpy-broadcast",
+        "level": 1,
+        "role": "foundation",
+        "family": "numpy-broadcast:행벡터와 1차원 배열 차원 결합",
+        "requires": ["numpy-shape-01"],
+        "remediation": ["numpy-shape-01", "numpy-broadcast-foundation-01"],
+        "objective": "행벡터와 1차원 배열 차원 결합의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-broadcast-application-02": {
+        "concept_id": "numpy-broadcast",
+        "level": 2,
+        "role": "application",
+        "family": "numpy-broadcast:축 집계 후 브로드캐스트 차감",
+        "requires": [
+          "numpy-shape-01",
+          "numpy-axis-01",
+          "numpy-broadcast-foundation-01"
+        ],
+        "remediation": ["numpy-axis-01", "numpy-broadcast-foundation-01"],
+        "objective": "축 집계 후 브로드캐스트 차감을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-mask-foundation-02": {
+        "concept_id": "numpy-mask",
+        "level": 1,
+        "role": "foundation",
+        "family": "numpy-mask:불리언 마스크의 참 개수 집계",
+        "requires": ["numpy-shape-01"],
+        "remediation": ["numpy-shape-01", "numpy-where-20261017"],
+        "objective": "불리언 마스크의 참 개수 집계의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-mask-application-02": {
+        "concept_id": "numpy-mask",
+        "level": 2,
+        "role": "application",
+        "family": "numpy-mask:마스크 위치 선택 대입",
+        "requires": [
+          "numpy-shape-01",
+          "numpy-where-20261017",
+          "numpy-mask-foundation-02"
+        ],
+        "remediation": ["numpy-where-20261017", "numpy-mask-foundation-02"],
+        "objective": "마스크 위치 선택 대입을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-memory-foundation-02": {
+        "concept_id": "numpy-memory",
+        "level": 1,
+        "role": "foundation",
+        "family": "numpy-memory:명시적 복사본 분리",
+        "requires": ["numpy-shape-01"],
+        "remediation": ["numpy-shape-01", "numpy-memory-foundation-01"],
+        "objective": "명시적 복사본 분리의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-memory-transfer-01": {
+        "concept_id": "numpy-memory",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-memory:재배열 뷰와 열 슬라이스 전파",
+        "requires": [
+          "numpy-shape-01",
+          "numpy-memory-foundation-01",
+          "numpy-view-01",
+          "numpy-view-02"
+        ],
+        "remediation": ["numpy-memory-foundation-01", "numpy-view-01"],
+        "objective": "재배열 뷰와 슬라이스 수정 전파: 재배열 뷰와 열 슬라이스 전파을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-memory-transfer-02": {
+        "concept_id": "numpy-memory",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-memory:불리언 복사본과 슬라이스 뷰 대조",
+        "requires": [
+          "numpy-shape-01",
+          "numpy-memory-foundation-02",
+          "numpy-view-01",
+          "numpy-view-02"
+        ],
+        "remediation": ["numpy-memory-foundation-02", "numpy-view-02"],
+        "objective": "조건 추출 수정과 슬라이스 수정 비교: 불리언 복사본과 슬라이스 뷰 대조을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "sql-rows-foundation-01": {
+        "concept_id": "sql-rows",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-rows:경계값 포함 비교 조건",
+        "requires": [],
+        "remediation": ["sql-where-01"],
+        "objective": "경계값 포함 비교 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-rows-foundation-02": {
+        "concept_id": "sql-rows",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-rows:IS NULL 기초 확인",
+        "requires": [],
+        "remediation": ["sql-where-01"],
+        "objective": "IS NULL 기초 확인의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-rows-foundation-03": {
+        "concept_id": "sql-rows",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-rows:정렬과 상위 행 선택",
+        "requires": [],
+        "remediation": ["sql-where-01"],
+        "objective": "정렬과 상위 행 선택의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-rows-foundation-04": {
+        "concept_id": "sql-rows",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-rows:후보 목록 포함 조건",
+        "requires": [],
+        "remediation": ["sql-where-01"],
+        "objective": "후보 목록 포함 조건의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-rows-transfer-02": {
+        "concept_id": "sql-rows",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-rows:COALESCE 치환 후 불일치 비교",
+        "requires": ["sql-where-01", "sql-null-01", "sql-null-02"],
+        "remediation": ["sql-null-01", "sql-null-02"],
+        "objective": "NULL 포함 불일치 조건의 함정: COALESCE 치환 후 불일치 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "sql-join-foundation-02": {
+        "concept_id": "sql-joins",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-joins:외부 조인 행 보존 기초",
+        "requires": ["sql-where-01"],
+        "remediation": ["sql-where-01", "sql-join-foundation-01"],
+        "objective": "외부 조인 행 보존 기초의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-join-transfer-02": {
+        "concept_id": "sql-joins",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-joins:미매칭 외부 조인의 COUNT(*)와 COUNT(열)",
+        "requires": [
+          "sql-where-01",
+          "sql-join-foundation-01",
+          "sql-join-01",
+          "sql-count-01"
+        ],
+        "remediation": ["sql-join-foundation-02", "sql-count-01"],
+        "objective": "주문 없는 고객의 집계 값 비교: 미매칭 외부 조인의 COUNT(*)와 COUNT(열)을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "sql-agg-transfer-02": {
+        "concept_id": "sql-aggregation",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-aggregation:WHERE 선필터와 HAVING 합계 결합",
+        "requires": ["sql-where-01", "sql-count-01", "sql-having-01"],
+        "remediation": ["sql-where-01", "sql-having-01"],
+        "objective": "정상 주문만 모은 뒤 팀 합계 필터링: WHERE 선필터와 HAVING 합계 결합을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "stats-summary-foundation-02": {
+        "concept_id": "stats-summaries",
+        "level": 1,
+        "role": "foundation",
+        "family": "stats-summaries:짝수 표본의 중앙값",
+        "requires": [],
+        "remediation": ["stats-median-01"],
+        "objective": "짝수 표본의 중앙값의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "stats-summary-application-02": {
+        "concept_id": "stats-summaries",
+        "level": 2,
+        "role": "application",
+        "family": "stats-summaries:평행이동에 따른 평균·표준편차 성질",
+        "requires": [
+          "stats-median-01",
+          "stats-summary-foundation-02",
+          "stats-std-01"
+        ],
+        "remediation": ["stats-median-01", "stats-std-01"],
+        "objective": "평행이동에 따른 평균·표준편차 성질을 적용하여 기초와 조건 변화 문항 사이를 연결한다.",
+        "review_status": "reviewed"
+      },
+      "stats-rate-foundation-02": {
+        "concept_id": "stats-rates",
+        "level": 1,
+        "role": "foundation",
+        "family": "stats-rates:기초 비율의 분자와 분모",
+        "requires": ["stats-median-01"],
+        "remediation": ["stats-median-01", "stats-weight-01"],
+        "objective": "기초 비율의 분자와 분모의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "stats-rate-transfer-02": {
+        "concept_id": "stats-rates",
+        "level": 3,
+        "role": "transfer",
+        "family": "stats-rates:통합 분모 전환율과 심슨 역설",
+        "requires": [
+          "stats-median-01",
+          "stats-weight-01",
+          "stats-ab-01",
+          "stats-conditional-01"
+        ],
+        "remediation": ["stats-weight-01", "stats-ab-01"],
+        "objective": "세그먼트 비중 차이와 전체 전환율 역전: 통합 분모 전환율과 심슨 역설을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "ml-eval-foundation-02": {
+        "concept_id": "ml-evaluation",
+        "level": 1,
+        "role": "foundation",
+        "family": "ml-evaluation:계층화 분할 비율 유지",
+        "requires": [],
+        "remediation": ["ml-split-01"],
+        "objective": "계층화 분할 비율 유지의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "ml-eval-transfer-01": {
+        "concept_id": "ml-evaluation",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-evaluation:전체 평균 누수와 학습 전용 평균 비교",
+        "requires": ["ml-split-01", "ml-eval-foundation-02", "ml-split-02"],
+        "remediation": ["ml-split-01", "ml-split-02"],
+        "objective": "분할 전후 기준 평균의 차이: 전체 평균 누수와 학습 전용 평균 비교을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "ml-eval-transfer-02": {
+        "concept_id": "ml-evaluation",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-evaluation:K-겹 교차 검증 분할 크기",
+        "requires": ["ml-split-01", "ml-split-02", "ml-eval-transfer-01"],
+        "remediation": ["ml-split-01", "ml-split-02"],
+        "objective": "3-겹 교차 검증의 학습과 검증 크기: K-겹 교차 검증 분할 크기을 조건·자료 구조가 달라진 상황에 전이하여 판단한다.",
+        "review_status": "reviewed"
+      },
+      "ml-metric-foundation-02": {
+        "concept_id": "ml-metrics",
+        "level": 1,
+        "role": "foundation",
+        "family": "ml-metrics:실제 양성 분모와 재현율",
+        "requires": ["ml-split-01"],
+        "remediation": ["ml-split-01", "ml-metric-01"],
+        "objective": "실제 양성 분모와 재현율의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "ml-neighbor-foundation-02": {
+        "concept_id": "ml-neighbors",
+        "level": 1,
+        "role": "foundation",
+        "family": "ml-neighbors:홀수 이웃 다수결 투표",
+        "requires": ["ml-split-01"],
+        "remediation": ["ml-split-01", "ml-neighbor-foundation-01"],
+        "objective": "홀수 이웃 다수결 투표의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
         "review_status": "reviewed"
       }
     },

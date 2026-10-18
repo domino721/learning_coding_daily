@@ -135,3 +135,33 @@
 - 검증: Pages39051537721와 관리39051537733 success. GitHub runner가 공개 HTML과 JS/CSS의 SHA256을 최종 빌드와 대조했다. 자산은 index-B-i0buKv.js / index-D6v8TWnn.css다.
 - 근거: [EV-025 로컬 검증](planning/evidence/EV-025.md), [EV-026 배포 검증](planning/evidence/EV-026.md)
 - 다음 개선: 실제 자료의 보충 이후 전이·힌트·복습·불필요한 반복을 표본 수와 함께 관찰한다. 개발·가상 결과로 학습 효과를 확정하지 않는다. 여러 경로의 이후 업데이트도 최신 원격·기존 ID/기록·공통 규칙·출시 검사를 보존한다.
+
+## CD-20261018-005 · 전 개념 기초 다원화·회복 경로 보강·활성 전이 확장 (28문항 추가)
+
+- 날짜: 2026-10-18, Asia/Seoul
+- 관련: CR-010·CR-011 / WBS-360·WBS-540 / 운영 `learning-paths-2.0` / 문제 은행 v0.3
+- 상태: 신규 28문항(Python 20, SQL 8) 작성·설계 카드·선수 경로·로컬 검증 반영
+
+### 근거
+
+1. 사용자가 `design.html` 기준으로 추천 알고리즘과 서비스 모형을 점검하고, 현재 문제들이 설계 의도에 맞는지 평가한 뒤 커리큘럼을 더 복잡·다각화하고 문제를 추가하도록 요청했다.
+2. 정적·동적 구조 분석에서 세 가지 커리큘럼 공백을 확인했다:
+   - **보충 회복(`recovery_items: 2`) 구조적 병목**: 18개 개념 중 10개(`numpy-broadcast`, `numpy-mask`, `numpy-memory`, `sql-rows`, `sql-joins`, `stats-summaries`, `stats-rates`, `ml-evaluation`, `ml-metrics`, `ml-neighbors`)에 단계 1(`foundation`) 문항이 1개뿐이었다. 도움이나 오답으로 `needs_support`가 켜지면 난이도 상한이 단계 1로 제한되는데, 서로 다른 단계 1 문항 2개를 독립 해결해야 해제되므로 단계 1 문항이 1개인 개념에서는 회복 조건을 영구히 충족할 수 없었다.
+   - **SQL 1일차 단일 문항 병목**: SQL 루트 개념(`sql-rows`)에 선수 없는 단계 1 문항이 `sql-where-01` 1개뿐이어서 SQL 첫날 기본 세션이 1문항만 제시되었다.
+   - **활성 단계 3(`transfer`) 공백 및 다단계 추론 부족**: `numpy-memory`와 `ml-evaluation`은 단계 3 문항이 보류 서술형뿐이어서 활성 단계 3 문항이 0개였고, 여러 개념에서 다단계 연산·경계 조건·교차 개념 전이 문항이 부족했다.
+
+### 판단
+
+기존 배포 문항(91개)의 ID·버전·내용·해시를 일절 변경하지 않고, 새 고유 ID로 28문항을 추가해 모든 18개 개념이 최소 2개 이상의 기초 과제 유형군(`basic_families >= 2`)과 활성 적용·전이 경로를 갖추도록 확장하기로 했다.
+
+### 변경
+
+- **단계 1 기초 다원화(13문항)**: `numpy-broadcast-foundation-02`, `numpy-mask-foundation-02`, `numpy-memory-foundation-02`, `sql-rows-foundation-01~04`, `sql-join-foundation-02`, `stats-summary-foundation-02`, `stats-rate-foundation-02`, `ml-eval-foundation-02`, `ml-metric-foundation-02`, `ml-neighbor-foundation-02`를 추가해 18개 전 개념의 단계 1 문항 수를 2개 이상으로 확보하고 SQL 첫날 기본 세션을 5문항으로 정상화했다.
+- **단계 2 다단계 적용(3문항)**: `numpy-broadcast-application-02`(축 평균 차감 중심화), `numpy-mask-application-02`(불리언 마스크 제자리 클리핑), `stats-summary-application-02`(상수 평행이동에 따른 평균·표준편차 불변성)를 추가했다.
+- **단계 3 조건 변화·전이(12문항)**: `pandas-select-transfer-02`, `pandas-filter-transfer-02`, `pandas-null-transfer-02`, `pandas-group-transfer-02`, `numpy-memory-transfer-01~02`, `sql-rows-transfer-02`, `sql-join-transfer-02`, `sql-agg-transfer-02`, `stats-rate-transfer-02`, `ml-eval-transfer-01~02`를 추가해 `numpy-memory`와 `ml-evaluation`의 활성 전이 공백을 해소하고 전 영역의 복합 추론(`reasoning_steps` 3~4) 문항을 보강했다.
+- `backend/scaffold_content.json`, `backend/difficulty.json`, `backend/learning_paths.json`, `curriculum/problem_bank.json`, `src/curriculum.json`을 동기화했다(총 119문항: 활성 Python 88·SQL 26, 보류 서술형 5).
+
+### 검증 및 남은 확인
+
+- Python 참조 실행·SQLite 표시 입력 대조·선수 경로 무순환·전체 활성 문항 도달·공통 이력 추천 일치(pytest 375개, Node 계약 20개) 및 모바일 E2E 회귀 통과.
+- 실제 사용자 학습 효과와 초기 난이도·임계값의 적합성은 7일 기기 관찰(WBS-520/530)에서 별도로 확인한다.
