@@ -416,6 +416,18 @@
         "tests/e2e/short-attempts.spec.ts"
       ],
       "code_reference": "WBS-280 CR-012 accompanying implementation commit"
+    },
+    {
+      "id": "EV-032",
+      "record": "docs/planning/evidence/EV-032.md",
+      "artifacts": [
+        "src/ExerciseCard.tsx",
+        "src/browserApi.ts",
+        "backend/main.py",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "6b8057923798e492a5a6a77a681907e341023e88"
     }
   ]
 }
