@@ -461,6 +461,18 @@
         "docs/content_batches/2026-10-19-expansion.md"
       ],
       "code_reference": "WBS-360/WBS-540 accompanying 18-question expansion commit"
+    },
+    {
+      "id": "EV-035",
+      "record": "docs/planning/evidence/EV-035.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json",
+        "curriculum/reviews/2026-10-19-expansion.json",
+        "AGENTS.md"
+      ],
+      "code_reference": "b8c336e2e202e5f245202b6114ddd93709503f08"
     }
   ]
 }

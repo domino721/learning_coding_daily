@@ -42,3 +42,7 @@
 ## 대상 재질문 방지
 
 사용자가 이미 저장소와 주소를 지정한 상태에서 재질문한 문제를 인정했다. `AGENTS.md`의 연결 대상 지침을 강화해 새 대화·시작 중 환경·열린 Page 없음에서도 README/AGENTS/Git remote 또는 연결된 GitHub를 먼저 확인하고 기존 Pages를 기본 대상으로 진행하게 했다. 다른 대상을 가리키는 명시적 증거가 충돌할 때만 충돌을 특정해 질문한다.
+
+## 게시 완료
+
+코드 `b8c336e2e202e5f245202b6114ddd93709503f08`의 [기존 Pages 실행](https://github.com/domino721/learning_coding_daily/actions/runs/39254081264)이 성공했다. 원격Python480/Node20/모바일30 통과와 공개JS/CSS 바이트 일치를 [EV-035](../planning/evidence/EV-035.md)에 기록했다. [기존 사이트](https://domino721.github.io/learning_coding_daily/)에서 활성Python103·SQL29를 제공한다. 실제학습효과와 기기7일관찰은 별도다.
