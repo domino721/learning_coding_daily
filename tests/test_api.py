@@ -380,10 +380,12 @@ def test_start_mode_compatibility_excludes_essays(learning):
     assert all(i['response_mode']==BY_ID[i['id']].response_mode!='essay' for i in extra['items'])
 
 
-def test_two_wrong_choices_finalize_once_and_survive_backup(learning):
+@pytest.mark.parametrize("mode", ["choice", "short"])
+def test_two_wrong_answers_finalize_once_and_survive_backup(learning, mode):
     client,path,_=learning
-    session=start(client);item=session['items'][0]
+    session=client.post('/api/sessions/today',json={'track_id':'python','response_mode':mode}).json();item=session['items'][0]
     wrong=next(c for c in item['choices'] if c!=BY_ID[item['id']].answer)
+    assert answer(client,session,item,'   ').status_code==422
     first=str(uuid4());second=str(uuid4())
     result=answer(client,session,item,wrong,first).json()['session']
     assert result['items'][0]['status']=='pending' and result['items'][0]['attempts_count']==1
@@ -400,3 +402,34 @@ def test_two_wrong_choices_finalize_once_and_survive_backup(learning):
     backup=client.get('/api/backup').json()
     assert client.post('/api/restore',json={'data':backup}).status_code==200
     assert client.get(f"/api/sessions/{session['id']}").json()['items'][0]['status']=='incorrect'
+
+
+def test_short_last_chance_can_succeed_with_concurrent_submissions(learning):
+    client,path,_=learning
+    session=client.post('/api/sessions/today',json={'track_id':'sql','response_mode':'short'}).json()
+    item=session['items'][0]
+    assert answer(client,session,item,'wrong').json()['correct'] is False
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        responses=list(pool.map(lambda _:answer(client,session,item),range(4)))
+    assert sorted(r.status_code for r in responses)==[200,409,409,409]
+    saved=next(r for r in responses if r.status_code==200).json()['session']['items'][0]
+    assert saved['status']=='correct' and saved['attempts_count']==2
+    with connect(path) as db:
+        assert db.execute('SELECT count(*) FROM attempts').fetchone()[0]==2
+        assert db.execute('SELECT completed_count FROM progress').fetchone()[0]==1
+
+
+def test_existing_over_limit_short_answer_is_preserved_and_cannot_retry(learning):
+    client,path,_=learning
+    session=client.post('/api/sessions/today',json={'track_id':'python','response_mode':'short'}).json()
+    item=session['items'][0]
+    with connect(path) as db:
+        db.execute("UPDATE session_items SET attempts_count=4,last_answer='old wrong answer',last_correct=0,draft='saved draft' WHERE session_id=? AND exercise_id=?",(session['id'],item['id']))
+    restored=start(client)['items'][0]
+    assert restored['status']=='pending' and restored['attempts_count']==4
+    assert restored['last_answer']=='old wrong answer' and restored['draft']=='saved draft'
+    saved=answer(client,session,item).json()['session']['items'][0]
+    assert saved['status']=='incorrect' and saved['attempts_count']==4
+    assert saved['last_answer']=='old wrong answer'
+    with connect(path) as db:
+        assert db.execute('SELECT count(*) FROM attempts').fetchone()[0]==0

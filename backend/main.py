@@ -381,7 +381,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                     or (mode == "choice" and body.answer not in exercise.choices)):
                 raise HTTPException(422, "문제에 맞는 답안을 입력해 주세요.")
             if mode == "essay": raise HTTPException(422, "서술형은 보류 중이에요. 작성한 답안은 학습 기록에 보관됩니다.")
-            if mode == "choice" and item["attempts_count"] >= 2:
+            if mode in ("choice", "short") and item["attempts_count"] >= 2:
                 finish(db,session_id,exercise.id,"incorrect",True)
                 return {"correct":False,"session":snapshot(db,session_id)}
             correct = exercise.matches(body.answer)
@@ -395,7 +395,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
                 finish(db, session_id, exercise.id, "revealed", True)
             elif correct:
                 finish(db, session_id, exercise.id, "correct", item["hints_used"] > 0 or item["attempts_count"] > 0)
-            elif mode == "choice" and item["attempts_count"] + 1 >= 2:
+            elif mode in ("choice", "short") and item["attempts_count"] + 1 >= 2:
                 finish(db,session_id,exercise.id,"incorrect",True)
             return {"correct": None if mode == "essay" else correct, "session": snapshot(db, session_id)}
 

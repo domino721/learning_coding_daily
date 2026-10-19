@@ -404,6 +404,18 @@
         "docs/CURRICULUM_LOG.md"
       ],
       "code_reference": "WBS-360/WBS-540 curriculum diversification and 28 new exercises (accompanying commit)"
+    },
+    {
+      "id": "EV-031",
+      "record": "docs/planning/evidence/EV-031.md",
+      "artifacts": [
+        "src/ExerciseCard.tsx",
+        "src/browserApi.ts",
+        "backend/main.py",
+        "tests/test_api.py",
+        "tests/e2e/short-attempts.spec.ts"
+      ],
+      "code_reference": "WBS-280 CR-012 accompanying implementation commit"
     }
   ]
 }

@@ -51,6 +51,7 @@ export default function ExerciseCard({
     return () => clearTimeout(timer);
   }, [draft, item.id, item.status, mode]);
   const done = item.status !== "pending";
+  const exhausted = mode !== "essay" && item.attempts_count >= 2;
   const { seconds, readSeconds } = useActiveTime(
     item.id,
     item.active_seconds,
@@ -131,7 +132,7 @@ export default function ExerciseCard({
           ·{" "}
           {item.difficulty?.label ?? (item.level === 2 ? "적용" : "기초 확인")}
         </p>
-        {mode === "choice" && !done && (
+        {mode !== "essay" && !done && (
           <p className="attempt-note">
             최대 2회 제출 · 남은 기회 {Math.max(0, 2 - item.attempts_count)}회
           </p>
@@ -139,11 +140,12 @@ export default function ExerciseCard({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (!busy && !done && draft.trim()) onAnswer(draft, readSeconds());
+            if (!busy && !done && !exhausted && draft.trim())
+              onAnswer(draft, readSeconds());
           }}
         >
           {mode === "choice" ? (
-            <fieldset disabled={busy || done} className="choices">
+            <fieldset disabled={busy || done || exhausted} className="choices">
               <legend className="sr-only">답안 선택</legend>
               {item.choices.map((choice, i) => (
                 <label
@@ -171,7 +173,7 @@ export default function ExerciseCard({
                 className="blank-input essay-input"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
-                disabled={busy || done}
+                disabled={busy || done || exhausted}
                 placeholder="답과 그렇게 생각한 이유를 적어 주세요."
                 rows={6}
                 maxLength={2000}
@@ -189,7 +191,7 @@ export default function ExerciseCard({
                 className="blank-input"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
-                disabled={busy || done}
+                disabled={busy || done || exhausted}
                 placeholder={
                   item.code.includes("____")
                     ? "빈칸에 들어갈 답"
@@ -211,9 +213,9 @@ export default function ExerciseCard({
             <div className="feedback retry" role="status">
               <strong>한 번 더 생각해 볼까요?</strong>
               <p>
-                {mode === "choice"
-                  ? `남은 기회는 ${Math.max(0, 2 - item.attempts_count)}회예요. 다시 틀리면 오답으로 마치고 해설을 보여드려요.`
-                  : "아직 마친 문제로 처리되지 않았어요. 다른 답을 시도하거나 힌트를 열어 보세요."}
+                {exhausted
+                  ? "제출 기회를 모두 사용했어요. 해설을 보고 마쳐 주세요."
+                  : `남은 기회는 ${Math.max(0, 2 - item.attempts_count)}회예요. 다시 틀리면 오답으로 마치고 해설을 보여드려요.`}
               </p>
             </div>
           )}
@@ -306,7 +308,7 @@ export default function ExerciseCard({
               <button
                 className="primary"
                 type="submit"
-                disabled={busy || !draft.trim()}
+                disabled={busy || exhausted || !draft.trim()}
               >
                 {busy
                   ? "확인하는 중…"

@@ -574,7 +574,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     throw new ApiError("문제에 맞는 답안을 입력해 주세요.", 422);
   if (item.response_mode === "choice" && !source.choices.includes(body.answer))
     throw new ApiError("보기에서 답을 골라 주세요.", 422);
-  if (item.response_mode === "choice" && item.attempts_count >= 2) {
+  if (item.attempts_count >= 2) {
     complete(data, session, item, "incorrect", true);
     await saveRecords(data);
     return { correct: false, session };
@@ -614,7 +614,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     correct ? "정답" : "오답",
   );
   if (correct) complete(data, session, item, "correct", assisted);
-  else if (item.response_mode === "choice" && item.attempts_count >= 2)
+  else if (item.attempts_count >= 2)
     complete(data, session, item, "incorrect", true);
   await saveRecords(data);
   return { correct: correct, session };
