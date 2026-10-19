@@ -1,0 +1,406 @@
+{
+  "date": "2026-10-19",
+  "batch_id": "curriculum-expansion-20261019",
+  "source_commit": "da0602e",
+  "review_method": "Codex direct item review with independent library/SQLite boundary tests; no external model review",
+  "status": "item_reviewed",
+  "scope": "18 existing concepts; 9 application + 9 transfer; original 119 exercises and learning-paths-2.0 rules preserved",
+  "exercises": [
+    {
+      "id": "pandas-mask-labels-20261019",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "Series 마스크의 라벨 정렬과 결과 행 순서를 구분한다.",
+      "rationale": "Series 마스크의 라벨 정렬과 결과 행 순서를 구분한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "pandas-select-01",
+        "pandas-alignment-20261017",
+        "pandas-select-03"
+      ],
+      "family": "pandas-select:라벨 정렬을 이용한 행 마스크",
+      "new_concept": "라벨이 다른 순서인 불리언 Series 선택",
+      "answer": "[20, 30]",
+      "distractor_hypotheses": {
+        "[10, 30]": "불리언 값을 라벨 대신 위치에 적용했을 가능성",
+        "[30, 20]": "마스크의 라벨 순서가 출력 순서라고 생각했을 가능성",
+        "[10, 20, 30]": "마스크의 값 대신 라벨 존재만 확인했을 가능성"
+      },
+      "diagnostic_question": "A 라벨에 대응하는 마스크 값은 무엇인가요?",
+      "boundary_check": "라벨 순서를 모두 뒤집어도 같은 라벨의 선택 여부는 유지된다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "pandas-union-filter-20261019",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "두 조건의 합집합을 행별로 평가하고 중복·경계값을 처리한다.",
+      "rationale": "두 조건의 합집합을 행별로 평가하고 중복·경계값을 처리한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["pandas-filter-01", "pandas-select-01"],
+      "family": "pandas-filter:조건 합집합",
+      "new_concept": "불리언 조건의 합집합",
+      "answer": "[1, 2, 4]",
+      "distractor_hypotheses": {
+        "[4]": "|를 &처럼 해석했을 가능성",
+        "[1, 4]": "등급 조건만 적용했을 가능성",
+        "[2, 4]": "금액 조건만 적용했을 가능성"
+      },
+      "diagnostic_question": "ID 2는 두 조건 중 몇 개를 만족하며 결과에 들어가나요?",
+      "boundary_check": "두 조건을 모두 만족하는 행을 한 번만 포함하며 100은 포함, 99는 제외한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "pandas-fill-return-20261019",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "결측 대체의 반환값과 원본 상태를 구분한다.",
+      "rationale": "결측 대체의 반환값과 원본 상태를 구분한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["pandas-null-01", "pandas-null-02"],
+      "family": "pandas-null:대체 반환값과 원본 상태",
+      "new_concept": "대체 결과와 원본의 구분",
+      "answer": "(1, 0)",
+      "distractor_hypotheses": {
+        "(0, 0)": "기본 호출이 원본도 변경한다고 생각했을 가능성",
+        "(1, 1)": "반환값에도 대체가 반영되지 않는다고 생각했을 가능성",
+        "(0, 1)": "원본과 반환값의 역할을 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "fillna의 반환값을 어느 변수에서 사용하고 있나요?",
+      "boundary_check": "결측치가 없는 입력에서는 원본과 반환값의 결측 개수가 모두 0이다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "pandas-sort-missing-20261019",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "결측 위치와 서로 다른 방향의 두 정렬 기준을 함께 적용한다.",
+      "rationale": "결측 위치와 서로 다른 방향의 두 정렬 기준을 함께 적용한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "pandas-sort-scaffold-01",
+        "pandas-sort-scaffold-02",
+        "pandas-null-01"
+      ],
+      "family": "pandas-sort:결측 위치와 다중 기준",
+      "new_concept": "결측 위치를 지정한 다중 정렬",
+      "answer": "['B', 'D', 'C', 'A']",
+      "distractor_hypotheses": {
+        "['C', 'A', 'B', 'D']": "na_position을 무시했을 가능성",
+        "['D', 'B', 'C', 'A']": "id에도 내림차순을 적용했을 가능성",
+        "['B', 'D', 'A', 'C']": "score의 내림차순을 오름차순으로 읽었을 가능성"
+      },
+      "diagnostic_question": "점수가 없는 B와 D 사이에는 어떤 열의 어떤 방향을 적용하나요?",
+      "boundary_check": "결측치가 없으면 na_position을 바꾸어도 결과는 같다. id가 유일하여 동점 출력은 결정적이다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "pandas-null-groups-20261019",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "그룹 키의 결측 처리로 전체 금액 합계가 달라지는 이유를 추적한다.",
+      "rationale": "그룹 키의 결측 처리로 전체 금액 합계가 달라지는 이유를 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "pandas-group-02",
+        "pandas-group-scaffold-01",
+        "pandas-null-01"
+      ],
+      "family": "pandas-group:결측 그룹 키 보존",
+      "new_concept": "결측 그룹 키의 보존",
+      "answer": "(12, 22)",
+      "distractor_hypotheses": {
+        "(22, 22)": "기본 groupby도 결측 키를 포함한다고 생각했을 가능성",
+        "(12, 12)": "dropna=False의 적용 대상을 금액 열로 생각했을 가능성",
+        "(2, 3)": "그룹 수를 금액 합계 대신 답했을 가능성"
+      },
+      "diagnostic_question": "team이 없는 행의 amount=10은 각 리포트에서 어느 그룹에 포함되나요?",
+      "boundary_check": "결측 키를 실제 팀 이름으로 바꾸면 두 합계는 모두 22가 된다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "numpy-kept-axis-20261019",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "직사각 배열에서 집계 축 보존 후 shape을 예측한다.",
+      "rationale": "직사각 배열에서 집계 축 보존 후 shape을 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["numpy-axis-01", "numpy-shape-01"],
+      "family": "numpy-structure:집계 축 보존",
+      "new_concept": "집계한 축의 길이 보존",
+      "answer": "(1, 3)",
+      "distractor_hypotheses": {
+        "(3,)": "keepdims를 무시했을 가능성",
+        "(2, 1)": "집계 축을 반대로 읽었을 가능성",
+        "(1, 2)": "원본의 행 수와 열 수를 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "원본 (2, 3) 중 axis=0은 어느 숫자를 1로 바꾸나요?",
+      "boundary_check": "비정사각 배열을 사용해 축을 뒤집는 오답이 우연히 정답이 되는 것을 막는다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "numpy-square-centering-20261019",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "실행 가능한 shape라도 의도한 행 기준 보정인지 두 결과로 판별한다.",
+      "rationale": "실행 가능한 shape라도 의도한 행 기준 보정인지 두 결과로 판별한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "numpy-broadcast-application-02",
+        "numpy-index-foundation-01",
+        "numpy-axis-01"
+      ],
+      "family": "numpy-broadcast:shape 호환과 의미 축의 구분",
+      "new_concept": "shape은 맞지만 축이 다른 보정",
+      "answer": "([-1.0, -8.0], [-1.0, 1.0])",
+      "distractor_hypotheses": {
+        "([-1.0, 1.0], [-1.0, 1.0])": "1차원 평균도 행마다 적용된다고 생각했을 가능성",
+        "([-1.0, -8.0], [-1.0, -8.0])": "새 축 추가의 효과를 무시했을 가능성",
+        "([-4.0, -5.0], [-4.0, -5.0])": "행 평균 대신 열 평균을 계산했을 가능성"
+      },
+      "diagnostic_question": "a[0, 1]에서 빼는 평균은 첫 행 평균인가요, 두 번째 행 평균인가요?",
+      "boundary_check": "(2, 3) 입력은 잘못된 (2,) 뺄셈에서 오류가 나지만 (2, 1)은 적용 가능하다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "numpy-mask-state-20261019",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "저장된 마스크의 생성 시점과 선택되는 배열 값의 시점을 구분한다.",
+      "rationale": "저장된 마스크의 생성 시점과 선택되는 배열 값의 시점을 구분한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": ["numpy-mask-application-02", "numpy-mask-foundation-02"],
+      "family": "numpy-mask:저장한 마스크의 시점",
+      "new_concept": "원본 변경과 저장된 마스크",
+      "answer": "[4, 6]",
+      "distractor_hypotheses": {
+        "[2, 4, 6]": "mask가 원본 변경과 함께 자동 재계산된다고 생각했을 가능성",
+        "[2, 4]": "선택 시점에도 이전 값을 쓴다고 생각했을 가능성",
+        "[6]": "조건 또는 경계값을 다르게 읽었을 가능성"
+      },
+      "diagnostic_question": "x += 2 뒤에 mask[0]을 다시 계산하는 문장이 있나요?",
+      "boundary_check": "처음 참이 없거나 모두 참이어도 갱신 뒤 기존 마스크의 선택 위치는 유지된다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "numpy-rebind-view-20261019",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "배열 재할당 뒤에도 뷰가 어느 배열에 연결되는지 추적한다.",
+      "rationale": "배열 재할당 뒤에도 뷰가 어느 배열에 연결되는지 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "numpy-view-01",
+        "numpy-memory-foundation-01",
+        "numpy-memory-foundation-02"
+      ],
+      "family": "numpy-memory:재할당과 기존 뷰 연결",
+      "new_concept": "새 배열로 재할당한 변수와 기존 뷰",
+      "answer": "([11, 12, 13], [9, 2])",
+      "distractor_hypotheses": {
+        "([9, 12, 13], [9, 12])": "재할당을 제자리 덧셈처럼 읽었을 가능성",
+        "([9, 12, 13], [9, 2])": "view가 새 x로 자동 연결된다고 생각했을 가능성",
+        "([11, 12, 13], [1, 2])": "view 자체에 대한 대입을 놓쳤을 가능성"
+      },
+      "diagnostic_question": "x = x + 10에서 새 배열을 만든 뒤 view의 연결 대상이 바뀌나요?",
+      "boundary_check": "같은 입력의 x += 10 변형에서는 view가 새 값과 수정 사항을 공유한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "sql-condition-order-20261019",
+      "domain": "SQL",
+      "level": 2,
+      "objective": "AND·OR 우선순위와 NULL 비교를 적용해 선택 행을 구한다.",
+      "rationale": "AND·OR 우선순위와 NULL 비교를 적용해 선택 행을 구한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["sql-where-01", "sql-rows-foundation-02"],
+      "family": "sql-rows:AND와 OR 우선순위",
+      "new_concept": "행 조건의 논리 우선순위",
+      "answer": "[1, 3]",
+      "distractor_hypotheses": {
+        "[3]": "OR 전체를 먼저 묶고 금액 조건을 적용했을 가능성",
+        "[1, 2, 3]": "open이면 금액 조건 없이 포함했을 가능성",
+        "[1, 3, 5]": "Unknown을 참으로 취급했을 가능성"
+      },
+      "diagnostic_question": "금액 30인 done 주문에 AND 금액 조건이 반드시 적용되나요?",
+      "boundary_check": "open 금액 99·100·NULL을 대조하고 done 금액이 낮아도 남는지 확인한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "sql-conditional-average-20261019",
+      "domain": "SQL",
+      "level": 3,
+      "objective": "조건부 평균의 ELSE 유무가 집계 분모를 바꾸는 과정을 추적한다.",
+      "rationale": "조건부 평균의 ELSE 유무가 집계 분모를 바꾸는 과정을 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "sql-refund-average-20261018",
+        "sql-null-count-20261018",
+        "sql-count-02"
+      ],
+      "family": "sql-aggregation:조건부 평균의 분모",
+      "new_concept": "조건부 집계의 NULL과 0 분모",
+      "answer": "(20.0, 13.33)",
+      "distractor_hypotheses": {
+        "(20.0, 20.0)": "AVG가 0도 제외한다고 생각했을 가능성",
+        "(13.33, 13.33)": "ELSE 생략을 ELSE 0으로 읽었을 가능성",
+        "(30.0, 13.33)": "첫 지표에 전체 원금액 평균을 사용했을 가능성"
+      },
+      "diagnostic_question": "첫 CASE에서 open 행이 만드는 값과 AVG에 포함되는지 설명해 보세요.",
+      "boundary_check": "완료 0개이면 (NULL, 0.0), 빈 테이블이면 (NULL, NULL)이다. 완료금액 자체의 NULL도 따로 확인한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "sql-customer-totals-20261019",
+      "domain": "SQL",
+      "level": 3,
+      "objective": "집계 단위를 고객당 한 행으로 맞춘 뒤 조인하여 두 지표를 보존한다.",
+      "rationale": "집계 단위를 고객당 한 행으로 맞춘 뒤 조인하여 두 지표를 보존한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": ["sql-join-01", "sql-join-foundation-01", "sql-having-01"],
+      "family": "sql-joins:집계 단위 정렬 후 조인",
+      "new_concept": "집계 단위를 맞춘 뒤 연결",
+      "answer": "(20, 13)",
+      "distractor_hypotheses": {
+        "(30, 13)": "중간 집계를 무시하고 원본 주문을 연결했을 가능성",
+        "(10, 13)": "서로 다른 고객의 같은 budget을 DISTINCT로 합쳤을 가능성",
+        "(20, 10)": "한 고객의 spent만 합계에 사용했을 가능성"
+      },
+      "diagnostic_question": "totals에서 고객 1은 몇 행이며, budget이 같은 고객 2와 같은 고객인가요?",
+      "boundary_check": "예산이 같은 고객을 각각 보존하고 주문 없는 고객을 추가해도 예산 합계에 포함한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "stats-negative-scale-20261019",
+      "domain": "통계",
+      "level": 2,
+      "objective": "음수 배율과 평행이동 뒤 평균·표준편차를 계산한다.",
+      "rationale": "음수 배율과 평행이동 뒤 평균·표준편차를 계산한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": [
+        "stats-median-01",
+        "stats-summary-foundation-02",
+        "stats-std-01"
+      ],
+      "family": "stats-summaries:배율과 변동성",
+      "new_concept": "음수 배율의 표준편차",
+      "answer": "(1.0, 2.0)",
+      "distractor_hypotheses": {
+        "(1.0, -2.0)": "표준편차에도 음수 부호를 그대로 곱했을 가능성",
+        "(1.0, 1.0)": "배율이 변동성에 미치는 영향을 놓쳤을 가능성",
+        "(-4.0, 2.0)": "평균에서 상수 이동을 누락했을 가능성"
+      },
+      "diagnostic_question": "변환한 두 값과 각각의 평균으로부터 거리는 얼마인가요?",
+      "boundary_check": "배율 -2·0·2에서 표준편차는 각각 2·0·2이며 ddof=0을 유지한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": ["(1, 2)", "(1, 2.0)", "(1.0, 2)"]
+    },
+    {
+      "id": "stats-two-denominators-20261019",
+      "domain": "통계",
+      "level": 2,
+      "objective": "같은 분자에서 전체 비율과 조건부 비율의 분모를 구분한다.",
+      "rationale": "같은 분자에서 전체 비율과 조건부 비율의 분모를 구분한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["stats-rate-foundation-02", "stats-median-01"],
+      "family": "stats-rates:조건부 비율의 분모",
+      "new_concept": "전체와 조건부 비율의 비교",
+      "answer": "(0.25, 0.5)",
+      "distractor_hypotheses": {
+        "(0.5, 0.5)": "첫 분모에도 모바일 건수를 썼을 가능성",
+        "(0.25, 0.25)": "둘째 분모에도 전체 건수를 썼을 가능성",
+        "(0.5, 0.25)": "두 비율의 순서를 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "두 번째 비율의 대상 집단에 데스크톱 방문이 포함되나요?",
+      "boundary_check": "데스크톱 방문만 추가하면 전체 비율만 변하고 모바일 구매율은 변하지 않는다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "ml-time-split-20261019",
+      "domain": "scikit-learn",
+      "level": 2,
+      "objective": "시간 순서를 유지하는 첫 학습·검증 구간을 인덱스로 예측한다.",
+      "rationale": "시간 순서를 유지하는 첫 학습·검증 구간을 인덱스로 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["ml-split-01", "ml-eval-foundation-02"],
+      "family": "ml-evaluation:시간 순서 분할",
+      "new_concept": "시간 순서 분할의 첫 구간",
+      "answer": "([0, 1], [2, 3])",
+      "distractor_hypotheses": {
+        "([0, 1, 2, 3], [4, 5])": "첫 분할 대신 마지막 분할을 답했을 가능성",
+        "([2, 3, 4, 5], [0, 1])": "일반 KFold의 앞 검증 구간과 혼동했을 가능성",
+        "([0, 1], [4, 5])": "중간 검증 구간을 건너뛰었을 가능성"
+      },
+      "diagnostic_question": "next는 첫 분할과 마지막 분할 중 어느 것을 가져오나요?",
+      "boundary_check": "8행·검증 길이 2에서는 첫 학습 길이가 4로 늘며, 모든 분할에서 학습 마지막 인덱스가 검증 첫 인덱스보다 작다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "ml-refit-state-20261019",
+      "domain": "scikit-learn",
+      "level": 3,
+      "objective": "재학습이 저장된 기준을 교체하고 이전 계산 결과는 바꾸지 않음을 추적한다.",
+      "rationale": "재학습이 저장된 기준을 교체하고 이전 계산 결과는 바꾸지 않음을 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+      "requires": [
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01",
+        "ml-scale-01"
+      ],
+      "family": "ml-preprocessing:재학습과 객체 상태",
+      "new_concept": "fit 재호출로 기준 교체",
+      "answer": "(3.0, -4.0)",
+      "distractor_hypotheses": {
+        "(3.0, 3.0)": "두 번째 fit이 기존 기준을 유지한다고 생각했을 가능성",
+        "(-4.0, -4.0)": "이미 저장한 float도 새 기준으로 소급 변경된다고 생각했을 가능성",
+        "(3.0, 4.0)": "새 입력과 평균의 차이 부호를 놓쳤을 가능성"
+      },
+      "diagnostic_question": "두 번째 fit 뒤 평균은 무엇이고, a는 scaler 자체인가요 이미 계산한 숫자인가요?",
+      "boundary_check": "transform 반복은 mean_/scale_을 바꾸지 않고 fit 재호출만 새 기준을 저장한다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "ml-threshold-recall-20261019",
+      "domain": "scikit-learn",
+      "level": 2,
+      "objective": "임계값으로 예측을 만든 뒤 실제 양성을 분모로 재현율을 계산한다.",
+      "rationale": "임계값으로 예측을 만든 뒤 실제 양성을 분모로 재현율을 계산한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["ml-metric-foundation-02", "ml-metric-01"],
+      "family": "ml-metrics:임계값과 재현율",
+      "new_concept": "임계값 변화와 재현율",
+      "answer": "(1.0, 0.5)",
+      "distractor_hypotheses": {
+        "(0.67, 1.0)": "재현율 대신 정밀도를 계산했을 가능성",
+        "(0.75, 0.75)": "재현율 대신 정확도를 계산했을 가능성",
+        "(0.5, 1.0)": "두 기준의 출력 순서를 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "0.8 기준에서 실제 양성 두 건 중 몇 건을 찾았나요?",
+      "boundary_check": "점수가 정확히 기준과 같으면 양성이고, 기준 상승 시 실제 양성 중 탐지 집합이 늘지는 않는다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": []
+    },
+    {
+      "id": "ml-neighbor-regression-20261019",
+      "domain": "scikit-learn",
+      "level": 2,
+      "objective": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다.",
+      "rationale": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+      "requires": [
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-foundation-02",
+        "stats-median-01"
+      ],
+      "family": "ml-neighbors:이웃 회귀 평균",
+      "new_concept": "이웃 회귀의 균등 평균",
+      "answer": "[5.0]",
+      "distractor_hypotheses": {
+        "[10.0]": "가장 가까운 한 이웃만 사용했을 가능성",
+        "[36.666666666666664]": "선택하지 않은 세 번째 목표값까지 평균했을 가능성",
+        "[1.0]": "입력 좌표를 목표값 대신 평균했을 가능성"
+      },
+      "diagnostic_question": "두 이웃의 입력 좌표와 목표값을 각각 적어 보세요. 무엇을 평균해야 하나요?",
+      "boundary_check": "k=1이면 가장 가까운 목표값, k=3이면 세 목표값 평균이다. 선택 경계의 거리 동점은 없다.",
+      "editorial_review": "입력 전체·독립 실행·단일 정답·중립 제목·2단계 힌트·기초/적용 선수·보충/다른날 변형을 개별 확인. 오답 원인은 가설이며 실제 학습 효과는 미확인.",
+      "accepted_answers": ["[5]"]
+    }
+  ]
+}

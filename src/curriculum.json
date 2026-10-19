@@ -4105,6 +4105,643 @@
       },
       "reference_setup": "",
       "reference_output": "[1]"
+    },
+    {
+      "id": "pandas-mask-labels-20261019",
+      "concept": "라벨이 다른 순서인 불리언 Series 선택",
+      "kind": "choice",
+      "title": "대상 행의 금액 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"amount\": [10, 20, 30]}, index=[\"A\", \"B\", \"C\"])\nmask = pd.Series([True, False, True], index=[\"C\", \"A\", \"B\"])\nprint(df.loc[mask, \"amount\"].tolist())",
+      "answer": "[20, 30]",
+      "explanation": "마스크는 C=True, A=False, B=True입니다. loc은 Series의 라벨을 df의 A, B, C에 맞추므로 A는 제외하고 B와 C의 금액 [20, 30]을 원래 표 순서로 반환합니다. 마스크의 표시 위치를 그대로 적용하면 [10, 30]으로 잘못 답합니다.",
+      "hints": [
+        "마스크의 각 값이 어느 행 라벨에 붙어 있는지 확인하세요.",
+        "마스크를 A, B, C 순서로 다시 적고, 결과의 행 순서도 확인하세요."
+      ],
+      "choices": ["[20, 30]", "[10, 30]", "[30, 20]", "[10, 20, 30]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-select",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "Series 마스크의 라벨 정렬과 결과 행 순서를 구분한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[20, 30]"
+    },
+    {
+      "id": "pandas-union-filter-20261019",
+      "concept": "불리언 조건의 합집합",
+      "kind": "blank",
+      "title": "리포트에 남는 주문",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\n    \"id\": [1, 2, 3, 4],\n    \"tier\": [\"gold\", \"silver\", \"silver\", \"gold\"],\n    \"amount\": [50, 100, 90, 120]\n})\nkept = df[(df[\"tier\"] == \"gold\") | (df[\"amount\"] >= 100)]\nprint(kept[\"id\"].tolist())",
+      "answer": "[1, 2, 4]",
+      "explanation": "행별 두 조건은 (True, False), (False, True), (False, False), (True, True)입니다. |는 둘 중 하나 이상이 참이면 선택하므로 ID 1, 2, 4가 남습니다. ID 4는 두 조건을 모두 만족해도 한 행으로 남고, >=는 금액 100을 포함합니다.",
+      "hints": [
+        "각 행에서 두 조건의 참·거짓을 따로 적어 보세요.",
+        "세로 막대 연산은 두 조건 중 하나만 참이어도 그 행을 남깁니다. 경계 금액도 확인하세요."
+      ],
+      "choices": ["[1, 4]", "[2, 4]", "[1, 2, 4]", "[4]"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-filter",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "두 조건의 합집합을 행별로 평가하고 중복·경계값을 처리한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[1, 2, 4]"
+    },
+    {
+      "id": "pandas-fill-return-20261019",
+      "concept": "대체 결과와 원본의 구분",
+      "kind": "blank",
+      "title": "정리 코드 실행 뒤 상태",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import pandas as pd\ns = pd.Series([4.0, None, 8.0])\nclean = s.fillna(0)\nprint((int(s.isna().sum()), int(clean.isna().sum())))",
+      "answer": "(1, 0)",
+      "explanation": "기본 fillna는 결측치를 채운 결과를 반환하며 s 자체를 바꾸지 않습니다. s에는 결측치가 1개 남고 clean에는 없어 출력은 (1, 0)입니다. 반환값을 쓰지 않는 s.fillna(0) 호출만으로는 원본 결측치가 사라지지 않습니다.",
+      "hints": [
+        "변수 s와 clean이 각각 어떤 값을 보관하는지 나누어 보세요.",
+        "fillna를 호출한 결과를 새 변수에 저장했습니다. 원본을 바꾸는 옵션이 있는지도 확인하세요."
+      ],
+      "choices": ["(0, 1)", "(1, 0)", "(0, 0)", "(1, 1)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-null",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "결측 대체의 반환값과 원본 상태를 구분한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(1, 0)"
+    },
+    {
+      "id": "pandas-sort-missing-20261019",
+      "concept": "결측 위치를 지정한 다중 정렬",
+      "kind": "choice",
+      "title": "목록의 최종 순서",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\n    \"id\": [\"A\", \"B\", \"C\", \"D\"],\n    \"score\": [80.0, None, 90.0, None]\n})\nordered = df.sort_values(\n    [\"score\", \"id\"], ascending=[False, True], na_position=\"first\"\n)\nprint(ordered[\"id\"].tolist())",
+      "answer": "['B', 'D', 'C', 'A']",
+      "explanation": "na_position=\"first\"로 결측 점수인 B, D가 앞에 옵니다. 둘은 두 번째 기준 id의 오름차순으로 B, D가 됩니다. 나머지 점수는 내림차순이므로 C(90), A(80)입니다. 내림차순이라고 결측치가 자동으로 뒤로 가는 것은 아닙니다.",
+      "hints": [
+        "값이 없는 행의 위치와 값이 있는 행의 정렬을 나누어 보세요.",
+        "na_position은 결측 행의 위치를 정하고, 같은 첫 기준에서는 두 번째 기준의 방향을 사용합니다."
+      ],
+      "choices": [
+        "['B', 'D', 'A', 'C']",
+        "['B', 'D', 'C', 'A']",
+        "['C', 'A', 'B', 'D']",
+        "['D', 'B', 'C', 'A']"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-sort",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "결측 위치와 서로 다른 방향의 두 정렬 기준을 함께 적용한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "['B', 'D', 'C', 'A']"
+    },
+    {
+      "id": "pandas-null-groups-20261019",
+      "concept": "결측 그룹 키의 보존",
+      "kind": "choice",
+      "title": "두 팀 리포트의 합계",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\n    \"team\": [\"A\", \"A\", \"B\", None],\n    \"amount\": [2, 4, 6, 10]\n})\na = df.groupby(\"team\")[\"amount\"].sum()\nb = df.groupby(\"team\", dropna=False)[\"amount\"].sum()\nprint((int(a.sum()), int(b.sum())))",
+      "answer": "(12, 22)",
+      "explanation": "기본 groupby는 그룹 키 team이 결측인 행을 그룹에서 제외합니다. A 합계 6과 B 합계 6을 더해 12입니다. dropna=False는 team이 결측인 그룹의 금액 10도 남기므로 합계가 22입니다. 금액 열에 결측이 없어도 그룹 키가 비어 있으면 기본 집계 총합이 줄어들 수 있습니다.",
+      "hints": [
+        "집계할 금액이 아니라 그룹을 만드는 열에서 비어 있는 위치를 찾아 보세요.",
+        "기본 groupby와 dropna=False에서 team이 없는 행이 각각 어떤 그룹에 들어가는지 확인하세요."
+      ],
+      "choices": ["(12, 22)", "(22, 22)", "(12, 12)", "(2, 3)"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-group",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "그룹 키의 결측 처리로 전체 금액 합계가 달라지는 이유를 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(12, 22)"
+    },
+    {
+      "id": "numpy-kept-axis-20261019",
+      "concept": "집계한 축의 길이 보존",
+      "kind": "blank",
+      "title": "요약 배열의 크기",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([[1, 2, 3], [4, 5, 6]])\nsummary = x.sum(axis=0, keepdims=True)\nprint(summary.shape)",
+      "answer": "(1, 3)",
+      "explanation": "x의 shape은 (2, 3)이고 axis=0 방향으로 더하면 열마다 [5, 7, 9]를 얻습니다. keepdims=True가 집계한 첫 축을 길이 1로 보존하므로 실제 결과는 [[5, 7, 9]], shape은 (1, 3)입니다. keepdims가 없으면 (3,)입니다.",
+      "hints": [
+        "사라지는 축과 남는 축을 먼저 구분하세요.",
+        "keepdims=True는 집계한 축의 길이를 1로 남깁니다. 집계하지 않은 축의 길이는 변하지 않습니다."
+      ],
+      "choices": ["(2, 1)", "(1, 2)", "(1, 3)", "(3,)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-structure",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "직사각 배열에서 집계 축 보존 후 shape을 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(1, 3)"
+    },
+    {
+      "id": "numpy-square-centering-20261019",
+      "concept": "shape은 맞지만 축이 다른 보정",
+      "kind": "choice",
+      "title": "두 보정 코드의 첫 행",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. means[:, None]은 1차원 배열에 길이 1인 두 번째 축을 추가합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([[2.0, 4.0], [10.0, 14.0]])\nmeans = x.mean(axis=1)\na = x - means\nb = x - means[:, None]\nprint((a[0].tolist(), b[0].tolist()))",
+      "answer": "([-1.0, -8.0], [-1.0, 1.0])",
+      "explanation": "행 평균 means는 [3, 12], shape은 (2,)입니다. a에서는 이 값들이 마지막 축에 맞아 첫 행 [2, 4]에서 [3, 12]를 빼므로 [-1, -8]입니다. b의 기준은 [[3], [12]]여서 첫 행의 두 값에서 모두 3을 빼 [-1, 1]입니다. 정사각 배열에서는 잘못된 축도 실행 오류 없이 계산될 수 있습니다.",
+      "hints": [
+        "means의 값과 shape, means[:, None]의 shape을 각각 적어 보세요.",
+        "길이 2인 1차원 배열은 마지막 축에 맞습니다. [:, None]은 (2, 1)을 만들어 행마다 다른 기준을 반복합니다."
+      ],
+      "choices": [
+        "([-1.0, -8.0], [-1.0, -8.0])",
+        "([-4.0, -5.0], [-4.0, -5.0])",
+        "([-1.0, -8.0], [-1.0, 1.0])",
+        "([-1.0, 1.0], [-1.0, 1.0])"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-broadcast",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "실행 가능한 shape라도 의도한 행 기준 보정인지 두 결과로 판별한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "([-1.0, -8.0], [-1.0, 1.0])"
+    },
+    {
+      "id": "numpy-mask-state-20261019",
+      "concept": "원본 변경과 저장된 마스크",
+      "kind": "choice",
+      "title": "갱신 뒤 선택된 값",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([0, 2, 4])\nmask = x > 1\nx += 2\nprint(x[mask].tolist())",
+      "answer": "[4, 6]",
+      "explanation": "mask는 갱신 전 [0, 2, 4]를 비교한 [False, True, True]입니다. x += 2 뒤 x는 [2, 4, 6]이지만 mask는 그대로여서 두 번째·세 번째 위치의 새 값 [4, 6]이 선택됩니다. 출력 직전에 x > 1을 다시 계산하는 코드와 다릅니다.",
+      "hints": [
+        "mask가 만들어진 시점의 x와 출력 시점의 x를 나누어 적어 보세요.",
+        "비교 결과는 별도의 불리언 배열로 저장됩니다. 원본의 값을 바꾸어도 기존 mask의 참·거짓은 다시 계산되지 않습니다."
+      ],
+      "choices": ["[6]", "[4, 6]", "[2, 4, 6]", "[2, 4]"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-mask",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "저장된 마스크의 생성 시점과 선택되는 배열 값의 시점을 구분한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[4, 6]"
+    },
+    {
+      "id": "numpy-rebind-view-20261019",
+      "concept": "새 배열로 재할당한 변수와 기존 뷰",
+      "kind": "choice",
+      "title": "두 변수의 최종 값",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([1, 2, 3])\nview = x[:2]\nx = x + 10\nview[0] = 9\nprint((x.tolist(), view.tolist()))",
+      "answer": "([11, 12, 13], [9, 2])",
+      "explanation": "view는 처음 만든 배열의 앞 두 원소를 공유합니다. x = x + 10은 [11, 12, 13]인 새 배열을 x에 연결하고, view는 원래 배열을 계속 가리킵니다. view[0] = 9는 원래 배열만 바꾸므로 새 x는 그대로이고 view는 [9, 2]입니다. x += 10처럼 원래 배열을 제자리에서 바꾸는 경우와 구분해야 합니다.",
+      "hints": [
+        "변수 이름 x가 처음과 끝에 같은 배열을 가리키는지 확인하세요.",
+        "x + 10은 새 배열을 만듭니다. view가 연결된 원래 배열과 새 배열을 따로 그려 보세요."
+      ],
+      "choices": [
+        "([11, 12, 13], [9, 2])",
+        "([9, 12, 13], [9, 12])",
+        "([9, 12, 13], [9, 2])",
+        "([11, 12, 13], [1, 2])"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "배열 재할당 뒤에도 뷰가 어느 배열에 연결되는지 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "([11, 12, 13], [9, 2])"
+    },
+    {
+      "id": "sql-condition-order-20261019",
+      "concept": "행 조건의 논리 우선순위",
+      "kind": "choice",
+      "title": "주문 조회 결과 점검",
+      "prompt": "주석은 SQLite 입력 테이블의 열과 전체 행입니다. NULL은 값이 없음을 뜻합니다. 조회 결과를 ID 목록으로 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, status TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'done',30),(2,'open',90),(3,'open',100),(4,'cancel',200),(5,'open',NULL);\nSELECT id FROM orders\nWHERE status = 'done' OR status = 'open' AND amount >= 100\nORDER BY id;",
+      "answer": "[1, 3]",
+      "explanation": "AND가 OR보다 먼저 적용되어 done OR (open AND amount >= 100)으로 계산됩니다. done인 ID 1은 금액과 관계없이 남고, open인 행 중에는 금액 100인 ID 3만 남습니다. NULL과의 비교는 Unknown이어서 ID 5는 WHERE를 통과하지 않습니다. 전체 조건에 괄호를 추가하면 다른 요구사항이 될 수 있습니다.",
+      "hints": [
+        "SQL에서 AND와 OR 중 어느 연산을 먼저 묶는지 확인하세요.",
+        "done 조건과, open이면서 금액 조건을 만족하는 경우를 나누어 보세요. NULL >= 100은 참이 아닙니다."
+      ],
+      "choices": ["[1, 2, 3]", "[1, 3, 5]", "[1, 3]", "[3]"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-rows",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "AND·OR 우선순위와 NULL 비교를 적용해 선택 행을 구한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id INTEGER, status TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'done',30),(2,'open',90),(3,'open',100),(4,'cancel',200),(5,'open',NULL);",
+      "reference_output": "[1, 3]"
+    },
+    {
+      "id": "sql-conditional-average-20261019",
+      "concept": "조건부 집계의 NULL과 0 분모",
+      "kind": "choice",
+      "title": "두 완료금액 지표",
+      "prompt": "주석은 SQLite 입력 테이블의 열과 전체 행입니다. NULL은 값이 없음을 뜻합니다. 반환하는 한 행을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(status TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES('done',10),('done',30),('open',50);\nSELECT\n    AVG(CASE WHEN status = 'done' THEN amount END),\n    ROUND(AVG(CASE WHEN status = 'done' THEN amount ELSE 0 END), 2)\nFROM orders;",
+      "answer": "(20.0, 13.33)",
+      "explanation": "첫 CASE는 [10, 30, NULL]을 만들어 AVG가 두 값을 평균하므로 20.0입니다. 두 번째는 [10, 30, 0]을 만들어 세 값을 평균하므로 반올림하면 13.33입니다. 첫 지표는 값이 있는 완료 주문의 평균 금액이고, 두 번째는 비완료 주문을 0으로 해석한 전체 주문당 완료 금액입니다. 보고하려는 분모에 맞추어 선택해야 합니다.",
+      "hints": [
+        "각 CASE가 세 입력 행에 대해 만드는 값을 적어 보세요.",
+        "ELSE가 없을 때 조건을 만족하지 않는 값은 NULL입니다. AVG가 NULL과 0을 각각 분모에 넣는지 확인하세요."
+      ],
+      "choices": [
+        "(13.33, 13.33)",
+        "(30.0, 13.33)",
+        "(20.0, 13.33)",
+        "(20.0, 20.0)"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-aggregation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "조건부 평균의 ELSE 유무가 집계 분모를 바꾸는 과정을 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE orders(status TEXT, amount INTEGER); INSERT INTO orders VALUES('done',10),('done',30),('open',50);",
+      "reference_output": "(20.0, 13.33)"
+    },
+    {
+      "id": "sql-customer-totals-20261019",
+      "concept": "집계 단위를 맞춘 뒤 연결",
+      "kind": "choice",
+      "title": "고객 리포트 최종 합계",
+      "prompt": "주석은 SQLite 입력 테이블의 열과 전체 행입니다. NULL은 값이 없음을 뜻합니다. WITH totals AS (...)는 괄호 안 조회 결과를 totals라는 이름의 중간 표로 사용합니다. 반환하는 한 행을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, budget INTEGER);\n-- INSERT INTO customers VALUES(1,10),(2,10);\n-- CREATE TABLE orders(customer_id INTEGER, amount INTEGER);\n-- INSERT INTO orders VALUES(1,4),(1,6),(2,3);\nWITH totals AS (\n    SELECT customer_id, SUM(amount) AS spent\n    FROM orders GROUP BY customer_id\n)\nSELECT SUM(c.budget), SUM(t.spent)\nFROM customers AS c\nLEFT JOIN totals AS t ON c.id = t.customer_id;",
+      "answer": "(20, 13)",
+      "explanation": "WITH가 이름 붙인 중간 결과 totals는 (고객 1, 10), (고객 2, 3)으로 고객당 한 행입니다. 조인 뒤 budget 10이 고객마다 한 번씩 있어 합계는 20, spent 합계는 13입니다. 주문 원본을 바로 연결하면 고객 1의 budget이 두 번 나타나 30이 됩니다. SUM(DISTINCT budget)은 서로 다른 두 고객의 같은 예산까지 합쳐 10이 되므로 해결책이 아닙니다.",
+      "hints": [
+        "totals가 고객마다 몇 행을 만드는지 먼저 확인하세요.",
+        "totals의 두 행을 만든 다음 customers의 두 행과 연결해 budget과 spent를 각각 더해 보세요."
+      ],
+      "choices": ["(20, 10)", "(20, 13)", "(30, 13)", "(10, 13)"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-joins",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "집계 단위를 고객당 한 행으로 맞춘 뒤 조인하여 두 지표를 보존한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE customers(id INTEGER, budget INTEGER); INSERT INTO customers VALUES(1,10),(2,10); CREATE TABLE orders(customer_id INTEGER, amount INTEGER); INSERT INTO orders VALUES(1,4),(1,6),(2,3);",
+      "reference_output": "(20, 13)"
+    },
+    {
+      "id": "stats-negative-scale-20261019",
+      "concept": "음수 배율의 표준편차",
+      "kind": "blank",
+      "title": "변환된 측정값 요약",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([1.0, 3.0])\ny = -2 * x + 5\nprint((float(y.mean()), float(y.std(ddof=0))))",
+      "answer": "(1.0, 2.0)",
+      "explanation": "y는 [3, -1]이므로 평균은 1입니다. 평균으로부터의 차이는 [2, -2]이고 ddof=0의 분산은 (4+4)/2=4, 표준편차는 2입니다. 원본 표준편차 1에 배율의 절댓값 2가 곱해집니다. 표준편차는 음수가 될 수 없으며 상수 5를 더해도 변하지 않습니다.",
+      "hints": [
+        "먼저 변환된 두 값을 직접 적어 평균과 퍼진 정도를 확인하세요.",
+        "더하는 상수는 퍼진 정도를 바꾸지 않습니다. 음수 배율은 순서를 뒤집어도 표준편차를 음수로 만들지 않습니다."
+      ],
+      "choices": ["(1.0, -2.0)", "(1.0, 1.0)", "(-4.0, 2.0)", "(1.0, 2.0)"],
+      "accepted": ["(1, 2)", "(1, 2.0)", "(1.0, 2)"],
+      "seconds": 120,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "음수 배율과 평행이동 뒤 평균·표준편차를 계산한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(1.0, 2.0)"
+    },
+    {
+      "id": "stats-two-denominators-20261019",
+      "concept": "전체와 조건부 비율의 비교",
+      "kind": "choice",
+      "title": "두 비율의 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "events = [(\"mobile\", 1), (\"mobile\", 0),\n          (\"desktop\", 1), (\"desktop\", 0)]\nmobile = [bought for device, bought in events if device == \"mobile\"]\nboth = sum(mobile)\nprint((both / len(events), both / len(mobile)))",
+      "answer": "(0.25, 0.5)",
+      "explanation": "모바일 구매는 1건입니다. 첫 비율은 전체 4건 중 모바일 구매인 1건이므로 0.25입니다. 둘째는 모바일 방문 2건 중 구매 1건이므로 0.5입니다. 함께 발생한 비율과 모바일이라는 조건 아래의 구매율은 분자가 같아도 분모가 다릅니다.",
+      "hints": [
+        "두 식의 분자는 같지만 분모가 가리키는 모집단을 구분하세요.",
+        "전체 방문은 4건이고 모바일 방문은 2건입니다. 모바일이면서 구매한 방문 수를 두 분모에 각각 적용하세요."
+      ],
+      "choices": ["(0.5, 0.5)", "(0.25, 0.25)", "(0.5, 0.25)", "(0.25, 0.5)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "같은 분자에서 전체 비율과 조건부 비율의 분모를 구분한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(0.25, 0.5)"
+    },
+    {
+      "id": "ml-time-split-20261019",
+      "concept": "시간 순서 분할의 첫 구간",
+      "kind": "choice",
+      "title": "첫 평가 구간의 행 번호",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. X의 행은 시간순입니다. next는 첫 분할의 학습·검증 행 인덱스를 꺼냅니다. 출력값을 고르세요.",
+      "code": "from sklearn.model_selection import TimeSeriesSplit\nX = [[10], [20], [30], [40], [50], [60]]\nsplitter = TimeSeriesSplit(n_splits=2, test_size=2)\ntrain_idx, valid_idx = next(splitter.split(X))\nprint((train_idx.tolist(), valid_idx.tolist()))",
+      "answer": "([0, 1], [2, 3])",
+      "explanation": "6행에서 길이 2인 검증 구간을 두 번 확보하므로 첫 학습 구간은 앞의 2행 [0, 1]입니다. 첫 검증 구간은 바로 다음 [2, 3]입니다. 두 번째 분할에서 학습은 [0, 1, 2, 3], 검증은 [4, 5]로 늘어납니다. 이 코드는 첫 분할만 꺼냅니다. 시간 순서를 지켜 과거로 학습하고 뒤 구간에서 평가하지만 실제 시계열 설계에서는 필요한 gap과 특성 생성 시점도 따로 검토해야 합니다.",
+      "hints": [
+        "검증 구간이 2개이고 각 구간에 행이 2개씩 들어갑니다. 첫 구간 앞의 학습 행을 확인하세요.",
+        "행 번호를 시간 순서로 세 묶음으로 나누어 첫 학습 구간과 첫 검증 구간을 찾아 보세요."
+      ],
+      "choices": [
+        "([2, 3, 4, 5], [0, 1])",
+        "([0, 1], [4, 5])",
+        "([0, 1], [2, 3])",
+        "([0, 1, 2, 3], [4, 5])"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-evaluation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "시간 순서를 유지하는 첫 학습·검증 구간을 인덱스로 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "([0, 1], [2, 3])"
+    },
+    {
+      "id": "ml-refit-state-20261019",
+      "concept": "fit 재호출로 기준 교체",
+      "kind": "choice",
+      "title": "두 번 처리한 같은 입력",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "from sklearn.preprocessing import StandardScaler\nscaler = StandardScaler().fit([[0.0], [2.0]])\na = float(scaler.transform([[4.0]])[0, 0])\nscaler.fit([[10.0], [14.0]])\nb = float(scaler.transform([[4.0]])[0, 0])\nprint((a, b))",
+      "answer": "(3.0, -4.0)",
+      "explanation": "첫 fit은 평균 1, 모집단 표준편차 1을 저장하므로 a=(4-1)/1=3입니다. 두 번째 fit은 평균 12, 표준편차 2로 기준을 교체하므로 b=(4-12)/2=-4입니다. a는 이미 Python float로 저장한 값이라 이후 fit으로 소급 변경되지 않습니다. 평가 입력에 다시 fit하면 학습 기준이 바뀌므로 의도와 데이터 사용 범위를 확인해야 합니다.",
+      "hints": [
+        "두 transform 직전에 scaler가 학습한 입력이 같은지 확인하세요.",
+        "첫 기준의 평균·표준편차와 두 번째 기준의 평균·표준편차를 따로 계산하세요. fit은 이전 기준을 교체합니다."
+      ],
+      "choices": ["(3.0, 4.0)", "(3.0, -4.0)", "(3.0, 3.0)", "(-4.0, -4.0)"],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-preprocessing",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "재학습이 저장된 기준을 교체하고 이전 계산 결과는 바꾸지 않음을 추적한다. 선수 문항 이후 입력·상태·경계가 달라진 상황을 기존 적용 단계와 연결한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(3.0, -4.0)"
+    },
+    {
+      "id": "ml-threshold-recall-20261019",
+      "concept": "임계값 변화와 재현율",
+      "kind": "choice",
+      "title": "두 기준의 탐지 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. scores는 클래스 1의 점수이며, int(True)=1·int(False)=0입니다. 출력값을 고르세요.",
+      "code": "from sklearn.metrics import recall_score\ny_true = [1, 0, 1, 0]\nscores = [0.9, 0.7, 0.6, 0.1]\nlow = [int(s >= 0.5) for s in scores]\nhigh = [int(s >= 0.8) for s in scores]\nprint((float(recall_score(y_true, low)),\n       float(recall_score(y_true, high))))",
+      "answer": "(1.0, 0.5)",
+      "explanation": "0.5 기준 예측은 [1, 1, 1, 0]이고 실제 양성 두 건을 모두 찾아 재현율이 1.0입니다. 0.8 기준은 [1, 0, 0, 0]이어서 두 건 중 한 건을 찾아 0.5입니다. (0.67, 1.0)은 각각의 정밀도이며 정확도와도 다릅니다. 기준을 올리면 이 예에서는 오탐도 줄지만 놓친 양성이 늘어납니다.",
+      "hints": [
+        "각 기준이 만드는 예측 0·1 목록을 먼저 적으세요.",
+        "재현율의 분모는 예측 양성이 아니라 실제 양성 수입니다. 실제 양성 두 건 중 맞힌 수를 기준별로 세세요."
+      ],
+      "choices": ["(1.0, 0.5)", "(0.67, 1.0)", "(0.75, 0.75)", "(0.5, 1.0)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "임계값으로 예측을 만든 뒤 실제 양성을 분모로 재현율을 계산한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(1.0, 0.5)"
+    },
+    {
+      "id": "ml-neighbor-regression-20261019",
+      "concept": "이웃 회귀의 균등 평균",
+      "kind": "blank",
+      "title": "새 관측의 예측 숫자",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "from sklearn.neighbors import KNeighborsRegressor\nX = [[0.0], [2.0], [8.0]]\ny = [0.0, 10.0, 100.0]\nmodel = KNeighborsRegressor(n_neighbors=2, weights=\"uniform\")\nmodel.fit(X, y)\nprint(model.predict([[1.5]]).tolist())",
+      "answer": "[5.0]",
+      "explanation": "1.5에서 학습 입력 2.0까지 거리는 0.5, 0.0까지는 1.5, 8.0까지는 6.5입니다. 가까운 두 점의 목표값은 10과 0입니다. 회귀 모델의 uniform 가중치는 두 목표값을 같은 비중으로 평균하므로 (10+0)/2=5.0을 예측합니다. 가장 가까운 한 값만 반환하거나, 클래스처럼 다수결하지 않습니다.",
+      "hints": [
+        "클래스를 고르는 모델인지 수치를 예측하는 모델인지 이름을 확인하세요.",
+        "입력 1.5와의 거리가 작은 두 학습점을 찾고, weights=\"uniform\"에서 두 목표값이 어떻게 결합되는지 보세요."
+      ],
+      "choices": ["[36.666666666666664]", "[1.0]", "[5.0]", "[10.0]"],
+      "accepted": ["[5]"],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-neighbors",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[5.0]"
     }
   ],
   "tracks": [
@@ -4113,14 +4750,14 @@
       "name": "Python 데이터 분석",
       "description": "pandas · NumPy · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 88
+      "exercise_count": 103
     },
     {
       "id": "sql",
       "name": "SQL",
       "description": "행 조건 · 집계 · 테이블 연결",
       "available": true,
-      "exercise_count": 26
+      "exercise_count": 29
     },
     {
       "id": "algorithms",
@@ -5595,6 +6232,239 @@
         "requires": ["ml-split-01"],
         "remediation": ["ml-split-01", "ml-neighbor-foundation-01"],
         "objective": "홀수 이웃 다수결 투표의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-mask-labels-20261019": {
+        "concept_id": "pandas-select",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-select:라벨 정렬을 이용한 행 마스크",
+        "requires": [
+          "pandas-select-01",
+          "pandas-alignment-20261017",
+          "pandas-select-03"
+        ],
+        "remediation": ["pandas-select-01", "pandas-alignment-20261017"],
+        "objective": "Series 마스크의 라벨 정렬과 결과 행 순서를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-union-filter-20261019": {
+        "concept_id": "pandas-filter",
+        "level": 2,
+        "role": "application",
+        "family": "pandas-filter:조건 합집합",
+        "requires": ["pandas-filter-01", "pandas-select-01"],
+        "remediation": ["pandas-filter-01"],
+        "objective": "두 조건의 합집합을 행별로 평가하고 중복·경계값을 처리한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-fill-return-20261019": {
+        "concept_id": "pandas-null",
+        "level": 2,
+        "role": "application",
+        "family": "pandas-null:대체 반환값과 원본 상태",
+        "requires": ["pandas-null-01", "pandas-null-02"],
+        "remediation": ["pandas-null-01", "pandas-null-02"],
+        "objective": "결측 대체의 반환값과 원본 상태를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-sort-missing-20261019": {
+        "concept_id": "pandas-sort",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-sort:결측 위치와 다중 기준",
+        "requires": [
+          "pandas-sort-scaffold-01",
+          "pandas-sort-scaffold-02",
+          "pandas-null-01"
+        ],
+        "remediation": ["pandas-sort-scaffold-02", "pandas-null-01"],
+        "objective": "결측 위치와 서로 다른 방향의 두 정렬 기준을 함께 적용한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-null-groups-20261019": {
+        "concept_id": "pandas-group",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-group:결측 그룹 키 보존",
+        "requires": [
+          "pandas-group-02",
+          "pandas-group-scaffold-01",
+          "pandas-null-01"
+        ],
+        "remediation": ["pandas-group-scaffold-01", "pandas-null-01"],
+        "objective": "그룹 키의 결측 처리로 전체 금액 합계가 달라지는 이유를 추적한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-kept-axis-20261019": {
+        "concept_id": "numpy-structure",
+        "level": 2,
+        "role": "application",
+        "family": "numpy-structure:집계 축 보존",
+        "requires": ["numpy-axis-01", "numpy-shape-01"],
+        "remediation": ["numpy-axis-01", "numpy-shape-01"],
+        "objective": "직사각 배열에서 집계 축 보존 후 shape을 예측한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-square-centering-20261019": {
+        "concept_id": "numpy-broadcast",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-broadcast:shape 호환과 의미 축의 구분",
+        "requires": [
+          "numpy-broadcast-application-02",
+          "numpy-index-foundation-01",
+          "numpy-axis-01"
+        ],
+        "remediation": ["numpy-broadcast-foundation-02", "numpy-axis-01"],
+        "objective": "실행 가능한 shape라도 의도한 행 기준 보정인지 두 결과로 판별한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-mask-state-20261019": {
+        "concept_id": "numpy-mask",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-mask:저장한 마스크의 시점",
+        "requires": ["numpy-mask-application-02", "numpy-mask-foundation-02"],
+        "remediation": [
+          "numpy-mask-foundation-02",
+          "numpy-mask-application-02"
+        ],
+        "objective": "저장된 마스크의 생성 시점과 선택되는 배열 값의 시점을 구분한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-rebind-view-20261019": {
+        "concept_id": "numpy-memory",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-memory:재할당과 기존 뷰 연결",
+        "requires": [
+          "numpy-view-01",
+          "numpy-memory-foundation-01",
+          "numpy-memory-foundation-02"
+        ],
+        "remediation": ["numpy-view-01", "numpy-memory-foundation-02"],
+        "objective": "배열 재할당 뒤에도 뷰가 어느 배열에 연결되는지 추적한다.",
+        "review_status": "reviewed"
+      },
+      "sql-condition-order-20261019": {
+        "concept_id": "sql-rows",
+        "level": 2,
+        "role": "application",
+        "family": "sql-rows:AND와 OR 우선순위",
+        "requires": ["sql-where-01", "sql-rows-foundation-02"],
+        "remediation": ["sql-rows-foundation-01", "sql-rows-foundation-02"],
+        "objective": "AND·OR 우선순위와 NULL 비교를 적용해 선택 행을 구한다.",
+        "review_status": "reviewed"
+      },
+      "sql-conditional-average-20261019": {
+        "concept_id": "sql-aggregation",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-aggregation:조건부 평균의 분모",
+        "requires": [
+          "sql-refund-average-20261018",
+          "sql-null-count-20261018",
+          "sql-count-02"
+        ],
+        "remediation": [
+          "sql-null-count-20261018",
+          "sql-refund-average-20261018"
+        ],
+        "objective": "조건부 평균의 ELSE 유무가 집계 분모를 바꾸는 과정을 추적한다.",
+        "review_status": "reviewed"
+      },
+      "sql-customer-totals-20261019": {
+        "concept_id": "sql-joins",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-joins:집계 단위 정렬 후 조인",
+        "requires": ["sql-join-01", "sql-join-foundation-01", "sql-having-01"],
+        "remediation": [
+          "sql-join-foundation-01",
+          "sql-join-01",
+          "sql-count-01"
+        ],
+        "objective": "집계 단위를 고객당 한 행으로 맞춘 뒤 조인하여 두 지표를 보존한다.",
+        "review_status": "reviewed"
+      },
+      "stats-negative-scale-20261019": {
+        "concept_id": "stats-summaries",
+        "level": 2,
+        "role": "application",
+        "family": "stats-summaries:배율과 변동성",
+        "requires": [
+          "stats-median-01",
+          "stats-summary-foundation-02",
+          "stats-std-01"
+        ],
+        "remediation": ["stats-summary-foundation-02", "stats-std-01"],
+        "objective": "음수 배율과 평행이동 뒤 평균·표준편차를 계산한다.",
+        "review_status": "reviewed"
+      },
+      "stats-two-denominators-20261019": {
+        "concept_id": "stats-rates",
+        "level": 2,
+        "role": "application",
+        "family": "stats-rates:조건부 비율의 분모",
+        "requires": ["stats-rate-foundation-02", "stats-median-01"],
+        "remediation": ["stats-rate-foundation-02"],
+        "objective": "같은 분자에서 전체 비율과 조건부 비율의 분모를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "ml-time-split-20261019": {
+        "concept_id": "ml-evaluation",
+        "level": 2,
+        "role": "application",
+        "family": "ml-evaluation:시간 순서 분할",
+        "requires": ["ml-split-01", "ml-eval-foundation-02"],
+        "remediation": ["ml-split-01", "ml-eval-foundation-02"],
+        "objective": "시간 순서를 유지하는 첫 학습·검증 구간을 인덱스로 예측한다.",
+        "review_status": "reviewed"
+      },
+      "ml-refit-state-20261019": {
+        "concept_id": "ml-preprocessing",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-preprocessing:재학습과 객체 상태",
+        "requires": [
+          "ml-fit-foundation-01",
+          "ml-transform-foundation-01",
+          "ml-scale-01"
+        ],
+        "remediation": [
+          "ml-mean-foundation-01",
+          "ml-scale-foundation-01",
+          "ml-scale-01"
+        ],
+        "objective": "재학습이 저장된 기준을 교체하고 이전 계산 결과는 바꾸지 않음을 추적한다.",
+        "review_status": "reviewed"
+      },
+      "ml-threshold-recall-20261019": {
+        "concept_id": "ml-metrics",
+        "level": 2,
+        "role": "application",
+        "family": "ml-metrics:임계값과 재현율",
+        "requires": ["ml-metric-foundation-02", "ml-metric-01"],
+        "remediation": ["ml-metric-foundation-02"],
+        "objective": "임계값으로 예측을 만든 뒤 실제 양성을 분모로 재현율을 계산한다.",
+        "review_status": "reviewed"
+      },
+      "ml-neighbor-regression-20261019": {
+        "concept_id": "ml-neighbors",
+        "level": 2,
+        "role": "application",
+        "family": "ml-neighbors:이웃 회귀 평균",
+        "requires": [
+          "ml-neighbor-foundation-01",
+          "ml-neighbor-foundation-02",
+          "stats-median-01"
+        ],
+        "remediation": [
+          "ml-neighbor-foundation-01",
+          "ml-neighbor-foundation-02"
+        ],
+        "objective": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다.",
         "review_status": "reviewed"
       }
     },

@@ -443,6 +443,24 @@
         "docs/ALGORITHM_AND_CURRICULUM_ANALYSIS.md"
       ],
       "code_reference": "WBS-360/WBS-540 recommendation formula bottleneck fix (accompanying commit)"
+    },
+    {
+      "id": "EV-034",
+      "record": "docs/planning/evidence/EV-034.md",
+      "artifacts": [
+        "AGENTS.md",
+        "backend/scaffold_content.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-19-expansion.json",
+        "src/curriculum.json",
+        "tests/test_expansion_20261019.py",
+        "tests/fixtures/catalog-before-expansion-20261019.json",
+        "tests/e2e/daily-content.spec.ts",
+        "docs/content_batches/2026-10-19-expansion.md"
+      ],
+      "code_reference": "WBS-360/WBS-540 accompanying 18-question expansion commit"
     }
   ]
 }

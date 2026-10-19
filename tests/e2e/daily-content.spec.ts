@@ -8,6 +8,7 @@ import { spawn, type ChildProcess } from "node:child_process";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
 import firstBatch from "../../backend/content_batches/2026-10-17.json" with { type: "json" };
 import sqlBatch from "../../backend/content_batches/2026-10-18.json" with { type: "json" };
+import expansion from "../../curriculum/reviews/2026-10-19-expansion.json" with { type: "json" };
 
 let isolatedApi: ChildProcess | undefined;
 test.afterEach(async () => {
@@ -21,10 +22,13 @@ test.afterEach(async () => {
   isolatedApi = undefined;
 });
 
-for (const batch of [firstBatch, sqlBatch]) {
+for (const batch of [firstBatch, sqlBatch, expansion]) {
   test(`daily batch ${batch.date} is reachable while earlier snapshots survive`, async ({
     page,
   }, testInfo) => {
+    // Every batch imports and re-exports the whole growing historical catalog.
+    test.slow();
+    await page.emulateMedia({ reducedMotion: "reduce" });
     // This imports an entire historical catalog, so it must not share the suite's
     // personal API database with the fresh-learner and recovery scenarios.
     if (testInfo.project.name === "mobile-chromium") {
@@ -40,6 +44,7 @@ for (const batch of [firstBatch, sqlBatch]) {
       });
       const database = testInfo.outputPath("isolated-learning.sqlite3");
       mkdirSync(dirname(database), { recursive: true });
+      let startupError = "";
       isolatedApi = spawn(
         ".venv/bin/python",
         [
@@ -51,16 +56,34 @@ for (const batch of [firstBatch, sqlBatch]) {
           "--port",
           String(port),
         ],
-        { env: { ...process.env, APP_DB_PATH: database }, stdio: "ignore" },
+        {
+          env: { ...process.env, APP_DB_PATH: database },
+          stdio: ["ignore", "ignore", "pipe"],
+        },
       );
+      isolatedApi.stderr?.on("data", (data) => {
+        startupError += data.toString();
+      });
+      isolatedApi.on("error", (error) => {
+        startupError += error.message;
+      });
       await expect
-        .poll(async () => {
-          try {
-            return (await fetch(`http://127.0.0.1:${port}/api/health`)).ok;
-          } catch {
-            return false;
-          }
-        })
+        .poll(
+          async () => {
+            if (isolatedApi!.exitCode !== null)
+              throw new Error(`Isolated API exited: ${startupError}`);
+            try {
+              return (
+                await fetch(`http://127.0.0.1:${port}/api/health`, {
+                  signal: AbortSignal.timeout(1000),
+                })
+              ).ok;
+            } catch {
+              return false;
+            }
+          },
+          { timeout: 15_000 },
+        )
         .toBeTruthy();
       await page.route("**/api/**", async (route) => {
         const url = new URL(route.request().url());
@@ -128,6 +151,9 @@ for (const batch of [firstBatch, sqlBatch]) {
     };
     await page.setViewportSize({ width: 320, height: 740 });
     await page.goto("./");
+    await expect(
+      page.getByRole("group", { name: "오늘 누적 학습" }),
+    ).toBeVisible();
     await page.getByRole("button", { name: "나의 기록", exact: true }).click();
     await page.getByLabel("백업 파일 가져오기").setInputFiles({
       name: "before-batch.json",
@@ -175,9 +201,16 @@ for (const batch of [firstBatch, sqlBatch]) {
         ).toBeTruthy();
         if (ex.response_mode === "choice")
           await page.getByLabel(ex.answer, { exact: true }).check();
-        else await page.getByRole("textbox").fill(ex.answer);
+        else {
+          const answer = ex.id.endsWith("-20261019")
+            ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
+            : ex.answer;
+          await page.getByRole("textbox").fill(answer);
+        }
         await page.getByRole("button", { name: "답 확인하기" }).click();
-        await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
+        await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible({
+          timeout: 15_000,
+        });
         solved.add(ex.id);
         await page
           .getByRole("button", { name: "다음으로", exact: true })
@@ -185,6 +218,16 @@ for (const batch of [firstBatch, sqlBatch]) {
         await expect(
           page.getByRole("heading", { name: title, exact: true }),
         ).toHaveCount(0);
+        // Transfer practice remains capped at one per session. Larger additions
+        // must be reachable through the existing optional extra-study flow.
+        if (
+          index + 1 < expectedCount &&
+          (await page
+            .getByRole("button", { name: "오늘 학습으로 돌아가기" })
+            .isVisible())
+        ) {
+          await page.getByRole("button", { name: /추천 문제 더 풀기/ }).click();
+        }
       }
       await page
         .getByRole("button", { name: "오늘 학습으로 돌아가기" })
@@ -194,7 +237,7 @@ for (const batch of [firstBatch, sqlBatch]) {
     await page.reload();
     await expect(
       page.getByRole("group", { name: "오늘 누적 학습" }),
-    ).toContainText("오늘 총 5문제");
+    ).toContainText(`오늘 총 ${batch.exercises.length}문제`);
     await page.getByRole("button", { name: "나의 기록", exact: true }).click();
     const download = page.waitForEvent("download");
     await page.getByRole("button", { name: "백업 파일 내려받기" }).click();

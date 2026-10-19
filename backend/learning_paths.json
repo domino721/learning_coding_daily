@@ -1330,6 +1330,226 @@
       "remediation": ["ml-split-01", "ml-neighbor-foundation-01"],
       "objective": "홀수 이웃 다수결 투표의 기초를 확인한 뒤 같은 개념의 적용 문제로 연결한다.",
       "review_status": "reviewed"
+    },
+    "pandas-mask-labels-20261019": {
+      "concept_id": "pandas-select",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-select:라벨 정렬을 이용한 행 마스크",
+      "requires": [
+        "pandas-select-01",
+        "pandas-alignment-20261017",
+        "pandas-select-03"
+      ],
+      "remediation": ["pandas-select-01", "pandas-alignment-20261017"],
+      "objective": "Series 마스크의 라벨 정렬과 결과 행 순서를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-union-filter-20261019": {
+      "concept_id": "pandas-filter",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-filter:조건 합집합",
+      "requires": ["pandas-filter-01", "pandas-select-01"],
+      "remediation": ["pandas-filter-01"],
+      "objective": "두 조건의 합집합을 행별로 평가하고 중복·경계값을 처리한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-fill-return-20261019": {
+      "concept_id": "pandas-null",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-null:대체 반환값과 원본 상태",
+      "requires": ["pandas-null-01", "pandas-null-02"],
+      "remediation": ["pandas-null-01", "pandas-null-02"],
+      "objective": "결측 대체의 반환값과 원본 상태를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-sort-missing-20261019": {
+      "concept_id": "pandas-sort",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-sort:결측 위치와 다중 기준",
+      "requires": [
+        "pandas-sort-scaffold-01",
+        "pandas-sort-scaffold-02",
+        "pandas-null-01"
+      ],
+      "remediation": ["pandas-sort-scaffold-02", "pandas-null-01"],
+      "objective": "결측 위치와 서로 다른 방향의 두 정렬 기준을 함께 적용한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-null-groups-20261019": {
+      "concept_id": "pandas-group",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-group:결측 그룹 키 보존",
+      "requires": [
+        "pandas-group-02",
+        "pandas-group-scaffold-01",
+        "pandas-null-01"
+      ],
+      "remediation": ["pandas-group-scaffold-01", "pandas-null-01"],
+      "objective": "그룹 키의 결측 처리로 전체 금액 합계가 달라지는 이유를 추적한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-kept-axis-20261019": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:집계 축 보존",
+      "requires": ["numpy-axis-01", "numpy-shape-01"],
+      "remediation": ["numpy-axis-01", "numpy-shape-01"],
+      "objective": "직사각 배열에서 집계 축 보존 후 shape을 예측한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-square-centering-20261019": {
+      "concept_id": "numpy-broadcast",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-broadcast:shape 호환과 의미 축의 구분",
+      "requires": [
+        "numpy-broadcast-application-02",
+        "numpy-index-foundation-01",
+        "numpy-axis-01"
+      ],
+      "remediation": ["numpy-broadcast-foundation-02", "numpy-axis-01"],
+      "objective": "실행 가능한 shape라도 의도한 행 기준 보정인지 두 결과로 판별한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-mask-state-20261019": {
+      "concept_id": "numpy-mask",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-mask:저장한 마스크의 시점",
+      "requires": ["numpy-mask-application-02", "numpy-mask-foundation-02"],
+      "remediation": ["numpy-mask-foundation-02", "numpy-mask-application-02"],
+      "objective": "저장된 마스크의 생성 시점과 선택되는 배열 값의 시점을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-rebind-view-20261019": {
+      "concept_id": "numpy-memory",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-memory:재할당과 기존 뷰 연결",
+      "requires": [
+        "numpy-view-01",
+        "numpy-memory-foundation-01",
+        "numpy-memory-foundation-02"
+      ],
+      "remediation": ["numpy-view-01", "numpy-memory-foundation-02"],
+      "objective": "배열 재할당 뒤에도 뷰가 어느 배열에 연결되는지 추적한다.",
+      "review_status": "reviewed"
+    },
+    "sql-condition-order-20261019": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:AND와 OR 우선순위",
+      "requires": ["sql-where-01", "sql-rows-foundation-02"],
+      "remediation": ["sql-rows-foundation-01", "sql-rows-foundation-02"],
+      "objective": "AND·OR 우선순위와 NULL 비교를 적용해 선택 행을 구한다.",
+      "review_status": "reviewed"
+    },
+    "sql-conditional-average-20261019": {
+      "concept_id": "sql-aggregation",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-aggregation:조건부 평균의 분모",
+      "requires": [
+        "sql-refund-average-20261018",
+        "sql-null-count-20261018",
+        "sql-count-02"
+      ],
+      "remediation": ["sql-null-count-20261018", "sql-refund-average-20261018"],
+      "objective": "조건부 평균의 ELSE 유무가 집계 분모를 바꾸는 과정을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "sql-customer-totals-20261019": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:집계 단위 정렬 후 조인",
+      "requires": ["sql-join-01", "sql-join-foundation-01", "sql-having-01"],
+      "remediation": ["sql-join-foundation-01", "sql-join-01", "sql-count-01"],
+      "objective": "집계 단위를 고객당 한 행으로 맞춘 뒤 조인하여 두 지표를 보존한다.",
+      "review_status": "reviewed"
+    },
+    "stats-negative-scale-20261019": {
+      "concept_id": "stats-summaries",
+      "level": 2,
+      "role": "application",
+      "family": "stats-summaries:배율과 변동성",
+      "requires": [
+        "stats-median-01",
+        "stats-summary-foundation-02",
+        "stats-std-01"
+      ],
+      "remediation": ["stats-summary-foundation-02", "stats-std-01"],
+      "objective": "음수 배율과 평행이동 뒤 평균·표준편차를 계산한다.",
+      "review_status": "reviewed"
+    },
+    "stats-two-denominators-20261019": {
+      "concept_id": "stats-rates",
+      "level": 2,
+      "role": "application",
+      "family": "stats-rates:조건부 비율의 분모",
+      "requires": ["stats-rate-foundation-02", "stats-median-01"],
+      "remediation": ["stats-rate-foundation-02"],
+      "objective": "같은 분자에서 전체 비율과 조건부 비율의 분모를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "ml-time-split-20261019": {
+      "concept_id": "ml-evaluation",
+      "level": 2,
+      "role": "application",
+      "family": "ml-evaluation:시간 순서 분할",
+      "requires": ["ml-split-01", "ml-eval-foundation-02"],
+      "remediation": ["ml-split-01", "ml-eval-foundation-02"],
+      "objective": "시간 순서를 유지하는 첫 학습·검증 구간을 인덱스로 예측한다.",
+      "review_status": "reviewed"
+    },
+    "ml-refit-state-20261019": {
+      "concept_id": "ml-preprocessing",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-preprocessing:재학습과 객체 상태",
+      "requires": [
+        "ml-fit-foundation-01",
+        "ml-transform-foundation-01",
+        "ml-scale-01"
+      ],
+      "remediation": [
+        "ml-mean-foundation-01",
+        "ml-scale-foundation-01",
+        "ml-scale-01"
+      ],
+      "objective": "재학습이 저장된 기준을 교체하고 이전 계산 결과는 바꾸지 않음을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "ml-threshold-recall-20261019": {
+      "concept_id": "ml-metrics",
+      "level": 2,
+      "role": "application",
+      "family": "ml-metrics:임계값과 재현율",
+      "requires": ["ml-metric-foundation-02", "ml-metric-01"],
+      "remediation": ["ml-metric-foundation-02"],
+      "objective": "임계값으로 예측을 만든 뒤 실제 양성을 분모로 재현율을 계산한다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-regression-20261019": {
+      "concept_id": "ml-neighbors",
+      "level": 2,
+      "role": "application",
+      "family": "ml-neighbors:이웃 회귀 평균",
+      "requires": [
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-foundation-02",
+        "stats-median-01"
+      ],
+      "remediation": ["ml-neighbor-foundation-01", "ml-neighbor-foundation-02"],
+      "objective": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [
