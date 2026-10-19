@@ -119,3 +119,28 @@ def test_server_persists_recommendation_basis_and_resumes_it(tmp_path):
     with TestClient(create_app(path,now=lambda:datetime(2026,10,18,tzinfo=timezone.utc))) as restarted:
         resumed=restarted.get(f"/api/sessions/{session['id']}").json()
         assert resumed['recommendation']==trace
+
+
+def test_day2_probes_unlocked_application_before_redundant_foundations_and_reaches_level3():
+    from datetime import timedelta
+    day1=[{'id':'pandas-select-01','day':'2026-10-18'},{'id':'numpy-shape-01','day':'2026-10-18'},
+          {'id':'stats-median-01','day':'2026-10-18'},{'id':'ml-split-01','day':'2026-10-18'},
+          {'id':'numpy-axis-01','day':'2026-10-18'}]
+    sessions,progress=history({'track':'python','records':day1})
+    day2=select_exercises(EXERCISES,sessions,progress,'2026-10-19',track='python')
+    assert sum(ex.level==2 for ex,_ in day2)>=4
+    assert not ({ex.id for ex,_ in day2}&{'pandas-select-02','pandas-select-scaffold-01','stats-summary-foundation-02','ml-eval-foundation-02'})
+    for track in ('python','sql'):
+        track_sessions=[];track_progress={};start=date(2026,10,18)
+        for offset in range(60):
+            day=(start+timedelta(days=offset)).isoformat()
+            selected=select_exercises(EXERCISES,track_sessions,track_progress,day,track=track)
+            items=[]
+            for ex,_ in selected:
+                items.append({**asdict(ex),'status':'correct','hints_used':0,'attempts_count':1})
+                due,streak=review_due(day,track_progress.get(ex.id,{}),True)
+                track_progress[ex.id]={'due':due,'streak':streak,'last_day':day,'completed':1}
+            if items:
+                track_sessions.append({'id':f'{track}-{offset}','track_id':track,'local_day':day,'batch':0,'items':items})
+        states=concept_states(track_sessions,BY_ID)
+        assert all(v['level']==3 for v in states.values() if (v['domain']=='SQL')==(track=='sql'))

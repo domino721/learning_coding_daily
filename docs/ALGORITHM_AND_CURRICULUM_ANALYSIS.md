@@ -78,8 +78,13 @@ $$\Delta d = \begin{cases}
 적격 후보 집합 $E_{\text{eligible}}$ 중에서:
 - **기본 세션(`extra = false`, 목표 5문항)**:
   1. 기한이 도래한 복습 문항($\text{due}(q) \le d_{\text{today}}$)을 $(\text{due}(q),\; \text{catalog\_index}(q))$ 오름차순으로 **최대 3개(`max_due_reviews = 3`)** 먼저 선택합니다.
-  2. 남은 슬롯(최소 2개 ~ 최대 5개)은 아직 완료 기록이 없는 미학습 적격 문항 중 아래 **4-튜플 키가 가장 작은 문항**을 한 문제씩 그리디하게 추가합니다(단, 묶음 내 신규 $l=3$ 문항은 최대 1개로 제한):
-     $$\text{SortKey}(q) = \big(\; \mathbb{I}(\neg\text{needs\_support}(c_q)),\; \text{count}_{\text{batch}}(\text{domain}_q),\; q.\text{level},\; \text{catalog\_index}(q) \;\big)$$
+  2. 남은 슬롯(최소 2개 ~ 최대 5개)은 아직 완료 기록이 없는 미학습 적격 문항 중 아래 **8-튜플 키가 가장 작은 문항**을 한 문제씩 그리디하게 추가합니다(단, 묶음 내 신규 $l=3$ 문항은 최대 1개로 제한):
+     $$\text{SortKey}(q) = \Big(\; \mathbb{I}(\neg\text{needs\_support}(c_q)),\; \text{count}_{\text{batch}}(\text{domain}_q),\; \text{redundant\_L1}(q),\; \text{pick}_{\text{today}}(c_q),\; \text{probe\_ready}(q),\; \big|\text{target}(c_q) - q.\text{level}\big|,\; \text{new\_family}(q),\; \text{catalog\_index}(q) \;\Big)$$
+     - $\text{redundant\_L1}(q) \in \{0, 1\}$: 이미 기초를 독립 통과했고($|I_{c_q}| > 0 \land \neg\text{needs\_support}(c_q)$) 미학습 상위 문항의 필수 선수(`requires`)도 아닌 **예비·보충용 단계 1 문항을 후순위로 유예(`1`)**합니다.
+     - $\text{pick}_{\text{today}}(c_q) \in \mathbb{N}_0$: 오늘 이미 독립 관찰되었거나 현 배치에 담긴 개념 횟수로, 하루에 개념당 최대 $+1$만 증가하는 `evidence_days` 특성을 고려해 **당일 묶음 내 개념을 분산**합니다.
+     - $\text{probe\_ready}(q) \in \{0, 1\}$: 기초 1문항을 통과해 단계 2 탐색(`limit = 2`)이 열린 개념($|I_{c_q}| > 0 \land L(c_q) = 1$)에서 **새로운 과제 유형군(`new_family = 0`)의 단계 2(`application`) 문항을 최우선(`0`) 배치**합니다.
+     - $|\text{target}(c_q) - q.\text{level}|$: 개념의 현재 목표 단계($\text{target}(c) = 1$ if 미시작/보충, $2$ if $L(c)=1$, $3$ if $L(c)\ge 2$)와 문항 난이도의 거리입니다.
+     - $\text{new\_family}(q) \in \{0, 1\}$: 해당 개념에서 아직 독립 해결하지 않은 과제 유형군(`family`)이면 `0`, 이미 해결한 유형군이면 `1`을 부여해 `families >= 2, 3` 승급 조건과 보충 다양성을 가속합니다.
 - **추가 학습 세션(`extra = true`, 목표 5문항)**:
   - 오늘 이미 제시된 문항(`exclude_ids`)을 제외하고, 미학습 적격 문항을 위 `SortKey` 순서로 먼저 채운 뒤 슬롯이 남으면 기한 도래 복습 문항을 채웁니다.
 
@@ -108,50 +113,39 @@ $$\Delta d = \begin{cases}
    - 신규 사용자의 첫 진입 시 `sessions = []`이므로 모든 개념이 `needs_support = false`, `limit = 1`입니다.
    - 따라서 선수 개념(`prerequisites = []`)과 선수 문항(`requires = []`)이 없는 루트 개념의 단계 1 문항들만 후보가 되며, 난수(Random Shuffle)나 사전 수준 진단(Placement Quiz)이 없으므로 `SortKey`의 마지막 요소인 `catalog_index` 순서대로 항상 고정 선택됩니다.
    - **Python 트랙 1일차 고정 5문항**: `pandas-select-01` $\rightarrow$ `numpy-shape-01` $\rightarrow$ `stats-median-01` $\rightarrow$ `ml-split-01` $\rightarrow$ `numpy-axis-01`
-   - **SQL 트랙 1일차 고정 5문항(이번 확장 반영 후)**: `sql-where-01` $\rightarrow$ `sql-rows-foundation-01` $\rightarrow$ `sql-rows-foundation-02` $\rightarrow$ `sql-rows-foundation-03` $\rightarrow$ `sql-rows-foundation-04`
+   - **SQL 트랙 1일차 고정 5문항**: `sql-where-01` $\rightarrow$ `sql-rows-foundation-01` $\rightarrow$ `sql-rows-foundation-02` $\rightarrow$ `sql-rows-foundation-03` $\rightarrow$ `sql-rows-foundation-04`
 2. **당일 세션 고정 복원 및 브라우저별 저장소 분리**:
    - 같은 날(`Asia/Seoul` 기준) 같은 브라우저에서 재접속하면 새 문제를 뽑지 않고 오늘 생성된 세션을 그대로 복구합니다.
    - 반대로 시크릿 모드, 카카오톡/인스타그램 인앱 브라우저, PC/모바일 등 **서로 다른 브라우저/기기**에서 접속하면 로컬 저장소(`learning-coding-daily:v1`)가 비어 있으므로 매번 다시 ‘1일차 첫 세션’으로 인식되어 동일한 5문제가 순서대로 뜹니다.
 
 ### 3.2 "1일차, 2일차마다 사용자마다 동일한 문제가 나오는가?"
 - **1일차**: 모든 사용자에게 **100% 동일한 문제와 순서**가 제시됩니다.
-- **2일차**: **1일차 풀이 결과에 따라 분기되지만, 1일차 결과가 같은 집단 내부에서는 다시 100% 동일**합니다.
+- **2일차**: **1일차 풀이 결과에 따라 즉시 분기됩니다.**
   - **1일차에 힌트를 사용했거나 오답/해설 확인이 있었던 사용자**:
-    - 해당 문항의 복습 기한이 `+1일(2일차)`로 설정되어 2일차 세션 앞자리에 `복습(review)`으로 배치되고, 해당 개념의 `needs_support = true`가 켜져 같은 개념의 다른 단계 1 기초 문항이 최우선 보충 추천됩니다.
-  - **1일차 5문항을 모두 한 번에 독립 해결한 사용자**:
-    - 1일차 문항들의 복습 기한이 `+3일(4일차)`로 설정되므로 2일차에는 복습 문항이 0개입니다.
-    - 1일차에 푼 4개 루트 개념(`pandas-select`, `numpy-structure`, `stats-summaries`, `ml-evaluation`)의 난이도 상한이 `limit = 2`로 열리고 하위 개념들도 해금되지만, `SortKey`가 `(not needs_support, domain_count, ex.level, catalog_index)` 순서여서 **개념과 무관하게 `ex.level == 1`인 미학습 문항이 `ex.level == 2` 문항보다 항상 먼저 선택**됩니다.
-    - 따라서 1일차를 다 맞힌 모든 사용자는 2일차에도 `['pandas-filter-01', 'stats-weight-01', 'ml-metric-01', 'numpy-where-20261017', 'pandas-null-01']`라는 동일한 단계 1 문항 5개를 받게 됩니다.
+    - 해당 문항의 복습 기한이 `+1일(2일차)`로 설정되어 2일차 세션 앞자리에 `복습(review)`으로 배치되고, 해당 개념의 `needs_support = true`가 켜져 같은 개념의 **다른 과제 유형군(`new_family = 0`) 단계 1 기초 문항**이 최우선 보충 추천됩니다.
+  - **1일차 5문항을 모두 한 번에 독립 해결한 사용자 (수식 병목 해결 후)**:
+    - 1일차에 통과한 4개 루트 개념(`pandas-select`, `numpy-structure`, `stats-summaries`, `ml-evaluation`)의 `limit = 2`가 열리면서, **2일차에 곧바로 4개 루트 개념의 단계 2(`application`) 적용 탐색 문항 4개**(`stats-std-01`, `ml-split-02`, `pandas-alignment-20261017`, `numpy-shape-application-01`)와 새로 해금된 하위 개념 기초 1개(`pandas-filter-01`)가 추천되어 **2일차 종료 즉시 4개 루트 개념이 모두 숙련도 `level = 2`로 승급**합니다.
 
 ---
 
-## 4. 병목 진단 및 해결 현황: 무엇이 해결되었고 무엇이 남았는가?
+## 4. 병목 해결 현황 및 숙련도 모형 유지·고도화 판단
 
-### 4.1 이번 작업(`CD-20261018-005` / `EV-030`)으로 **완전히 해결된 콘텐츠·경로 병목 3가지**
+### 4.1 완전히 해결된 콘텐츠·경로 병목 3종 + 추천 정렬 수식 병목 1종
 
-| 병목 항목 | 기존 상태 (91문항 기준) | 해결 내용 (119문항 기준, 신규 28문항 추가) | 검증 결과 |
+| 병목 항목 | 기존 상태 | 해결 내용 | 검증 결과 |
 | :--- | :--- | :--- | :--- |
 | **① 단계 1 보충 회복 데드락 (`recovery_items = 2` 불능)** | 18개 중 **10개 개념**에 단계 1(`foundation`) 문항이 **1개뿐**이어서, 오답/힌트 발생 시 `limit = 1`에 갇힌 채 서로 다른 기초 2문항 독립 해결 조건을 영구히 채울 수 없었음 | 10개 개념 전체에 새로운 과제 유형군(`family`)의 단계 1 문항 13개를 추가해 **18개 전 개념 `L1 >= 2`, `basic_families >= 2` 달성** | 모든 개념에서 오답 후 기초 2문항 독립 해결로 자력 회복 가능 확인 |
-| **② SQL 1일차 단일 문항 병목** | SQL 루트 개념(`sql-rows`)의 선수 없는 단계 1 문항이 `sql-where-01` **1개뿐**이어서 SQL 1일차 기본 세션에 1문제만 출제됨 | `sql-rows`에 선수 없는 단계 1 기초 문항 4개(`sql-rows-foundation-01~04`)를 추가해 **SQL 1일차 5문항 정상 출제** | SQL 1일차(기초 5) $\rightarrow$ 2일차(집계·조인 기초 5) $\rightarrow$ 3일차(적용 5) 진행 확인 |
+| **② SQL 1일차 단일 문항 병목** | SQL 루트 개념(`sql-rows`)의 선수 없는 단계 1 문항이 `sql-where-01` **1개뿐**이어서 SQL 1일차 기본 세션에 1문제만 출제됨 | `sql-rows`에 선수 없는 단계 1 기초 문항 4개(`sql-rows-foundation-01~04`)를 추가해 **SQL 1일차 5문항 정상 출제** | SQL 1일차(기초 5) $\rightarrow$ 2일차(적용 2 + 집계·조인 기초 3) $\rightarrow$ 3일차(적용 4 + 전이 1) 진행 확인 |
 | **③ 활성 단계 3(`transfer`) 공백 및 복합 추론 부족** | `numpy-memory`와 `ml-evaluation`의 활성 단계 3 문항이 **0개**(서술형 보류 때문)였고, `ml-evaluation`은 활성 문항이 총 2개뿐이라 단계 3 승급 자체가 불가능했음 | `numpy-memory-transfer-01~02`, `ml-eval-transfer-01~02` 등 다단계 적용·전이 15문항 추가 | 60일 시뮬레이션에서 **Python 15개·SQL 3개 전 개념이 실제로 숙련도 `level = 3`에 도달**함을 검증 |
+| **④ 전역 단계 1 수평 스윕(`ex.level` 오름차순) 수식 병목** | `(!needs_support, domain_count, ex.level, idx)` 정렬 때문에 1일차 기초를 100% 통과해도 예비 보충용 L1 문항 35개가 모두 소진될 때(Python 1~6일차 내내)까지 L2·L3 문항이 차단되고 8일차에도 15개 중 14개 개념이 `level = 1`에 머묾 | `SortKey`를 8-튜플로 고도화해 **불필요한 예비 L1 유예(`redundant_L1`) + 당일 개념 분산(`pick_today`) + 해금된 L2 탐색 우선(`probe_ready`) + 목표 단계 거리(`|target - level|`) + 미경험 유형군 우선(`new_family`)** 적용 | Python 2일차 즉시 L2 적용 4문항 진입, 3일차 L3 전이 진입, **8일차 기준 L3 3개·L2 6개 달성**(기존 L3 0개·L2 1개 대비 대폭 개선) |
 
----
+### 4.2 숙련도 판정 모형(이산 상태 기계) 자체를 현재 단계에서 유지하는 엔지니어링 판단 근거
 
-### 4.2 아직 남아 있는 **추천 알고리즘 산식 자체의 병목 2가지** (후속 결정 사항)
+후보 선택·정렬 수식(`selectExercises`)은 위와 같이 즉시 고도화하되, **개념별 숙련 단계(1~3단계) 판정 규칙(`level2_items=2, level2_days=2, level3_items=3, level3_days=3, recovery_items=2`)과 고정 복습 간격(`1/3/7/14일`) 모형 자체는 현행(`learning-paths-2.0`)을 그대로 유지**하고 다음 우선순위 작업(`WBS-520` 실제 기기 7일 관찰)을 먼저 진행하는 것이 타당합니다.
 
-콘텐츠와 선수 경로 그래프의 병목은 모두 해소되었으나, [src/recommendation.ts](../src/recommendation.ts) / [backend/curriculum.py](../backend/curriculum.py)의 **선택 산식(`selectExercises`)을 그대로 유지하는 한 남아 있는 알고리즘적 병목**은 다음 두 가지입니다.
-
-#### ① Python 트랙의 ‘전역 단계 1 우선 스윕(Broad-First Level 1 Sweep)’ 병목
-- **원인**:
-  - 현재 미학습 문항 정렬 키는 `(!needs_support, domain_count, ex.level, catalog_index)`입니다.
-  - 여기서 `ex.level`이 세 번째 우선순위로 전역 적용되기 때문에, 사용자가 1일차에 `pandas-select-01`(기초)을 단번에 맞혀 `pandas-select`의 단계 2(`limit = 2`, 적용)가 열렸음에도 불구하고, **같은 `pandas` 영역 안의 다른 개념(`pandas-filter`, `pandas-null`, `pandas-sort`, `pandas-group`)에 아직 안 푼 단계 1(`ex.level = 1`) 문항이 남아 있으면 그 단계 1 문항들이 항상 먼저 선택**됩니다.
-  - 결과적으로 Python 트랙의 단계 1 문항 35개를 거의 다 훑기 전까지는 사용자가 이미 기초를 통과한 개념에서도 단계 2(적용) 문제를 바로 다음 날 만나지 못하고 수평으로만 기초 문제를 풀게 됩니다.
-- **해결 방안 (`learning-paths-2.1` 후보)**:
-  - 정렬 키에서 단순히 `ex.level` 오름차순을 쓰는 대신, **‘이미 시작해 단계 2(`limit >= 2`)가 열렸지만 아직 단계 2 이상을 풀지 않은 개념의 진급 확인 문항’**에 우선순위를 부여하거나, 개념 목표 난이도와의 거리($|\text{target\_level}(c) - q.\text{level}|$)를 정렬 키에 반영하면 **1일차 기초 통과 $\rightarrow$ 2일차 즉시 해당 개념 적용(Level 2) 진입**이 가능해집니다.
-
-#### ② 초기 온보딩 시 ‘사전 수준 진단(Placement) 및 1일차 개인화’ 부재
-- **원인**:
-  - 모든 신규 사용자가 `sessions = []`에서 동일한 `catalog_index` 순서로 시작하므로, 이미 Python/SQL 기본기가 있는 사용자도 1일차~초반 세션을 가장 쉬운 루트 기초 문항부터 동일하게 거쳐야 합니다.
-- **해결 방안**:
-  - (방안 A — 경량 진단 세션): 첫 시작 시 선택적으로 핵심 개념 대표 적용(Level 2) 문항을 섞은 진단 묶음을 제시해, 첫 시도에 독립 해결하면 해당 개념의 기초(`L1`) 반복을 건너뛰고 바로 적용/전이로 진입하도록 구성.
-  - (방안 B — 결정론적 해시 시드 타이브레이커): 같은 조건(`!needs_support, domain_count, ex.level`) 내 동률 문항들을 고를 때 고정 `catalog_index` 대신 `(learner_id, local_day)` 해시 시드를 사용해 학습자·날짜별로 제시 문항과 순서를 다변화.
+1. **표본 확보 전 확률/회귀 모형(IRT·BKT) 도입의 과적합·불투명성 위험**:
+   - 문항반응이론(IRT)이나 베이지안 지식 추적(BKT)은 문항별 실측 정답률·변별도·추측 파라미터를 추정할 최소 수십~수백 건의 실제 풀이 로그가 필요합니다.
+   - `WBS-520`(7일 실기기 관찰) 데이터가 쌓이기 전에 임의의 회귀 계수나 확률 임계값을 넣으면, 오판 시 왜 특정 문항이 추천되었는지 추적(`recommendation_trace`)하기 어려워집니다.
+2. **7일 관찰(`WBS-520` / `WBS-530`) 비교 기준선 보존**:
+   - 현재 프로젝트의 핵심 다음 단계는 `WBS-520`(7일 기기 관찰)을 통해 문항별 독립 해결률, 힌트 후 성공률, 14일 지연 복습 유지율을 수집하고 `WBS-530`에서 임계값을 보정하는 것입니다.
+   - 이번에 수식 병목(④)을 해결함으로써 7일 관찰 기간 동안 사용자가 실제로 단계 1(기초) $\rightarrow$ 단계 2(적용) $\rightarrow$ 단계 3(전이)을 모두 경험할 수 있게 되었으므로, **지금은 숙련도 상태 기계를 고정한 채 `WBS-520` 실사용 데이터를 수집하는 것이 가장 높은 가치를 만듭니다.**

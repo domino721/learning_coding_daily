@@ -162,11 +162,18 @@ export function selectExercises(
         .filter((s) => s.local_day === today)
         .flatMap((s) => s.items.map((i) => i.id)),
     );
-  const latest = new Map(
-    observations(sessions)
-      .filter((o) => !o.essay)
-      .map((o) => [o.id, o]),
-  );
+  const obs = observations(sessions),
+    latest = new Map(obs.filter((o) => !o.essay).map((o) => [o.id, o])),
+    obsToday = new Set(
+      obs.filter((o) => o.day === today && o.independent).map((o) => o.concept),
+    ),
+    solvedFamilies = new Map<string, Set<string>>();
+  for (const o of obs)
+    if (o.independent) {
+      if (!solvedFamilies.has(o.concept))
+        solvedFamilies.set(o.concept, new Set());
+      solvedFamilies.get(o.concept)!.add(o.family);
+    }
   const known = (id: string) => {
     if (latest.get(id)?.independent) return true;
     const state = states.get(paths[id].concept_id)!;
@@ -200,24 +207,75 @@ export function selectExercises(
   const selected: [Source, "new" | "review" | "practice"][] = extra
     ? []
     : due.slice(0, 3).map((ex) => [ex, "review"]);
-  const counts = new Map(curriculum.concepts.map((c) => [c.domain, 0]));
-  for (const [ex] of selected)
-    counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
-  const pool = exercises.filter(
-    (ex) => !progress[ex.id] && !doneToday.has(ex.id) && eligible(ex),
-  );
-  while (pool.length && selected.length < 5) {
-    pool.sort(
-      (a, b) =>
-        Number(!states.get(a.concept_id)!.needs_support) -
-          Number(!states.get(b.concept_id)!.needs_support) ||
-        (counts.get(a.domain) ?? 0) - (counts.get(b.domain) ?? 0) ||
-        a.level - b.level ||
-        exercises.indexOf(a) - exercises.indexOf(b),
+  const counts = new Map(curriculum.concepts.map((c) => [c.domain, 0])),
+    conceptPicks = new Map(
+      curriculum.concepts.map((c) => [c.id, obsToday.has(c.id) ? 1 : 0]),
     );
+  for (const [ex] of selected) {
+    counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
+    conceptPicks.set(ex.concept_id, (conceptPicks.get(ex.concept_id) ?? 0) + 1);
+  }
+  const pool = exercises.filter(
+      (ex) => !progress[ex.id] && !doneToday.has(ex.id) && eligible(ex),
+    ),
+    requiredL1 = new Set(
+      exercises
+        .filter((ex) => !progress[ex.id])
+        .flatMap((ex) => paths[ex.id].requires.filter((req) => !known(req))),
+    ),
+    progressedConcepts = new Set(
+      Object.keys(progress)
+        .map((pid) => byId.get(pid)?.concept_id)
+        .filter((cid): cid is string => !!cid),
+    );
+  const rank = (ex: Source): number[] => {
+    const st = states.get(ex.concept_id)!,
+      fam = paths[ex.id].family,
+      newFam = solvedFamilies.get(ex.concept_id)?.has(fam) ? 1 : 0,
+      dom = counts.get(ex.domain) ?? 0,
+      pick = conceptPicks.get(ex.concept_id) ?? 0,
+      idx = exercises.indexOf(ex);
+    if (st.needs_support) return [0, dom, 0, 0, ex.level, 0, newFam, idx];
+    if (!progressedConcepts.has(ex.concept_id))
+      return [1, dom, 0, pick, 1, ex.level - 1, 0, idx];
+    const redundantL1 =
+        ex.level === 1 && st.independent_count > 0 && !requiredL1.has(ex.id)
+          ? 1
+          : 0,
+      target = st.independent_count === 0 ? 1 : st.level === 1 ? 2 : 3,
+      probeReady =
+        st.independent_count > 0 &&
+        st.level === 1 &&
+        ex.level === 2 &&
+        newFam === 0
+          ? 0
+          : 1;
+    return [
+      1,
+      dom,
+      redundantL1,
+      pick,
+      probeReady,
+      Math.abs(target - ex.level),
+      newFam,
+      idx,
+    ];
+  };
+  while (pool.length && selected.length < 5) {
+    pool.sort((a, b) => {
+      const ra = rank(a),
+        rb = rank(b);
+      for (let i = 0; i < ra.length; i++)
+        if (ra[i] !== rb[i]) return ra[i] - rb[i];
+      return 0;
+    });
     const ex = pool.shift()!;
     selected.push([ex, "new"]);
     counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
+    conceptPicks.set(ex.concept_id, (conceptPicks.get(ex.concept_id) ?? 0) + 1);
+    if (!solvedFamilies.has(ex.concept_id))
+      solvedFamilies.set(ex.concept_id, new Set());
+    solvedFamilies.get(ex.concept_id)!.add(paths[ex.id].family);
     if (ex.level === 3)
       for (let i = pool.length - 1; i >= 0; i--)
         if (pool[i].level === 3) pool.splice(i, 1);

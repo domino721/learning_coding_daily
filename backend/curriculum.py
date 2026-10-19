@@ -124,6 +124,10 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
     by_id={ex.id:ex for ex in exercises};states=concept_states(sessions,by_id)
     obs=observations(sessions,by_id)
     latest={o['id']:o for o in obs if not o['essay']}
+    obs_today={o['concept'] for o in obs if o['day']==today and o['independent']}
+    solved_families={}
+    for o in obs:
+        if o['independent']:solved_families.setdefault(o['concept'],set()).add(o['family'])
     def known(identifier):
         if identifier in latest and latest[identifier]['independent']:return True
         cid=LEARNING_PATHS['items'][identifier]['concept_id']
@@ -141,11 +145,30 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
                key=lambda ex:(progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
     selected=[] if extra else [(ex,'review') for ex in due[:3]]
     counts={c['domain']:0 for c in CONCEPTS}
-    for ex,_ in selected:counts[ex.domain]+=1
+    concept_picks={c['id']:(1 if c['id'] in obs_today else 0) for c in CONCEPTS}
+    for ex,_ in selected:
+        counts[ex.domain]+=1
+        concept_picks[ex.concept_id]+=1
     pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
+    required_l1={req for ex in exercises if ex.id not in progress for req in LEARNING_PATHS['items'][ex.id]['requires'] if not known(req)}
+    progressed_concepts={by_id[pid].concept_id for pid in progress if pid in by_id}
     while pool and len(selected)<5:
-        ex=min(pool,key=lambda ex:(not states[ex.concept_id]['needs_support'],counts[ex.domain],ex.level,exercises.index(ex)))
-        selected.append((ex,'new'));counts[ex.domain]+=1;pool.remove(ex)
+        def sort_key(ex):
+            st=states[ex.concept_id]
+            fam=LEARNING_PATHS['items'][ex.id]['family']
+            new_fam=0 if fam not in solved_families.get(ex.concept_id,set()) else 1
+            if st['needs_support']:
+                return (0,counts[ex.domain],0,0,ex.level,0,new_fam,exercises.index(ex))
+            if ex.concept_id not in progressed_concepts:
+                return (1,counts[ex.domain],0,concept_picks[ex.concept_id],1,ex.level-1,0,exercises.index(ex))
+            redundant_l1=int(ex.level==1 and st['independent_count']>0 and ex.id not in required_l1)
+            target=1 if st['independent_count']==0 else 2 if st['level']==1 else 3
+            probe_ready=0 if (st['independent_count']>0 and st['level']==1 and ex.level==2 and new_fam==0) else 1
+            return (1,counts[ex.domain],redundant_l1,concept_picks[ex.concept_id],probe_ready,abs(target-ex.level),new_fam,exercises.index(ex))
+        ex=min(pool,key=sort_key)
+        selected.append((ex,'new'));counts[ex.domain]+=1;concept_picks[ex.concept_id]+=1
+        solved_families.setdefault(ex.concept_id,set()).add(LEARNING_PATHS['items'][ex.id]['family'])
+        pool.remove(ex)
         if ex.level==3:pool=[candidate for candidate in pool if candidate.level<3]
     if extra:
         for ex in due:

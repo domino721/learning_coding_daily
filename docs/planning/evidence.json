@@ -428,6 +428,21 @@
         "scripts/verify-published-site.py"
       ],
       "code_reference": "6b8057923798e492a5a6a77a681907e341023e88"
+    },
+    {
+      "id": "EV-033",
+      "record": "docs/planning/evidence/EV-033.md",
+      "artifacts": [
+        "backend/curriculum.py",
+        "src/recommendation.ts",
+        "tests/fixtures/learning-paths.json",
+        "tests/test_learning_paths.py",
+        "docs/experiments/learning-paths-v2.json",
+        "docs/ADAPTIVE_LEARNING.md",
+        "docs/CURRICULUM_LOG.md",
+        "docs/ALGORITHM_AND_CURRICULUM_ANALYSIS.md"
+      ],
+      "code_reference": "WBS-360/WBS-540 recommendation formula bottleneck fix (accompanying commit)"
     }
   ]
 }

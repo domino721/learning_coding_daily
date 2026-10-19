@@ -163,5 +163,39 @@
     ],
     "first": "stats-weight-01",
     "excluded": ["stats-conditional-03"]
+  },
+  {
+    "name": "day-2 application probe bypasses redundant foundation sweep",
+    "track": "python",
+    "day": "2026-10-19",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "stats-median-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "ml-split-01",
+        "day": "2026-10-18"
+      },
+      {
+        "id": "numpy-axis-01",
+        "day": "2026-10-18"
+      }
+    ],
+    "first": "stats-std-01",
+    "excluded": [
+      "pandas-select-02",
+      "pandas-select-scaffold-01",
+      "stats-summary-foundation-02",
+      "ml-eval-foundation-02"
+    ]
   }
 ]
