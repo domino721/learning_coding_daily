@@ -491,6 +491,19 @@
         "tests/test_published_site.py"
       ],
       "code_reference": "63e4bbacd626e5d53c147b5759f4b9bb63c4286e"
+    },
+    {
+      "id": "EV-037",
+      "record": "docs/planning/evidence/EV-037.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-20.json",
+        "curriculum/reviews/2026-10-20.json",
+        "docs/content_batches/2026-10-20.md",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json"
+      ],
+      "code_reference": "b95335759303c64d0891ad433c1a858f5abe9f8e"
     }
   ]
 }
