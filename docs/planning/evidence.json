@@ -563,6 +563,19 @@
         "tests/e2e/learning.spec.ts"
       ],
       "code_reference": "WBS-010 accompanying compact footprint and one-line subtitle CSS after EV-041"
+    },
+    {
+      "id": "EV-043",
+      "record": "docs/planning/evidence/EV-043.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/Activity.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "9a8eff8febcda94296ac6cb103d5772faca18259"
     }
   ]
 }
