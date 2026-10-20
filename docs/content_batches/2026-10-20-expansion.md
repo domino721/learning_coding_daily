@@ -36,3 +36,7 @@
 - 전체 검사 결과와 기존 Pages의 실제 게시 결과는 별도 WBS 증거에 기록한다. 실행 성공과 실제 학습 효과를 구분하며, 사용자 관찰과 난이도·시간 보정은 기존 WBS-520/530을 유지한다.
 
 로컬 최종 검증은 [EV-038](../planning/evidence/EV-038.md)에 초기 실패·수정·재검증을 구분했다. Python584/Node20, 고유 모바일34개(정기/보강 양모드 최종4개 포함), 기존142개 보존과 전 활성149개 가상 도달을 확인했다. 실제 원격 게시 성공은 후속 근거로 구분한다.
+
+## 게시 완료
+
+최종 코드 `5658e1a2b482d9aa419747fd4030bec007039f78`의 [Pages39346900347](https://github.com/domino721/learning_coding_daily/actions/runs/39346900347)이 성공했다. 원격 단일 Python584/Node20/모바일34 통과와 문제 데이터 chunk를 포함한 공개5개JS/CSS 일치를 [EV-039](../planning/evidence/EV-039.md)에 기록했다. [기존 사이트](https://domino721.github.io/learning_coding_daily/)에서 활성 Python116·SQL33을 제공하며 실제 난이도/학습 효과는 별도 관찰한다.

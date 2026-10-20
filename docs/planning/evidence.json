@@ -519,6 +519,19 @@
         "tests/e2e/daily-content.spec.ts"
       ],
       "code_reference": "WBS-360/WBS-540 accompanying 12-question expansion commit"
+    },
+    {
+      "id": "EV-039",
+      "record": "docs/planning/evidence/EV-039.md",
+      "artifacts": [
+        "src/curriculum.json",
+        "curriculum/reviews/2026-10-20-expansion.json",
+        "backend/learning_paths.json",
+        "tests/test_expansion_20261020.py",
+        "tests/e2e/daily-content.spec.ts",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "5658e1a2b482d9aa419747fd4030bec007039f78"
     }
   ]
 }
