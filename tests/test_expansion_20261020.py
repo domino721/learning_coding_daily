@@ -61,7 +61,11 @@ def test_142_existing_exercises_paths_rules_and_concepts_are_preserved():
     bank = json.loads(Path('curriculum/problem_bank.json').read_text())
     assert digest(bank['concepts']) == saved['concepts']
     assert LEARNING_PATHS['version'] == 'learning-paths-2.0'
-    assert len(NEW) == 12 and len(EXERCISES) == 154
+    new_ids = {item['id'] for item in NEW}
+    assert len(new_ids) == len(NEW) == 12
+    assert new_ids.isdisjoint(saved['exercises'])
+    assert set(saved['exercises']) | new_ids <= set(BY_ID)
+    assert len(EXERCISES) == len(BY_ID)
     assert sum(item['level'] == 2 for item in NEW) == 5
     assert sum(item['level'] == 3 for item in NEW) == 7
     for track in ('python', 'sql'):
