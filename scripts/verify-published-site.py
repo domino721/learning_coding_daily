@@ -38,7 +38,15 @@ def verify_once(site_url, dist, fetch=fetch_bytes):
     actual.feed(fetch(site_url.rstrip('/') + '/?build_check=' + cache_key).decode('utf-8'))
     if set(actual.paths) != set(expected.paths):
         raise ValueError('Public HTML still references a different build')
-    for path in expected.paths:
+    # Vite can put the actual catalog in an imported chunk. Checking only the
+    # entry script would accept a deployment whose content chunk is missing.
+    paths = list(expected.paths)
+    for asset in sorted(dist.rglob('*')):
+        if asset.is_file() and asset.suffix in ('.js', '.css'):
+            path = './' + asset.relative_to(dist).as_posix()
+            if path not in paths:
+                paths.append(path)
+    for path in paths:
         relative = urlsplit(path).path.removeprefix('./')
         local = (dist / relative).resolve()
         if not local.is_relative_to(dist.resolve()) or not local.is_file():
@@ -46,7 +54,7 @@ def verify_once(site_url, dist, fetch=fetch_bytes):
         remote = fetch(urljoin(site_url.rstrip('/') + '/', path))
         if hashlib.sha256(remote).digest() != hashlib.sha256(local.read_bytes()).digest():
             raise ValueError(f'Published asset differs: {local.name}')
-    return expected.paths
+    return paths
 
 
 def main():

@@ -626,6 +626,30 @@
       "changes": [],
       "summary": "main b8c336e 비강제 push 및 Pages39254081264/관리39254081250 success. 필수품질118064861408의 Python480/Node20/모바일30(서버비해당9제외) 단일 원격 실행 성공, publish118066136312의 실제 공개 app-DSVC_biQ.js/app-DnyMvMFg.css bytes 일치 EV-035. 기존18개 개념에 적용9·전이9 추가(활성Python103/SQL29)와 대상 재질문 방지 AGENTS 지침 게시 완료. 실제학습효과/기기7일관찰은 별도, 다음WBS-520 유지. 앱 변경 없이 배포 근거만 [skip ci] 저장.",
       "commit": "b8c336e2e202e5f245202b6114ddd93709503f08"
+    },
+    {
+      "id": "LOG-052",
+      "date": "2026-10-20",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [
+        "CR-009"
+      ],
+      "summary": "서울 실행일10월20일 확인. clean checkout에서 fetch 후 기존 checkout을 최신 main63e4bba로 fast-forward. 오늘 배치 부재 및 기존137문항/경로 확인. 기준선1.8.0·추천/복습/기록·계정기능 보존 위에 새5개 적용 문항과 카드/참조/경계 검수 착수. 이전19일 확인에서는 파일 변경/게시가 없었으며 소급 배치는 만들지 않음.",
+      "commit": null
+    },
+    {
+      "id": "LOG-053",
+      "date": "2026-10-20",
+      "tasks": [
+        "WBS-350"
+      ],
+      "changes": [
+        "CR-009"
+      ],
+      "summary": "codex-2026-10-20적용5개(Python3/SQL2) 작성·Codex 별도재풀이·실제 참조/경계 검수 완료. 기존137문항/경로 불변 및 모바일 실제5개풀이/기록보존 확인. 최종Python515/Node20/모바일32(비해당9제외), 원본/카드/경로·타입/포맷/빌드 통과 EV-036. 분리된 카탈로그청크 포함 공개JS/CSS 비교 보완. 원격 게시/Pages성공은 아직 미확인.",
+      "commit": null
     }
   ]
 }

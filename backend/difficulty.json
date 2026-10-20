@@ -1642,5 +1642,65 @@
     "distractor_strength": 0,
     "rationale": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다. 선수 문항 이후 새 구분 하나를 짧은 입력에 적용한다.",
     "calibration": "editorial-20261019; 참조 실행과 편집 검수 기준, 실제 학습 관찰 전"
+  },
+  "pandas-max-label-20261020": {
+    "concept_id": "pandas-sort",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "동일 최대값이 있을 때 값·위치·라벨과 동점 선택 기준을 구분한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+    "calibration": "editorial-20261020; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "numpy-transpose-mean-20261020": {
+    "concept_id": "numpy-structure",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "전치로 바뀐 행 구성을 확인한 뒤 해당 축의 평균을 계산한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+    "calibration": "editorial-20261020; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "ml-confusion-order-20261020": {
+    "concept_id": "ml-metrics",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "명시한 클래스 순서에 따라 실제/예측 교차표를 채운다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+    "calibration": "editorial-20261020; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-union-rows-20261020": {
+    "concept_id": "sql-rows",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "결합 결과 전체의 중복 제거와 원본 행 보존을 구분해 건수를 계산한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+    "calibration": "editorial-20261020; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-division-rate-20261020": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "집계된 분자·분모의 자료형과 연산 순서가 비율에 미치는 영향을 판단한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+    "calibration": "editorial-20261020; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
   }
 }

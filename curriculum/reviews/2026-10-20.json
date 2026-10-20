@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-20",
+  "batch_id": "codex-2026-10-20",
+  "method": "Codex separate editorial re-solve and executed pandas/NumPy/SQLite/scikit-learn reference/boundary checks; no Gemini or model API calls",
+  "exercises": [
+    {
+      "id": "pandas-max-label-20261020",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "C",
+      "editorial_check": "A: 라벨을 정렬한 뒤 동점을 선택했을 가능성; B: 최대값을 찾지 않고 첫 행을 선택했을 가능성; 12: 라벨 대신 최대값을 반환한다고 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 대상, 둘째는 연산/기준을 좁힌다. 정답 문자열을 제시하지 않는다.",
+      "prerequisite_check": ["pandas-sort-01", "pandas-sort-scaffold-01"],
+      "difficulty_check": "동일 최대값이 있을 때 값·위치·라벨과 동점 선택 기준을 구분한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+      "limitations": "실제 학습 효과와 추정 시간은 사용자 관찰 전이며 편집 검수와 참조 계산만 확인한다."
+    },
+    {
+      "id": "numpy-transpose-mean-20261020",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[2.5, 3.5, 4.5]",
+      "editorial_check": "[2.0,5.0]: 전치 전에 행 평균을 계산했을 가능성; [5,7,9]: 평균 대신 합계를 사용했을 가능성; [3.5]: 축을 없앤 전체 평균으로 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 대상, 둘째는 연산/기준을 좁힌다. 정답 문자열을 제시하지 않는다.",
+      "prerequisite_check": ["numpy-shape-01", "numpy-axis-01"],
+      "difficulty_check": "전치로 바뀐 행 구성을 확인한 뒤 해당 축의 평균을 계산한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+      "limitations": "실제 학습 효과와 추정 시간은 사용자 관찰 전이며 편집 검수와 참조 계산만 확인한다."
+    },
+    {
+      "id": "ml-confusion-order-20261020",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[[1, 1], [0, 2]]",
+      "editorial_check": "[[2,0],[1,1]]: 기본 클래스 순서로 계산했을 가능성; [[1,0],[1,2]]: 실제와 예측 축을 바꿨을 가능성; [[1,1],[2,0]]: 두 번째 행의 클래스 순서만 반대로 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 대상, 둘째는 연산/기준을 좁힌다. 정답 문자열을 제시하지 않는다.",
+      "prerequisite_check": [
+        "ml-metric-01",
+        "ml-metric-foundation-02",
+        "numpy-index-foundation-01"
+      ],
+      "difficulty_check": "명시한 클래스 순서에 따라 실제/예측 교차표를 채운다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+      "limitations": "실제 학습 효과와 추정 시간은 사용자 관찰 전이며 편집 검수와 참조 계산만 확인한다."
+    },
+    {
+      "id": "sql-union-rows-20261020",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "(2, 4)",
+      "editorial_check": "(4,4): 두 연산 모두 중복을 보존한다고 봤을 가능성; (2,2): ALL도 중복을 제거한다고 봤을 가능성; (3,4): 입력 내부 중복은 남는다고 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 대상, 둘째는 연산/기준을 좁힌다. 정답 문자열을 제시하지 않는다.",
+      "prerequisite_check": ["sql-rows-foundation-04", "sql-count-01"],
+      "difficulty_check": "결합 결과 전체의 중복 제거와 원본 행 보존을 구분해 건수를 계산한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+      "limitations": "실제 학습 효과와 추정 시간은 사용자 관찰 전이며 편집 검수와 참조 계산만 확인한다."
+    },
+    {
+      "id": "sql-division-rate-20261020",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "(0, 0.33)",
+      "editorial_check": "(0.33,0.33): 정수 나눗셈도 실수라고 봤을 가능성; (0,0.0): 1.0 곱셈을 무시했을 가능성; (1,0.33): 첫 식에서 분모를 무시했을 가능성",
+      "hints_check": "첫 힌트는 확인 대상, 둘째는 연산/기준을 좁힌다. 정답 문자열을 제시하지 않는다.",
+      "prerequisite_check": ["sql-count-01", "sql-null-count-20261018"],
+      "difficulty_check": "집계된 분자·분모의 자료형과 연산 순서가 비율에 미치는 영향을 판단한다. 기초 문항의 값·위치/집계 기준을 새 API나 연산 순서에 연결하는 적용이다.",
+      "limitations": "실제 학습 효과와 추정 시간은 사용자 관찰 전이며 편집 검수와 참조 계산만 확인한다."
+    }
+  ]
+}

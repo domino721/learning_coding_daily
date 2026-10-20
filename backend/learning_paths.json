@@ -1550,6 +1550,60 @@
       "remediation": ["ml-neighbor-foundation-01", "ml-neighbor-foundation-02"],
       "objective": "이웃을 거리로 선택하고 회귀 목표값의 평균으로 예측한다.",
       "review_status": "reviewed"
+    },
+    "pandas-max-label-20261020": {
+      "concept_id": "pandas-sort",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-sort:최대값의 첫 라벨",
+      "requires": ["pandas-sort-01", "pandas-sort-scaffold-01"],
+      "remediation": ["pandas-sort-01", "pandas-sort-scaffold-01"],
+      "objective": "동일 최대값이 있을 때 값·위치·라벨과 동점 선택 기준을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-transpose-mean-20261020": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:전치 후 행 평균",
+      "requires": ["numpy-shape-01", "numpy-axis-01"],
+      "remediation": ["numpy-shape-01", "numpy-axis-01"],
+      "objective": "전치로 바뀐 행 구성을 확인한 뒤 해당 축의 평균을 계산한다.",
+      "review_status": "reviewed"
+    },
+    "ml-confusion-order-20261020": {
+      "concept_id": "ml-metrics",
+      "level": 2,
+      "role": "application",
+      "family": "ml-metrics:클래스 순서 교차표",
+      "requires": [
+        "ml-metric-01",
+        "ml-metric-foundation-02",
+        "numpy-index-foundation-01"
+      ],
+      "remediation": ["ml-metric-01", "ml-metric-foundation-02"],
+      "objective": "명시한 클래스 순서에 따라 실제/예측 교차표를 채운다.",
+      "review_status": "reviewed"
+    },
+    "sql-union-rows-20261020": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:집합 결합 중복",
+      "requires": ["sql-rows-foundation-04", "sql-count-01"],
+      "remediation": ["sql-rows-foundation-04", "sql-count-01"],
+      "objective": "결합 결과 전체의 중복 제거와 원본 행 보존을 구분해 건수를 계산한다.",
+      "review_status": "reviewed"
+    },
+    "sql-division-rate-20261020": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:비율 자료형",
+      "requires": ["sql-count-01", "sql-null-count-20261018"],
+      "remediation": ["sql-count-01", "sql-null-count-20261018"],
+      "objective": "집계된 분자·분모의 자료형과 연산 순서가 비율에 미치는 영향을 판단한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

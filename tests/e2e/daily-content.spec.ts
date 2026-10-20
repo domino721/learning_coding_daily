@@ -10,6 +10,8 @@ import firstBatch from "../../backend/content_batches/2026-10-17.json" with { ty
 import sqlBatch from "../../backend/content_batches/2026-10-18.json" with { type: "json" };
 import expansion from "../../curriculum/reviews/2026-10-19-expansion.json" with { type: "json" };
 
+import daily20261020 from "../../backend/content_batches/2026-10-20.json" with { type: "json" };
+
 let isolatedApi: ChildProcess | undefined;
 test.afterEach(async () => {
   if (isolatedApi && isolatedApi.exitCode === null) {
@@ -22,7 +24,7 @@ test.afterEach(async () => {
   isolatedApi = undefined;
 });
 
-for (const batch of [firstBatch, sqlBatch, expansion]) {
+for (const batch of [firstBatch, sqlBatch, expansion, daily20261020]) {
   test(`daily batch ${batch.date} is reachable while earlier snapshots survive`, async ({
     page,
   }, testInfo) => {

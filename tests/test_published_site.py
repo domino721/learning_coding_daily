@@ -45,3 +45,20 @@ def test_matching_filename_with_corrupt_bytes_is_not_success(build):
 def test_tls_is_required(build):
     with pytest.raises(ValueError, match='HTTPS'):
         published.verify_once('http://example.org/course/', build, reader(build))
+
+
+def test_catalog_chunk_is_checked_even_when_not_in_html(build):
+    (build / 'assets' / 'catalog.js').write_bytes(b'reviewed questions')
+    paths = published.verify_once('https://example.org/course/', build, reader(build))
+    assert './assets/catalog.js' in paths
+
+
+def test_stale_imported_catalog_chunk_cannot_pass_entry_script_check(build):
+    (build / 'assets' / 'catalog.js').write_bytes(b'reviewed questions')
+    good = reader(build)
+
+    def stale_chunk(url):
+        return b'old questions' if url.endswith('/catalog.js') else good(url)
+
+    with pytest.raises(ValueError, match='catalog.js'):
+        published.verify_once('https://example.org/course/', build, stale_chunk)

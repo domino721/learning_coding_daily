@@ -473,6 +473,24 @@
         "AGENTS.md"
       ],
       "code_reference": "b8c336e2e202e5f245202b6114ddd93709503f08"
+    },
+    {
+      "id": "EV-036",
+      "record": "docs/planning/evidence/EV-036.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-20.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-20.json",
+        "src/curriculum.json",
+        "tests/test_daily_20261020.py",
+        "tests/fixtures/catalog-before-daily-20261020.json",
+        "tests/e2e/daily-content.spec.ts",
+        "scripts/verify-published-site.py",
+        "tests/test_published_site.py"
+      ],
+      "code_reference": "63e4bbacd626e5d53c147b5759f4b9bb63c4286e"
     }
   ]
 }
