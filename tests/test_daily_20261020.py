@@ -21,7 +21,13 @@ def test_previous_137_exercises_and_paths_are_unchanged():
     for identifier, expected in saved['exercises'].items():
         assert digest(asdict(BY_ID[identifier])) == expected, identifier
         assert digest(LEARNING_PATHS['items'][identifier]) == saved['path_items'][identifier]
-    assert len(EXERCISES) == len(BY_ID) == len(saved['exercises']) + 5
+    daily = json.loads(Path('backend/content_batches/2026-10-20.json').read_text())
+    daily_ids = {item['id'] for item in daily['exercises']}
+    assert len(daily_ids) == 5 and not daily_ids & set(saved['exercises'])
+    # Later reviewed additions may coexist with this batch. Keep the historical
+    # hashes strict while checking this batch's presence instead of a global cap.
+    assert len(EXERCISES) == len(BY_ID)
+    assert set(saved['exercises']) | daily_ids <= set(BY_ID)
 
 
 @pytest.mark.parametrize('values,labels,expected', [

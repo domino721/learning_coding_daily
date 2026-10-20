@@ -4917,6 +4917,434 @@
       },
       "reference_setup": "",
       "reference_output": "[5.0]"
+    },
+    {
+      "id": "pandas-top-order-20261020",
+      "concept": "행 제한과 정렬의 비가환성",
+      "kind": "choice",
+      "title": "두 후보 목록의 순서",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"id\": [\"A\", \"B\", \"C\", \"D\"],\n                   \"amount\": [10, 90, 80, 70]})\nfirst = df.head(2).sort_values(\"amount\", ascending=False)\nsecond = df.sort_values(\"amount\", ascending=False).head(2)\nprint((first[\"id\"].tolist(), second[\"id\"].tolist()))",
+      "answer": "(['B', 'A'], ['B', 'C'])",
+      "explanation": "첫 경로는 A·B만 남긴 뒤 90, 10 순으로 정렬하므로 B·A입니다. 두 번째는 전체를 90, 80, 70, 10 순으로 정렬한 후 두 행을 골라 B·C입니다. 상위 매출 보고서는 정렬하기 전 데이터 제한 여부를 확인해야 합니다.",
+      "hints": [
+        "각 경로에서 처음 두 행을 고르는 순간에 어떤 행이 남아 있는지 적어 보세요.",
+        "head(2)는 호출 시점의 첫 두 행을 반환합니다. 이미 제외한 행은 뒤의 정렬로 돌아오지 않습니다."
+      ],
+      "choices": [
+        "(['B', 'A'], ['B', 'C'])",
+        "(['B', 'C'], ['B', 'C'])",
+        "(['A', 'B'], ['B', 'C'])",
+        "(['B', 'A'], ['C', 'B'])"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-sort",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(['B', 'A'], ['B', 'C'])"
+    },
+    {
+      "id": "pandas-unique-buyers-20261020",
+      "concept": "고유값 개수와 행 수",
+      "kind": "blank",
+      "title": "고객 리포트의 두 숫자",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"team\": [\"A\", \"A\", \"A\", \"A\", \"B\"],\n                   \"buyer\": [1, 1, 2, None, 3]})\ng = df.groupby(\"team\")[\"buyer\"]\nprint((int(g.size()[\"A\"]), int(g.nunique()[\"A\"])))",
+      "answer": "(4, 2)",
+      "explanation": "A팀에는 4행이 있어 size는 4입니다. 알려진 고객은 1, 1, 2이고 서로 다른 값은 1과 2라 nunique는 2입니다. count라면 알려진 값의 개수 3입니다. 고객 번호를 모르는 주문을 신규 고객 한 명으로 해석해서는 안 됩니다.",
+      "hints": [
+        "같은 고객이 두 번 나타난 행과 고객을 모르는 행을 따로 표시하세요.",
+        "size는 행을 세고, nunique의 기본 설정은 결측을 빼고 서로 다른 값만 셉니다."
+      ],
+      "choices": ["(4, 3)", "(4, 2)", "(3, 2)", "(4, 4)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-group",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(4, 2)"
+    },
+    {
+      "id": "numpy-reshape-columns-20261020",
+      "concept": "reshape 후 원소 위치",
+      "kind": "choice",
+      "title": "두 출력 열의 값",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.arange(6).reshape(2, 3)\ny = x.reshape(3, 2)\nprint((x[:, 1].tolist(), y[:, 1].tolist()))",
+      "answer": "([1, 4], [1, 3, 5])",
+      "explanation": "x는 [[0,1,2],[3,4,5]]여서 두 번째 열은 [1,4]입니다. y는 [[0,1],[2,3],[4,5]]이므로 [1,3,5]입니다. reshape는 값을 정렬하거나 기존 열을 하나씩 복사하는 연산이 아닙니다.",
+      "hints": [
+        "0부터 5까지를 먼저 2행 3열, 다음에는 3행 2열로 적어 보세요.",
+        "기본 reshape는 행을 먼저 채우는 순서를 유지합니다. [:, 1]은 모든 행의 두 번째 열입니다."
+      ],
+      "choices": [
+        "([1, 4], [1, 4])",
+        "([3, 4, 5], [2, 3])",
+        "([1, 4], [1, 3, 5])",
+        "([1, 4], [2, 3, 4])"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-structure",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "([1, 4], [1, 3, 5])"
+    },
+    {
+      "id": "numpy-chained-write-20261020",
+      "concept": "연쇄 선택의 중간 객체와 대입",
+      "kind": "choice",
+      "title": "두 대입 이후 원본",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([1, 4, 7])\nx[x >= 4][0] = 0\nx[1:][0] = 9\nprint(x.tolist())",
+      "answer": "[1, 9, 7]",
+      "explanation": "불리언 선택 x[x>=4]는 [4,7] 복사본이어서 그 첫 값을 바꿔도 x는 유지됩니다. x[1:]은 원본과 메모리를 공유하는 뷰이고 뷰의 0번째는 원본의 1번째입니다. 따라서 원본은 [1,9,7]입니다. 원본 조건 위치를 바꾸려면 x[x>=4]=0처럼 원본에 직접 대입해야 합니다.",
+      "hints": [
+        "각 줄에서 첫 번째 대괄호가 만든 객체를 별도 변수에 담았다고 생각해 보세요.",
+        "불리언 배열로 추출한 중간 배열과 기본 슬라이스는 메모리 공유 여부가 다릅니다. 두 번째 [0]은 중간 배열 기준입니다."
+      ],
+      "choices": ["[1, 0, 7]", "[1, 4, 7]", "[9, 4, 7]", "[1, 9, 7]"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[1, 9, 7]"
+    },
+    {
+      "id": "sql-composite-match-20261020",
+      "concept": "복합 키의 일치 조건",
+      "kind": "blank",
+      "title": "연결된 주문의 건수",
+      "prompt": "표시한 입력 전체를 사용합니다. SQLite 기준으로 출력값을 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE users(org TEXT, user_id INTEGER);\n-- INSERT INTO users VALUES('A',1),('B',1);\n-- CREATE TABLE orders(org TEXT, user_id INTEGER, amount INTEGER);\n-- INSERT INTO orders VALUES('A',1,10),('A',1,20),('B',1,30);\nSELECT COUNT(*) FROM users AS u\nJOIN orders AS o\n  ON u.org = o.org AND u.user_id = o.user_id;",
+      "answer": "3",
+      "explanation": "A·1은 A조직 주문 두 건, B·1은 B조직 주문 한 건과 연결되어 3행입니다. user_id만 비교하면 각 사용자가 세 주문과 모두 연결되어 6행이 됩니다. 실무에서는 ID가 전체에서 유일한지 조직 안에서만 유일한지 먼저 확인해야 합니다.",
+      "hints": [
+        "A조직의 사용자 1과 B조직의 사용자 1을 서로 다른 사람으로 두고 각 주문을 연결하세요.",
+        "AND로 연결한 두 비교가 모두 참이어야 한 행 쌍이 결과에 들어갑니다."
+      ],
+      "choices": ["3", "6", "2", "1"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-joins",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 0,
+        "rationale": "조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE users(org TEXT, user_id INTEGER);\nINSERT INTO users VALUES('A',1),('B',1);\nCREATE TABLE orders(org TEXT, user_id INTEGER, amount INTEGER);\nINSERT INTO orders VALUES('A',1,10),('A',1,20),('B',1,30);",
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-unique-visitors-20261020",
+      "concept": "COUNT DISTINCT의 집계 대상",
+      "kind": "choice",
+      "title": "방문 리포트의 두 건수",
+      "prompt": "표시한 입력 전체를 사용합니다. SQLite 기준으로 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE visits(team TEXT, user_id INTEGER);\n-- INSERT INTO visits VALUES('A',1),('A',1),('A',2),('A',NULL),('B',3);\nSELECT COUNT(*), COUNT(DISTINCT user_id)\nFROM visits WHERE team = 'A';",
+      "answer": "(4, 2)",
+      "explanation": "WHERE 후 A팀의 4행이 남으므로 COUNT(*)는 4입니다. user_id의 1,1,2,NULL 중 알려진 서로 다른 값은 1과 2여서 COUNT(DISTINCT user_id)는 2입니다. COUNT(user_id)라면 중복을 포함한 3입니다. 방문 수와 사용자 수를 지표에서 구별해야 합니다.",
+      "hints": [
+        "먼저 A팀의 행만 남기고 user_id를 나열하세요.",
+        "COUNT(*)는 행을 세며 COUNT(DISTINCT 열)은 NULL을 빼고 중복 값도 한 번만 셉니다."
+      ],
+      "choices": ["(4, 3)", "(4, 2)", "(3, 2)", "(5, 3)"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-aggregation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "CREATE TABLE visits(team TEXT, user_id INTEGER);\nINSERT INTO visits VALUES('A',1),('A',1),('A',2),('A',NULL),('B',3);",
+      "reference_output": "(4, 2)"
+    },
+    {
+      "id": "stats-median-pooling-20261020",
+      "concept": "집단 요약의 비가산성",
+      "kind": "blank",
+      "title": "두 요약 절차의 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\na = [1, 2, 100]\nb = [3, 4, 5]\nfirst = np.median([np.median(a), np.median(b)])\nsecond = np.median(a + b)\nprint((float(first), float(second)))",
+      "answer": "(3.0, 3.5)",
+      "explanation": "a의 중앙값은 2, b의 중앙값은 4이므로 first는 3.0입니다. 합친 자료를 정렬하면 1,2,3,4,5,100이라 second는 (3+4)/2=3.5입니다. 같은 크기의 집단이어도 중앙값의 중앙값은 전체 중앙값을 보장하지 않습니다. 통합 중앙값에는 원자료나 적절한 분포 정보가 필요합니다.",
+      "hints": [
+        "첫 경로에는 두 요약값만, 두 번째에는 여섯 원자료가 들어갑니다.",
+        "짝수 개 자료의 중앙값은 정렬한 가운데 두 값의 평균입니다. a+b는 리스트를 이어 붙입니다."
+      ],
+      "choices": ["(3.0, 3.0)", "(3.5, 3.5)", "(3.0, 3.5)", "(4.0, 3.5)"],
+      "accepted": ["(3, 3.5)"],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-summaries",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(3.0, 3.5)"
+    },
+    {
+      "id": "stats-user-session-20261020",
+      "concept": "관측 단위에 따른 비율",
+      "kind": "choice",
+      "title": "주간 구매율의 두 값",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"user\": [\"A\", \"A\", \"B\", \"C\", \"C\"],\n                   \"bought\": [0, 1, 0, 0, 1]})\nfirst = df[\"bought\"].mean()\nsecond = df.groupby(\"user\")[\"bought\"].max().mean()\nprint((round(float(first), 2), round(float(second), 2)))",
+      "answer": "(0.4, 0.67)",
+      "explanation": "첫 계산은 5개 세션 중 구매 세션 2개라 0.4입니다. 사용자별 최대값은 A=1, B=0, C=1이고 세 사용자 중 두 명이 한 번 이상 구매해 2/3≈0.67입니다. 반복 방문이 있는 데이터에서 세션 전환율과 사용자 구매율을 같은 지표로 보고하면 안 됩니다.",
+      "hints": [
+        "행 하나가 사용자 한 명인지 방문 한 번인지 구분하세요.",
+        "0/1 값의 사용자별 max는 그 사용자가 한 번이라도 구매했는지를 나타냅니다. 사용자 B도 남습니다."
+      ],
+      "choices": ["(0.4, 0.4)", "(0.67, 0.4)", "(0.4, 1.0)", "(0.4, 0.67)"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "통계",
+      "level": 3,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(0.4, 0.67)"
+    },
+    {
+      "id": "ml-neighbor-weights-20261020",
+      "concept": "거리 역수 가중 투표",
+      "kind": "choice",
+      "title": "두 설정의 예측 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "from sklearn.neighbors import KNeighborsClassifier\nX = [[0.0], [4.0], [5.0]]\ny = [0, 1, 1]\nuniform = KNeighborsClassifier(n_neighbors=3, weights=\"uniform\").fit(X, y)\ndistance = KNeighborsClassifier(n_neighbors=3, weights=\"distance\").fit(X, y)\nprint((uniform.predict([[1.0]]).tolist(),\n       distance.predict([[1.0]]).tolist()))",
+      "answer": "([1], [0])",
+      "explanation": "uniform에서는 레이블 1이 두 표라 [1]입니다. distance에서는 레이블 0의 가중치가 1/1=1이고 레이블 1의 합은 1/3+1/4≈0.583이어서 [0]입니다. 이웃 수가 같아도 가중치 설정이 예측에 영향을 줍니다. 거리 0인 이웃은 별도 처리되므로 무조건 1/0을 계산하지 않습니다.",
+      "hints": [
+        "각 클래스의 이웃 수와 입력까지의 거리를 각각 비교하세요.",
+        "uniform은 같은 표, distance는 거리 역수에 비례한 표를 줍니다. 여기서 거리는 1, 3, 4로 모두 0이 아닙니다."
+      ],
+      "choices": ["([1], [0])", "([1], [1])", "([0], [0])", "([0], [1])"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-neighbors",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "([1], [0])"
+    },
+    {
+      "id": "ml-f1-balance-20261020",
+      "concept": "정밀도·재현율의 조화평균",
+      "kind": "blank",
+      "title": "분류 리포트의 점수",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "from sklearn.metrics import f1_score\ny_true = [1, 1, 1, 0]\ny_pred = [1, 0, 0, 0]\nprint(f1_score(y_true, y_pred))",
+      "answer": "0.5",
+      "explanation": "맞힌 양성 TP=1, 거짓 양성 FP=0, 놓친 양성 FN=2입니다. F1=2/(2+0+2)=0.5입니다. 정밀도는 1이지만 재현율은 1/3이라 완벽한 성능이 아닙니다. 두 비율의 산술평균 약 0.67도 F1이 아닙니다.",
+      "hints": [
+        "실제 양성·예측 양성·맞힌 양성의 수를 먼저 세세요.",
+        "F1은 2TP/(2TP+FP+FN)입니다. 한 지표만 높거나 두 지표를 단순 평균하는 것과 다릅니다."
+      ],
+      "choices": ["0.67", "0.5", "0.33", "1.0"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-metrics",
+      "response_mode": "short",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 0,
+        "rationale": "거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "0.5"
+    },
+    {
+      "id": "ml-constant-feature-20261020",
+      "concept": "상수 특성의 scale_=1 처리",
+      "kind": "choice",
+      "title": "새 행의 변환 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "from sklearn.preprocessing import StandardScaler\nscaler = StandardScaler().fit([[5.0, 0.0], [5.0, 2.0]])\nprint(scaler.transform([[7.0, 3.0]]).tolist())",
+      "answer": "[[2.0, 2.0]]",
+      "explanation": "학습 평균은 [5,1]입니다. 첫 열은 분산이 0이어서 scale_=1이고 두 번째 열의 표준편차도 1입니다. 따라서 새 값은 [(7-5)/1,(3-1)/1]=[2,2]입니다. 학습 상수 열이 새 데이터에서도 무조건 0이 되는 것은 아니며 새 값에 다시 fit하지 않습니다.",
+      "hints": [
+        "학습에서 각 열의 평균과 변동을 따로 확인하세요.",
+        "StandardScaler는 분산이 0인 특성의 scale_를 1로 둡니다. 평균을 빼는 과정은 그대로 적용됩니다."
+      ],
+      "choices": [
+        "[[0.0, 2.0]]",
+        "[[7.0, 3.0]]",
+        "[[2.0, 2.0]]",
+        "[[0.0, 0.0]]"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-preprocessing",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[[2.0, 2.0]]"
+    },
+    {
+      "id": "ml-group-isolation-20261020",
+      "concept": "집단 단위 평가 분리",
+      "kind": "choice",
+      "title": "두 평가 절차의 중복 집단",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nfrom sklearn.model_selection import KFold, GroupKFold\nX = np.arange(4).reshape(-1, 1)\ngroups = np.array([\"A\", \"B\", \"A\", \"B\"])\nt1, v1 = next(KFold(n_splits=2).split(X))\nt2, v2 = next(GroupKFold(n_splits=2).split(X, groups=groups))\na = sorted(set(groups[t1].tolist()) & set(groups[v1].tolist()))\nb = sorted(set(groups[t2].tolist()) & set(groups[v2].tolist()))\nprint((a, b))",
+      "answer": "(['A', 'B'], [])",
+      "explanation": "일반 KFold의 첫 분할은 학습 [2,3], 검증 [0,1]입니다. 양쪽에 A와 B가 모두 있어 교집합은 [A,B]입니다. GroupKFold는 같은 집단을 양쪽에 나누지 않아 교집합이 비어 있습니다. 새 사용자·환자의 성능을 평가할 때 같은 사람의 반복 관측이 양쪽에 섞이는지 확인해야 합니다. 집단 분리가 모든 누수나 시간 순서를 자동 해결하는 것은 아닙니다.",
+      "hints": [
+        "학습 행과 검증 행의 번호가 다른 것과 집단 이름이 다른 것을 구분하세요.",
+        "첫 KFold는 앞 두 행과 뒤 두 행을 나눕니다. GroupKFold는 같은 groups 값을 가진 행을 한쪽에 함께 둡니다."
+      ],
+      "choices": [
+        "([], [])",
+        "(['A', 'B'], ['A', 'B'])",
+        "([], ['A', 'B'])",
+        "(['A', 'B'], [])"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-evaluation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+        "calibration": "editorial-20261020; 참조 실행·경계 검증과 개별 편집 검수, 실제 학습 관찰 전"
+      },
+      "reference_setup": "",
+      "reference_output": "(['A', 'B'], [])"
     }
   ],
   "tracks": [
@@ -4925,14 +5353,14 @@
       "name": "Python 데이터 분석",
       "description": "pandas · NumPy · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 106
+      "exercise_count": 116
     },
     {
       "id": "sql",
       "name": "SQL",
       "description": "행 조건 · 집계 · 테이블 연결",
       "available": true,
-      "exercise_count": 31
+      "exercise_count": 33
     },
     {
       "id": "algorithms",
@@ -6694,6 +7122,158 @@
         "requires": ["sql-count-01", "sql-null-count-20261018"],
         "remediation": ["sql-count-01", "sql-null-count-20261018"],
         "objective": "집계된 분자·분모의 자료형과 연산 순서가 비율에 미치는 영향을 판단한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-top-order-20261020": {
+        "concept_id": "pandas-sort",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-sort:후보 제한 전후 정렬",
+        "requires": ["pandas-sort-scaffold-01", "pandas-sort-scaffold-02"],
+        "remediation": ["pandas-sort-scaffold-01"],
+        "objective": "상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다.",
+        "review_status": "reviewed"
+      },
+      "pandas-unique-buyers-20261020": {
+        "concept_id": "pandas-group",
+        "level": 2,
+        "role": "application",
+        "family": "pandas-group:고유 고객과 주문 단위",
+        "requires": [
+          "pandas-group-01",
+          "pandas-group-scaffold-01",
+          "pandas-null-01"
+        ],
+        "remediation": ["pandas-group-scaffold-01", "pandas-null-01"],
+        "objective": "팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-reshape-columns-20261020": {
+        "concept_id": "numpy-structure",
+        "level": 2,
+        "role": "application",
+        "family": "numpy-structure:재구성 후 열 추출",
+        "requires": ["numpy-shape-01", "numpy-index-foundation-01"],
+        "remediation": ["numpy-index-foundation-01"],
+        "objective": "배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다.",
+        "review_status": "reviewed"
+      },
+      "numpy-chained-write-20261020": {
+        "concept_id": "numpy-memory",
+        "level": 3,
+        "role": "transfer",
+        "family": "numpy-memory:연쇄 인덱싱 쓰기 경로",
+        "requires": [
+          "numpy-memory-foundation-01",
+          "numpy-view-02",
+          "numpy-mask-application-02"
+        ],
+        "remediation": [
+          "numpy-memory-foundation-01",
+          "numpy-memory-foundation-02"
+        ],
+        "objective": "연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다.",
+        "review_status": "reviewed"
+      },
+      "sql-composite-match-20261020": {
+        "concept_id": "sql-joins",
+        "level": 2,
+        "role": "application",
+        "family": "sql-joins:두 키의 동시 일치",
+        "requires": ["sql-join-foundation-01", "sql-rows-foundation-01"],
+        "remediation": ["sql-join-foundation-01"],
+        "objective": "조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다.",
+        "review_status": "reviewed"
+      },
+      "sql-unique-visitors-20261020": {
+        "concept_id": "sql-aggregation",
+        "level": 2,
+        "role": "application",
+        "family": "sql-aggregation:중복 방문과 사용자 단위",
+        "requires": ["sql-count-01", "sql-where-01"],
+        "remediation": ["sql-null-count-20261018"],
+        "objective": "행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "stats-median-pooling-20261020": {
+        "concept_id": "stats-summaries",
+        "level": 3,
+        "role": "transfer",
+        "family": "stats-summaries:중앙값 요약과 원자료 통합",
+        "requires": ["stats-median-01", "stats-summary-application-02"],
+        "remediation": ["stats-summary-foundation-02"],
+        "objective": "집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다.",
+        "review_status": "reviewed"
+      },
+      "stats-user-session-20261020": {
+        "concept_id": "stats-rates",
+        "level": 3,
+        "role": "transfer",
+        "family": "stats-rates:재방문 사용자와 세션 분모",
+        "requires": [
+          "stats-weight-01",
+          "stats-two-denominators-20261019",
+          "pandas-group-02"
+        ],
+        "remediation": ["stats-rate-foundation-02", "pandas-group-scaffold-01"],
+        "objective": "세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "ml-neighbor-weights-20261020": {
+        "concept_id": "ml-neighbors",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-neighbors:이웃 가중치 변경",
+        "requires": [
+          "ml-neighbor-foundation-01",
+          "ml-neighbor-01",
+          "ml-neighbor-regression-20261019"
+        ],
+        "remediation": ["ml-neighbor-foundation-02"],
+        "objective": "같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다.",
+        "review_status": "reviewed"
+      },
+      "ml-f1-balance-20261020": {
+        "concept_id": "ml-metrics",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-metrics:F1과 한쪽 지표의 차이",
+        "requires": [
+          "ml-metric-foundation-02",
+          "ml-metric-application-01",
+          "ml-metric-03"
+        ],
+        "remediation": ["ml-metric-foundation-02", "ml-metric-application-01"],
+        "objective": "거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다.",
+        "review_status": "reviewed"
+      },
+      "ml-constant-feature-20261020": {
+        "concept_id": "ml-preprocessing",
+        "level": 2,
+        "role": "application",
+        "family": "ml-preprocessing:분산 0 특성의 새 값 변환",
+        "requires": [
+          "ml-mean-foundation-01",
+          "ml-scale-foundation-01",
+          "ml-transform-foundation-01"
+        ],
+        "remediation": ["ml-scale-foundation-01", "ml-transform-foundation-01"],
+        "objective": "학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다.",
+        "review_status": "reviewed"
+      },
+      "ml-group-isolation-20261020": {
+        "concept_id": "ml-evaluation",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-evaluation:반복 관측의 집단 격리",
+        "requires": [
+          "ml-split-01",
+          "ml-split-02",
+          "ml-time-split-20261019",
+          "numpy-index-foundation-01"
+        ],
+        "remediation": ["ml-eval-foundation-02", "ml-time-split-20261019"],
+        "objective": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다.",
         "review_status": "reviewed"
       }
     },

@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-20",
+  "batch_id": "curriculum-expansion-20261020",
+  "source_commit": "63e4bbacd626e5d53c147b5759f4b9bb63c4286e",
+  "review_method": "Codex direct per-item editorial review plus independent library/SQLite boundary tests; actual learner effects unmeasured",
+  "status": "item_reviewed",
+  "scope": "12 additions within existing concepts, 5 application + 7 transfer; all 142 current exercises including concurrent daily five, paths, tracks and rules preserved",
+  "exercises": [
+    {
+      "id": "pandas-top-order-20261020",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다.",
+      "rationale": "상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": ["pandas-sort-scaffold-01", "pandas-sort-scaffold-02"],
+      "family": "pandas-sort:후보 제한 전후 정렬",
+      "new_concept": "행 제한과 정렬의 비가환성",
+      "answer": "(['B', 'A'], ['B', 'C'])",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "(['B', 'C'], ['B', 'C'])": "head가 언제나 전체 데이터의 상위 금액을 고른다고 생각했을 가능성",
+        "(['A', 'B'], ['B', 'C'])": "첫 경로의 정렬 반환값을 무시했을 가능성",
+        "(['B', 'A'], ['C', 'B'])": "두 번째 경로의 정렬 방향을 반대로 읽었을 가능성"
+      },
+      "diagnostic_question": "첫 경로에서 C행이 정렬 대상에 들어가나요?",
+      "boundary_check": "입력 행 순서가 달라지면 첫 경로만 후보 집합이 바뀌며, head(0)은 두 경로 모두 빈 결과다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다."
+    },
+    {
+      "id": "pandas-unique-buyers-20261020",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다.",
+      "rationale": "팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+      "requires": [
+        "pandas-group-01",
+        "pandas-group-scaffold-01",
+        "pandas-null-01"
+      ],
+      "family": "pandas-group:고유 고객과 주문 단위",
+      "new_concept": "고유값 개수와 행 수",
+      "answer": "(4, 2)",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "(4, 3)": "nunique를 결측치만 제외하는 count로 해석했을 가능성",
+        "(3, 2)": "size가 결측치인 행을 제외한다고 생각했을 가능성",
+        "(4, 4)": "고유 고객 수를 주문 행 수와 같다고 생각했을 가능성"
+      },
+      "diagnostic_question": "고객 1의 두 주문은 주문 건수와 고객 수에 각각 몇 번 반영되나요?",
+      "boundary_check": "같은 고객의 주문 추가 시 size만 증가한다. nunique(dropna=False)는 결측도 하나의 값으로 세어 3이다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다."
+    },
+    {
+      "id": "numpy-reshape-columns-20261020",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다.",
+      "rationale": "배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "family": "numpy-structure:재구성 후 열 추출",
+      "new_concept": "reshape 후 원소 위치",
+      "answer": "([1, 4], [1, 3, 5])",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "([1, 4], [1, 4])": "reshape 후에도 열 단위 값이 보존된다고 생각했을 가능성",
+        "([3, 4, 5], [2, 3])": "열 선택을 행 선택으로 읽었을 가능성",
+        "([1, 4], [2, 3, 4])": "행 우선으로 값을 다시 묶는 순서를 혼동했을 가능성"
+      },
+      "diagnostic_question": "y의 두 번째 행에는 어떤 두 값이 들어 있나요?",
+      "boundary_check": "reshape 전후 전체 원소 순서는 같다. 1열 형태에서는 두 번째 열을 선택할 수 없다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다."
+    },
+    {
+      "id": "numpy-chained-write-20261020",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다.",
+      "rationale": "연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": [
+        "numpy-memory-foundation-01",
+        "numpy-view-02",
+        "numpy-mask-application-02"
+      ],
+      "family": "numpy-memory:연쇄 인덱싱 쓰기 경로",
+      "new_concept": "연쇄 선택의 중간 객체와 대입",
+      "answer": "[1, 9, 7]",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "[1, 0, 7]": "첫 대입만 원본에 전파된다고 생각했을 가능성",
+        "[1, 4, 7]": "두 단계 선택은 언제나 복사라고 생각했을 가능성",
+        "[9, 4, 7]": "슬라이스 결과의 0 위치를 원본 0 위치와 혼동했을 가능성"
+      },
+      "diagnostic_question": "첫 대입의 왼쪽에서 마지막 [0]이 수정하는 객체는 x 자체인가요?",
+      "boundary_check": "직접 마스크 대입은 원본을 바꾼다. 슬라이스에 copy()를 붙이면 두 번째 대입도 원본에 전파되지 않는다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다."
+    },
+    {
+      "id": "sql-composite-match-20261020",
+      "domain": "SQL",
+      "level": 2,
+      "objective": "조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다.",
+      "rationale": "조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["sql-join-foundation-01", "sql-rows-foundation-01"],
+      "family": "sql-joins:두 키의 동시 일치",
+      "new_concept": "복합 키의 일치 조건",
+      "answer": "3",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "6": "조직 조건을 빼고 user_id만 비교했을 가능성",
+        "2": "주문 수 대신 users의 행 수를 셌을 가능성",
+        "1": "서로 다른 user_id의 개수만 셌을 가능성"
+      },
+      "diagnostic_question": "A조직 사용자와 B조직 주문은 ON절의 어떤 비교에서 제외되나요?",
+      "boundary_check": "한쪽 조직에 같은 번호를 추가해도 다른 조직의 연결 건수는 증가하지 않는다. 키 하나를 빼면 잘못된 조합이 증가한다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다."
+    },
+    {
+      "id": "sql-unique-visitors-20261020",
+      "domain": "SQL",
+      "level": 2,
+      "objective": "행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다.",
+      "rationale": "행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+      "requires": ["sql-count-01", "sql-where-01"],
+      "family": "sql-aggregation:중복 방문과 사용자 단위",
+      "new_concept": "COUNT DISTINCT의 집계 대상",
+      "answer": "(4, 2)",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "(4, 3)": "DISTINCT를 무시해 NULL만 제외했거나 NULL을 고유 사용자로 셌을 가능성",
+        "(3, 2)": "COUNT(*)도 NULL이 있는 행을 제외한다고 생각했을 가능성",
+        "(5, 3)": "팀 조건을 집계 전에 적용하지 않았을 가능성"
+      },
+      "diagnostic_question": "user_id=1의 재방문은 두 집계에 각각 몇 번 반영되나요?",
+      "boundary_check": "중복 방문 추가는 첫 집계만 증가시키고, 새 사용자 방문은 두 집계를 모두 증가시킨다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다."
+    },
+    {
+      "id": "stats-median-pooling-20261020",
+      "domain": "통계",
+      "level": 3,
+      "objective": "집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다.",
+      "rationale": "집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": ["stats-median-01", "stats-summary-application-02"],
+      "family": "stats-summaries:중앙값 요약과 원자료 통합",
+      "new_concept": "집단 요약의 비가산성",
+      "answer": "(3.0, 3.5)",
+      "accepted_answers": ["(3, 3.5)"],
+      "distractor_hypotheses": {
+        "(3.0, 3.0)": "집단 중앙값의 중앙값이 전체 중앙값이라고 생각했을 가능성",
+        "(3.5, 3.5)": "첫 연산도 원자료 전체를 합친다고 생각했을 가능성",
+        "(4.0, 3.5)": "첫 두 중앙값 중 큰 값만 선택했을 가능성"
+      },
+      "diagnostic_question": "first와 second에 각각 실제로 들어가는 값의 목록은 무엇인가요?",
+      "boundary_check": "두 집단 크기가 같아도 같다는 보장은 없다. 대칭적인 일부 입력에서 두 결과가 우연히 같을 수 있다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다."
+    },
+    {
+      "id": "stats-user-session-20261020",
+      "domain": "통계",
+      "level": 3,
+      "objective": "세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다.",
+      "rationale": "세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": [
+        "stats-weight-01",
+        "stats-two-denominators-20261019",
+        "pandas-group-02"
+      ],
+      "family": "stats-rates:재방문 사용자와 세션 분모",
+      "new_concept": "관측 단위에 따른 비율",
+      "answer": "(0.4, 0.67)",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "(0.4, 0.4)": "두 번째 계산도 세션 다섯 개를 분모로 사용했을 가능성",
+        "(0.67, 0.4)": "행 단위 비율과 사용자 단위 비율을 뒤바꾸었을 가능성",
+        "(0.4, 1.0)": "구매하지 않은 사용자 B를 두 번째 분모에서 제외했을 가능성"
+      },
+      "diagnostic_question": "두 번째 계산에서 B는 분모에 남아 있나요? A의 두 방문은 몇 개 값으로 바뀌나요?",
+      "boundary_check": "구매하지 않는 재방문 한 건 추가 시 세션 비율은 바뀌지만 사용자별 구매율은 유지된다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다."
+    },
+    {
+      "id": "ml-neighbor-weights-20261020",
+      "domain": "scikit-learn",
+      "level": 3,
+      "objective": "같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다.",
+      "rationale": "같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": [
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-01",
+        "ml-neighbor-regression-20261019"
+      ],
+      "family": "ml-neighbors:이웃 가중치 변경",
+      "new_concept": "거리 역수 가중 투표",
+      "answer": "([1], [0])",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "([1], [1])": "distance 설정에서도 이웃 수만으로 다수결했을 가능성",
+        "([0], [0])": "uniform 설정도 가장 가까운 한 이웃만 사용한다고 생각했을 가능성",
+        "([0], [1])": "두 가중치 설정의 역할을 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "레이블 1의 총 가중치는 레이블 0의 가중치보다 큰가요?",
+      "boundary_check": "query=0에서는 정확히 겹친 이웃의 레이블 0이 distance 결과를 결정한다. uniform 결과는 여전히 1이다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다."
+    },
+    {
+      "id": "ml-f1-balance-20261020",
+      "domain": "scikit-learn",
+      "level": 3,
+      "objective": "거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다.",
+      "rationale": "거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": [
+        "ml-metric-foundation-02",
+        "ml-metric-application-01",
+        "ml-metric-03"
+      ],
+      "family": "ml-metrics:F1과 한쪽 지표의 차이",
+      "new_concept": "정밀도·재현율의 조화평균",
+      "answer": "0.5",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "0.67": "정밀도와 재현율을 산술평균했을 가능성",
+        "0.33": "F1을 재현율 하나로 해석했을 가능성",
+        "1.0": "거짓 양성이 없다는 이유로 완벽한 점수라고 생각했을 가능성"
+      },
+      "diagnostic_question": "놓친 두 양성은 F1 식에서 어디에 반영되나요?",
+      "boundary_check": "전부 맞히면 F1=1, TP=0이고 실제 양성이 있으면 F1=0이다. TN만 추가해도 F1은 변하지 않는다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다."
+    },
+    {
+      "id": "ml-constant-feature-20261020",
+      "domain": "scikit-learn",
+      "level": 2,
+      "objective": "학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다.",
+      "rationale": "학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다. 선수 기초 이후 새로운 구분 하나를 짧은 입력에 적용한다.",
+      "requires": [
+        "ml-mean-foundation-01",
+        "ml-scale-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "family": "ml-preprocessing:분산 0 특성의 새 값 변환",
+      "new_concept": "상수 특성의 scale_=1 처리",
+      "answer": "[[2.0, 2.0]]",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "[[0.0, 2.0]]": "학습 때 상수였던 열은 새 값도 항상 0이라고 생각했을 가능성",
+        "[[7.0, 3.0]]": "상수 열이 있으면 모든 변환을 생략한다고 생각했을 가능성",
+        "[[0.0, 0.0]]": "새 한 행으로 기준을 다시 학습했다고 생각했을 가능성"
+      },
+      "diagnostic_question": "첫 열의 학습 값 5와 새 값 7은 같은가요? scale_는 0인가요, 1인가요?",
+      "boundary_check": "새 첫 값이 5면 변환값 0, 4면 -1이다. 두 번째 열의 기준은 첫 열이 상수여도 유지된다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다."
+    },
+    {
+      "id": "ml-group-isolation-20261020",
+      "domain": "scikit-learn",
+      "level": 3,
+      "objective": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다.",
+      "rationale": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다. 기존 적용 이후 조건 변화와 중간 상태를 함께 추적한다.",
+      "requires": [
+        "ml-split-01",
+        "ml-split-02",
+        "ml-time-split-20261019",
+        "numpy-index-foundation-01"
+      ],
+      "family": "ml-evaluation:반복 관측의 집단 격리",
+      "new_concept": "집단 단위 평가 분리",
+      "answer": "(['A', 'B'], [])",
+      "accepted_answers": [],
+      "distractor_hypotheses": {
+        "([], [])": "행 인덱스만 다르면 같은 집단도 분리되었다고 생각했을 가능성",
+        "(['A', 'B'], ['A', 'B'])": "GroupKFold도 집단을 나누지 않는다고 생각했을 가능성",
+        "([], ['A', 'B'])": "일반 분할과 집단별 분할의 역할을 반대로 이해했을 가능성"
+      },
+      "diagnostic_question": "A집단의 0행과 2행은 각 평가 절차에서 같은 쪽에 있나요?",
+      "boundary_check": "일반 KFold는 입력 행 순서를 바꾸면 집단 중복이 달라질 수 있다. 집단 분할은 어떤 허용 순서에서도 교집합이 비어야 한다.",
+      "editorial_review": "입력·상태 독립성·단일 정답·중립 제목·선수 부담·오답 가설·힌트·보충·다른날 변형을 개별 검토. 반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다."
+    }
+  ],
+  "integration_commit": "b95335759303c64d0891ad433c1a858f5abe9f8e"
+}

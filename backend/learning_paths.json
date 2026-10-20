@@ -1604,6 +1604,158 @@
       "remediation": ["sql-count-01", "sql-null-count-20261018"],
       "objective": "집계된 분자·분모의 자료형과 연산 순서가 비율에 미치는 영향을 판단한다.",
       "review_status": "reviewed"
+    },
+    "pandas-top-order-20261020": {
+      "concept_id": "pandas-sort",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-sort:후보 제한 전후 정렬",
+      "requires": ["pandas-sort-scaffold-01", "pandas-sort-scaffold-02"],
+      "remediation": ["pandas-sort-scaffold-01"],
+      "objective": "상위 행 제한과 정렬의 호출 순서가 후보 집합에 미치는 영향을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-unique-buyers-20261020": {
+      "concept_id": "pandas-group",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-group:고유 고객과 주문 단위",
+      "requires": [
+        "pandas-group-01",
+        "pandas-group-scaffold-01",
+        "pandas-null-01"
+      ],
+      "remediation": ["pandas-group-scaffold-01", "pandas-null-01"],
+      "objective": "팀의 주문 행 수와 결측을 제외한 고유 고객 수를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-reshape-columns-20261020": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:재구성 후 열 추출",
+      "requires": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "remediation": ["numpy-index-foundation-01"],
+      "objective": "배열 재구성 전후 같은 열 위치가 다른 원소를 가리킴을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-chained-write-20261020": {
+      "concept_id": "numpy-memory",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-memory:연쇄 인덱싱 쓰기 경로",
+      "requires": [
+        "numpy-memory-foundation-01",
+        "numpy-view-02",
+        "numpy-mask-application-02"
+      ],
+      "remediation": [
+        "numpy-memory-foundation-01",
+        "numpy-memory-foundation-02"
+      ],
+      "objective": "연쇄 인덱싱의 중간 결과가 복사인지 뷰인지에 따라 대입 전파를 판단한다.",
+      "review_status": "reviewed"
+    },
+    "sql-composite-match-20261020": {
+      "concept_id": "sql-joins",
+      "level": 2,
+      "role": "application",
+      "family": "sql-joins:두 키의 동시 일치",
+      "requires": ["sql-join-foundation-01", "sql-rows-foundation-01"],
+      "remediation": ["sql-join-foundation-01"],
+      "objective": "조직 안에서만 유일한 ID를 두 열의 일치 조건으로 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-unique-visitors-20261020": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:중복 방문과 사용자 단위",
+      "requires": ["sql-count-01", "sql-where-01"],
+      "remediation": ["sql-null-count-20261018"],
+      "objective": "행 조건 이후 전체 방문 건수와 알려진 고유 사용자 수를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "stats-median-pooling-20261020": {
+      "concept_id": "stats-summaries",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-summaries:중앙값 요약과 원자료 통합",
+      "requires": ["stats-median-01", "stats-summary-application-02"],
+      "remediation": ["stats-summary-foundation-02"],
+      "objective": "집단 중앙값만으로 원자료를 합친 중앙값을 대체할 수 없음을 계산으로 구분한다.",
+      "review_status": "reviewed"
+    },
+    "stats-user-session-20261020": {
+      "concept_id": "stats-rates",
+      "level": 3,
+      "role": "transfer",
+      "family": "stats-rates:재방문 사용자와 세션 분모",
+      "requires": [
+        "stats-weight-01",
+        "stats-two-denominators-20261019",
+        "pandas-group-02"
+      ],
+      "remediation": ["stats-rate-foundation-02", "pandas-group-scaffold-01"],
+      "objective": "세션별 구매 비율과 한 번 이상 구매한 사용자 비율의 분모를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-weights-20261020": {
+      "concept_id": "ml-neighbors",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-neighbors:이웃 가중치 변경",
+      "requires": [
+        "ml-neighbor-foundation-01",
+        "ml-neighbor-01",
+        "ml-neighbor-regression-20261019"
+      ],
+      "remediation": ["ml-neighbor-foundation-02"],
+      "objective": "같은 세 이웃에서 균등 투표와 거리 역수 가중 투표가 다른 예측을 만드는 이유를 판단한다.",
+      "review_status": "reviewed"
+    },
+    "ml-f1-balance-20261020": {
+      "concept_id": "ml-metrics",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-metrics:F1과 한쪽 지표의 차이",
+      "requires": [
+        "ml-metric-foundation-02",
+        "ml-metric-application-01",
+        "ml-metric-03"
+      ],
+      "remediation": ["ml-metric-foundation-02", "ml-metric-application-01"],
+      "objective": "거짓 음성이 있는 분류 결과에서 F1의 분자와 분모를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "ml-constant-feature-20261020": {
+      "concept_id": "ml-preprocessing",
+      "level": 2,
+      "role": "application",
+      "family": "ml-preprocessing:분산 0 특성의 새 값 변환",
+      "requires": [
+        "ml-mean-foundation-01",
+        "ml-scale-foundation-01",
+        "ml-transform-foundation-01"
+      ],
+      "remediation": ["ml-scale-foundation-01", "ml-transform-foundation-01"],
+      "objective": "학습 중 변동이 없던 특성의 StandardScaler 처리를 새 값에 적용한다.",
+      "review_status": "reviewed"
+    },
+    "ml-group-isolation-20261020": {
+      "concept_id": "ml-evaluation",
+      "level": 3,
+      "role": "transfer",
+      "family": "ml-evaluation:반복 관측의 집단 격리",
+      "requires": [
+        "ml-split-01",
+        "ml-split-02",
+        "ml-time-split-20261019",
+        "numpy-index-foundation-01"
+      ],
+      "remediation": ["ml-eval-foundation-02", "ml-time-split-20261019"],
+      "objective": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

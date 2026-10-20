@@ -12,6 +12,8 @@ import expansion from "../../curriculum/reviews/2026-10-19-expansion.json" with 
 
 import daily20261020 from "../../backend/content_batches/2026-10-20.json" with { type: "json" };
 
+import expansion20 from "../../curriculum/reviews/2026-10-20-expansion.json" with { type: "json" };
+
 let isolatedApi: ChildProcess | undefined;
 test.afterEach(async () => {
   if (isolatedApi && isolatedApi.exitCode === null) {
@@ -24,8 +26,14 @@ test.afterEach(async () => {
   isolatedApi = undefined;
 });
 
-for (const batch of [firstBatch, sqlBatch, expansion, daily20261020]) {
-  test(`daily batch ${batch.date} is reachable while earlier snapshots survive`, async ({
+for (const batch of [
+  firstBatch,
+  sqlBatch,
+  expansion,
+  daily20261020,
+  expansion20,
+]) {
+  test(`daily batch ${batch.date}${batch === expansion20 ? " expansion" : ""} is reachable while earlier snapshots survive`, async ({
     page,
   }, testInfo) => {
     // Every batch imports and re-exports the whole growing historical catalog.
@@ -204,9 +212,10 @@ for (const batch of [firstBatch, sqlBatch, expansion, daily20261020]) {
         if (ex.response_mode === "choice")
           await page.getByLabel(ex.answer, { exact: true }).check();
         else {
-          const answer = ex.id.endsWith("-20261019")
-            ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
-            : ex.answer;
+          const answer =
+            batch === expansion || batch === expansion20
+              ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
+              : ex.answer;
           await page.getByRole("textbox").fill(answer);
         }
         await page.getByRole("button", { name: "답 확인하기" }).click();
@@ -259,7 +268,7 @@ for (const batch of [firstBatch, sqlBatch, expansion, daily20261020]) {
       ).toBe("correct");
     expect(errors).toEqual([]);
     await page.screenshot({
-      path: `test-results/${test.info().project.name}-codex-${batch.date}-records.png`,
+      path: `test-results/${test.info().project.name}-codex-${batch.date}${batch === expansion20 ? "-expansion" : ""}-records.png`,
       fullPage: true,
     });
   });
