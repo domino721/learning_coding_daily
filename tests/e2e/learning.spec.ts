@@ -31,6 +31,17 @@ test("independent courses use unique pools, capped choices and preserved history
   const today = page.getByRole("group", { name: "오늘 누적 학습" }),
     lifetime = page.getByRole("region", { name: "누적 학습" });
   await expect(lifetime).toContainText("0문제 풀이");
+  await page.setViewportSize({ width: 565, height: 740 });
+  const headingBox = (await page.locator(".page-heading").boundingBox())!;
+  const wideActivityBox = (await page.locator(".activity").boundingBox())!;
+  const totalBox = (await today.locator("p").boundingBox())!;
+  const daysBox = (await today.locator(".activity-days").boundingBox())!;
+  const breakdownBox = (await today.locator(".today-breakdown").boundingBox())!;
+  expect(wideActivityBox.x).toBeGreaterThan(headingBox.x + headingBox.width);
+  expect(wideActivityBox.y).toBe(headingBox.y);
+  expect(breakdownBox.x).toBeGreaterThan(totalBox.x + totalBox.width);
+  expect(daysBox.y + daysBox.height).toBeLessThanOrEqual(totalBox.y);
+  expect(breakdownBox.y).toBeLessThan(daysBox.y);
   await page.setViewportSize({ width: 320, height: 740 });
   const startButton = page.getByRole("button", {
     name: "오늘 학습 시작하기",
@@ -40,7 +51,7 @@ test("independent courses use unique pools, capped choices and preserved history
   const activityBox = (await page.locator(".activity").boundingBox())!;
   // The primary action must fit above the fixed navigation without scrolling.
   expect(startBox.y + startBox.height).toBeLessThan(navBox.y);
-  expect(activityBox.y).toBeGreaterThan(startBox.y + startBox.height);
+  expect(activityBox.y + activityBox.height).toBeLessThan(startBox.y);
   expect(activityBox.height).toBeLessThan(240);
   await page.screenshot({
     path: `test-results/${test.info().project.name}-home.png`,

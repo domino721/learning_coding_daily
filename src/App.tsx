@@ -253,8 +253,16 @@ export default function App() {
     dashboard?.extra && !dashboard.extra.finished
       ? "추가 학습 이어서 풀기"
       : "추천 문제 더 풀기";
+  const activity = dashboard && (
+    <Activity
+      dashboard={dashboard}
+      todaySession={todaySession}
+      recordMode={screen === "record"}
+      activeCount={tracks.reduce((n, t) => n + t.exercise_count, 0)}
+    />
+  );
   return (
-    <div className="app-shell">
+    <div className={`app-shell${screen === "home" ? " home-shell" : ""}`}>
       <SyncAgent />
       <header className="app-header">
         <button
@@ -327,21 +335,28 @@ export default function App() {
           <>
             {(screen === "home" || screen === "record") && (
               <>
-                <div className="page-heading">
-                  <p className="eyebrow">
-                    {day?.replaceAll("-", ".")} ·{" "}
-                    {screen === "record" ? "MY LEARNING" : "DAILY PRACTICE"}
-                  </p>
-                  <h1 ref={focusTarget} tabIndex={-1}>
-                    {screen === "record"
-                      ? "쌓여 가는 작은 실력."
-                      : "오늘도, 한 걸음 더."}
-                  </h1>
-                  <p>
-                    {screen === "record"
-                      ? "해설로 배운 것도 소중한 연습이에요."
-                      : "하루 10분의 연습이 내일의 자신감이 되도록."}
-                  </p>
+                <div className={screen === "home" ? "home-intro" : undefined}>
+                  <div className="page-heading">
+                    <p className="eyebrow">
+                      {day?.replaceAll("-", ".")} ·{" "}
+                      {screen === "record" ? "MY LEARNING" : "DAILY PRACTICE"}
+                    </p>
+                    <h1 ref={focusTarget} tabIndex={-1}>
+                      {screen === "record" ? (
+                        "쌓여 가는 작은 실력."
+                      ) : (
+                        <>
+                          <span>오늘도,</span> <span>한 걸음 더.</span>
+                        </>
+                      )}
+                    </h1>
+                    <p>
+                      {screen === "record"
+                        ? "해설로 배운 것도 소중한 연습이에요."
+                        : "하루 10분의 연습이 내일의 자신감이 되도록."}
+                    </p>
+                  </div>
+                  {screen === "home" && activity}
                 </div>
                 {screen === "home" && (
                   <>
@@ -502,17 +517,7 @@ export default function App() {
                   </>
                 )}
                 {dashboard && <Lifetime dashboard={dashboard} />}
-                {dashboard && (
-                  <Activity
-                    dashboard={dashboard}
-                    todaySession={todaySession}
-                    recordMode={screen === "record"}
-                    activeCount={tracks.reduce(
-                      (n, t) => n + t.exercise_count,
-                      0,
-                    )}
-                  />
-                )}
+                {screen === "record" && activity}
                 {screen === "record" && (
                   <LearningRecord
                     dashboard={dashboard}

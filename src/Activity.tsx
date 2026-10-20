@@ -1,16 +1,36 @@
 import type { Dashboard, Session } from "./api";
-export function TodayCompleted({ dashboard }: { dashboard: Dashboard }) {
+export function TodayCompleted({
+  dashboard,
+  activityHeading = false,
+}: {
+  dashboard: Dashboard;
+  activityHeading?: boolean;
+}) {
   const basic = dashboard.today_sessions
     .filter((s) => !s.batch)
     .reduce((n, s) => n + s.completed_count, 0);
   const total = dashboard.today_completed_count ?? basic;
   return (
     <div className="today-completed" role="group" aria-label="오늘 누적 학습">
-      <p>
-        오늘 총 <strong>{total}문제</strong> 풀었어요.
-      </p>
-      <span>
-        전체 트랙 · 기본 {basic}문제 · 추가·이전 {total - basic}문제
+      <div className="today-summary">
+        {activityHeading && (
+          <>
+            <h2 id="activity-title">최근 7일의 발자국</h2>
+            <span className="activity-days">
+              {dashboard.weekly_days.length}일 학습했어요
+            </span>
+          </>
+        )}
+        <p>
+          오늘 총 <strong>{total}문제</strong> 풀었어요.
+        </p>
+      </div>
+      <span className="today-breakdown">
+        <span>전체 트랙</span>
+        <span className="breakdown-separator"> · </span>
+        <span>기본 {basic}문제</span>
+        <span className="breakdown-separator"> · </span>
+        <span>추가·이전 {total - basic}문제</span>
       </span>
     </div>
   );
@@ -41,11 +61,7 @@ export default function Activity({
 }) {
   return (
     <section className="activity" aria-labelledby="activity-title">
-      <div className="section-heading">
-        <h2 id="activity-title">최근 7일의 발자국</h2>
-        <span>{dashboard.weekly_days.length}일 학습했어요</span>
-      </div>
-      <TodayCompleted dashboard={dashboard} />
+      <TodayCompleted dashboard={dashboard} activityHeading />
       {recordMode && (
         <p className="achievement-note">
           {todaySession?.finished

@@ -532,6 +532,37 @@
         "scripts/verify-published-site.py"
       ],
       "code_reference": "5658e1a2b482d9aa419747fd4030bec007039f78"
+    },
+    {
+      "id": "EV-040",
+      "record": "docs/planning/evidence/EV-040.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/Activity.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts"
+      ],
+      "code_reference": "WBS-010 accompanying home layout maintenance after 2879bc17508cb27b197bc6d9ce524989192240ac"
+    },
+    {
+      "id": "EV-041",
+      "record": "docs/planning/evidence/EV-041.md",
+      "artifacts": [
+        "src/App.tsx",
+        "src/Activity.tsx",
+        "src/style.css",
+        "tests/e2e/learning.spec.ts"
+      ],
+      "code_reference": "WBS-010 accompanying follow-up layout maintenance after EV-040"
+    },
+    {
+      "id": "EV-042",
+      "record": "docs/planning/evidence/EV-042.md",
+      "artifacts": [
+        "src/style.css",
+        "tests/e2e/learning.spec.ts"
+      ],
+      "code_reference": "WBS-010 accompanying compact footprint and one-line subtitle CSS after EV-041"
     }
   ]
 }
