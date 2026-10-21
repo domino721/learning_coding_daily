@@ -605,6 +605,26 @@
         "src/curriculum.json"
       ],
       "code_reference": "73a956ff56e73d3a31bc716b3eff3b9b12392d8b"
+    },
+    {
+      "id": "EV-046",
+      "record": "docs/planning/evidence/EV-046.md",
+      "artifacts": [
+        "backend/scaffold_content.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-21-expansion.json",
+        "tests/test_expansion_20261021.py",
+        "tests/fixtures/catalog-before-expansion-20261021.json",
+        "tests/e2e/daily-content.spec.ts",
+        "tests/fixtures/recommendation.json",
+        "tests/test_api.py",
+        "docs/content_batches/2026-10-21-expansion.md",
+        "docs/experiments/api-paths-20261021.json",
+        "src/curriculum.json"
+      ],
+      "code_reference": "WBS-360/WBS-540 accompanying API-path expansion after 2c5bc52eee37c48190c77cad5ecf878cba45bc1a"
     }
   ]
 }

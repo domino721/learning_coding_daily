@@ -40,7 +40,7 @@ for (const fixture of cases)
       assert.equal(state[key], expected[key]);
     assert.deepEqual(
       selectExercises(sessions as any, {}, fixture.day).map(([ex]) => ex.id),
-      fixture.selected_v2 ?? fixture.selected,
+      fixture.selected_current ?? fixture.selected_v2 ?? fixture.selected,
     );
   });
 test("review intervals and same-day cap", () => {

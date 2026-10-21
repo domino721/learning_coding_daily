@@ -112,7 +112,8 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
     client, _, clock = learning
     active={ex.id for ex in EXERCISES if ex.response_mode!='essay'}
     seen=set()
-    for _ in range(60):
+    # A growing catalog needs a growing replay budget; daily/review limits stay fixed.
+    for _ in range(max(60, len(active))):
         for track in ('python','sql'):
             response=client.post('/api/sessions/today',json={'track_id':track})
             if response.status_code==422: continue

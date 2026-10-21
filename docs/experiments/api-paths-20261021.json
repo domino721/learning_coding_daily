@@ -1,0 +1,66 @@
+{
+  "synthetic": true,
+  "assumption": "Every selected item answered independently; one default batch per day, at most 120 days; no learner data.",
+  "tracks": [
+    {
+      "track": "python",
+      "days_to_all_active_items": 63,
+      "active_count": 134,
+      "new_first_day": {
+        "numpy-finite-average-20261021": 54,
+        "numpy-finite-mask-20261021": 61,
+        "numpy-isin-order-20261021": 52,
+        "numpy-isin-shape-20261021": 60,
+        "numpy-where-columns-20261021": 42,
+        "numpy-where-source-20261021": 48,
+        "pandas-isin-labels-20261021": 49,
+        "pandas-isin-values-20261021": 63,
+        "pandas-valid-counts-20261021": 53,
+        "pandas-where-labels-20261021": 47,
+        "pandas-where-values-20261021": 62,
+        "python-bool-type-20261021": 62,
+        "python-column-types-20261021": 60,
+        "python-finite-inputs-20261021": 51,
+        "python-numeric-inputs-20261021": 51
+      },
+      "concept_levels": {
+        "pandas-select": 3,
+        "pandas-filter": 3,
+        "pandas-null": 3,
+        "pandas-sort": 3,
+        "pandas-group": 3,
+        "numpy-structure": 3,
+        "numpy-broadcast": 3,
+        "numpy-mask": 3,
+        "numpy-memory": 3,
+        "stats-summaries": 3,
+        "stats-rates": 3,
+        "ml-evaluation": 3,
+        "ml-preprocessing": 3,
+        "ml-metrics": 3,
+        "ml-neighbors": 3
+      }
+    },
+    {
+      "track": "sql",
+      "days_to_all_active_items": 15,
+      "active_count": 38,
+      "new_first_day": {
+        "sql-case-counts-20261021": 14,
+        "sql-case-values-20261021": 13,
+        "sql-membership-duplicates-20261021": 9
+      },
+      "concept_levels": {
+        "sql-rows": 3,
+        "sql-aggregation": 3,
+        "sql-joins": 3
+      }
+    }
+  ],
+  "source_hashes": {
+    "backend/curriculum.py": "8c7d5733eb7c7ab4f54e1f1bb103dd223ab4932408c26ba0d60ae76f9cf399e0",
+    "backend/learning_paths.json": "be5144a954e41bc423cf43e82100db777679158853ee69d76f99f7af9bff09ec",
+    "src/recommendation.ts": "e2fcda1383a035a80c8beea7ba23ac6c85ee0ed72cb3122c22ff90af7614dfea"
+  },
+  "note": "Synthetic routing only; established concept evidence may waive particular prerequisite IDs under the unchanged production policy. Not a learner schedule or efficacy estimate."
+}

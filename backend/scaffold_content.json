@@ -1720,6 +1720,429 @@
       "explanation": "일반 KFold의 첫 분할은 학습 [2,3], 검증 [0,1]입니다. 양쪽에 A와 B가 모두 있어 교집합은 [A,B]입니다. GroupKFold는 같은 집단을 양쪽에 나누지 않아 교집합이 비어 있습니다. 새 사용자·환자의 성능을 평가할 때 같은 사람의 반복 관측이 양쪽에 섞이는지 확인해야 합니다. 집단 분리가 모든 누수나 시간 순서를 자동 해결하는 것은 아닙니다.",
       "reference_output": "(['A', 'B'], [])",
       "reference_setup": ""
+    },
+    {
+      "id": "python-column-types-20261021",
+      "title": "두 열 객체 점검",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"amount\": [10, 20]})\nprint((isinstance(df[\"amount\"], pd.Series),\n       isinstance(df[[\"amount\"]], pd.Series)))",
+      "answer": "(True, False)",
+      "explanation": "한 겹 대괄호로 고른 열은 Series, 두 겹 대괄호로 고른 표는 DataFrame입니다. isinstance(객체, 클래스)는 해당 클래스의 객체인지 불리언으로 반환하므로 (True, False)입니다. 후속 API를 고르기 전에 반환 자료형을 확인할 수 있습니다.",
+      "hints": [
+        "두 선택식이 만드는 객체의 자료형을 먼저 구분해 보세요.",
+        "isinstance의 두 번째 인수는 검사할 클래스입니다. 값의 모양이나 열 이름을 비교하지 않습니다."
+      ],
+      "domain": "pandas",
+      "concept": "객체와 클래스의 isinstance 검사",
+      "kind": "choice",
+      "choices": [
+        "(True, False)",
+        "(True, True)",
+        "(False, True)",
+        "(False, False)"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "(True, False)",
+      "reference_setup": ""
+    },
+    {
+      "id": "python-bool-type-20261021",
+      "title": "입력 세 값의 판정",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "print((isinstance(True, int),\n       isinstance(\"3\", int),\n       isinstance(3.0, int)))",
+      "answer": "(True, False, False)",
+      "explanation": "bool은 int의 하위 클래스이므로 isinstance(True, int)는 True입니다. \"3\"은 str, 3.0은 float이므로 나머지는 False입니다. isinstance는 변환 함수가 아닙니다. 숫자 입력 검증에서 불리언을 제외해야 하는지는 별도로 결정해야 합니다.",
+      "hints": [
+        "값이 같아 보이는 것과 객체의 자료형이 같은 것은 구분해 보세요.",
+        "isinstance는 하위 클래스 관계도 인정합니다. bool과 int의 관계를 확인하고 문자열과 float도 따로 보세요."
+      ],
+      "domain": "pandas",
+      "concept": "isinstance의 하위 클래스 판정",
+      "kind": "choice",
+      "choices": [
+        "(False, False, False)",
+        "(True, True, False)",
+        "(True, False, True)",
+        "(True, False, False)"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "(True, False, False)",
+      "reference_setup": ""
+    },
+    {
+      "id": "python-numeric-inputs-20261021",
+      "title": "입력 목록의 처리 결과",
+      "prompt": "대괄호 안의 for는 values를 순회하고 if가 참인 원소로 리스트를 만듭니다. 독립적으로 실행한 출력 리스트를 입력하세요.",
+      "code": "values = [5, True, 2.5, \"8\", False]\nkept = [value for value in values\n        if isinstance(value, (int, float))\n        and not isinstance(value, bool)]\nprint(kept)",
+      "answer": "[5, 2.5]",
+      "explanation": "클래스 튜플 (int, float)은 둘 중 하나의 자료형이면 통과시킵니다. 그 뒤 bool을 제외하므로 5와 2.5만 남습니다. \"8\"은 문자열 그대로라 제외됩니다. 이 검사는 숫자의 유한성까지 보장하지는 않습니다.",
+      "hints": [
+        "각 값에 대해 첫 검사와 두 번째 검사의 참·거짓을 따로 적어 보세요.",
+        "클래스 튜플은 허용 자료형 중 하나면 됩니다. True와 False는 첫 검사를 통과하지만 다음 조건도 만족해야 합니다."
+      ],
+      "domain": "pandas",
+      "concept": "클래스 튜플과 불리언 제외 조건의 연결",
+      "kind": "choice",
+      "choices": ["[5, 2.5, 8]", "[5]", "[5, 2.5]", "[5, True, 2.5, False]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "[5, 2.5]",
+      "reference_setup": ""
+    },
+    {
+      "id": "pandas-where-values-20261021",
+      "title": "보정 목록 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ns = pd.Series([4, -2, 0])\nprint(s.where(s >= 0, 9).tolist())",
+      "answer": "[4, 9, 0]",
+      "explanation": "Series.where는 조건이 True인 위치의 원래 값을 유지하고 False인 위치를 두 번째 인수로 바꿉니다. 조건은 [True, False, True]이므로 [4, 9, 0]이며 길이 3을 유지합니다. s[s >= 0]처럼 행을 거르는 것과 다릅니다.",
+      "hints": [
+        "결과의 길이가 달라지는 연산인지 먼저 생각해 보세요.",
+        "where에서는 True 위치를 유지하고 False 위치를 other로 교체합니다. 경계값 0의 조건도 확인하세요."
+      ],
+      "domain": "pandas",
+      "concept": "Series.where의 원소별 유지와 교체",
+      "kind": "choice",
+      "choices": ["[4, -2, 0]", "[4, 9, 0]", "[9, -2, 9]", "[4, 0]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "[4, 9, 0]",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-where-source-20261021",
+      "title": "처리 전후 배열 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([-3, 0, 4])\nresult = np.where(x >= 0, x, 0)\nprint((x.tolist(), result.tolist()))",
+      "answer": "([-3, 0, 4], [0, 0, 4])",
+      "explanation": "조건 [False, True, True]에 따라 result는 [0, 0, 4]입니다. np.where는 선택 결과를 반환하며 x에 대입하지 않았으므로 x는 [-3, 0, 4] 그대로입니다. 필터링과 달리 길이도 3을 유지합니다.",
+      "hints": [
+        "함수의 반환값을 어느 변수에 저장했는지 보세요.",
+        "True이면 두 번째 인수 x에서, False이면 세 번째 인수 0에서 고릅니다. x를 직접 바꾸는 대입문은 없습니다."
+      ],
+      "domain": "NumPy",
+      "concept": "조건 선택 결과와 원본 배열의 상태",
+      "kind": "choice",
+      "choices": [
+        "([-3, 0, 4], [0, 0, 4])",
+        "([0, 0, 4], [0, 0, 4])",
+        "([-3, 0, 4], [-3, 0, 0])",
+        "([-3, 0, 4], [0, 4])"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "([-3, 0, 4], [0, 0, 4])",
+      "reference_setup": ""
+    },
+    {
+      "id": "pandas-where-labels-20261021",
+      "title": "대체 목록의 적용 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ns = pd.Series([-1, 5, -3], index=[\"a\", \"b\", \"c\"])\nother = pd.Series([20, 10, 30], index=[\"b\", \"a\", \"c\"])\nprint(s.where(s >= 0, other).tolist())",
+      "answer": "[10, 5, 30]",
+      "explanation": "False인 a·c 위치를 other의 같은 라벨에서 가져와 각각 10과 30으로 바꿉니다. True인 b는 원래 값 5를 유지합니다. other의 첫 값 20을 a 위치에 넣지 않습니다. Series끼리의 연산에서 라벨과 위치를 구분해야 합니다.",
+      "hints": [
+        "바꾸어야 할 라벨과 그대로 둘 라벨을 먼저 적어 보세요.",
+        "other가 Series이면 같은 라벨로 맞춥니다. other의 첫 번째 위치가 s의 첫 번째 위치에 대응한다고 가정하지 마세요."
+      ],
+      "domain": "pandas",
+      "concept": "where의 대체 Series 라벨 정렬",
+      "kind": "choice",
+      "choices": ["[20, 5, 30]", "[-1, 20, -3]", "[20, 10, 30]", "[10, 5, 30]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "[10, 5, 30]",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-where-columns-20261021",
+      "title": "두 행의 처리 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([[-1, 2], [-3, -4]])\nother = np.array([10, 20])\nprint(np.where(x > 0, x, other).tolist())",
+      "answer": "[[10, 2], [10, 20]]",
+      "explanation": "other의 shape (2,)는 x의 마지막 축인 두 열에 맞추어 각 행에 [10, 20]으로 적용됩니다. 첫 열의 음수 두 개는 10, 두 번째 열의 -4는 20으로 바뀌며 양수인 2는 유지됩니다. 결과 shape은 (2,2)입니다.",
+      "hints": [
+        "x와 other의 shape을 오른쪽 축부터 맞추어 보세요.",
+        "other는 각 행마다 같은 두 열의 대체 값을 제공합니다. 그 뒤 조건에 따라 x 또는 other를 고릅니다."
+      ],
+      "domain": "NumPy",
+      "concept": "조건 선택과 열별 대체 배열의 연결",
+      "kind": "choice",
+      "choices": [
+        "[[0, 2], [0, 0]]",
+        "[[10, 20], [10, 20]]",
+        "[[10, 2], [10, 20]]",
+        "[[10, 2], [20, 20]]"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "[[10, 2], [10, 20]]",
+      "reference_setup": ""
+    },
+    {
+      "id": "pandas-isin-values-20261021",
+      "title": "등급 목록의 판정",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ns = pd.Series([\"A\", \"B\", \"A\", \"C\"])\nprint(s.isin([\"B\", \"C\"]).tolist())",
+      "answer": "[False, True, False, True]",
+      "explanation": "isin은 각 원소가 후보 목록 안에 있는지 검사합니다. A는 False, B와 C는 True이므로 [False, True, False, True]입니다. 결과는 원본과 같은 길이의 불리언 Series이며 행을 실제로 고르려면 별도 인덱싱이 필요합니다.",
+      "hints": [
+        "반환값이 후보 목록인지, 입력의 각 원소에 대한 판정인지 확인해 보세요.",
+        "s의 네 위치를 차례로 보고 B 또는 C와 일치하는지 판단합니다."
+      ],
+      "domain": "pandas",
+      "concept": "Series.isin의 목록 포함 검사",
+      "kind": "choice",
+      "choices": [
+        "[False, True]",
+        "[False, True, False, True]",
+        "[True, False, True, False]",
+        "[\"B\", \"C\"]"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "[False, True, False, True]",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-isin-shape-20261021",
+      "title": "작은 표의 판정 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([[1, 4], [4, 2]])\nprint(np.isin(x, [2, 4]).tolist())",
+      "answer": "[[False, True], [True, True]]",
+      "explanation": "np.isin은 x의 각 원소가 [2,4]에 있는지 검사하고 x와 같은 shape의 불리언 배열을 반환합니다. 1만 False이고 나머지는 True입니다. 후보 목록의 순서로 x를 재배열하지 않습니다.",
+      "hints": [
+        "입력 x의 모양과 반환 마스크의 모양을 먼저 생각해 보세요.",
+        "각 칸의 값이 2 또는 4인지 판단하되 칸의 위치는 바꾸지 않습니다."
+      ],
+      "domain": "NumPy",
+      "concept": "np.isin의 배열 포함 마스크",
+      "kind": "choice",
+      "choices": [
+        "[[False, True], [True, True]]",
+        "[False, True, True, True]",
+        "[[True, False], [False, False]]",
+        "[2, 4]"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "[[False, True], [True, True]]",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-isin-order-20261021",
+      "title": "선택된 코드 목록",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\ncodes = np.array([\"b\", \"a\", \"b\", \"c\"])\nprint(codes[np.isin(codes, [\"a\", \"b\"])].tolist())",
+      "answer": "['b', 'a', 'b']",
+      "explanation": "포함 마스크는 [True,True,True,False]입니다. 이 마스크로 codes를 고르면 원래 순서의 b,a,b가 남습니다. isin은 정렬이나 중복 제거를 하지 않습니다. 중복 이벤트를 유지해야 하는 분석에서 이 차이가 중요합니다.",
+      "hints": [
+        "안쪽 함수의 반환값과 바깥 대괄호의 결과를 구분해 보세요.",
+        "불리언 인덱싱은 True인 위치를 원본 순서로 고릅니다. 후보 목록의 순서는 결과 정렬 기준이 아닙니다."
+      ],
+      "domain": "NumPy",
+      "concept": "포함 검사와 불리언 인덱싱의 연결",
+      "kind": "choice",
+      "choices": [
+        "['a', 'b']",
+        "['a', 'b', 'b']",
+        "[True, True, True, False]",
+        "['b', 'a', 'b']"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "['b', 'a', 'b']",
+      "reference_setup": ""
+    },
+    {
+      "id": "pandas-isin-labels-20261021",
+      "title": "승인된 행의 번호",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ns = pd.Series([10, 20, 10], index=[5, 8, 9])\nallowed = pd.Series([10], index=[20])\nprint(s[s.isin(allowed)].index.tolist())",
+      "answer": "[5, 9]",
+      "explanation": "Series.isin은 allowed의 값 10을 포함 후보로 사용합니다. allowed의 인덱스 20으로 맞추지 않습니다. s에서 값 10인 두 행의 라벨은 5와 9이므로 [5,9]입니다. 마지막 index가 값 대신 라벨을 반환하는 점도 확인해야 합니다.",
+      "hints": [
+        "allowed에서 후보 값과 행 라벨을 따로 적어 보세요.",
+        "isin은 전달한 Series의 값들을 포함 후보로 씁니다. 선택된 s의 값이 아니라 마지막 index를 출력합니다."
+      ],
+      "domain": "pandas",
+      "concept": "isin 후보 Series의 값과 라벨 구분",
+      "kind": "choice",
+      "choices": ["[10, 10]", "[]", "[5, 9]", "[8]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "[5, 9]",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-finite-mask-20261021",
+      "title": "측정값 네 개의 판정",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([0.0, np.nan, np.inf, -np.inf])\nprint(np.isfinite(x).tolist())",
+      "answer": "[True, False, False, False]",
+      "explanation": "isfinite는 유한한 수이면 True, NaN이나 양·음의 무한대이면 False입니다. 0은 유한하므로 [True,False,False,False]입니다. 결측 검사만으로는 무한대를 제외할 수 없습니다.",
+      "hints": [
+        "NaN과 양·음 무한대를 각각 유한한 수로 볼 수 있는지 판단해 보세요.",
+        "0과 음수는 유한할 수 있습니다. np.isfinite는 NaN과 두 방향의 무한대에 False를 반환합니다."
+      ],
+      "domain": "NumPy",
+      "concept": "유한한 수와 NaN·무한대의 구분",
+      "kind": "choice",
+      "choices": [
+        "[True, True, False, False]",
+        "[True, False, False, False]",
+        "[True, False, True, True]",
+        "[False, False, False, False]"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 90,
+      "reference_output": "[True, False, False, False]",
+      "reference_setup": ""
+    },
+    {
+      "id": "pandas-valid-counts-20261021",
+      "title": "측정 목록의 두 집계",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nimport pandas as pd\ns = pd.Series([1.0, np.inf, np.nan, -np.inf])\nprint((int(s.notna().sum()), int(np.isfinite(s).sum())))",
+      "answer": "(3, 1)",
+      "explanation": "notna는 NaN만 제외하므로 1.0과 양·음 무한대 세 개를 셉니다. isfinite는 그중 유한한 1.0만 True이므로 1입니다. 따라서 (3,1)입니다. 분석 입력이 결측이 없다고 해서 모두 계산 가능한 유한값이라는 뜻은 아닙니다.",
+      "hints": [
+        "두 검사가 NaN과 무한대에 각각 어떤 판정을 하는지 표로 적어 보세요.",
+        "notna는 결측 여부, isfinite는 유한성입니다. 불리언의 합은 True의 개수입니다."
+      ],
+      "domain": "pandas",
+      "concept": "결측 검사와 유한성 검사 연결",
+      "kind": "choice",
+      "choices": ["(3, 1)", "(1, 1)", "(3, 3)", "(4, 1)"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "(3, 1)",
+      "reference_setup": ""
+    },
+    {
+      "id": "numpy-finite-average-20261021",
+      "title": "센서 요약값 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([10.0, np.nan, np.inf, 20.0])\nprint(float(x[np.isfinite(x)].mean()))",
+      "answer": "15.0",
+      "explanation": "유한성 마스크는 [True,False,False,True]이고 선택 결과는 [10,20]입니다. 선택된 두 값의 평균은 15.0입니다. np.nanmean만 사용하면 NaN만 제외하고 무한대는 남습니다. 유한한 값이 하나도 없으면 평균을 바로 계산하기 전에 별도 처리해야 합니다.",
+      "hints": [
+        "평균을 계산하기 직전 배열에 실제로 어떤 값이 남는지 적어 보세요.",
+        "isfinite가 True인 값만 고른 뒤 그 개수를 분모로 씁니다. 제거한 위치를 0으로 채우지는 않습니다."
+      ],
+      "domain": "NumPy",
+      "concept": "유한성 필터와 집계 분모의 연결",
+      "kind": "choice",
+      "choices": ["7.5", "inf", "nan", "15.0"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "15.0",
+      "reference_setup": ""
+    },
+    {
+      "id": "python-finite-inputs-20261021",
+      "title": "외부 입력의 처리 결과",
+      "prompt": "입력은 Python 기본 자료형입니다. 대괄호 안의 for는 순회하며 if가 참인 원소로 리스트를 만듭니다. 독립적으로 실행한 결과를 고르세요.",
+      "code": "import math\nvalues = [1.0, True, float(\"inf\"), \"2\", None, -3]\nkept = [value for value in values\n        if isinstance(value, (int, float))\n        and not isinstance(value, bool)\n        and math.isfinite(value)]\nprint(kept)",
+      "answer": "[1.0, -3]",
+      "explanation": "숫자 자료형인 1.0·True·무한대·-3 중 bool인 True를 제외하고 math.isfinite로 무한대를 제외하여 [1.0,-3]이 남습니다. \"2\"와 None은 첫 조건이 거짓이라 뒤의 math.isfinite를 호출하지 않습니다. and는 왼쪽부터 평가하고 거짓이면 멈추므로 TypeError가 발생하지 않습니다. 이 문항의 입력은 Python 기본 자료형입니다.",
+      "hints": [
+        "각 값이 어느 조건에서 처음 제외되는지 왼쪽부터 추적해 보세요.",
+        "and는 앞 조건이 거짓이면 뒤를 평가하지 않습니다. 자료형·bool 제외·유한성을 차례로 확인합니다."
+      ],
+      "domain": "pandas",
+      "concept": "자료형 검증 뒤 유한성 검사를 수행하는 순서",
+      "kind": "choice",
+      "choices": [
+        "[1.0, 2.0, -3]",
+        "TypeError가 발생한다",
+        "[1.0, -3]",
+        "[1.0, True, -3]"
+      ],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "[1.0, -3]",
+      "reference_setup": ""
+    },
+    {
+      "id": "sql-case-values-20261021",
+      "title": "보고서 금액 열 확인",
+      "prompt": "SQLite 기준으로 출력되는 값 목록을 id 순서대로 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, amount INTEGER);\n-- INSERT INTO orders VALUES(1,-2),(2,0),(3,5);\nSELECT CASE WHEN amount >= 0 THEN amount ELSE 0 END\nFROM orders ORDER BY id;",
+      "answer": "[0, 0, 5]",
+      "explanation": "CASE는 각 행에 대해 출력할 값을 고릅니다. -2는 ELSE 0, 0과 5는 THEN의 원래 값을 반환하므로 [0,0,5]입니다. WHERE가 없으므로 세 행을 유지합니다. 조건에 따른 값 치환과 행 제외를 구분해야 합니다.",
+      "hints": [
+        "SELECT의 표현식과 FROM 뒤 행 조건이 각각 무엇을 바꾸는지 보세요.",
+        "CASE는 행마다 값 하나를 만듭니다. 거짓인 행에도 ELSE에 적힌 값이 반환됩니다."
+      ],
+      "domain": "SQL",
+      "concept": "행을 유지하는 조건부 값 치환",
+      "kind": "choice",
+      "choices": ["[0, 0, 0]", "[0, 0, 5]", "[0, 5]", "[-2, 0, 5]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 120,
+      "reference_output": "[0, 0, 5]",
+      "reference_setup": "CREATE TABLE orders(id INTEGER, amount INTEGER);\nINSERT INTO orders VALUES(1,-2),(2,0),(3,5);"
+    },
+    {
+      "id": "sql-membership-duplicates-20261021",
+      "title": "대상 번호 조회 결과",
+      "prompt": "SQLite 기준으로 출력되는 id 목록을 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER);\n-- INSERT INTO orders VALUES(1),(2),(3);\n-- CREATE TABLE allowed(id INTEGER);\n-- INSERT INTO allowed VALUES(2),(2),(NULL);\nSELECT id FROM orders\nWHERE id IN (SELECT id FROM allowed)\nORDER BY id;",
+      "answer": "[2]",
+      "explanation": "id=2는 후보 안의 2와 일치하므로 통과합니다. 후보의 2가 중복되어도 포함 여부는 한 번의 참·거짓 판정이므로 원본 한 행이 두 행으로 늘지 않습니다. 1과 3은 일치가 없고 NULL 때문에 Unknown이 되어 WHERE에서 제외됩니다. NOT IN과 JOIN의 결과를 그대로 대입하면 안 됩니다.",
+      "hints": [
+        "원본의 각 행을 한 번씩 검사하는지, 두 테이블의 모든 조합을 만드는지 보세요.",
+        "IN은 후보에 일치하는 값이 있으면 True입니다. NULL이 있어도 실제로 일치하는 값의 판정은 True입니다."
+      ],
+      "domain": "SQL",
+      "concept": "포함 서브쿼리의 중복과 NULL 판정",
+      "kind": "choice",
+      "choices": ["[2]", "[2, 2]", "[]", "[1, 2, 3]"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "[2]",
+      "reference_setup": "CREATE TABLE orders(id INTEGER);\nINSERT INTO orders VALUES(1),(2),(3);\nCREATE TABLE allowed(id INTEGER);\nINSERT INTO allowed VALUES(2),(2),(NULL);"
+    },
+    {
+      "id": "sql-case-counts-20261021",
+      "title": "두 건수 집계 비교",
+      "prompt": "SQLite 기준으로 출력되는 한 행을 (첫 번째 값, 두 번째 값) 형식으로 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(status TEXT);\n-- INSERT INTO orders VALUES('open'),('done'),(NULL);\nSELECT COUNT(CASE WHEN status = 'done' THEN 1 ELSE 0 END),\n       COUNT(CASE WHEN status = 'done' THEN 1 END)\nFROM orders;",
+      "answer": "(3, 1)",
+      "explanation": "첫 CASE의 결과는 0,1,0입니다. COUNT(표현식)는 0도 NULL이 아니면 세므로 3입니다. 두 번째 CASE는 ELSE가 없어 거짓·Unknown에서 NULL을 반환하며 결과 NULL,1,NULL 중 1개만 셉니다. 조건을 만족한 수를 세려면 집계에 들어가는 값을 먼저 확인해야 합니다.",
+      "hints": [
+        "각 CASE가 세 행에서 반환하는 값을 먼저 나열해 보세요.",
+        "COUNT는 참의 개수가 아니라 NULL이 아닌 값의 개수입니다. ELSE가 없을 때의 반환값도 확인하세요."
+      ],
+      "domain": "SQL",
+      "concept": "COUNT에 전달되는 조건부 값과 NULL",
+      "kind": "choice",
+      "choices": ["(1, 1)", "(3, 3)", "(2, 1)", "(3, 1)"],
+      "accepted": [],
+      "version": 1,
+      "seconds": 180,
+      "reference_output": "(3, 1)",
+      "reference_setup": "CREATE TABLE orders(status TEXT);\nINSERT INTO orders VALUES('open'),('done'),(NULL);"
     }
   ]
 }

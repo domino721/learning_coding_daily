@@ -142,6 +142,13 @@
       "pandas-select-scaffold-01",
       "numpy-shape-01",
       "sql-where-01"
+    ],
+    "selected_current": [
+      "pandas-select-01",
+      "pandas-select-02",
+      "pandas-select-scaffold-01",
+      "python-column-types-20261021",
+      "python-bool-type-20261021"
     ]
   },
   {

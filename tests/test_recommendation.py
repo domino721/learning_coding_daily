@@ -24,7 +24,7 @@ def test_declared_learning_rules(case):
     # The v1 selection remains recorded; v2 adds targeted support before unrelated roots.
     selected=select_exercises(EXERCISES,sessions,{},case['day'])
     assert len(selected)==len({e.id for e,_ in selected})==5
-    assert [e.id for e,_ in selected]==case.get('selected_v2',case['selected'])
+    assert [e.id for e,_ in selected]==case.get('selected_current',case.get('selected_v2',case['selected']))
 
 
 def test_curriculum_has_explicit_metadata_and_acyclic_prerequisites():

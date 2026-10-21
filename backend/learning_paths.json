@@ -1806,6 +1806,201 @@
       "remediation": ["sql-join-foundation-01", "sql-join-foundation-02"],
       "objective": "USING 연결 후 공통 키와 비공통 열의 개수·순서를 예측한다.",
       "review_status": "reviewed"
+    },
+    "python-column-types-20261021": {
+      "concept_id": "pandas-select",
+      "level": 1,
+      "role": "foundation",
+      "family": "pandas-select:선택 객체의 클래스 판별",
+      "requires": [],
+      "remediation": ["python-column-types-20261021"],
+      "objective": "열 선택으로 얻은 Series와 DataFrame을 isinstance로 판별한다.",
+      "review_status": "reviewed"
+    },
+    "python-bool-type-20261021": {
+      "concept_id": "pandas-select",
+      "level": 1,
+      "role": "foundation",
+      "family": "pandas-select:불리언과 숫자 자료형",
+      "requires": [],
+      "remediation": ["python-bool-type-20261021"],
+      "objective": "불리언의 하위 클래스 관계와 숫자 문자열·실수의 자료형을 판별한다.",
+      "review_status": "reviewed"
+    },
+    "python-numeric-inputs-20261021": {
+      "concept_id": "pandas-select",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-select:허용 자료형과 예외 제외",
+      "requires": ["python-bool-type-20261021"],
+      "remediation": ["python-bool-type-20261021"],
+      "objective": "허용할 숫자 자료형을 묶고 불리언을 제외하는 입력 검증을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-where-values-20261021": {
+      "concept_id": "pandas-filter",
+      "level": 1,
+      "role": "foundation",
+      "family": "pandas-filter:조건 치환과 행 제거 구분",
+      "requires": [],
+      "remediation": ["pandas-where-values-20261021"],
+      "objective": "Series.where의 유지·교체 방향과 길이 보존을 읽는다.",
+      "review_status": "reviewed"
+    },
+    "numpy-where-source-20261021": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:조건 선택 반환과 원본 상태",
+      "requires": ["numpy-where-20261017"],
+      "remediation": ["numpy-where-20261017"],
+      "objective": "np.where의 반환 결과와 원본 상태를 따로 추적한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-where-labels-20261021": {
+      "concept_id": "pandas-select",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-select:조건 치환의 대체 라벨 정렬",
+      "requires": [
+        "python-column-types-20261021",
+        "pandas-where-values-20261021",
+        "pandas-alignment-20261017"
+      ],
+      "remediation": ["python-column-types-20261021"],
+      "objective": "조건 치환에서 대체 Series의 라벨 정렬과 원래 값 유지를 함께 추적한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-where-columns-20261021": {
+      "concept_id": "numpy-broadcast",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-broadcast:조건 선택의 대체 배열 확장",
+      "requires": [
+        "numpy-where-20261017",
+        "numpy-broadcast-foundation-01",
+        "numpy-broadcast-application-02"
+      ],
+      "remediation": ["numpy-where-20261017"],
+      "objective": "조건 선택에 열 방향 브로드캐스팅을 적용해 결과를 예측한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-isin-values-20261021": {
+      "concept_id": "pandas-filter",
+      "level": 1,
+      "role": "foundation",
+      "family": "pandas-filter:후보 목록의 원소별 포함 판정",
+      "requires": [],
+      "remediation": ["pandas-isin-values-20261021"],
+      "objective": "Series.isin이 만드는 원소별 포함 마스크와 길이를 예측한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-isin-shape-20261021": {
+      "concept_id": "numpy-mask",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-mask:배열 포함 마스크의 shape",
+      "requires": [],
+      "remediation": ["numpy-isin-shape-20261021"],
+      "objective": "np.isin의 원소별 포함 판정과 입력 shape 보존을 확인한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-isin-order-20261021": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:포함 선택의 순서와 중복",
+      "requires": ["numpy-isin-shape-20261021"],
+      "remediation": ["numpy-isin-shape-20261021"],
+      "objective": "포함 마스크를 적용한 결과의 순서와 중복 보존을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-isin-labels-20261021": {
+      "concept_id": "pandas-filter",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-filter:포함 후보 Series의 값과 라벨",
+      "requires": [
+        "pandas-isin-values-20261021",
+        "pandas-filter-scaffold-02",
+        "pandas-alignment-20261017"
+      ],
+      "remediation": ["pandas-isin-values-20261021"],
+      "objective": "Series 후보의 값 포함 검사와 결과 행 라벨 추출을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-finite-mask-20261021": {
+      "concept_id": "numpy-mask",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-mask:유한성의 원소별 판정",
+      "requires": [],
+      "remediation": ["numpy-finite-mask-20261021"],
+      "objective": "np.isfinite로 0·NaN·양음 무한대의 유한성을 판별한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-valid-counts-20261021": {
+      "concept_id": "pandas-null",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-null:결측과 유한성의 집계 차이",
+      "requires": ["pandas-null-01", "numpy-finite-mask-20261021"],
+      "remediation": ["pandas-null-01"],
+      "objective": "결측이 아닌 값의 개수와 유한한 수의 개수를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-finite-average-20261021": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:유한값 선택 후 요약",
+      "requires": ["numpy-finite-mask-20261021"],
+      "remediation": ["numpy-finite-mask-20261021"],
+      "objective": "유한성 마스크를 적용한 뒤 선택된 값만으로 평균을 계산한다.",
+      "review_status": "reviewed"
+    },
+    "python-finite-inputs-20261021": {
+      "concept_id": "pandas-null",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-null:혼합 입력의 안전한 유한성 검사",
+      "requires": [
+        "python-numeric-inputs-20261021",
+        "pandas-valid-counts-20261021"
+      ],
+      "remediation": ["python-numeric-inputs-20261021"],
+      "objective": "기본 자료형의 입력에서 타입·불리언·유한성 검사와 단락 평가를 연결한다.",
+      "review_status": "reviewed"
+    },
+    "sql-case-values-20261021": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:조건부 출력과 행 필터",
+      "requires": ["sql-rows-foundation-01"],
+      "remediation": ["sql-rows-foundation-01"],
+      "objective": "CASE의 값 선택과 WHERE의 행 선택을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "sql-membership-duplicates-20261021": {
+      "concept_id": "sql-rows",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-rows:포함 서브쿼리의 행 보존",
+      "requires": ["sql-rows-foundation-04", "sql-exists-20261017"],
+      "remediation": ["sql-rows-foundation-04"],
+      "objective": "후보 중복·NULL이 있는 IN 서브쿼리와 조인 행 증식을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "sql-case-counts-20261021": {
+      "concept_id": "sql-aggregation",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-aggregation:조건부 COUNT의 0과 NULL",
+      "requires": ["sql-count-01", "sql-having-01", "sql-case-values-20261021"],
+      "remediation": ["sql-count-01"],
+      "objective": "조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

@@ -1,0 +1,385 @@
+{
+  "date": "2026-10-21",
+  "batch_id": "manual-2026-10-21-api-paths",
+  "source_commit": "2c5bc52eee37c48190c77cad5ecf878cba45bc1a",
+  "status": "reviewed",
+  "review_method": "Codex authored outside app, separately solved all 18 examples with actual Python/NumPy/pandas/SQLite; per-item choices, prerequisites, boundaries and editorial review. No external model API.",
+  "scope": "Existing 18 concepts, learning-paths-2.0 and design/plan 1.8.0 preserved; 15 Python and 3 SQL; six each foundation/application/transfer. Learning efficacy unobserved.",
+  "exercises": [
+    {
+      "id": "python-column-types-20261021",
+      "domain": "pandas",
+      "level": 1,
+      "objective": "열 선택으로 얻은 Series와 DataFrame을 isinstance로 판별한다.",
+      "new_concept": "객체와 클래스의 isinstance 검사",
+      "family": "pandas-select:선택 객체의 클래스 판별",
+      "requires": [],
+      "answer": "(True, False)",
+      "distractor_hypotheses": {
+        "(True, True)": "대괄호 개수와 관계없이 같은 열이면 Series라고 판단했을 가능성",
+        "(False, True)": "Series와 DataFrame의 선택 표기를 반대로 기억했을 가능성",
+        "(False, False)": "isinstance가 값의 종류가 아닌 실제 객체의 자료형을 검사한다는 점을 놓쳤을 가능성"
+      },
+      "diagnostic_question": "두 겹 대괄호의 결과가 1열이어도 Series인가요?",
+      "boundary_check": "한 행·여러 행·빈 표에서도 열 선택 객체의 클래스는 동일하다.",
+      "accepted_answers": [],
+      "rationale": "열 선택으로 얻은 Series와 DataFrame을 isinstance로 판별한다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 열 선택으로 얻은 Series와 DataFrame을 isinstance로 판별한다."
+    },
+    {
+      "id": "python-bool-type-20261021",
+      "domain": "pandas",
+      "level": 1,
+      "objective": "불리언의 하위 클래스 관계와 숫자 문자열·실수의 자료형을 판별한다.",
+      "new_concept": "isinstance의 하위 클래스 판정",
+      "family": "pandas-select:불리언과 숫자 자료형",
+      "requires": [],
+      "answer": "(True, False, False)",
+      "distractor_hypotheses": {
+        "(False, False, False)": "bool이 int의 하위 클래스라는 관계를 모를 가능성",
+        "(True, True, False)": "숫자 문자열이 자동으로 정수로 변환된다고 생각했을 가능성",
+        "(True, False, True)": "값이 정수와 같으면 float도 int로 판정한다고 생각했을 가능성"
+      },
+      "diagnostic_question": "이 검사는 값을 변환하나요, 기존 자료형을 확인하나요?",
+      "boundary_check": "False도 int로 인정되지만 \"0\"과 0.0은 int가 아니다. 정수 하위 클래스도 인정된다.",
+      "accepted_answers": [],
+      "rationale": "불리언의 하위 클래스 관계와 숫자 문자열·실수의 자료형을 판별한다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 불리언의 하위 클래스 관계와 숫자 문자열·실수의 자료형을 판별한다."
+    },
+    {
+      "id": "python-numeric-inputs-20261021",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "허용할 숫자 자료형을 묶고 불리언을 제외하는 입력 검증을 추적한다.",
+      "new_concept": "클래스 튜플과 불리언 제외 조건의 연결",
+      "family": "pandas-select:허용 자료형과 예외 제외",
+      "requires": ["python-bool-type-20261021"],
+      "answer": "[5, 2.5]",
+      "distractor_hypotheses": {
+        "[5, True, 2.5, False]": "자료형 묶음만 검사하고 bool 제외 조건을 적용하지 않았을 가능성",
+        "[5, 2.5, 8]": "문자열을 숫자로 자동 변환한다고 생각했을 가능성",
+        "[5]": "isinstance의 클래스 튜플을 둘 다 충족해야 하는 조건으로 오해했을 가능성"
+      },
+      "diagnostic_question": "True는 어느 조건에서 제외되며 \"8\"은 실제로 변환되나요?",
+      "boundary_check": "0·음수·실수는 유지하고 bool·str·None은 제외한다. 무한대는 자료형 검사만으로 제외되지 않는다.",
+      "accepted_answers": [],
+      "rationale": "허용할 숫자 자료형을 묶고 불리언을 제외하는 입력 검증을 추적한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 허용할 숫자 자료형을 묶고 불리언을 제외하는 입력 검증을 추적한다."
+    },
+    {
+      "id": "pandas-where-values-20261021",
+      "domain": "pandas",
+      "level": 1,
+      "objective": "Series.where의 유지·교체 방향과 길이 보존을 읽는다.",
+      "new_concept": "Series.where의 원소별 유지와 교체",
+      "family": "pandas-filter:조건 치환과 행 제거 구분",
+      "requires": [],
+      "answer": "[4, 9, 0]",
+      "distractor_hypotheses": {
+        "[9, -2, 9]": "True인 위치를 교체하는 mask와 where를 반대로 이해했을 가능성",
+        "[4, 0]": "where를 불리언 인덱싱처럼 행을 제거하는 연산으로 생각했을 가능성",
+        "[4, -2, 0]": "where의 반환값에 교체 결과가 담긴다는 점을 놓쳤을 가능성"
+      },
+      "diagnostic_question": "조건이 거짓인 위치가 사라지나요, 다른 값으로 바뀌나요?",
+      "boundary_check": "전부 True·전부 False·빈 Series와 경계값 0에서 길이와 라벨을 보존한다.",
+      "accepted_answers": [],
+      "rationale": "Series.where의 유지·교체 방향과 길이 보존을 읽는다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. Series.where의 유지·교체 방향과 길이 보존을 읽는다."
+    },
+    {
+      "id": "numpy-where-source-20261021",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "np.where의 반환 결과와 원본 상태를 따로 추적한다.",
+      "new_concept": "조건 선택 결과와 원본 배열의 상태",
+      "family": "numpy-mask:조건 선택 반환과 원본 상태",
+      "requires": ["numpy-where-20261017"],
+      "answer": "([-3, 0, 4], [0, 0, 4])",
+      "distractor_hypotheses": {
+        "([0, 0, 4], [0, 0, 4])": "np.where가 원본 배열에도 직접 대입한다고 생각했을 가능성",
+        "([-3, 0, 4], [-3, 0, 0])": "True와 False에 대응하는 인수를 반대로 읽었을 가능성",
+        "([-3, 0, 4], [0, 4])": "where가 조건을 만족한 원소만 추출한다고 생각했을 가능성"
+      },
+      "diagnostic_question": "원본을 변경하는 대입문이 실제로 어느 줄에 있나요?",
+      "boundary_check": "전부 참·전부 거짓·빈 배열에서도 입력을 바꾸지 않으며 결과 배열 수정도 원본에 전파되지 않는다.",
+      "accepted_answers": [],
+      "rationale": "np.where의 반환 결과와 원본 상태를 따로 추적한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. np.where의 반환 결과와 원본 상태를 따로 추적한다."
+    },
+    {
+      "id": "pandas-where-labels-20261021",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "조건 치환에서 대체 Series의 라벨 정렬과 원래 값 유지를 함께 추적한다.",
+      "new_concept": "where의 대체 Series 라벨 정렬",
+      "family": "pandas-select:조건 치환의 대체 라벨 정렬",
+      "requires": [
+        "python-column-types-20261021",
+        "pandas-where-values-20261021",
+        "pandas-alignment-20261017"
+      ],
+      "answer": "[10, 5, 30]",
+      "distractor_hypotheses": {
+        "[20, 5, 30]": "대체 Series를 위치로만 대응시켰을 가능성",
+        "[-1, 20, -3]": "where의 유지·교체 방향을 거꾸로 읽었을 가능성",
+        "[20, 10, 30]": "조건과 무관하게 대체 Series 전체를 반환한다고 생각했을 가능성"
+      },
+      "diagnostic_question": "a 라벨에서 사용할 대체 값은 other의 몇 번째 위치에 있나요?",
+      "boundary_check": "other 순서를 바꿔도 결과는 같다. 바꿀 라벨이 other에 없을 때만 그 위치가 결측이 된다.",
+      "accepted_answers": [],
+      "rationale": "조건 치환에서 대체 Series의 라벨 정렬과 원래 값 유지를 함께 추적한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 조건 치환에서 대체 Series의 라벨 정렬과 원래 값 유지를 함께 추적한다."
+    },
+    {
+      "id": "numpy-where-columns-20261021",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "조건 선택에 열 방향 브로드캐스팅을 적용해 결과를 예측한다.",
+      "new_concept": "조건 선택과 열별 대체 배열의 연결",
+      "family": "numpy-broadcast:조건 선택의 대체 배열 확장",
+      "requires": [
+        "numpy-where-20261017",
+        "numpy-broadcast-foundation-01",
+        "numpy-broadcast-application-02"
+      ],
+      "answer": "[[10, 2], [10, 20]]",
+      "distractor_hypotheses": {
+        "[[10, 2], [20, 20]]": "other를 열별이 아닌 행별 대체 값으로 확장했을 가능성",
+        "[[0, 2], [0, 0]]": "지정한 대체 배열 대신 False를 0으로 바꾼다고 생각했을 가능성",
+        "[[10, 20], [10, 20]]": "조건이 참인 위치의 원래 값을 무시했을 가능성"
+      },
+      "diagnostic_question": "other의 길이 2는 x의 행 축과 열 축 중 어디에 먼저 맞춰지나요?",
+      "boundary_check": "다른 열 수·한 행 입력·(행,1) 대체 배열을 비교하면 열별·행별 확장의 차이가 드러난다.",
+      "accepted_answers": [],
+      "rationale": "조건 선택에 열 방향 브로드캐스팅을 적용해 결과를 예측한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 조건 선택에 열 방향 브로드캐스팅을 적용해 결과를 예측한다."
+    },
+    {
+      "id": "pandas-isin-values-20261021",
+      "domain": "pandas",
+      "level": 1,
+      "objective": "Series.isin이 만드는 원소별 포함 마스크와 길이를 예측한다.",
+      "new_concept": "Series.isin의 목록 포함 검사",
+      "family": "pandas-filter:후보 목록의 원소별 포함 판정",
+      "requires": [],
+      "answer": "[False, True, False, True]",
+      "distractor_hypotheses": {
+        "[True, False, True, False]": "포함과 제외의 방향을 뒤집었을 가능성",
+        "[\"B\", \"C\"]": "isin이 선택된 원소 자체를 반환한다고 생각했을 가능성",
+        "[False, True]": "결과 길이가 입력 s가 아닌 후보 목록의 길이라고 생각했을 가능성"
+      },
+      "diagnostic_question": "결과의 각 위치는 s의 원소에 대응하나요, 후보 목록에 대응하나요?",
+      "boundary_check": "후보 중복은 결과를 바꾸지 않고 빈 후보는 모두 False다. 문자열 숫자는 정수와 다르다.",
+      "accepted_answers": [],
+      "rationale": "Series.isin이 만드는 원소별 포함 마스크와 길이를 예측한다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. Series.isin이 만드는 원소별 포함 마스크와 길이를 예측한다."
+    },
+    {
+      "id": "numpy-isin-shape-20261021",
+      "domain": "NumPy",
+      "level": 1,
+      "objective": "np.isin의 원소별 포함 판정과 입력 shape 보존을 확인한다.",
+      "new_concept": "np.isin의 배열 포함 마스크",
+      "family": "numpy-mask:배열 포함 마스크의 shape",
+      "requires": [],
+      "answer": "[[False, True], [True, True]]",
+      "distractor_hypotheses": {
+        "[False, True, True, True]": "마스크가 입력의 2차원 구조를 보존하지 않고 평탄화된다고 생각했을 가능성",
+        "[[True, False], [False, False]]": "포함 검사와 제외 검사를 혼동했을 가능성",
+        "[2, 4]": "입력 위치의 판정 대신 후보 목록을 반환한다고 생각했을 가능성"
+      },
+      "diagnostic_question": "반환 마스크가 행별 하나인가요, 원소별 하나인가요?",
+      "boundary_check": "빈 후보·후보 중복·비정방 배열에서도 결과 shape은 입력과 같다.",
+      "accepted_answers": [],
+      "rationale": "np.isin의 원소별 포함 판정과 입력 shape 보존을 확인한다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. np.isin의 원소별 포함 판정과 입력 shape 보존을 확인한다."
+    },
+    {
+      "id": "numpy-isin-order-20261021",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "포함 마스크를 적용한 결과의 순서와 중복 보존을 추적한다.",
+      "new_concept": "포함 검사와 불리언 인덱싱의 연결",
+      "family": "numpy-mask:포함 선택의 순서와 중복",
+      "requires": ["numpy-isin-shape-20261021"],
+      "answer": "['b', 'a', 'b']",
+      "distractor_hypotheses": {
+        "['a', 'b']": "집합처럼 결과의 중복을 제거하고 정렬한다고 생각했을 가능성",
+        "['a', 'b', 'b']": "후보 목록의 순서로 원본을 재배열한다고 생각했을 가능성",
+        "[True, True, True, False]": "내부 마스크만 계산하고 바깥 인덱싱을 놓쳤을 가능성"
+      },
+      "diagnostic_question": "원본에서 두 번 등장한 b를 제거하는 연산이 있나요?",
+      "boundary_check": "후보 순서·후보 중복은 결과를 바꾸지 않는다. 빈 후보는 빈 결과이고 원본 중복 추가는 결과에도 추가된다.",
+      "accepted_answers": [],
+      "rationale": "포함 마스크를 적용한 결과의 순서와 중복 보존을 추적한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 포함 마스크를 적용한 결과의 순서와 중복 보존을 추적한다."
+    },
+    {
+      "id": "pandas-isin-labels-20261021",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "Series 후보의 값 포함 검사와 결과 행 라벨 추출을 구분한다.",
+      "new_concept": "isin 후보 Series의 값과 라벨 구분",
+      "family": "pandas-filter:포함 후보 Series의 값과 라벨",
+      "requires": [
+        "pandas-isin-values-20261021",
+        "pandas-filter-scaffold-02",
+        "pandas-alignment-20261017"
+      ],
+      "answer": "[5, 9]",
+      "distractor_hypotheses": {
+        "[8]": "후보 Series의 값 대신 인덱스 20과 비교했을 가능성",
+        "[10, 10]": "선택된 값과 마지막에 요청한 행 인덱스를 혼동했을 가능성",
+        "[]": "isin도 두 Series를 같은 행 라벨로 정렬한 후 비교한다고 생각했을 가능성"
+      },
+      "diagnostic_question": "allowed의 인덱스만 바꾸면 후보 값 10도 바뀌나요?",
+      "boundary_check": "후보 라벨·순서·중복만 바꾸어도 결과는 같다. 후보 값이 20으로 바뀌면 결과 라벨은 8이다.",
+      "accepted_answers": [],
+      "rationale": "Series 후보의 값 포함 검사와 결과 행 라벨 추출을 구분한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. Series 후보의 값 포함 검사와 결과 행 라벨 추출을 구분한다."
+    },
+    {
+      "id": "numpy-finite-mask-20261021",
+      "domain": "NumPy",
+      "level": 1,
+      "objective": "np.isfinite로 0·NaN·양음 무한대의 유한성을 판별한다.",
+      "new_concept": "유한한 수와 NaN·무한대의 구분",
+      "family": "numpy-mask:유한성의 원소별 판정",
+      "requires": [],
+      "answer": "[True, False, False, False]",
+      "distractor_hypotheses": {
+        "[True, False, True, True]": "유한성 검사를 결측 여부 검사와 동일하게 생각했을 가능성",
+        "[False, False, False, False]": "0도 무효 수치라고 생각했을 가능성",
+        "[True, True, False, False]": "NaN을 유한한 숫자로 취급했을 가능성"
+      },
+      "diagnostic_question": "무한대가 결측이 아니라는 사실이 유한함을 뜻하나요?",
+      "boundary_check": "음수·큰 유한값·빈 배열을 허용하며 NaN과 양·음 무한대는 제외한다.",
+      "accepted_answers": [],
+      "rationale": "np.isfinite로 0·NaN·양음 무한대의 유한성을 판별한다. 한 API의 반환 의미를 확인하는 기초다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. np.isfinite로 0·NaN·양음 무한대의 유한성을 판별한다."
+    },
+    {
+      "id": "pandas-valid-counts-20261021",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "결측이 아닌 값의 개수와 유한한 수의 개수를 구분한다.",
+      "new_concept": "결측 검사와 유한성 검사 연결",
+      "family": "pandas-null:결측과 유한성의 집계 차이",
+      "requires": ["pandas-null-01", "numpy-finite-mask-20261021"],
+      "answer": "(3, 1)",
+      "distractor_hypotheses": {
+        "(1, 1)": "notna도 무한대를 제외한다고 생각했을 가능성",
+        "(3, 3)": "isfinite가 NaN만 제외한다고 생각했을 가능성",
+        "(4, 1)": "notna를 행 수 집계와 혼동했을 가능성"
+      },
+      "diagnostic_question": "양의 무한대는 어느 검사에서는 통과하고 어느 검사에서는 제외되나요?",
+      "boundary_check": "모두 결측·무한대만 있는 입력·유한값만 있는 입력의 두 개수를 비교한다.",
+      "accepted_answers": [],
+      "rationale": "결측이 아닌 값의 개수와 유한한 수의 개수를 구분한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 결측이 아닌 값의 개수와 유한한 수의 개수를 구분한다."
+    },
+    {
+      "id": "numpy-finite-average-20261021",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "유한성 마스크를 적용한 뒤 선택된 값만으로 평균을 계산한다.",
+      "new_concept": "유한성 필터와 집계 분모의 연결",
+      "family": "numpy-mask:유한값 선택 후 요약",
+      "requires": ["numpy-finite-mask-20261021"],
+      "answer": "15.0",
+      "distractor_hypotheses": {
+        "7.5": "제외한 값을 0으로 두고 전체 4개를 분모로 사용했을 가능성",
+        "inf": "isfinite를 NaN만 제외하는 검사로 생각했을 가능성",
+        "nan": "안쪽 마스크 선택을 적용하지 않은 전체 평균으로 생각했을 가능성"
+      },
+      "diagnostic_question": "평균의 분모는 원본 길이인가요, 선택 결과의 길이인가요?",
+      "boundary_check": "0·음수·음의 무한대·단일 유한값·유한값 없음에서 선택과 평균 계산 가능 여부를 구분한다.",
+      "accepted_answers": [],
+      "rationale": "유한성 마스크를 적용한 뒤 선택된 값만으로 평균을 계산한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 유한성 마스크를 적용한 뒤 선택된 값만으로 평균을 계산한다."
+    },
+    {
+      "id": "python-finite-inputs-20261021",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "기본 자료형의 입력에서 타입·불리언·유한성 검사와 단락 평가를 연결한다.",
+      "new_concept": "자료형 검증 뒤 유한성 검사를 수행하는 순서",
+      "family": "pandas-null:혼합 입력의 안전한 유한성 검사",
+      "requires": [
+        "python-numeric-inputs-20261021",
+        "pandas-valid-counts-20261021"
+      ],
+      "answer": "[1.0, -3]",
+      "distractor_hypotheses": {
+        "[1.0, True, -3]": "bool 제외 조건을 놓쳤을 가능성",
+        "[1.0, 2.0, -3]": "검사 과정에서 숫자 문자열을 자동 변환한다고 생각했을 가능성",
+        "TypeError가 발생한다": "앞 조건이 거짓이면 뒤 조건을 평가하지 않는 단락 평가를 놓쳤을 가능성"
+      },
+      "diagnostic_question": "None에서 math.isfinite가 실제로 호출되나요? 어느 앞 조건에서 멈추나요?",
+      "boundary_check": "조건 순서를 반대로 하면 str·None에서 오류가 날 수 있다. bool·NaN·양음 무한대와 빈 입력을 구별한다.",
+      "accepted_answers": [],
+      "rationale": "기본 자료형의 입력에서 타입·불리언·유한성 검사와 단락 평가를 연결한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 기본 자료형의 입력에서 타입·불리언·유한성 검사와 단락 평가를 연결한다."
+    },
+    {
+      "id": "sql-case-values-20261021",
+      "domain": "SQL",
+      "level": 2,
+      "objective": "CASE의 값 선택과 WHERE의 행 선택을 구분한다.",
+      "new_concept": "행을 유지하는 조건부 값 치환",
+      "family": "sql-rows:조건부 출력과 행 필터",
+      "requires": ["sql-rows-foundation-01"],
+      "answer": "[0, 0, 5]",
+      "distractor_hypotheses": {
+        "[0, 5]": "CASE 표현식도 WHERE처럼 조건이 거짓인 행을 없앤다고 생각했을 가능성",
+        "[-2, 0, 5]": "CASE 반환값 대신 원래 열을 읽었을 가능성",
+        "[0, 0, 0]": "조건 참인 위치의 원래 값을 유지하는 THEN을 놓쳤을 가능성"
+      },
+      "diagnostic_question": "조건이 거짓인 id=1의 행은 사라지나요, 값이 바뀌나요?",
+      "boundary_check": "음수·0·양수·NULL 입력에서도 CASE는 행을 유지하고 ELSE 없는 거짓 조건은 NULL을 만든다.",
+      "accepted_answers": [],
+      "rationale": "CASE의 값 선택과 WHERE의 행 선택을 구분한다. 확인한 기초를 후속 선택·상태·집계에 연결한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. CASE의 값 선택과 WHERE의 행 선택을 구분한다."
+    },
+    {
+      "id": "sql-membership-duplicates-20261021",
+      "domain": "SQL",
+      "level": 3,
+      "objective": "후보 중복·NULL이 있는 IN 서브쿼리와 조인 행 증식을 구분한다.",
+      "new_concept": "포함 서브쿼리의 중복과 NULL 판정",
+      "family": "sql-rows:포함 서브쿼리의 행 보존",
+      "requires": ["sql-rows-foundation-04", "sql-exists-20261017"],
+      "answer": "[2]",
+      "distractor_hypotheses": {
+        "[2, 2]": "IN 포함 검사를 JOIN처럼 후보 중복 수만큼 행을 늘린다고 생각했을 가능성",
+        "[]": "NOT IN의 NULL 문제를 IN의 일치하는 값에도 그대로 적용했을 가능성",
+        "[1, 2, 3]": "후보의 NULL을 모든 값과 일치하는 와일드카드로 생각했을 가능성"
+      },
+      "diagnostic_question": "후보에 같은 2가 두 번 있으면 원본의 id=2 행도 복제되나요?",
+      "boundary_check": "빈 후보·NULL만 있는 후보·중복 후보·원본 중복을 각각 비교한다. 원본 중복은 유지되고 후보 중복은 복제하지 않는다.",
+      "accepted_answers": [],
+      "rationale": "후보 중복·NULL이 있는 IN 서브쿼리와 조인 행 증식을 구분한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 후보 중복·NULL이 있는 IN 서브쿼리와 조인 행 증식을 구분한다."
+    },
+    {
+      "id": "sql-case-counts-20261021",
+      "domain": "SQL",
+      "level": 3,
+      "objective": "조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다.",
+      "new_concept": "COUNT에 전달되는 조건부 값과 NULL",
+      "family": "sql-aggregation:조건부 COUNT의 0과 NULL",
+      "requires": ["sql-count-01", "sql-having-01", "sql-case-values-20261021"],
+      "answer": "(3, 1)",
+      "distractor_hypotheses": {
+        "(1, 1)": "COUNT가 0을 세지 않는다고 생각했을 가능성",
+        "(3, 3)": "ELSE 생략 시 0이 반환된다고 생각했을 가능성",
+        "(2, 1)": "원본 status가 NULL이면 CASE 결과와 무관하게 COUNT에서 제외된다고 생각했을 가능성"
+      },
+      "diagnostic_question": "COUNT(0)과 COUNT(NULL)은 각각 한 값을 세나요?",
+      "boundary_check": "빈 표·전부 거짓·전부 참·NULL 상태에서 두 COUNT의 차이를 확인한다.",
+      "accepted_answers": [],
+      "rationale": "조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
+      "editorial_review": "Codex가 입력·실제 참조 출력·단일 정답·오답별 가설·두 힌트·선수·보충·다른 날 변형을 개별 검토했다. 조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다."
+    }
+  ]
+}

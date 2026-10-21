@@ -16,6 +16,8 @@ import expansion20 from "../../curriculum/reviews/2026-10-20-expansion.json" wit
 
 import daily20261021 from "../../backend/content_batches/2026-10-21.json" with { type: "json" };
 
+import expansion21 from "../../curriculum/reviews/2026-10-21-expansion.json" with { type: "json" };
+
 let isolatedApi: ChildProcess | undefined;
 test.afterEach(async () => {
   if (isolatedApi && isolatedApi.exitCode === null) {
@@ -35,8 +37,9 @@ for (const batch of [
   daily20261020,
   expansion20,
   daily20261021,
+  expansion21,
 ]) {
-  test(`daily batch ${batch.date}${batch === expansion20 ? " expansion" : ""} is reachable while earlier snapshots survive`, async ({
+  test(`daily batch ${batch.date}${batch === expansion20 || batch === expansion21 ? " expansion" : ""} is reachable while earlier snapshots survive`, async ({
     page,
   }, testInfo) => {
     // Every batch imports and re-exports the whole growing historical catalog.
@@ -216,7 +219,9 @@ for (const batch of [
           await page.getByLabel(ex.answer, { exact: true }).check();
         else {
           const answer =
-            batch === expansion || batch === expansion20
+            batch === expansion ||
+            batch === expansion20 ||
+            batch === expansion21
               ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
               : ex.answer;
           await page.getByRole("textbox").fill(answer);
@@ -271,7 +276,7 @@ for (const batch of [
       ).toBe("correct");
     expect(errors).toEqual([]);
     await page.screenshot({
-      path: `test-results/${test.info().project.name}-codex-${batch.date}${batch === expansion20 ? "-expansion" : ""}-records.png`,
+      path: `test-results/${test.info().project.name}-codex-${batch.date}${batch === expansion20 || batch === expansion21 ? "-expansion" : ""}-records.png`,
       fullPage: true,
     });
   });
