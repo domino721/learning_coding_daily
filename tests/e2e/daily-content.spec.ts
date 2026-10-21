@@ -14,6 +14,8 @@ import daily20261020 from "../../backend/content_batches/2026-10-20.json" with {
 
 import expansion20 from "../../curriculum/reviews/2026-10-20-expansion.json" with { type: "json" };
 
+import daily20261021 from "../../backend/content_batches/2026-10-21.json" with { type: "json" };
+
 let isolatedApi: ChildProcess | undefined;
 test.afterEach(async () => {
   if (isolatedApi && isolatedApi.exitCode === null) {
@@ -32,6 +34,7 @@ for (const batch of [
   expansion,
   daily20261020,
   expansion20,
+  daily20261021,
 ]) {
   test(`daily batch ${batch.date}${batch === expansion20 ? " expansion" : ""} is reachable while earlier snapshots survive`, async ({
     page,

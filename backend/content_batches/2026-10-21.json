@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "batch_id": "codex-2026-10-21",
+  "date": "2026-10-21",
+  "status": "reviewed",
+  "review_method": "Codex separate editorial re-solve and executed pandas/NumPy/SQLite reference/boundary checks; no Gemini or model API calls",
+  "review_record": "docs/content_batches/2026-10-21.md",
+  "exercises": [
+    {
+      "id": "pandas-tie-rank-20261021",
+      "concept": "동점 순위와 다음 등수",
+      "kind": "choice",
+      "title": "점수 코드 출력 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\nscores = pd.Series([90, 90, 80])\nranks = scores.rank(method=\"min\", ascending=False)\nprint(ranks.astype(int).tolist())",
+      "answer": "[1, 1, 3]",
+      "choices": [
+        "[1, 1, 3]",
+        "[1, 1, 2]",
+        "[1, 2, 3]",
+        "[2, 2, 1]"
+      ],
+      "explanation": "큰 점수가 앞서므로 90 두 개는 정렬 위치 1과 2에 있습니다. method=\"min\"은 동점에 그 위치 중 작은 등수 1을 함께 부여합니다. 80의 위치는 세 번째여서 3입니다. dense 방식처럼 다음 등수를 2로 압축하거나 원래 순서로 동점을 가르지 않습니다.",
+      "hints": [
+        "정렬 방향과 동점 처리 방법을 따로 확인하세요.",
+        "동점인 두 점수가 차지할 위치를 먼저 세고, min 방식이 그중 어떤 등수를 쓰는지 보세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "reference_output": "[1, 1, 3]"
+    },
+    {
+      "id": "numpy-adjacent-diff-20261021",
+      "concept": "지정 축의 인접 원소 차이",
+      "kind": "blank",
+      "title": "변환된 표 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([[2, 5, 9], [10, 7, 3]])\nprint(np.diff(x, axis=1).tolist())",
+      "answer": "[[3, 4], [-3, -4]]",
+      "choices": [
+        "[[3, 4], [-3, -4]]",
+        "[[8, 2, -6]]",
+        "[[-3, -4], [3, 4]]",
+        "[[2, 5, 9], [10, 7, 3]]"
+      ],
+      "explanation": "axis=1은 각 행 안에서 열 방향을 따라 인접한 값을 비교합니다. np.diff는 뒤 값에서 앞 값을 빼므로 첫 행은 5-2=3, 9-5=4, 둘째 행은 7-10=-3, 3-7=-4입니다. 열이 세 개이면 인접한 간격은 두 개여서 결과는 2행 2열입니다.",
+      "hints": [
+        "어느 축에서 서로 이웃한 두 값을 비교하는지 확인하세요.",
+        "np.diff는 뒤 값에서 앞 값을 뺍니다. 한 행의 세 값 사이에 몇 개의 간격이 있는지도 세어 보세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "reference_output": "[[3, 4], [-3, -4]]"
+    },
+    {
+      "id": "stats-linear-quantile-20261021",
+      "concept": "분위수의 선형 보간",
+      "kind": "blank",
+      "title": "요약 지표 코드 점검",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nvalues = [8, 0, 6, 2]\nprint(float(np.quantile(values, 0.25, method=\"linear\")))",
+      "answer": "1.5",
+      "choices": [
+        "1.5",
+        "0.0",
+        "1.0",
+        "2.0"
+      ],
+      "explanation": "정렬된 값은 [0,2,6,8]입니다. linear 방식의 0부터 시작하는 위치는 (4-1)×0.25=0.75입니다. 위치 0의 값 0에서 위치 1의 값 2까지 75% 이동해 0+0.75×(2-0)=1.5입니다. 아래 값만 고르는 lower, 두 값의 평균인 midpoint, 가까운 관측값인 nearest와 구분합니다.",
+      "hints": [
+        "입력값을 크기순으로 놓고, 주어진 method가 관측값 하나만 고르는지 확인하세요.",
+        "linear 방식의 위치는 (값 개수-1)×q입니다. 소수 위치는 양옆 값 사이를 그 비율만큼 이동합니다."
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "reference_output": "1.5"
+    },
+    {
+      "id": "sql-like-width-20261021",
+      "concept": "패턴의 한 문자와 임의 길이",
+      "kind": "blank",
+      "title": "이름 조회 코드 점검",
+      "prompt": "아래 SQL의 결과를 id의 오름차순 리스트로 입력하세요. 주석은 전체 SQLite 입력입니다.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE users(id INTEGER, name TEXT);\n-- INSERT INTO users VALUES(1,'A'),(2,'AB'),(3,'A_B'),(4,'B_A'),(5,NULL);\nSELECT id FROM users\nWHERE name LIKE 'A_%'\nORDER BY id;",
+      "answer": "[2, 3]",
+      "choices": [
+        "[2, 3]",
+        "[3]",
+        "[1, 2, 3]",
+        "[2, 3, 4]"
+      ],
+      "explanation": "LIKE의 밑줄(_)은 정확히 한 문자, 퍼센트(%)는 0개 이상의 문자를 뜻합니다. 따라서 A 다음에 최소 한 문자가 있어야 합니다. AB와 A_B는 맞지만 A만 있는 행은 짧아서, B_A는 시작 문자가 달라서 제외됩니다. NULL과의 LIKE 결과는 True가 아니므로 그 행도 제외됩니다. 밑줄을 문자 자체로 찾는 조건은 별도의 이스케이프가 필요합니다.",
+      "hints": [
+        "패턴의 시작 문자와 두 와일드카드가 각각 요구하는 길이를 확인하세요.",
+        "밑줄은 한 문자를 반드시 소비하고, %는 뒤에 문자가 없어도 됩니다. 이름이 A 하나뿐인 경우부터 살펴보세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_output": "[2, 3]",
+      "reference_setup": "CREATE TABLE users(id INTEGER, name TEXT); INSERT INTO users VALUES(1,'A'),(2,'AB'),(3,'A_B'),(4,'B_A'),(5,NULL);"
+    },
+    {
+      "id": "sql-using-columns-20261021",
+      "concept": "USING 조인의 결과 열",
+      "kind": "choice",
+      "title": "연결 리포트 결과 확인",
+      "prompt": "아래 SQL의 결과를 한 행의 튜플로 고르세요. 주석은 전체 SQLite 입력입니다.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE a(id INTEGER, amount INTEGER);\n-- INSERT INTO a VALUES(1,10);\n-- CREATE TABLE b(id INTEGER, bonus INTEGER);\n-- INSERT INTO b VALUES(1,7);\nSELECT * FROM a JOIN b USING (id);",
+      "answer": "(1, 10, 7)",
+      "choices": [
+        "(1, 10, 7)",
+        "(1, 10, 1, 7)",
+        "(1, 7, 10)",
+        "(10, 7)"
+      ],
+      "explanation": "USING(id)는 id가 같은 행을 연결하고 결과에서 연결 키 id를 한 번만 내보냅니다. 왼쪽 a의 id, amount 뒤에 오른쪽 b의 중복 키를 뺀 bonus가 이어져 (1,10,7)입니다. ON a.id=b.id를 사용한 SELECT *처럼 id가 두 번 나오거나, 연결 키가 전부 사라지는 것은 아닙니다.",
+      "hints": [
+        "연결 조건으로 지정한 열이 SELECT *에서 몇 번 나타나는지 확인하세요.",
+        "USING에 적은 공통 열은 결과에 한 번만 남습니다. 왼쪽 열 뒤에 남는 오른쪽 열을 적어 보세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_output": "(1, 10, 7)",
+      "reference_setup": "CREATE TABLE a(id INTEGER, amount INTEGER); INSERT INTO a VALUES(1,10); CREATE TABLE b(id INTEGER, bonus INTEGER); INSERT INTO b VALUES(1,7);"
+    }
+  ]
+}

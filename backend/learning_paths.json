@@ -1756,6 +1756,56 @@
       "remediation": ["ml-eval-foundation-02", "ml-time-split-20261019"],
       "objective": "반복 관측에서 행 분리와 집단 독립 평가가 다른 조건임을 추적한다.",
       "review_status": "reviewed"
+    },
+    "pandas-tie-rank-20261021": {
+      "concept_id": "pandas-sort",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-sort:동점 최소 순위",
+      "requires": ["pandas-sort-01", "pandas-sort-scaffold-01"],
+      "remediation": ["pandas-sort-01", "pandas-sort-scaffold-01"],
+      "objective": "동점의 최소 위치와 동점 뒤 다음 등수를 계산한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-adjacent-diff-20261021": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:인접 차이 축",
+      "requires": ["numpy-shape-01", "numpy-axis-01"],
+      "remediation": ["numpy-shape-01", "numpy-axis-01"],
+      "objective": "행 내부 인접 차이의 부호와 줄어든 축 길이를 계산한다.",
+      "review_status": "reviewed"
+    },
+    "stats-linear-quantile-20261021": {
+      "concept_id": "stats-summaries",
+      "level": 2,
+      "role": "application",
+      "family": "stats-summaries:분위수 선형 보간",
+      "requires": ["stats-median-01", "stats-summary-foundation-02"],
+      "remediation": ["stats-median-01", "stats-summary-foundation-02"],
+      "objective": "정렬 후 소수 위치를 이용해 선형 분위수를 보간한다.",
+      "review_status": "reviewed"
+    },
+    "sql-like-width-20261021": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:패턴 최소 길이",
+      "requires": ["sql-rows-foundation-04", "sql-rows-foundation-02"],
+      "remediation": ["sql-rows-foundation-04", "sql-rows-foundation-02"],
+      "objective": "밑줄과 퍼센트의 최소 길이를 구분하여 패턴에 맞는 행을 고른다.",
+      "review_status": "reviewed"
+    },
+    "sql-using-columns-20261021": {
+      "concept_id": "sql-joins",
+      "level": 2,
+      "role": "application",
+      "family": "sql-joins:USING 결과 열",
+      "requires": ["sql-join-foundation-01", "sql-join-foundation-02"],
+      "remediation": ["sql-join-foundation-01", "sql-join-foundation-02"],
+      "objective": "USING 연결 후 공통 키와 비공통 열의 개수·순서를 예측한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

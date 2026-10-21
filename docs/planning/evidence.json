@@ -576,6 +576,22 @@
         "scripts/verify-published-site.py"
       ],
       "code_reference": "9a8eff8febcda94296ac6cb103d5772faca18259"
+    },
+    {
+      "id": "EV-044",
+      "record": "docs/planning/evidence/EV-044.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-21.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-21.json",
+        "src/curriculum.json",
+        "tests/test_daily_20261021.py",
+        "tests/fixtures/catalog-before-daily-20261021.json",
+        "tests/e2e/daily-content.spec.ts"
+      ],
+      "code_reference": "c319a1124a1809701b5a4fbfe99d9328af41d21a"
     }
   ]
 }
