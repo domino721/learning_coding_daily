@@ -625,6 +625,19 @@
         "src/curriculum.json"
       ],
       "code_reference": "WBS-360/WBS-540 accompanying API-path expansion after 2c5bc52eee37c48190c77cad5ecf878cba45bc1a"
+    },
+    {
+      "id": "EV-047",
+      "record": "docs/planning/evidence/EV-047.md",
+      "artifacts": [
+        "docs/planning/evidence/EV-047-status.json",
+        "curriculum/reviews/2026-10-21-expansion.json",
+        "src/curriculum.json",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "docs/content_batches/2026-10-21-expansion.md"
+      ],
+      "code_reference": "9d713d40751e85853900358a10eed98b6653278d"
     }
   ]
 }
