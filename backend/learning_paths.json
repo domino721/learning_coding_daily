@@ -2001,6 +2001,64 @@
       "remediation": ["sql-count-01"],
       "objective": "조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다.",
       "review_status": "reviewed"
+    },
+    "pandas-map-missing-20261022": {
+      "concept_id": "pandas-null",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-null:사전 매핑 결측",
+      "requires": ["pandas-null-01", "python-column-types-20261021"],
+      "remediation": ["pandas-null-01", "python-column-types-20261021"],
+      "objective": "명시적 None 매핑과 미등록 키에서 생기는 결측을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "ml-minmax-clip-20261022": {
+      "concept_id": "ml-preprocessing",
+      "level": 2,
+      "role": "application",
+      "family": "ml-preprocessing:범위 외 클리핑",
+      "requires": [
+        "ml-transform-foundation-01",
+        "ml-mean-foundation-01",
+        "numpy-index-foundation-01"
+      ],
+      "remediation": ["ml-transform-foundation-01", "ml-mean-foundation-01"],
+      "objective": "학습 최소/최대 기준을 재사용하고 출력 제한 설정을 구별한다.",
+      "review_status": "reviewed"
+    },
+    "stats-correlation-scale-20261022": {
+      "concept_id": "stats-summaries",
+      "level": 2,
+      "role": "application",
+      "family": "stats-summaries:상관과 기울기",
+      "requires": [
+        "stats-median-01",
+        "stats-std-01",
+        "numpy-index-foundation-01"
+      ],
+      "remediation": ["stats-median-01", "stats-std-01"],
+      "objective": "단위 변화량과 정규화된 선형 연관성을 구분해 계수를 읽는다.",
+      "review_status": "reviewed"
+    },
+    "sql-nullsafe-is-20261022": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:NULL 안전 동등성",
+      "requires": ["sql-rows-foundation-02", "sql-rows-foundation-04"],
+      "remediation": ["sql-rows-foundation-02", "sql-rows-foundation-04"],
+      "objective": "일반 등식과 NULL 안전 등식의 참인 행을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "sql-self-pairs-20261022": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:자기 조인 비대칭 쌍",
+      "requires": ["sql-join-foundation-01", "sql-composite-match-20261020"],
+      "remediation": ["sql-join-foundation-01", "sql-composite-match-20261020"],
+      "objective": "한 표의 두 역할과 순서 조건으로 자기/역순 중복 없이 쌍을 만든다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

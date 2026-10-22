@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-22",
+  "batch_id": "codex-2026-10-22",
+  "method": "Codex separate editorial re-solve and executed pandas/NumPy/SQLite/scikit-learn reference/boundary checks; no Gemini or model API calls",
+  "exercises": [
+    {
+      "id": "pandas-map-missing-20261022",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[False, True, True]",
+      "editorial_check": "[False,False,True]: 키 존재를 유효값으로 봤을 가능성; [False,True,False]: 미등록 C를 그대로 보존한다고 봤을 가능성; [True,True,True]: 값 대신 행 인덱스로 사전 키를 찾았을 가능성",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준/연산을 좁힌다. 정답을 그대로 주지 않는다.",
+      "prerequisite_check": ["pandas-null-01", "python-column-types-20261021"],
+      "difficulty_check": "명시적 None 매핑과 미등록 키에서 생기는 결측을 구분한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산만 확인한다."
+    },
+    {
+      "id": "ml-minmax-clip-20261022",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "(2.0, 1.0)",
+      "editorial_check": "(1,1): 기본 변환도 항상 범위 안이라고 봤을 가능성; (2,2): clip을 무시했을 가능성; (20,1): 첫 모델이 입력을 변환하지 않는다고 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준/연산을 좁힌다. 정답을 그대로 주지 않는다.",
+      "prerequisite_check": [
+        "ml-transform-foundation-01",
+        "ml-mean-foundation-01",
+        "numpy-index-foundation-01"
+      ],
+      "difficulty_check": "학습 최소/최대 기준을 재사용하고 출력 제한 설정을 구별한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산만 확인한다."
+    },
+    {
+      "id": "stats-correlation-scale-20261022",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "-1.0",
+      "editorial_check": "-10: 직선 기울기를 계수로 봤을 가능성; 1: 관계는 있지만 방향을 놓쳤을 가능성; 0: 단위 차이를 무관계로 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준/연산을 좁힌다. 정답을 그대로 주지 않는다.",
+      "prerequisite_check": [
+        "stats-median-01",
+        "stats-std-01",
+        "numpy-index-foundation-01"
+      ],
+      "difficulty_check": "단위 변화량과 정규화된 선형 연관성을 구분해 계수를 읽는다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산만 확인한다."
+    },
+    {
+      "id": "sql-nullsafe-is-20261022",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[1, 2]",
+      "editorial_check": "[1]: IS를 일반 등식으로 봤을 가능성; [2]: IS가 NULL 검사용으로만 쓰인다고 봤을 가능성; 전체행: NULL을 어떤 값과도 맞는 와일드카드로 봤을 가능성",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준/연산을 좁힌다. 정답을 그대로 주지 않는다.",
+      "prerequisite_check": [
+        "sql-rows-foundation-02",
+        "sql-rows-foundation-04"
+      ],
+      "difficulty_check": "일반 등식과 NULL 안전 등식의 참인 행을 구분한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산만 확인한다."
+    },
+    {
+      "id": "sql-self-pairs-20261022",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "(1, 2)",
+      "editorial_check": "(2,1): id 부등호 방향을 바꿨을 가능성; (1,1): 자기 쌍도 허용한다고 봤을 가능성; (1,3): 팀 일치 조건을 무시했을 가능성",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준/연산을 좁힌다. 정답을 그대로 주지 않는다.",
+      "prerequisite_check": [
+        "sql-join-foundation-01",
+        "sql-composite-match-20261020"
+      ],
+      "difficulty_check": "한 표의 두 역할과 순서 조건으로 자기/역순 중복 없이 쌍을 만든다. 같은 표를 두 역할로 해석하고 연결 조건과 쌍의 순서 제약을 합쳐 추적하는 전이다.",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산만 확인한다."
+    }
+  ]
+}

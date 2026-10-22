@@ -2122,5 +2122,65 @@
     "distractor_strength": 3,
     "rationale": "조건부 집계에서 0과 NULL이 COUNT에 주는 영향을 구분한다. 기존 적용 단계 뒤 자료형·라벨·축·NULL 조건 변화를 추적한다.",
     "calibration": "editorial-20261021-api-paths; 실제 참조·경계/편집 검수, 사용자 성과 보정 전"
+  },
+  "pandas-map-missing-20261022": {
+    "concept_id": "pandas-null",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "명시적 None 매핑과 미등록 키에서 생기는 결측을 구분한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+    "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "ml-minmax-clip-20261022": {
+    "concept_id": "ml-preprocessing",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "학습 최소/최대 기준을 재사용하고 출력 제한 설정을 구별한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+    "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "stats-correlation-scale-20261022": {
+    "concept_id": "stats-summaries",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 1,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "단위 변화량과 정규화된 선형 연관성을 구분해 계수를 읽는다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+    "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-nullsafe-is-20261022": {
+    "concept_id": "sql-rows",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "일반 등식과 NULL 안전 등식의 참인 행을 구분한다. 기존 기초/상태 기준을 새 연산에 적용한다.",
+    "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-self-pairs-20261022": {
+    "concept_id": "sql-joins",
+    "response_mode": "choice",
+    "level": 3,
+    "label": "조건 변화·전이",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 3,
+    "distractor_strength": 3,
+    "rationale": "한 표의 두 역할과 순서 조건으로 자기/역순 중복 없이 쌍을 만든다. 같은 표를 두 역할로 해석하고 연결 조건과 쌍의 순서 제약을 합쳐 추적하는 전이다.",
+    "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
   }
 }

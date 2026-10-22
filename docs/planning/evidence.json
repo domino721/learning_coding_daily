@@ -638,6 +638,22 @@
         "docs/content_batches/2026-10-21-expansion.md"
       ],
       "code_reference": "9d713d40751e85853900358a10eed98b6653278d"
+    },
+    {
+      "id": "EV-048",
+      "record": "docs/planning/evidence/EV-048.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-22.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-22.json",
+        "src/curriculum.json",
+        "tests/test_daily_20261022.py",
+        "tests/fixtures/catalog-before-daily-20261022.json",
+        "tests/e2e/daily-content.spec.ts"
+      ],
+      "code_reference": "deea00c63c90305e7202fba4a452bcd616b6ead5"
     }
   ]
 }
