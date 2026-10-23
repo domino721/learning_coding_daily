@@ -2143,6 +2143,345 @@
       "seconds": 180,
       "reference_output": "(3, 1)",
       "reference_setup": "CREATE TABLE orders(status TEXT);\nINSERT INTO orders VALUES('open'),('done'),(NULL);"
+    },
+    {
+      "id": "numpy-where-positions-20261023",
+      "concept": "인자 하나인 where의 위치 반환",
+      "domain": "NumPy",
+      "title": "측정 위치 기록",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nx = np.array([2, 9, 4, 7])\nprint(np.where(x > 4)[0].tolist())",
+      "answer": "[1, 3]",
+      "explanation": "조건은 [False, True, False, True]입니다. 인자가 하나인 np.where는 True인 위치를 축별 배열의 튜플로 반환합니다. 1차원에서는 첫 배열이 [1,3]입니다. 값 [9,7]을 얻으려면 이 위치로 x를 다시 선택해야 합니다. 위치 번호는 0부터 시작합니다.",
+      "hints": [
+        "출력하는 것은 원본 값, 조건 자체, 위치 중 무엇인가요?",
+        "np.where에 대체할 두 값이 없으면 축별 위치 배열을 돌려줍니다. [0]은 첫 축의 위치 배열입니다."
+      ],
+      "choices": ["[9, 7]", "[1, 3]", "[False, True, False, True]", "[2, 4]"],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[1, 3]"
+    },
+    {
+      "id": "numpy-where-coordinates-20261023",
+      "concept": "다차원 where의 좌표 짝",
+      "domain": "NumPy",
+      "title": "격자 점검 기록",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([[0, 5, 0], [8, 0, 0]])\nrows, cols = np.where(x > 0)\nprint((rows.tolist(), cols.tolist()))",
+      "answer": "([0, 1], [1, 0])",
+      "explanation": "조건을 만족하는 좌표는 (0,1), (1,0)입니다. 첫 반환 배열은 행 위치 [0,1], 두 번째는 열 위치 [1,0]이며 같은 순번끼리 하나의 좌표를 만듭니다. 값이나 펼친 배열의 위치 [1,3]을 반환하지 않습니다.",
+      "hints": [
+        "두 반환 배열을 같은 순번끼리 짝지어 보세요.",
+        "2차원 where는 첫 축 위치와 둘째 축 위치를 따로 반환합니다. 첫 배열이 행, 둘째가 열입니다."
+      ],
+      "choices": [
+        "([1, 0], [0, 1])",
+        "([5, 8], [5, 8])",
+        "([1, 3], [1, 3])",
+        "([0, 1], [1, 0])"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "([0, 1], [1, 0])"
+    },
+    {
+      "id": "numpy-where-evaluation-20261023",
+      "concept": "조건 선택 이전의 인자 계산",
+      "domain": "NumPy",
+      "title": "비율 코드 실행 점검",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요. np.errstate의 raise 설정은 해당 수치 연산 오류를 FloatingPointError로 발생시킵니다. 예외가 발생하면 except의 코드를 실행합니다.",
+      "code": "import numpy as np\nx = np.array([0.0, 4.0])\ntry:\n    with np.errstate(divide=\"raise\", invalid=\"raise\"):\n        result = np.where(x != 0, 12 / x, 0.0)\n    print(result.tolist())\nexcept FloatingPointError:\n    print(\"계산 오류\")",
+      "answer": "계산 오류",
+      "explanation": "np.where를 호출하기 전에 인자 12/x가 배열 전체에 대해 계산됩니다. x의 첫 값 0으로 나누는 순간 errstate의 divide=\"raise\" 설정에 따라 FloatingPointError가 발생해 except가 실행됩니다. where는 Python의 if처럼 원소마다 인자 계산을 생략하지 않습니다. 안전한 계산은 np.divide(12, x, out=np.zeros_like(x), where=x != 0)처럼 연산 자체의 where 조건과 초기화한 out을 사용할 수 있습니다.",
+      "hints": [
+        "함수에 전달할 인자 12/x는 호출 전과 호출 후 중 언제 계산되나요?",
+        "errstate의 raise는 0으로 나눌 때 예외를 발생시킵니다. np.where의 선택이 그 계산보다 먼저 일어나는지 확인하세요."
+      ],
+      "choices": ["[0.0, 3.0]", "[inf, 3.0]", "계산 오류", "[0.0, 0.0]"],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "계산 오류"
+    },
+    {
+      "id": "pandas-isin-cells-20261023",
+      "concept": "DataFrame isin의 원소별 결과",
+      "domain": "pandas",
+      "title": "표 확인 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"left\": [1, 2], \"right\": [3, 1]})\nprint(df.isin([1]).values.tolist())",
+      "answer": "[[True, False], [False, True]]",
+      "explanation": "isin은 각 셀의 값이 후보 [1]에 포함되는지 검사합니다. 첫 행은 [True,False], 둘째 행은 [False,True]입니다. DataFrame 크기를 유지한 불리언 표를 반환하며 행을 자동으로 제거하거나 한 행의 판정을 하나로 합치지 않습니다.",
+      "hints": [
+        "결과가 한 행당 하나인가요, 한 셀당 하나인가요?",
+        "DataFrame.isin은 원본과 같은 크기로 각 셀의 포함 여부를 반환합니다."
+      ],
+      "choices": [
+        "[[True, False], [False, True]]",
+        "[True, True]",
+        "[[1, 3], [2, 1]]",
+        "[[True, True], [True, True]]"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[[True, False], [False, True]]"
+    },
+    {
+      "id": "pandas-isin-column-rules-20261023",
+      "concept": "사전으로 지정한 열별 포함 조건",
+      "domain": "pandas",
+      "title": "열별 점검표",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"grade\": [\"A\", \"A\", \"B\"],\n                   \"state\": [\"open\", \"hold\", \"open\"]})\nresult = df.isin({\"grade\": [\"A\"], \"state\": [\"open\"]})\nprint(result.values.tolist())",
+      "answer": "[[True, True], [True, False], [False, True]]",
+      "explanation": "사전 키는 열 이름이며 각 열은 자기 후보 목록과 비교합니다. grade 열은 A,A,B를 A와 비교해 True,True,False이고 state는 open,hold,open을 open과 비교해 True,False,True입니다. 셀별 결과이므로 행은 제거되지 않습니다.",
+      "hints": [
+        "사전 키와 값 목록이 각각 무엇과 대응하는지 보세요.",
+        "grade는 [\"A\"], state는 [\"open\"]과 따로 비교합니다. 두 열의 후보를 합치지 않습니다."
+      ],
+      "choices": [
+        "[[True, True], [True, True], [True, True]]",
+        "[[True, True]]",
+        "[[True, True], [True, False], [False, True]]",
+        "[[False, False], [False, False], [False, False]]"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[[True, True], [True, False], [False, True]]"
+    },
+    {
+      "id": "pandas-isin-cross-columns-20261023",
+      "concept": "포함 후보의 범위와 행 조건 축약",
+      "domain": "pandas",
+      "title": "경로 승인 결과",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"source\": [\"A\", \"B\", \"A\"],\n                   \"target\": [\"B\", \"A\", \"A\"]})\nglobal_ok = df.isin([\"A\", \"B\"]).all(axis=1)\nrule_ok = df.isin({\"source\": [\"A\"], \"target\": [\"B\"]}).all(axis=1)\nprint((global_ok.tolist(), rule_ok.tolist()))",
+      "answer": "([True, True, True], [True, False, False])",
+      "explanation": "전역 후보 [A,B]는 모든 셀을 허용해 세 행이 모두 True입니다. 열별 규칙은 source가 A이면서 target이 B여야 하므로 첫 행만 True입니다. all(axis=1)은 각 행의 모든 열이 True인지 검사해 행당 하나로 줄입니다. 값의 집합만 같아도 업무상 열의 역할이 다르면 규칙 결과가 달라집니다.",
+      "hints": [
+        "둘째 행의 B와 A는 각 열에서 허용된 값인지 따로 확인하세요.",
+        "목록은 모든 열에 같은 후보를 쓰지만 사전은 열별 후보를 씁니다. all(axis=1)은 한 행의 조건을 모두 만족해야 합니다."
+      ],
+      "choices": [
+        "([True, False, False], [True, False, False])",
+        "([True, True, True], [True, False, False])",
+        "([True, True, True], [True, True, True])",
+        "([True, True], [False, False])"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "([True, True, True], [True, False, False])"
+    },
+    {
+      "id": "numpy-row-all-20261023",
+      "concept": "행별 불리언 축약",
+      "domain": "NumPy",
+      "title": "검사표 요약",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nchecks = np.array([[True, True], [True, False], [False, False]])\nprint(checks.all(axis=1).tolist())",
+      "answer": "[True, False, False]",
+      "explanation": "axis=1 방향의 열들을 각 행 안에서 합쳐 검사합니다. 첫 행만 모든 값이 True여서 결과는 [True,False,False]입니다. any는 하나라도 True인지 검사하고 axis=0은 열마다 하나를 남깁니다.",
+      "hints": [
+        "출력 원소가 행 수만큼 남는지, 열 수만큼 남는지 확인하세요.",
+        "all은 검사 대상이 전부 True여야 True입니다. axis=1은 각 행 안의 열 방향을 줄입니다."
+      ],
+      "choices": [
+        "[True, True, False]",
+        "[False, False]",
+        "False",
+        "[True, False, False]"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[True, False, False]"
+    },
+    {
+      "id": "numpy-finite-rows-20261023",
+      "concept": "셀 유한성과 행 전체 유효성",
+      "domain": "NumPy",
+      "title": "측정 묶음 선택",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nx = np.array([[1.0, np.nan], [2.0, 3.0], [np.inf, 4.0]])\nvalid = np.isfinite(x).all(axis=1)\nprint(x[valid].tolist())",
+      "answer": "[[2.0, 3.0]]",
+      "explanation": "행별 유효성은 [False,True,False]입니다. NaN이나 무한대가 하나라도 있는 행은 all(axis=1)에서 False가 되어 두 값 모두 유한한 둘째 행만 남습니다. x[np.isfinite(x)]는 셀 단위로 골라 1차원 배열을 반환하므로 다른 처리입니다.",
+      "hints": [
+        "중간 valid 배열은 셀당 하나인가요, 행당 하나인가요?",
+        "isfinite로 셀별 검사한 뒤 all(axis=1)로 행의 모든 값이 유한한지 검사합니다."
+      ],
+      "choices": [
+        "[1.0, 2.0, 3.0, 4.0]",
+        "[[1.0, nan], [2.0, 3.0], [inf, 4.0]]",
+        "[[2.0, 3.0]]",
+        "[[1.0], [2.0], [inf]]"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[[2.0, 3.0]]"
+    },
+    {
+      "id": "numpy-finite-ratios-20261023",
+      "concept": "유한성 검사의 계산 단계",
+      "domain": "NumPy",
+      "title": "산출 비율 점검",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요. np.errstate의 ignore는 해당 계산 경고를 표시하지 않는 설정입니다.",
+      "code": "import numpy as np\namount = np.array([10.0, 0.0, 9.0])\nbase = np.array([2.0, 0.0, 0.0])\ninput_ok = np.isfinite(amount) & np.isfinite(base)\nwith np.errstate(divide=\"ignore\", invalid=\"ignore\"):\n    ratio = amount / base\nprint((input_ok.tolist(), np.isfinite(ratio).tolist()))",
+      "answer": "([True, True, True], [True, False, False])",
+      "explanation": "두 입력 배열은 모두 유한한 수이며 0도 유한하므로 input_ok는 전부 True입니다. 계산 결과는 [5.0,nan,inf]여서 유한성은 [True,False,False]입니다. errstate의 ignore는 경고를 숨길 뿐 결과를 고치지 않습니다. 입력 검증만으로 계산 결과의 유효성을 보장할 수 없습니다.",
+      "hints": [
+        "입력에 0이 있다는 것과 입력이 무한대라는 것은 같은가요?",
+        "0/0은 NaN, 양수를 0으로 나누면 inf입니다. ignore는 그 값을 0으로 바꾸지 않습니다."
+      ],
+      "choices": [
+        "([True, True, True], [True, False, False])",
+        "([True, True, True], [True, True, True])",
+        "([True, False, False], [True, False, False])",
+        "([True, True, True], [True, True, False])"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "([True, True, True], [True, False, False])"
+    },
+    {
+      "id": "numpy-scalar-types-20261023",
+      "concept": "NumPy 정수 스칼라의 타입 계층",
+      "domain": "NumPy",
+      "title": "단일 값 형식 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nvalue = np.int64(7)\nprint((isinstance(value, int), isinstance(value, np.integer)))",
+      "answer": "(False, True)",
+      "explanation": "np.int64 스칼라는 NumPy의 np.integer 계열입니다. Python 내장 int의 인스턴스는 아니므로 False,True가 됩니다. 숫자 모양과 타입 계층은 다릅니다. NumPy 정수를 받는 입력 검증에는 허용 타입을 명시해야 합니다.",
+      "hints": [
+        "값이 정수처럼 보인다는 것과 내장 int의 인스턴스인 것은 같은가요?",
+        "np.int64는 np.integer의 하위 타입이며 Python int와 별도의 계층입니다."
+      ],
+      "choices": [
+        "(True, True)",
+        "(False, True)",
+        "(False, False)",
+        "(True, False)"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "(False, True)"
+    },
+    {
+      "id": "numpy-integer-inputs-20261023",
+      "concept": "Python과 NumPy 정수 입력 정책",
+      "domain": "NumPy",
+      "title": "입력 수량 목록",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "import numpy as np\nvalues = [np.int64(3), 5, True, 2.5, \"4\"]\nkept = [int(v) for v in values\n        if isinstance(v, (int, np.integer)) and not isinstance(v, bool)]\nprint(kept)",
+      "answer": "[3, 5]",
+      "explanation": "np.int64(3)은 np.integer로, 5는 int로 통과합니다. True는 int 검사에도 통과하지만 bool 제외 조건에서 탈락합니다. 2.5와 \"4\"는 지정한 정수 타입이 아니어서 변환 전에 제외됩니다. int(v)는 이미 통과한 값의 출력 형식을 맞추는 것이며 모든 입력을 변환하는 절차가 아닙니다.",
+      "hints": [
+        "if 조건을 먼저 통과한 값만 int(v)로 변환합니다.",
+        "isinstance의 튜플은 어느 한 타입에 속하면 True입니다. bool은 int의 하위 타입이어서 별도로 제외합니다."
+      ],
+      "choices": ["[5]", "[3, 5, 1]", "[3, 5, 2, 4]", "[3, 5]"],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "[3, 5]"
+    },
+    {
+      "id": "numpy-coercion-types-20261023",
+      "concept": "배열의 공통 dtype과 타입 정보 손실",
+      "domain": "NumPy",
+      "title": "입력 변환 순서",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nraw = [2, True]\narray = np.array(raw)\nprint((isinstance(raw[1], bool),\n       isinstance(array[1], np.integer),\n       int(array[1])))",
+      "answer": "(True, True, 1)",
+      "explanation": "raw의 둘째 값은 bool인 True입니다. np.array는 두 값을 담을 공통 정수 dtype을 선택해 True를 1로 바꿉니다. 그래서 array[1]은 np.integer이며 값은 1입니다. 입력에서 bool을 거절해야 한다면 배열로 변환하기 전에 원래 값을 검사해야 합니다. object dtype으로 보존하는 방법은 별도 정책입니다.",
+      "hints": [
+        "배열을 만들면서 원래 원소마다의 Python 타입이 모두 보존되나요?",
+        "일반 NumPy 배열은 공통 dtype을 정합니다. 정수와 bool을 함께 넣으면 bool도 정수값으로 변환됩니다."
+      ],
+      "choices": [
+        "(True, False, 1)",
+        "(False, True, 1)",
+        "(True, True, 1)",
+        "(True, True, 2)"
+      ],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "reference_setup": "",
+      "reference_output": "(True, True, 1)"
+    },
+    {
+      "id": "sql-nullif-ratio-20261023",
+      "concept": "NULLIF를 사용한 분모 처리",
+      "domain": "SQL",
+      "title": "비율 열 계산",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE measures(id INTEGER, amount REAL, base REAL);\n-- INSERT INTO measures VALUES(1,10,2),(2,0,0),(3,9,NULL);\nSELECT COALESCE(amount / NULLIF(base, 0), -1)\nFROM measures ORDER BY id;",
+      "answer": "[5.0, -1, -1]",
+      "explanation": "NULLIF(base,0)은 base가 0이면 NULL, 그렇지 않으면 base를 반환합니다. 0 분모와 결측 분모의 나눗셈 결과가 NULL이 되고 COALESCE가 -1로 바꿉니다. WHERE가 없으므로 세 행을 모두 반환합니다. -1은 이 예제의 표시 정책이며 모든 분석에서 적절한 대체값은 아닙니다.",
+      "hints": [
+        "NULLIF의 두 인자가 같을 때 반환값을 생각해 보세요.",
+        "NULLIF(0,0)은 NULL이며 NULL을 포함한 나눗셈도 NULL입니다. COALESCE는 NULL인 결과만 대체합니다."
+      ],
+      "choices": ["[5.0, -1, -1]", "[5.0, 0, -1]", "[5.0, -1]", "[5.0, 0, 0]"],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "reference_setup": "CREATE TABLE measures(id INTEGER, amount REAL, base REAL);\nINSERT INTO measures VALUES(1,10,2),(2,0,0),(3,9,NULL);",
+      "reference_output": "[5.0, -1, -1]"
+    },
+    {
+      "id": "sql-empty-membership-20261023",
+      "concept": "빈 집합과 NULL의 포함 조건",
+      "domain": "SQL",
+      "title": "제외 목록이 비어 있는 날",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요. blocked에는 행이 없습니다. SQLite 기준입니다.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER);\n-- INSERT INTO orders VALUES(1),(NULL),(2);\n-- CREATE TABLE blocked(id INTEGER);\nSELECT COUNT(*) FROM orders\nWHERE id NOT IN (SELECT id FROM blocked);",
+      "answer": "3",
+      "explanation": "blocked에는 행이 없습니다. SQLite에서 빈 집합에 대한 IN은 False이고 NOT IN은 True이며 왼쪽 값이 NULL이어도 같습니다. 그래서 NULL id 행까지 세 행이 남습니다. 목록에 NULL 한 행이 있는 경우와 빈 목록은 다릅니다. NULL id를 항상 제외하려면 id IS NOT NULL 조건을 별도로 명시해야 합니다.",
+      "hints": [
+        "NULL이 들어 있는 목록과 행 자체가 없는 목록을 구분해 보세요.",
+        "SQLite에서 빈 집합에 대한 NOT IN은 왼쪽 값이 NULL이어도 True입니다. COUNT(*)는 남은 행 전체를 셉니다."
+      ],
+      "choices": ["2", "0", "NULL", "3"],
+      "kind": "choice",
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "reference_setup": "CREATE TABLE orders(id INTEGER);\nINSERT INTO orders VALUES(1),(NULL),(2);\nCREATE TABLE blocked(id INTEGER);",
+      "reference_output": "3"
     }
   ]
 }

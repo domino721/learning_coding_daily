@@ -1,0 +1,302 @@
+{
+  "date": "2026-10-23",
+  "batch_id": "manual-2026-10-23-api-boundaries",
+  "source_commit": "ee9ee4b2180f94eb857c83b75ead128be067e520",
+  "status": "reviewed",
+  "review_method": "Codex individually authored 14 drafts outside app, separately traced each expression and verified actual NumPy/pandas/SQLite output. Each item has three diagnostic distractors, explicit prerequisites and boundary cases. No external model API; learner efficacy unobserved.",
+  "scope": "Python12/SQL2; foundation4/application5/transfer5; existing187 questions, all cards/drafts,18 concepts and learning-paths-2.0 rules preserved.",
+  "exercises": [
+    {
+      "id": "numpy-where-positions-20261023",
+      "domain": "NumPy",
+      "level": 1,
+      "objective": "where의 한 인자 호출에서 반환된 위치와 원본 값을 구분한다.",
+      "family": "numpy-mask:조건의 위치 반환",
+      "requires": ["numpy-index-foundation-01"],
+      "answer": "[1, 3]",
+      "distractor_hypotheses": {
+        "[9, 7]": "선택 위치를 원본 값으로 바꿔 읽었을 가능성",
+        "[False, True, False, True]": "where가 조건 마스크 자체를 반환한다고 생각했을 가능성",
+        "[2, 4]": "위치를 1부터 세었을 가능성"
+      },
+      "diagnostic_question": "코드의 [0]은 원본 x의 첫 값을 고르나요, 반환 튜플의 첫 배열을 고르나요?",
+      "boundary_check": "빈 입력·참 없음·모두 참에서 빈 위치 배열/전체 위치와 값 선택을 비교한다.",
+      "new_concept": "인자 하나인 where의 위치 반환",
+      "accepted_answers": [],
+      "rationale": "where의 한 인자 호출에서 반환된 위치와 원본 값을 구분한다. 익숙한 입력에서 새 API 동작 하나를 확인한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. where의 한 인자 호출에서 반환된 위치와 원본 값을 구분한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-where-coordinates-20261023",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "where의 축별 위치 배열을 짝지어 2차원 좌표를 복원한다.",
+      "family": "numpy-mask:축별 좌표 짝 해석",
+      "requires": ["numpy-where-positions-20261023", "numpy-shape-01"],
+      "answer": "([0, 1], [1, 0])",
+      "distractor_hypotheses": {
+        "([1, 0], [0, 1])": "행과 열의 축 순서를 바꾸었을 가능성",
+        "([5, 8], [5, 8])": "좌표 대신 원본 값을 반환한다고 생각했을 가능성",
+        "([1, 3], [1, 3])": "배열을 펼친 위치와 축별 위치를 혼동했을 가능성"
+      },
+      "diagnostic_question": "각 배열 하나가 완성된 좌표인가요, 같은 순번의 두 값이 좌표인가요?",
+      "boundary_check": "비정방 배열·참 없음·동일 행에 여러 참이 있는 경우 좌표로 다시 선택한 값과 비교한다.",
+      "new_concept": "다차원 where의 좌표 짝",
+      "accepted_answers": [],
+      "rationale": "where의 축별 위치 배열을 짝지어 2차원 좌표를 복원한다. 확인한 기초를 축·입력 정책·반환 구조에 연결한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. where의 축별 위치 배열을 짝지어 2차원 좌표를 복원한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-where-evaluation-20261023",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "np.where의 조건 선택과 인자 식의 선계산을 구분해 0 나눗셈을 진단한다.",
+      "family": "numpy-mask:조건 선택과 식 평가 시점",
+      "requires": [
+        "numpy-where-source-20261021",
+        "numpy-where-positions-20261023"
+      ],
+      "answer": "계산 오류",
+      "distractor_hypotheses": {
+        "[0.0, 3.0]": "where가 선택하지 않은 쪽의 계산을 생략한다고 생각했을 가능성",
+        "[inf, 3.0]": "raise 설정 대신 기본 경고 동작을 적용했을 가능성",
+        "[0.0, 0.0]": "0 값 대체가 배열 전체에 적용된다고 생각했을 가능성"
+      },
+      "diagnostic_question": "조건이 False인 위치에서도 12/x라는 인자 식은 계산되나요?",
+      "boundary_check": "0 없음/0 포함, 기본 경고와 raise, np.divide의 where/out을 비교한다.",
+      "new_concept": "조건 선택 이전의 인자 계산",
+      "accepted_answers": [],
+      "rationale": "np.where의 조건 선택과 인자 식의 선계산을 구분해 0 나눗셈을 진단한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. np.where의 조건 선택과 인자 식의 선계산을 구분해 0 나눗셈을 진단한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "pandas-isin-cells-20261023",
+      "domain": "pandas",
+      "level": 1,
+      "objective": "DataFrame.isin의 원소별 마스크와 행 필터를 구분한다.",
+      "family": "pandas-filter:표의 셀별 포함 판정",
+      "requires": ["pandas-isin-values-20261021"],
+      "answer": "[[True, False], [False, True]]",
+      "distractor_hypotheses": {
+        "[True, True]": "각 행의 판정으로 자동 축약된다고 생각했을 가능성",
+        "[[1, 3], [2, 1]]": "isin이 원본 값을 그대로 선택한다고 생각했을 가능성",
+        "[[True, True], [True, True]]": "한 셀의 참을 행 전체에 전파했을 가능성"
+      },
+      "diagnostic_question": "한 행에 하나라도 1이 있으면 그 행의 모든 셀이 True가 되나요?",
+      "boundary_check": "빈 표·후보 없음·여러 열에 같은 값에서 원본과 마스크 shape가 같은지 확인한다.",
+      "new_concept": "DataFrame isin의 원소별 결과",
+      "accepted_answers": [],
+      "rationale": "DataFrame.isin의 원소별 마스크와 행 필터를 구분한다. 익숙한 입력에서 새 API 동작 하나를 확인한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. DataFrame.isin의 원소별 마스크와 행 필터를 구분한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "pandas-isin-column-rules-20261023",
+      "domain": "pandas",
+      "level": 2,
+      "objective": "DataFrame.isin에 사전을 주었을 때 열별 허용값으로 마스크를 만든다.",
+      "family": "pandas-filter:열별 후보 매핑",
+      "requires": ["pandas-isin-cells-20261023"],
+      "answer": "[[True, True], [True, False], [False, True]]",
+      "distractor_hypotheses": {
+        "[[True, True], [True, True], [True, True]]": "후보가 있는 열이면 모든 셀이 참이라고 생각했을 가능성",
+        "[[True, True]]": "모든 조건을 만족하는 행만 반환한다고 생각했을 가능성",
+        "[[False, False], [False, False], [False, False]]": "사전 키 문자열을 셀 값과 비교했을 가능성"
+      },
+      "diagnostic_question": "사전의 키는 검사할 값인가요, 검사 규칙을 적용할 열인가요?",
+      "boundary_check": "누락 열·사전 키 순서 반전·다른 열에만 허용된 값에서 열별 판정을 확인한다.",
+      "new_concept": "사전으로 지정한 열별 포함 조건",
+      "accepted_answers": [],
+      "rationale": "DataFrame.isin에 사전을 주었을 때 열별 허용값으로 마스크를 만든다. 확인한 기초를 축·입력 정책·반환 구조에 연결한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. DataFrame.isin에 사전을 주었을 때 열별 허용값으로 마스크를 만든다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "pandas-isin-cross-columns-20261023",
+      "domain": "pandas",
+      "level": 3,
+      "objective": "전역 포함 검사와 열별 업무 규칙을 행 단위로 축약한 결과를 비교한다.",
+      "family": "pandas-filter:열 역할을 보존한 행 승인",
+      "requires": [
+        "pandas-isin-column-rules-20261023",
+        "numpy-row-all-20261023"
+      ],
+      "answer": "([True, True, True], [True, False, False])",
+      "distractor_hypotheses": {
+        "([True, False, False], [True, False, False])": "전역 후보를 위치별 후보처럼 대응시켰을 가능성",
+        "([True, True, True], [True, True, True])": "열별 후보를 전역 후보와 동일하게 취급했을 가능성",
+        "([True, True], [False, False])": "행별 축약 대신 열별 축약을 적용했을 가능성"
+      },
+      "diagnostic_question": "값들이 전역 후보에 있다는 사실만으로 source와 target의 역할도 맞나요?",
+      "boundary_check": "source/target 교환·빈 후보·미지정 열·3행2열의 all/any/축 차이를 확인한다.",
+      "new_concept": "포함 후보의 범위와 행 조건 축약",
+      "accepted_answers": [],
+      "rationale": "전역 포함 검사와 열별 업무 규칙을 행 단위로 축약한 결과를 비교한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. 전역 포함 검사와 열별 업무 규칙을 행 단위로 축약한 결과를 비교한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-row-all-20261023",
+      "domain": "NumPy",
+      "level": 1,
+      "objective": "불리언 배열의 all(axis=1)에서 행별 전체 조건을 읽는다.",
+      "family": "numpy-structure:행별 전체 조건 축약",
+      "requires": ["numpy-axis-01"],
+      "answer": "[True, False, False]",
+      "distractor_hypotheses": {
+        "[True, True, False]": "all을 any로 해석했을 가능성",
+        "[False, False]": "axis=0으로 열별 검사했을 가능성",
+        "False": "axis를 무시하고 전체 원소를 축약했을 가능성"
+      },
+      "diagnostic_question": "all과 any 중 하나만 참이어도 되는 것은 어느 쪽인가요?",
+      "boundary_check": "비정방 배열·전부 참/거짓·빈 행과 빈 열의 all 결과를 확인한다.",
+      "new_concept": "행별 불리언 축약",
+      "accepted_answers": [],
+      "rationale": "불리언 배열의 all(axis=1)에서 행별 전체 조건을 읽는다. 익숙한 입력에서 새 API 동작 하나를 확인한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. 불리언 배열의 all(axis=1)에서 행별 전체 조건을 읽는다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-finite-rows-20261023",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "유한성 마스크를 행별로 축약해 표의 구조를 유지하며 유효 행을 선택한다.",
+      "family": "numpy-mask:유한한 행 선택",
+      "requires": ["numpy-finite-mask-20261021", "numpy-row-all-20261023"],
+      "answer": "[[2.0, 3.0]]",
+      "distractor_hypotheses": {
+        "[1.0, 2.0, 3.0, 4.0]": "셀 마스크로 바로 선택해 배열을 평탄화했을 가능성",
+        "[[1.0, nan], [2.0, 3.0], [inf, 4.0]]": "all을 any로 해석했을 가능성",
+        "[[1.0], [2.0], [inf]]": "행 마스크와 열 마스크를 혼동했을 가능성"
+      },
+      "diagnostic_question": "하나의 유한값이 있으면 충분한가요, 행 전체가 유한해야 하나요?",
+      "boundary_check": "행마다 NaN/양음 무한대·유효행 없음·한 열·비정방 배열에서 행 선택을 확인한다.",
+      "new_concept": "셀 유한성과 행 전체 유효성",
+      "accepted_answers": [],
+      "rationale": "유한성 마스크를 행별로 축약해 표의 구조를 유지하며 유효 행을 선택한다. 확인한 기초를 축·입력 정책·반환 구조에 연결한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. 유한성 마스크를 행별로 축약해 표의 구조를 유지하며 유효 행을 선택한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-finite-ratios-20261023",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "유한한 입력과 비유한한 계산 결과를 구분해 산출값 검증 시점을 판단한다.",
+      "family": "numpy-mask:계산 전후의 유한성 검증",
+      "requires": [
+        "numpy-finite-rows-20261023",
+        "numpy-finite-average-20261021"
+      ],
+      "answer": "([True, True, True], [True, False, False])",
+      "distractor_hypotheses": {
+        "([True, True, True], [True, True, True])": "경고 무시를 비정상 값 보정으로 생각했을 가능성",
+        "([True, False, False], [True, False, False])": "0 자체를 비유한값으로 해석했을 가능성",
+        "([True, True, True], [True, True, False])": "NaN만 유효값으로 오인했을 가능성"
+      },
+      "diagnostic_question": "유한한 두 수를 나누면 분모가 0이어도 결과가 유한한가요?",
+      "boundary_check": "0/0·양음수/0·분모 비0·오버플로에서 입력과 결과의 유한성을 구분한다.",
+      "new_concept": "유한성 검사의 계산 단계",
+      "accepted_answers": [],
+      "rationale": "유한한 입력과 비유한한 계산 결과를 구분해 산출값 검증 시점을 판단한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. 유한한 입력과 비유한한 계산 결과를 구분해 산출값 검증 시점을 판단한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-scalar-types-20261023",
+      "domain": "NumPy",
+      "level": 1,
+      "objective": "NumPy 정수 스칼라와 Python 내장 int의 isinstance 결과를 구분한다.",
+      "family": "numpy-structure:NumPy 스칼라 계층 확인",
+      "requires": ["numpy-index-foundation-01"],
+      "answer": "(False, True)",
+      "distractor_hypotheses": {
+        "(True, True)": "모든 정수형이 내장 int를 상속한다고 생각했을 가능성",
+        "(False, False)": "np.integer가 실제 NumPy 정수의 상위 타입임을 놓쳤을 가능성",
+        "(True, False)": "NumPy 계층과 내장 타입 계층을 뒤바꾸었을 가능성"
+      },
+      "diagnostic_question": "np.int64와 Python int가 같은 클래스 계층이라고 가정했나요?",
+      "boundary_check": "int·np.int32·np.int64·float·bool에서 두 타입 검사를 비교한다.",
+      "new_concept": "NumPy 정수 스칼라의 타입 계층",
+      "accepted_answers": [],
+      "rationale": "NumPy 정수 스칼라와 Python 내장 int의 isinstance 결과를 구분한다. 익숙한 입력에서 새 API 동작 하나를 확인한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. NumPy 정수 스칼라와 Python 내장 int의 isinstance 결과를 구분한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-integer-inputs-20261023",
+      "domain": "NumPy",
+      "level": 2,
+      "objective": "Python/NumPy 정수를 함께 허용하고 bool과 변환 가능한 문자열을 구분한다.",
+      "family": "numpy-structure:혼합 정수 계층 입력 정책",
+      "requires": ["numpy-scalar-types-20261023", "python-bool-type-20261021"],
+      "answer": "[3, 5]",
+      "distractor_hypotheses": {
+        "[5]": "NumPy 정수를 내장 int 조건만으로 검사했을 가능성",
+        "[3, 5, 1]": "bool의 int 하위 관계를 제외하지 않았을 가능성",
+        "[3, 5, 2, 4]": "타입 검사와 강제 형변환을 같은 처리로 생각했을 가능성"
+      },
+      "diagnostic_question": "int(v)는 모든 입력에 실행되나요, 타입 조건을 통과한 입력에만 실행되나요?",
+      "boundary_check": "음수·0·NumPy 정수 폭·bool·문자열·소수에서 실제 변환 전 검사 결과를 확인한다.",
+      "new_concept": "Python과 NumPy 정수 입력 정책",
+      "accepted_answers": [],
+      "rationale": "Python/NumPy 정수를 함께 허용하고 bool과 변환 가능한 문자열을 구분한다. 확인한 기초를 축·입력 정책·반환 구조에 연결한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. Python/NumPy 정수를 함께 허용하고 bool과 변환 가능한 문자열을 구분한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "numpy-coercion-types-20261023",
+      "domain": "NumPy",
+      "level": 3,
+      "objective": "배열 생성의 타입 통일로 원래 bool 정보가 사라지는 검증 순서 문제를 진단한다.",
+      "family": "numpy-structure:변환 이전의 타입 정보",
+      "requires": [
+        "numpy-integer-inputs-20261023",
+        "python-numeric-inputs-20261021"
+      ],
+      "answer": "(True, True, 1)",
+      "distractor_hypotheses": {
+        "(True, False, 1)": "일반 배열이 서로 다른 원래 타입을 그대로 보관한다고 생각했을 가능성",
+        "(False, True, 1)": "배열 생성이 원본 리스트도 바꾼다고 생각했을 가능성",
+        "(True, True, 2)": "첫 원소의 값과 둘째 원소의 변환 결과를 혼동했을 가능성"
+      },
+      "diagnostic_question": "생성된 정수 1만 보고 원래 입력이 True였는지 복원할 수 있나요?",
+      "boundary_check": "bool만 있는 배열·정수와 bool·dtype=object·원본 리스트 보존을 비교한다.",
+      "new_concept": "배열의 공통 dtype과 타입 정보 손실",
+      "accepted_answers": [],
+      "rationale": "배열 생성의 타입 통일로 원래 bool 정보가 사라지는 검증 순서 문제를 진단한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. 배열 생성의 타입 통일로 원래 bool 정보가 사라지는 검증 순서 문제를 진단한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "sql-nullif-ratio-20261023",
+      "domain": "SQL",
+      "level": 2,
+      "objective": "NULLIF와 COALESCE를 연결해 0/결측 분모의 결과와 행 보존을 추적한다.",
+      "family": "sql-rows:0 분모의 NULL 변환",
+      "requires": ["sql-rows-foundation-02", "sql-null-02"],
+      "answer": "[5.0, -1, -1]",
+      "distractor_hypotheses": {
+        "[5.0, 0, -1]": "0/0의 결과를 0으로 가정했을 가능성",
+        "[5.0, -1]": "NULL 분모 행을 자동 제거한다고 생각했을 가능성",
+        "[5.0, 0, 0]": "대체 표시값을 임의로 0으로 읽었을 가능성"
+      },
+      "diagnostic_question": "NULLIF로 값을 바꾸는 것과 WHERE로 행을 제거하는 것이 같은가요?",
+      "boundary_check": "양수·음수·0·NULL 분모와 NULL 분자, 빈 표에서 표시 입력으로 재현한다.",
+      "new_concept": "NULLIF를 사용한 분모 처리",
+      "accepted_answers": [],
+      "rationale": "NULLIF와 COALESCE를 연결해 0/결측 분모의 결과와 행 보존을 추적한다. 확인한 기초를 축·입력 정책·반환 구조에 연결한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. NULLIF와 COALESCE를 연결해 0/결측 분모의 결과와 행 보존을 추적한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    },
+    {
+      "id": "sql-empty-membership-20261023",
+      "domain": "SQL",
+      "level": 3,
+      "objective": "SQLite의 빈 제외 집합과 NULL을 포함한 제외 집합의 차이를 판단한다.",
+      "family": "sql-rows:빈 포함 집합의 논리",
+      "requires": ["sql-exists-20261017", "sql-where-02", "sql-count-01"],
+      "answer": "3",
+      "distractor_hypotheses": {
+        "2": "왼쪽 NULL은 빈 집합에서도 무조건 탈락한다고 생각했을 가능성",
+        "0": "빈 집합을 NULL 한 행과 동일하게 해석했을 가능성",
+        "NULL": "COUNT(*)와 NULL인 식의 값을 혼동했을 가능성"
+      },
+      "diagnostic_question": "blocked가 빈 것과 blocked에 NULL 한 행이 있는 것은 같은가요?",
+      "boundary_check": "빈 제외 표·NULL 한 행·일치/불일치/중복 제외값·NULL 왼쪽 값을 SQLite 진리표로 비교한다.",
+      "new_concept": "빈 집합과 NULL의 포함 조건",
+      "accepted_answers": [],
+      "rationale": "SQLite의 빈 제외 집합과 NULL을 포함한 제외 집합의 차이를 판단한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
+      "editorial_review": "Codex 개별 재풀이·실제 참조 일치 확인. SQLite의 빈 제외 집합과 NULL을 포함한 제외 집합의 차이를 판단한다. 각 오답 가설과 힌트·선수·보충·다른 날 변형을 검토했다."
+    }
+  ]
+}

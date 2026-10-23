@@ -254,7 +254,8 @@ def test_extras_never_repeat_today_and_exhaustion_creates_no_empty_session(learn
         assert client.post(endpoint,json=body).json()['id']==current['id']
         with TestClient(create_app(path,now=lambda:clock[0])) as restarted:
             assert restarted.post(endpoint,json=body).json()['id']==current['id']
-        assert batch<20
+        # Each nonempty extra session must consume at least one unseen active ID.
+        assert batch < sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)
     dashboard=client.get('/api/dashboard').json()
     assert dashboard['today_completed_count']==dashboard['all_time_completed_count']==len(seen)
     assert dashboard['available_count']==0

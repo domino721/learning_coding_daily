@@ -2109,6 +2109,173 @@
       "remediation": ["sql-rows-foundation-03", "sql-rows-foundation-01"],
       "objective": "동점까지 결정된 정렬 결과에서 OFFSET으로 건너뛴 뒤 LIMIT을 적용한다.",
       "review_status": "reviewed"
+    },
+    "numpy-where-positions-20261023": {
+      "concept_id": "numpy-mask",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-mask:조건의 위치 반환",
+      "requires": ["numpy-index-foundation-01"],
+      "remediation": ["numpy-index-foundation-01"],
+      "objective": "where의 한 인자 호출에서 반환된 위치와 원본 값을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-where-coordinates-20261023": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:축별 좌표 짝 해석",
+      "requires": ["numpy-where-positions-20261023", "numpy-shape-01"],
+      "remediation": ["numpy-where-positions-20261023", "numpy-shape-01"],
+      "objective": "where의 축별 위치 배열을 짝지어 2차원 좌표를 복원한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-where-evaluation-20261023": {
+      "concept_id": "numpy-mask",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-mask:조건 선택과 식 평가 시점",
+      "requires": [
+        "numpy-where-source-20261021",
+        "numpy-where-positions-20261023"
+      ],
+      "remediation": [
+        "numpy-where-source-20261021",
+        "numpy-where-positions-20261023"
+      ],
+      "objective": "np.where의 조건 선택과 인자 식의 선계산을 구분해 0 나눗셈을 진단한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-isin-cells-20261023": {
+      "concept_id": "pandas-filter",
+      "level": 1,
+      "role": "foundation",
+      "family": "pandas-filter:표의 셀별 포함 판정",
+      "requires": ["pandas-isin-values-20261021"],
+      "remediation": ["pandas-isin-values-20261021"],
+      "objective": "DataFrame.isin의 원소별 마스크와 행 필터를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "pandas-isin-column-rules-20261023": {
+      "concept_id": "pandas-filter",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-filter:열별 후보 매핑",
+      "requires": ["pandas-isin-cells-20261023"],
+      "remediation": ["pandas-isin-cells-20261023"],
+      "objective": "DataFrame.isin에 사전을 주었을 때 열별 허용값으로 마스크를 만든다.",
+      "review_status": "reviewed"
+    },
+    "pandas-isin-cross-columns-20261023": {
+      "concept_id": "pandas-filter",
+      "level": 3,
+      "role": "transfer",
+      "family": "pandas-filter:열 역할을 보존한 행 승인",
+      "requires": [
+        "pandas-isin-column-rules-20261023",
+        "numpy-row-all-20261023"
+      ],
+      "remediation": [
+        "pandas-isin-column-rules-20261023",
+        "numpy-row-all-20261023"
+      ],
+      "objective": "전역 포함 검사와 열별 업무 규칙을 행 단위로 축약한 결과를 비교한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-row-all-20261023": {
+      "concept_id": "numpy-structure",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-structure:행별 전체 조건 축약",
+      "requires": ["numpy-axis-01"],
+      "remediation": ["numpy-axis-01"],
+      "objective": "불리언 배열의 all(axis=1)에서 행별 전체 조건을 읽는다.",
+      "review_status": "reviewed"
+    },
+    "numpy-finite-rows-20261023": {
+      "concept_id": "numpy-mask",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-mask:유한한 행 선택",
+      "requires": ["numpy-finite-mask-20261021", "numpy-row-all-20261023"],
+      "remediation": ["numpy-finite-mask-20261021", "numpy-row-all-20261023"],
+      "objective": "유한성 마스크를 행별로 축약해 표의 구조를 유지하며 유효 행을 선택한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-finite-ratios-20261023": {
+      "concept_id": "numpy-mask",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-mask:계산 전후의 유한성 검증",
+      "requires": [
+        "numpy-finite-rows-20261023",
+        "numpy-finite-average-20261021"
+      ],
+      "remediation": [
+        "numpy-finite-rows-20261023",
+        "numpy-finite-average-20261021"
+      ],
+      "objective": "유한한 입력과 비유한한 계산 결과를 구분해 산출값 검증 시점을 판단한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-scalar-types-20261023": {
+      "concept_id": "numpy-structure",
+      "level": 1,
+      "role": "foundation",
+      "family": "numpy-structure:NumPy 스칼라 계층 확인",
+      "requires": ["numpy-index-foundation-01"],
+      "remediation": ["numpy-index-foundation-01"],
+      "objective": "NumPy 정수 스칼라와 Python 내장 int의 isinstance 결과를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-integer-inputs-20261023": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:혼합 정수 계층 입력 정책",
+      "requires": ["numpy-scalar-types-20261023", "python-bool-type-20261021"],
+      "remediation": [
+        "numpy-scalar-types-20261023",
+        "python-bool-type-20261021"
+      ],
+      "objective": "Python/NumPy 정수를 함께 허용하고 bool과 변환 가능한 문자열을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-coercion-types-20261023": {
+      "concept_id": "numpy-structure",
+      "level": 3,
+      "role": "transfer",
+      "family": "numpy-structure:변환 이전의 타입 정보",
+      "requires": [
+        "numpy-integer-inputs-20261023",
+        "python-numeric-inputs-20261021"
+      ],
+      "remediation": [
+        "numpy-integer-inputs-20261023",
+        "python-numeric-inputs-20261021"
+      ],
+      "objective": "배열 생성의 타입 통일로 원래 bool 정보가 사라지는 검증 순서 문제를 진단한다.",
+      "review_status": "reviewed"
+    },
+    "sql-nullif-ratio-20261023": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-rows:0 분모의 NULL 변환",
+      "requires": ["sql-rows-foundation-02", "sql-null-02"],
+      "remediation": ["sql-rows-foundation-02", "sql-null-02"],
+      "objective": "NULLIF와 COALESCE를 연결해 0/결측 분모의 결과와 행 보존을 추적한다.",
+      "review_status": "reviewed"
+    },
+    "sql-empty-membership-20261023": {
+      "concept_id": "sql-rows",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-rows:빈 포함 집합의 논리",
+      "requires": ["sql-exists-20261017", "sql-where-02", "sql-count-01"],
+      "remediation": ["sql-exists-20261017", "sql-where-02", "sql-count-01"],
+      "objective": "SQLite의 빈 제외 집합과 NULL을 포함한 제외 집합의 차이를 판단한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

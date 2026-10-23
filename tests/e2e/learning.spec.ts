@@ -144,7 +144,11 @@ test("independent courses use unique pools, capped choices and preserved history
   ).toHaveCount(first.choices.length);
   await expect(review).toContainText(wrong);
   await expect(review).toContainText(first.explanation);
-  for (let batch = 0; batch < 20; batch++) {
+  // Every extra session consumes at least one unseen active question.
+  const pythonPool = curriculum.tracks.find(
+    (track) => track.id === "python",
+  )!.exercise_count;
+  for (let batch = 0; batch < pythonPool; batch++) {
     const more = page.getByRole("button", {
       name: /추천 문제 더 풀기|추가 학습 이어서 풀기/,
     });
