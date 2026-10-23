@@ -2059,6 +2059,56 @@
       "remediation": ["sql-join-foundation-01", "sql-composite-match-20261020"],
       "objective": "한 표의 두 역할과 순서 조건으로 자기/역순 중복 없이 쌍을 만든다.",
       "review_status": "reviewed"
+    },
+    "pandas-group-cumulative-20261023": {
+      "concept_id": "pandas-group",
+      "level": 2,
+      "role": "application",
+      "family": "group-cumulative-row-order",
+      "requires": ["pandas-group-scaffold-01", "numpy-index-foundation-01"],
+      "remediation": ["pandas-group-scaffold-01", "numpy-index-foundation-01"],
+      "objective": "교차 배치된 그룹의 누적 상태를 원래 행 위치로 복원한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-stack-concatenate-20261023": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "array-stack-versus-concatenate",
+      "requires": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "remediation": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "objective": "새 축을 만드는 stack과 기존 축을 연장하는 concatenate의 shape를 구분한다.",
+      "review_status": "reviewed"
+    },
+    "ml-neighbor-indices-20261023": {
+      "concept_id": "ml-neighbors",
+      "level": 2,
+      "role": "application",
+      "family": "neighbor-query-row-indices",
+      "requires": ["ml-neighbor-foundation-01", "numpy-index-foundation-01"],
+      "remediation": ["ml-neighbor-foundation-01", "numpy-index-foundation-01"],
+      "objective": "2차원 거리로 이웃 순서를 구하고 반환된 행 번호를 목표 레이블과 구분한다.",
+      "review_status": "reviewed"
+    },
+    "sql-running-window-20261023": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-running-rows-window",
+      "requires": ["sql-distinct-sum-20261018", "sql-rows-foundation-03"],
+      "remediation": ["sql-distinct-sum-20261018", "sql-rows-foundation-03"],
+      "objective": "명시된 ROWS 범위의 누적합을 행 유지 및 정렬 순서와 함께 추적한다.",
+      "review_status": "reviewed"
+    },
+    "sql-offset-page-20261023": {
+      "concept_id": "sql-rows",
+      "level": 2,
+      "role": "application",
+      "family": "sql-offset-after-total-order",
+      "requires": ["sql-rows-foundation-03", "sql-rows-foundation-01"],
+      "remediation": ["sql-rows-foundation-03", "sql-rows-foundation-01"],
+      "objective": "동점까지 결정된 정렬 결과에서 OFFSET으로 건너뛴 뒤 LIMIT을 적용한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [

@@ -2182,5 +2182,65 @@
     "distractor_strength": 3,
     "rationale": "한 표의 두 역할과 순서 조건으로 자기/역순 중복 없이 쌍을 만든다. 같은 표를 두 역할로 해석하고 연결 조건과 쌍의 순서 제약을 합쳐 추적하는 전이다.",
     "calibration": "editorial-20261022; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "pandas-group-cumulative-20261023": {
+    "concept_id": "pandas-group",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "그룹별 누적 상태 두 개를 갱신하고 원래 행 순서로 읽는다. 기존 단순 집계 다음의 적용이다.",
+    "calibration": "editorial-20261023; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "numpy-stack-concatenate-20261023": {
+    "concept_id": "numpy-structure",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "동일한 입력으로 새 축과 기존 축의 길이를 각각 계산한다. 기존 shape 읽기에서 연산 뒤 구조로 확장한다.",
+    "calibration": "editorial-20261023; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "ml-neighbor-indices-20261023": {
+    "concept_id": "ml-neighbors",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 최근접 선택을 두 좌표에서 수행하고 반환 행 번호를 읽는 적용이다. 거리 동점 없는 입력으로 정답을 유일하게 한다.",
+    "calibration": "editorial-20261023; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-running-window-20261023": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "기존 SUM·정렬 기초를 명시적 행 프레임에 연결한다. 고유 id와 ROWS 명시로 동점/RANGE 모호함을 피한다.",
+    "calibration": "editorial-20261023; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-offset-page-20261023": {
+    "concept_id": "sql-rows",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "기존 정렬/최댓값 기초 이후 동점 정렬과 페이지 범위를 연결한다. 고유 id 보조키로 결과 순서를 유일하게 한다.",
+    "calibration": "editorial-20261023; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
   }
 }

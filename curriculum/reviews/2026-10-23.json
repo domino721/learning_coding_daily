@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-23",
+  "batch_id": "codex-2026-10-23",
+  "method": "Codex separate editorial re-solve and executed pandas/NumPy/SQLite/scikit-learn reference/boundary checks; no Gemini or model API calls",
+  "exercises": [
+    {
+      "id": "pandas-group-cumulative-20261023",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[2, 5, 5, 12]",
+      "editorial_check": "전체 누적합·최종 그룹합 반복·키별 재정렬을 혼동할 가능성. 오답만으로 원인을 확정하지 않는다.",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준을 좁힌다. 정답을 그대로 제공하지 않는다.",
+      "prerequisite_check": [
+        "pandas-group-scaffold-01",
+        "numpy-index-foundation-01"
+      ],
+      "difficulty_check": "그룹별 누적 상태 두 개를 갱신하고 원래 행 순서로 읽는다. 기존 단순 집계 다음의 적용이다.",
+      "boundary_check": "빈 입력·한 팀·교차 팀·음수·0·사용자 인덱스와 원본 불변을 독립 사전 누적과 대조",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산을 구분한다."
+    },
+    {
+      "id": "numpy-stack-concatenate-20261023",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "((2, 2), (4,))",
+      "editorial_check": "원소 수만 보고 둘 다 평탄 배열이라고 보거나 concatenate도 새 축을 만든다고 볼 가능성.",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준을 좁힌다. 정답을 그대로 제공하지 않는다.",
+      "prerequisite_check": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "difficulty_check": "동일한 입력으로 새 축과 기존 축의 길이를 각각 계산한다. 기존 shape 읽기에서 연산 뒤 구조로 확장한다.",
+      "boundary_check": "길이0/1/3·2차원 입력에서 값/차원/원소수·원본 불변, 길이 불일치 stack의 ValueError 확인",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산을 구분한다."
+    },
+    {
+      "id": "ml-neighbor-indices-20261023",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[[2, 0]]",
+      "editorial_check": "학습 입력 순서 유지·레이블 반환·한 좌표만의 거리 사용을 혼동할 가능성.",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준을 좁힌다. 정답을 그대로 제공하지 않는다.",
+      "prerequisite_check": [
+        "ml-neighbor-foundation-01",
+        "numpy-index-foundation-01"
+      ],
+      "difficulty_check": "기존 최근접 선택을 두 좌표에서 수행하고 반환 행 번호를 읽는 적용이다. 거리 동점 없는 입력으로 정답을 유일하게 한다.",
+      "boundary_check": "서로 다른 질의점·k=1/2/3·학습 행 순서/레이블 변경에서 수동 제곱거리 정렬과 대조; 동점 제외",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산을 구분한다."
+    },
+    {
+      "id": "sql-running-window-20261023",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[2, 7, 10]",
+      "editorial_check": "OVER를 무시한 전체 합·원래 금액 열·별도 합계 행 추가를 혼동할 가능성.",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준을 좁힌다. 정답을 그대로 제공하지 않는다.",
+      "prerequisite_check": [
+        "sql-distinct-sum-20261018",
+        "sql-rows-foundation-03"
+      ],
+      "difficulty_check": "기존 SUM·정렬 기초를 명시적 행 프레임에 연결한다. 고유 id와 ROWS 명시로 동점/RANGE 모호함을 피한다.",
+      "boundary_check": "빈표·한행·역삽입·음수·0·NULL(처음/중간/전체)을 수동 SQL식 누적과 대조",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산을 구분한다."
+    },
+    {
+      "id": "sql-offset-page-20261023",
+      "reviewer": "Codex in this execution; no Gemini",
+      "status": "reviewed",
+      "reference_result": "[3, 1]",
+      "editorial_check": "OFFSET 무시·삽입 첫 행 먼저 제거·OFFSET을 id 값으로 해석할 가능성.",
+      "hints_check": "첫 힌트는 확인 관점, 둘째는 중간 기준을 좁힌다. 정답을 그대로 제공하지 않는다.",
+      "prerequisite_check": [
+        "sql-rows-foundation-03",
+        "sql-rows-foundation-01"
+      ],
+      "difficulty_check": "기존 정렬/최댓값 기초 이후 동점 정렬과 페이지 범위를 연결한다. 고유 id 보조키로 결과 순서를 유일하게 한다.",
+      "boundary_check": "빈표·한행·동점·역삽입·OFFSET0/끝/초과·LIMIT0/남은수초과를 정렬 후 슬라이스와 대조",
+      "limitations": "실제 학습 효과·시간/난이도 보정은 사용자 관찰 전이다. 편집 검수와 실행 계산을 구분한다."
+    }
+  ]
+}

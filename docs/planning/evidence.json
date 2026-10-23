@@ -667,6 +667,22 @@
         "src/curriculum.json"
       ],
       "code_reference": "3c54753813f753d74fed318a251376143a639d38"
+    },
+    {
+      "id": "EV-050",
+      "record": "docs/planning/evidence/EV-050.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-23.json",
+        "backend/difficulty.json",
+        "backend/learning_paths.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-23.json",
+        "src/curriculum.json",
+        "tests/test_daily_20261023.py",
+        "tests/fixtures/catalog-before-daily-20261023.json",
+        "tests/e2e/daily-content.spec.ts"
+      ],
+      "code_reference": "f0583b1b044a645b0e2a0a4fa8385b619cfe1a9a"
     }
   ]
 }
