@@ -714,6 +714,19 @@
         "tests/e2e/learning.spec.ts"
       ],
       "code_reference": "ee9ee4b2180f94eb857c83b75ead128be067e520"
+    },
+    {
+      "id": "EV-053",
+      "record": "docs/planning/evidence/EV-053.md",
+      "artifacts": [
+        "backend/scaffold_content.json",
+        "curriculum/reviews/2026-10-23-expansion.json",
+        "docs/content_batches/2026-10-23-expansion.md",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json"
+      ],
+      "code_reference": "7cb17fc3d9205e37f140bd4087bbbac3a7ea8481"
     }
   ]
 }
