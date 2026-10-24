@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "batch_id": "codex-2026-10-24",
+  "date": "2026-10-24",
+  "status": "reviewed",
+  "review_method": "Codex separate editorial re-solve and executed pandas/NumPy/SQLite/scikit-learn reference/boundary checks; no Gemini or model API calls",
+  "review_record": "docs/content_batches/2026-10-24.md",
+  "exercises": [
+    {
+      "id": "pandas-duplicate-members-20261024",
+      "concept": "중복 그룹 전체 판정",
+      "kind": "choice",
+      "title": "선택된 행의 번호",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"id\": [1, 2, 3, 4],\n                   \"code\": [\"A\", \"B\", \"A\", \"C\"]})\nmask = df.duplicated(subset=[\"code\"], keep=False)\nprint(df.loc[mask, \"id\"].tolist())",
+      "answer": "[1, 3]",
+      "choices": [
+        "[1, 3]",
+        "[3]",
+        "[1]",
+        "[2, 4]"
+      ],
+      "explanation": "code가 A인 두 행이 같은 중복 그룹입니다. duplicated의 keep=False는 중복 그룹에서 어떤 행도 예외로 남기지 않아 첫 번째 A도 True로 표시합니다. 따라서 id1과3이 선택됩니다. keep=\"first\"였다면 첫 A를 제외해 id3만, keep=\"last\"였다면 마지막 A를 제외해 id1만 선택합니다. B와 C는 유일하므로 False입니다. id 열은 subset에 없어 비교하지 않습니다.",
+      "hints": [
+        "어떤 열을 비교하며 중복 그룹 안에서 예외로 남기는 행이 있는지 확인하세요.",
+        "keep=False를 첫 행 보존 설정과 구분하고, 마스크가 True인 원래 행의 id를 읽으세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "reference_output": "[1, 3]"
+    },
+    {
+      "id": "stats-compound-change-20261024",
+      "concept": "서로 다른 기준금액의 연속 변화",
+      "kind": "choice",
+      "title": "연속 변화의 최종 비율",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "import numpy as np\nrates = np.array([0.25, -0.20])\ninitial = 100.0\nfinal = initial * np.prod(1 + rates)\nprint(round(float((final - initial) / initial), 2))",
+      "answer": "0.0",
+      "choices": [
+        "0.0",
+        "0.05",
+        "-0.05",
+        "1.0"
+      ],
+      "explanation": "첫 변화에서 100×1.25=125, 다음 변화에서 125×0.80=100입니다. 각 비율의 기준금액이 달라 변화율을 단순히 더하지 않습니다. 최종 순변화율은 (100-100)/100=0입니다. 0.05는 변화율의 합, 1.0은 최종/처음의 배율로, 순변화율과 다릅니다. 출력은 비율이고 퍼센트 숫자로 바꾸는 ×100은 없습니다.",
+      "hints": [
+        "각 변화율이 처음 금액에 적용되는지, 직전 금액에 적용되는지 생각해 보세요.",
+        "1+변화율을 차례로 곱한 뒤 최종 배율과 순변화율을 구분하세요."
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "reference_output": "0.0"
+    },
+    {
+      "id": "ml-balanced-recall-20261024",
+      "concept": "정확도와 클래스별 재현율 평균",
+      "kind": "choice",
+      "title": "분류 리포트의 두 점수",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "from sklearn.metrics import accuracy_score, balanced_accuracy_score\ny_true = [0, 0, 0, 0, 1, 1]\ny_pred = [0, 0, 0, 1, 1, 0]\nprint((round(float(accuracy_score(y_true, y_pred)), 3),\n       round(float(balanced_accuracy_score(y_true, y_pred)), 3)))",
+      "answer": "(0.667, 0.625)",
+      "choices": [
+        "(0.667, 0.625)",
+        "(0.667, 0.667)",
+        "(0.625, 0.667)",
+        "(0.667, 0.5)"
+      ],
+      "explanation": "맞힌 관측은 6개 중4개이므로 accuracy는4/6≈0.667입니다. 클래스0의 재현율은3/4=0.75, 클래스1은1/2=0.5입니다. 기본 balanced_accuracy는 관측 수로 가중하지 않고 클래스별 재현율을 같은 비중으로 평균해 (0.75+0.5)/2=0.625입니다. 양성 클래스1의 재현율만 쓰거나 두 점수의 순서를 바꾸지 않습니다. 코드는 두 클래스를 모두 포함하며 기본 adjusted=False를 사용합니다.",
+      "hints": [
+        "전체 관측의 정답 비율과 클래스마다 따로 구한 정답 비율을 구분하세요.",
+        "클래스0과1에서 각각 몇 개 중 몇 개를 맞혔는지 구하고, 두 재현율의 평균과 전체 정확도를 따로 계산하세요."
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "reference_output": "(0.667, 0.625)"
+    },
+    {
+      "id": "sql-except-set-20261024",
+      "concept": "집합 차이의 중복과 NULL",
+      "kind": "blank",
+      "title": "제외 연산의 결과 목록",
+      "prompt": "표시된 전체 입력으로 SQLite 쿼리를 실행합니다. 결과 열을 위에서부터 Python 리스트로 적으세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER);\n-- INSERT INTO orders VALUES(1),(1),(2),(NULL);\n-- CREATE TABLE blocked(id INTEGER);\n-- INSERT INTO blocked VALUES(2),(NULL);\nSELECT id FROM orders\nEXCEPT\nSELECT id FROM blocked\nORDER BY id;",
+      "answer": "[1]",
+      "choices": [
+        "[1]",
+        "[1, 1]",
+        "[]",
+        "[None, 1]"
+      ],
+      "explanation": "EXCEPT는 왼쪽 결과에만 있는 서로 다른 값을 반환합니다. 2와 NULL은 오른쪽에도 있으므로 빠지고 왼쪽의 중복된1은 하나로 합쳐져 [1]입니다. SQLite 집합 연산에서 NULL끼리는 중복 판정상 같은 값으로 다룹니다. 오른쪽에 NULL이 있는 NOT IN 조건의 삼값 논리를 이 집합 연산에 그대로 적용하면 안 됩니다. EXCEPT ALL을 사용한 코드도 아닙니다.",
+      "hints": [
+        "행별 조건 필터인지, 두 결과 집합의 차이를 구하는지 확인하세요.",
+        "오른쪽에도 있는 값을 제거한 뒤 왼쪽 중복과 양쪽 NULL이 어떻게 처리되는지 살펴보세요."
+      ],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_output": "[1]",
+      "reference_setup": "CREATE TABLE orders(id INTEGER); INSERT INTO orders VALUES(1),(1),(2),(NULL); CREATE TABLE blocked(id INTEGER); INSERT INTO blocked VALUES(2),(NULL);"
+    },
+    {
+      "id": "sql-full-coverage-20261024",
+      "concept": "양쪽 미연결 행 보존",
+      "kind": "choice",
+      "title": "연결 결과의 전체 행 수",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE a(id INTEGER);\n-- INSERT INTO a VALUES(1),(2);\n-- CREATE TABLE b(id INTEGER);\n-- INSERT INTO b VALUES(2),(3);\nSELECT COUNT(*) FROM a\nFULL OUTER JOIN b ON a.id = b.id;",
+      "answer": "3",
+      "choices": [
+        "3",
+        "1",
+        "2",
+        "4"
+      ],
+      "explanation": "id2끼리 연결된 행 하나에 a에만 있는 id1 행, b에만 있는 id3 행이 각각 추가되어3행입니다. FULL OUTER JOIN은 양쪽 미연결 행을 보존하고 반대쪽 열을 NULL로 채웁니다. INNER JOIN은1행, LEFT JOIN은2행이며 조건 없는 모든 쌍4행과도 다릅니다. COUNT(*)는 NULL 보완 행도 셉니다. SQLite3.39 이상이 지원하는 FULL OUTER JOIN을 사용합니다.",
+      "hints": [
+        "연결되는 키 외에 어느 쪽의 미연결 행을 보존하는지 확인하세요.",
+        "일치하는 키의 행 쌍, 왼쪽에만 있는 행, 오른쪽에만 있는 행을 나누어 세어 보세요."
+      ],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_output": "3",
+      "reference_setup": "CREATE TABLE a(id INTEGER); INSERT INTO a VALUES(1),(2); CREATE TABLE b(id INTEGER); INSERT INTO b VALUES(2),(3);"
+    }
+  ]
+}

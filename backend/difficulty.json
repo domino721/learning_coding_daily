@@ -2410,5 +2410,65 @@
     "distractor_strength": 3,
     "rationale": "SQLite의 빈 제외 집합과 NULL을 포함한 제외 집합의 차이를 판단한다. 입력 구조나 계산 순서가 달라질 때 기존 지식을 연결해 판단한다.",
     "calibration": "editorial-20261023-api-boundaries; 실제 참조/경계 검수, 사용자 성과 보정 전"
+  },
+  "pandas-duplicate-members-20261024": {
+    "concept_id": "pandas-filter",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 불리언 행 선택에 중복 판정 마스크를 연결한다. 비교 열과 그룹 예외 설정을 추적하는 적용이다.",
+    "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "stats-compound-change-20261024": {
+    "concept_id": "stats-rates",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기초 비율을 직전 금액에 순차 적용하고 배율과 변화율을 구분한다. 기존 단일 전후 비교와 다른 적용이다.",
+    "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "ml-balanced-recall-20261024": {
+    "concept_id": "ml-metrics",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 정확도/재현율 기초를 연결해 두 분모와 클래스 동일 비중 평균을 추적한다.",
+    "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-except-set-20261024": {
+    "concept_id": "sql-rows",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "기존 조건/NULL과 UNION 기초 위에 집합 차이를 적용한다. 행별 비교와 결과집합 연산의 차이를 추적한다.",
+    "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-full-coverage-20261024": {
+    "concept_id": "sql-joins",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 INNER/LEFT 조인 기초를 양쪽 행 보존으로 확장한다. 최초 예제는 키가 고유해 새 동작에 집중한다.",
+    "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
   }
 }
