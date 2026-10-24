@@ -743,6 +743,19 @@
         "tests/e2e/daily-content.spec.ts"
       ],
       "code_reference": "ed3a56075b2b674833def69947209ecf8d9977f2"
+    },
+    {
+      "id": "EV-055",
+      "record": "docs/planning/evidence/EV-055.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-24.json",
+        "curriculum/reviews/2026-10-24.json",
+        "docs/content_batches/2026-10-24.md",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json"
+      ],
+      "code_reference": "bd3670e7be11fa32d6108d8597daaa229e7c4832"
     }
   ]
 }
