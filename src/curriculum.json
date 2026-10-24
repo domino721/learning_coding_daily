@@ -7365,7 +7365,7 @@
   ],
   "learning_paths": {
     "schema_version": 1,
-    "version": "learning-paths-2.0",
+    "version": "learning-paths-2.1",
     "rules": {
       "level2_items": 2,
       "level2_days": 2,
@@ -7374,6 +7374,9 @@
       "level3_transfer_days": 2,
       "recovery_items": 2,
       "max_transfer_per_batch": 1
+    },
+    "review": {
+      "repeat_gap_days": 7
     },
     "items": {
       "pandas-select-01": {

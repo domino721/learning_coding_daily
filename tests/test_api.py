@@ -120,7 +120,7 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
             session=response.json()
             for item in session['items']:
                 assert (item['domain']=='SQL')==(track=='sql')
-                assert item['response_mode']!='essay' and item['category']!='practice'
+                assert item['response_mode']!='essay' and item['category'] in ('new','review','practice')
                 seen.add(item['id'])
                 if item['status']=='pending': assert answer(client,session,item).status_code==200
         if seen==active:break

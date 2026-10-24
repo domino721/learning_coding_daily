@@ -220,3 +220,69 @@ test("final incorrect outcomes survive verified backup and idempotent merge", as
   assert.equal(merged.sessions[0].correct_count, 0);
   assert.equal(JSON.stringify(data), original);
 });
+
+test("recent independent success is reviewed through a sibling until the gap passes", () => {
+  const ex = curriculum.exercises.find((e) => e.id === "pandas-select-01")!;
+  const sessions = [
+    {
+      id: "s-0",
+      local_day: "2026-10-20",
+      batch: 0,
+      items: [
+        {
+          ...ex,
+          status: "correct",
+          response_mode: "short",
+          hints_used: 0,
+          attempts_count: 1,
+        },
+      ],
+    },
+  ];
+  const progress = {
+    "pandas-select-01": {
+      ...reviewDue("2026-10-20", {}, true),
+      last_day: "2026-10-20",
+      completed: 1,
+    },
+  };
+  const soon = selectExercises(
+    sessions as any,
+    progress,
+    "2026-10-23",
+    false,
+    "python",
+  );
+  assert.equal(soon[0][1], "practice");
+  assert.equal(soon[0][0].id, "pandas-select-02");
+  assert.ok(!soon.some(([e]) => e.id === "pandas-select-01"));
+  const later = selectExercises(
+    sessions as any,
+    progress,
+    "2026-10-27",
+    false,
+    "python",
+  );
+  assert.deepEqual(
+    [later[0][0].id, later[0][1]],
+    ["pandas-select-01", "review"],
+  );
+  const helped = {
+    "pandas-select-01": {
+      ...reviewDue("2026-10-20", {}, false),
+      last_day: "2026-10-20",
+      completed: 1,
+    },
+  };
+  const retry = selectExercises(
+    sessions as any,
+    helped,
+    "2026-10-21",
+    false,
+    "python",
+  );
+  assert.deepEqual(
+    [retry[0][0].id, retry[0][1]],
+    ["pandas-select-01", "review"],
+  );
+});

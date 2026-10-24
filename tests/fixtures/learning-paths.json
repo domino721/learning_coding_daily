@@ -197,5 +197,31 @@
       "stats-summary-foundation-02",
       "ml-eval-foundation-02"
     ]
+  },
+  {
+    "name": "recent independent success is reviewed through a sibling",
+    "track": "python",
+    "day": "2026-10-23",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-20"
+      }
+    ],
+    "first": "pandas-select-02",
+    "excluded": ["pandas-select-01"]
+  },
+  {
+    "name": "independent success returns as itself after the repeat gap",
+    "track": "python",
+    "day": "2026-10-27",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-20"
+      }
+    ],
+    "first": "pandas-select-01",
+    "excluded": []
   }
 ]

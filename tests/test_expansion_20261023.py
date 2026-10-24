@@ -36,7 +36,7 @@ def test_all_187_existing_questions_paths_cards_drafts_concepts_and_rules_surviv
         assert digest(cards[key]) == expected, key
     assert digest(bank['concepts']) == old['concepts']
     assert LEARNING_PATHS['rules'] == old['rules']
-    assert LEARNING_PATHS['version'] == 'learning-paths-2.0'
+    assert LEARNING_PATHS['version'] == 'learning-paths-2.1'  # 2.0 rules preserved; 2.1 adds the review variation policy
     added = {item['id'] for item in NEW}
     assert len(added) == 14 and not added & old['exercises'].keys()
     assert added | old['exercises'].keys() <= BY_ID.keys()

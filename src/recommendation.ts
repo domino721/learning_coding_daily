@@ -14,6 +14,7 @@ type PathSpec = {
   role: string;
   family: string;
   requires: string[];
+  remediation?: string[];
 };
 const policy = curriculum.learning_paths;
 const paths = policy.items as Record<string, PathSpec>;
@@ -204,9 +205,55 @@ export function selectExercises(
         progress[a.id].due.localeCompare(progress[b.id].due) ||
         exercises.indexOf(a) - exercises.indexOf(b),
     );
-  const selected: [Source, "new" | "review" | "practice"][] = extra
-    ? []
-    : due.slice(0, 3).map((ex) => [ex, "review"]);
+  const pool = exercises.filter(
+    (ex) => !progress[ex.id] && !doneToday.has(ex.id) && eligible(ex),
+  );
+  const gapDays = policy.review.repeat_gap_days;
+  // Only an item already solved independently is varied; a helped item is retried as itself.
+  const recentlySeen = (ex: Source) => {
+    const prior = progress[ex.id],
+      last = prior?.last_day;
+    if (!prior?.streak || !last) return false;
+    const days = (Date.parse(today) - Date.parse(last)) / 86_400_000;
+    return Number.isFinite(days) && days < gapDays;
+  };
+  // A recently solved item is reviewed through a different, unseen exercise of the same concept.
+  const substitute = (ex: Source): Source | undefined => {
+    const remediation = paths[ex.id].remediation ?? [];
+    const key = (c: Source) => [
+      remediation.includes(c.id) ? 0 : 1,
+      Math.abs(c.level - ex.level),
+      exercises.indexOf(c),
+    ];
+    return pool
+      .filter((c) => c.concept_id === ex.concept_id)
+      .sort((a, b) => {
+        const ka = key(a),
+          kb = key(b);
+        for (let i = 0; i < ka.length; i++)
+          if (ka[i] !== kb[i]) return ka[i] - kb[i];
+        return 0;
+      })[0];
+  };
+  const selected: [Source, "new" | "review" | "practice"][] = [];
+  const reviewConcepts = new Set<string>();
+  if (!extra)
+    for (const ex of due) {
+      if (selected.length >= 3) break;
+      if (!recentlySeen(ex)) {
+        selected.push([ex, "review"]);
+        reviewConcepts.add(ex.concept_id);
+        continue;
+      }
+      if (reviewConcepts.has(ex.concept_id)) continue;
+      const other = substitute(ex);
+      if (!other) selected.push([ex, "review"]);
+      else {
+        selected.push([other, "practice"]);
+        pool.splice(pool.indexOf(other), 1);
+      }
+      reviewConcepts.add(ex.concept_id);
+    }
   const counts = new Map(curriculum.concepts.map((c) => [c.domain, 0])),
     conceptPicks = new Map(
       curriculum.concepts.map((c) => [c.id, obsToday.has(c.id) ? 1 : 0]),
@@ -215,10 +262,7 @@ export function selectExercises(
     counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
     conceptPicks.set(ex.concept_id, (conceptPicks.get(ex.concept_id) ?? 0) + 1);
   }
-  const pool = exercises.filter(
-      (ex) => !progress[ex.id] && !doneToday.has(ex.id) && eligible(ex),
-    ),
-    requiredL1 = new Set(
+  const requiredL1 = new Set(
       exercises
         .filter((ex) => !progress[ex.id])
         .flatMap((ex) => paths[ex.id].requires.filter((req) => !known(req))),
@@ -283,6 +327,7 @@ export function selectExercises(
   if (extra)
     for (const ex of due) {
       if (selected.length >= 5) break;
+      if (recentlySeen(ex)) continue;
       if (!selected.some(([x]) => x.id === ex.id))
         selected.push([ex, "review"]);
     }
@@ -298,6 +343,7 @@ export function recommendationTrace(
   return {
     algorithm_version: policy.version,
     rules: policy.rules,
+    review: policy.review,
     items: selected.map(([ex, category]) => {
       const state = states.get(ex.concept_id)!;
       return {
@@ -312,11 +358,13 @@ export function recommendationTrace(
         reason:
           category === "review"
             ? "예정된 복습으로 기억을 다시 확인해요."
-            : state.needs_support
-              ? "도움이 필요했던 개념의 기초를 먼저 확인해요."
-              : ex.level === 1
-                ? "다음 단계에 필요한 기초를 먼저 확인해요."
-                : "확인한 기초를 다른 조건에 적용해요.",
+            : category === "practice"
+              ? "최근 본 문제 대신 같은 개념을 다른 문제로 확인해요."
+              : state.needs_support
+                ? "도움이 필요했던 개념의 기초를 먼저 확인해요."
+                : ex.level === 1
+                  ? "다음 단계에 필요한 기초를 먼저 확인해요."
+                  : "확인한 기초를 다른 조건에 적용해요.",
       };
     }),
   };

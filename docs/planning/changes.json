@@ -313,6 +313,30 @@
       "alternatives": "단답형 무제한 유지나 객관식까지 3회로 바꾸는 대신 사용자가 요청한 기존 객관식 정책의 일관된 적용을 선택한다.",
       "baseline": "설계/계획 1.8.0",
       "implementation_commit": null
+    },
+    {
+      "id": "CR-013",
+      "date": "2026-10-25",
+      "title": "최근 독립 해결 문항의 복습을 같은 개념의 다른 문항으로 변형",
+      "status": "applied",
+      "authorization": "베타 사용자 3명 운영 중 “동일한 문제가 단답형으로 다시 나와 반복된다”는 후기를 받은 사용자가 문항 수준·품질 향상을 지시했다. 서버 구축은 사용자 데스크탑 미가동으로 후속으로 미뤘고 나머지 진행을 명시했다.",
+      "impact": {
+        "scope": "WBS-360의 복습 선택 규칙에 7일 반복 간격을 추가한다. 독립 해결 뒤 7일 안의 기한 도래 문항은 같은 개념의 미학습 문항(보충 우선·같은 단계 우선)을 practice로 대신 제시하고, 같은 개념의 복수 기한 문항은 한 자리만 쓴다. 도움/오답 뒤 다음날 복습과 7일 이후 복습은 원래 문항을 유지한다. 추가 학습은 간격 안의 문항을 건너뛴다.",
+        "data": "기존 origin/key/스키마/문항 snapshot/진도(due·streak·last_day)/완료·미완료·임시답안 보존. progress 계약 변경 없음. 추천 trace에 review 정책을 추가 기록한다. learning_paths.json의 rules는 그대로이고 별도 review 블록과 버전 learning-paths-2.1을 추가한다.",
+        "cost": "기존 무료 GitHub Pages 유지, 신규 비용·서비스·외부 전송 없음.",
+        "schedule": "웹/서버 공통 시나리오·단위·API·모바일 회귀 후 기존 Pages 경로로 게시. 실제 반복 체감 변화는 베타 사용자 7일 관찰(WBS-520)에서 확인.",
+        "requirements": [
+          "REQ-005",
+          "REQ-007",
+          "REQ-008"
+        ],
+        "tasks": [
+          "WBS-360"
+        ]
+      },
+      "alternatives": "같은 문항을 다른 형식(객관식↔단답)으로 다시 내는 방법은 답 기억 측정 문제가 그대로라 제외했다. 복습을 개념 단위 스케줄로 전면 재설계하는 방법은 progress 계약과 기록 이전이 필요해 보류했다. 도움 받은 문항까지 변형하는 방법은 선수 보충 뒤 원래 목표를 다시 푸는 설계 의도(공통 시나리오 “completed bridge opens original target review”)와 충돌해 제외했다.",
+      "baseline": "설계/계획 1.9.0",
+      "implementation_commit": null
     }
   ]
 }

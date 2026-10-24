@@ -144,3 +144,32 @@ def test_day2_probes_unlocked_application_before_redundant_foundations_and_reach
                 track_sessions.append({'id':f'{track}-{offset}','track_id':track,'local_day':day,'batch':0,'items':items})
         states=concept_states(track_sessions,BY_ID)
         assert all(v['level']==3 for v in states.values() if (v['domain']=='SQL')==(track=='sql'))
+
+
+def test_recent_independent_review_varies_the_exercise_but_helped_items_are_retried():
+    solved={'track':'python','records':[{'id':'pandas-select-01','day':'2026-10-20'}]}
+    sessions,progress=history(solved)
+    assert progress['pandas-select-01']['due']=='2026-10-23'
+    picked=select_exercises(EXERCISES,sessions,progress,'2026-10-23',track='python')
+    first,category=picked[0]
+    assert category=='practice' and first.id=='pandas-select-02' and first.concept_id=='pandas-select'
+    assert 'pandas-select-01' not in {e.id for e,_ in picked}
+    assert len({e.id for e,_ in picked})==len(picked)
+    trace=recommendation_trace(picked,sessions,BY_ID)
+    assert trace['review']=={'repeat_gap_days':7} and trace['items'][0]['reason']=='최근 본 문제 대신 같은 개념을 다른 문제로 확인해요.'
+    extra=select_exercises(EXERCISES,sessions,progress,'2026-10-23',extra=True,track='python')
+    assert 'pandas-select-01' not in {e.id for e,_ in extra}
+    later=select_exercises(EXERCISES,sessions,progress,'2026-10-27',track='python')
+    assert later[0]==(BY_ID['pandas-select-01'],'review')
+    helped={'track':'python','records':[{'id':'pandas-select-01','day':'2026-10-20','status':'revealed','hints':1}]}
+    sessions,progress=history(helped)
+    assert select_exercises(EXERCISES,sessions,progress,'2026-10-21',track='python')[0]==(BY_ID['pandas-select-01'],'review')
+
+
+def test_two_recent_items_of_one_concept_take_a_single_practice_slot():
+    sample={'track':'python','records':[{'id':'pandas-select-01','day':'2026-10-20'},{'id':'pandas-select-02','day':'2026-10-20'}]}
+    sessions,progress=history(sample)
+    picked=select_exercises(EXERCISES,sessions,progress,'2026-10-23',track='python')
+    practice=[e for e,c in picked if c=='practice']
+    assert len(practice)==1 and practice[0].concept_id=='pandas-select'
+    assert not {'pandas-select-01','pandas-select-02'}&{e.id for e,_ in picked}

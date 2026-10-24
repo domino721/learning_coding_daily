@@ -143,13 +143,34 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         return prereq and ex.level<=limit and all(known(key) for key in LEARNING_PATHS['items'][ex.id]['requires'])
     due=sorted([ex for ex in exercises if ex.id in progress and progress[ex.id].get('due',progress[ex.id].get('due_day','9999'))<=today and ex.id not in done_today and eligible(ex)],
                key=lambda ex:(progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
-    selected=[] if extra else [(ex,'review') for ex in due[:3]]
+    pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
+    gap_days=LEARNING_PATHS['review']['repeat_gap_days']
+    def recently_seen(ex):
+        # Only an item already solved independently is varied; a helped item is retried as itself.
+        prior=progress[ex.id];last=prior.get('last_day')
+        if not prior.get('streak') or last is None:return False
+        try:return (date.fromisoformat(today)-date.fromisoformat(last)).days<gap_days
+        except ValueError:return False
+    def substitute(ex):
+        # A recently solved item is reviewed through a different, unseen exercise of the same concept.
+        siblings=[c for c in pool if c.concept_id==ex.concept_id]
+        remediation=LEARNING_PATHS['items'][ex.id]['remediation']
+        return min(siblings,key=lambda c:(0 if c.id in remediation else 1,abs(c.level-ex.level),exercises.index(c)),default=None)
+    selected=[];review_concepts=set()
+    if not extra:
+        for ex in due:
+            if len(selected)>=3:break
+            if not recently_seen(ex):selected.append((ex,'review'));review_concepts.add(ex.concept_id);continue
+            if ex.concept_id in review_concepts:continue
+            other=substitute(ex)
+            if other is None:selected.append((ex,'review'))
+            else:selected.append((other,'practice'));pool.remove(other)
+            review_concepts.add(ex.concept_id)
     counts={c['domain']:0 for c in CONCEPTS}
     concept_picks={c['id']:(1 if c['id'] in obs_today else 0) for c in CONCEPTS}
     for ex,_ in selected:
         counts[ex.domain]+=1
         concept_picks[ex.concept_id]+=1
-    pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
     required_l1={req for ex in exercises if ex.id not in progress for req in LEARNING_PATHS['items'][ex.id]['requires'] if not known(req)}
     progressed_concepts={by_id[pid].concept_id for pid in progress if pid in by_id}
     while pool and len(selected)<5:
@@ -173,6 +194,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
     if extra:
         for ex in due:
             if len(selected)>=5:break
+            if recently_seen(ex):continue
             if ex.id not in {x.id for x,_ in selected}:selected.append((ex,'review'))
     return selected
 
@@ -213,7 +235,7 @@ def validate_learning_paths(exercises):
 
 def recommendation_trace(selected, sessions, by_id):
     states=concept_states(sessions,by_id)
-    return {'algorithm_version':LEARNING_PATHS['version'],'rules':LEARNING_PATHS['rules'],
+    return {'algorithm_version':LEARNING_PATHS['version'],'rules':LEARNING_PATHS['rules'],'review':LEARNING_PATHS['review'],
         'items':[{'id':ex.id,'version':ex.version,'concept_id':ex.concept_id,
                   'role':LEARNING_PATHS['items'][ex.id]['role'],
                   'requires':LEARNING_PATHS['items'][ex.id]['requires'],
@@ -221,6 +243,7 @@ def recommendation_trace(selected, sessions, by_id):
                   'independent_count':states[ex.concept_id]['independent_count'],
                   'evidence_days':states[ex.concept_id]['evidence_days'],
                   'reason':'예정된 복습으로 기억을 다시 확인해요.' if category=='review' else
+                    '최근 본 문제 대신 같은 개념을 다른 문제로 확인해요.' if category=='practice' else
                     '도움이 필요했던 개념의 기초를 먼저 확인해요.' if states[ex.concept_id]['needs_support'] else
                     '다음 단계에 필요한 기초를 먼저 확인해요.' if ex.level==1 else
                     '확인한 기초를 다른 조건에 적용해요.'}

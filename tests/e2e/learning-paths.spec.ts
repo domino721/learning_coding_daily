@@ -89,7 +89,7 @@ test("a learner who needed the target explanation receives its foundation and ke
   );
   expect(current.items[0].id).toBe("ml-fit-foundation-01");
   expect(current.items[0].status).toBe("correct");
-  expect(current.recommendation.algorithm_version).toBe("learning-paths-2.0");
+  expect(current.recommendation.algorithm_version).toBe("learning-paths-2.1");
   expect(
     JSON.parse(
       stored.events.find(
