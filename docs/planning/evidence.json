@@ -773,6 +773,17 @@
         "docs/CONTENT_QUALITY_REVIEW.md"
       ],
       "code_reference": "f58feb9280fbe7a49eb6c8b2db36f3ca3063a97a"
+    },
+    {
+      "id": "EV-057",
+      "record": "docs/planning/evidence/EV-057.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json",
+        "backend/learning_paths.json"
+      ],
+      "code_reference": "7c55ca9f495b5a3d03b3b13e491480a2c93fd001"
     }
   ]
 }
