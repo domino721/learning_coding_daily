@@ -1,5 +1,6 @@
 from copy import deepcopy
 from pathlib import Path
+from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 from backend.main import create_app
@@ -63,7 +64,9 @@ def test_sync_is_idempotent_and_conflict_rolls_back(account_client,tmp_path):
     assert c.get('/api/history',headers=headers(a)).json()['sessions'][0]['local_day']==s['local_day']
 
 
-def test_login_password_policy_and_rate_limit(account_client):
+def test_login_password_policy_and_rate_limit(account_client,monkeypatch):
+    # All 16 requests must be in one minute; a real minute rollover resets the bucket.
+    monkeypatch.setattr('backend.accounts.time',SimpleNamespace(time=lambda:1_800_000_010.0))
     c=account_client
     assert c.post('/api/auth/register',json={'username':'learner','password':'short'}).status_code==422
     for _ in range(15):c.post('/api/auth/login',json=credentials())

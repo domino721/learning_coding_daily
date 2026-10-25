@@ -2470,5 +2470,65 @@
     "distractor_strength": 2,
     "rationale": "기존 INNER/LEFT 조인 기초를 양쪽 행 보존으로 확장한다. 최초 예제는 키가 고유해 새 동작에 집중한다.",
     "calibration": "editorial-20261024; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "pandas-reindex-fill-scope-20261025": {
+    "concept_id": "pandas-select",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 라벨 정렬을 재색인에 적용하고 새 라벨 기본값과 기존 결측을 구분한다. 같은 라벨 정렬 행동이므로 기존 유형군을 공유한다.",
+    "calibration": "editorial-20261025; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "numpy-squeeze-axis-20261025": {
+    "concept_id": "numpy-structure",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 shape 읽기를 지정 축과 자동 축 제거의 차이에 적용한다. 기존 축/배열 크기 유형군을 공유해 다양성을 부풀리지 않는다.",
+    "calibration": "editorial-20261025; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "ml-imputer-median-scope-20261025": {
+    "concept_id": "ml-preprocessing",
+    "response_mode": "choice",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 2,
+    "rationale": "기존 fit 상태 재사용과 중앙값 기초를 결측 대치 범위에 연결한다. 기존 학습 기준 재사용 유형군을 공유한다.",
+    "calibration": "editorial-20261025; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-distinct-nocase-20261025": {
+    "concept_id": "sql-aggregation",
+    "response_mode": "short",
+    "level": 2,
+    "label": "적용",
+    "reasoning_steps": 2,
+    "code_load": 2,
+    "transfer": 2,
+    "distractor_strength": 0,
+    "rationale": "기존 고유 사용자 집계에 문자 동등 기준의 조건 변화를 적용한다. 같은 사용자 단위 집계 유형군을 공유한다.",
+    "calibration": "editorial-20261025; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
+  },
+  "sql-halfopen-periods-20261025": {
+    "concept_id": "sql-joins",
+    "response_mode": "choice",
+    "level": 3,
+    "label": "전이",
+    "reasoning_steps": 3,
+    "code_load": 2,
+    "transfer": 3,
+    "distractor_strength": 3,
+    "rationale": "기존 조건 조인/복합 조건 적용을 키 동등에서 구간 포함으로 옮기고 세 경계 사례를 합쳐 판단하는 전이다. 기존 연결 조건 유형군을 공유한다.",
+    "calibration": "editorial-20261025; 실제 참조/경계·편집 검수, 사용자 성과 보정 전"
   }
 }

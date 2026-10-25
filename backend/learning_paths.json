@@ -2340,6 +2340,82 @@
       "remediation": ["sql-join-foundation-01", "sql-join-foundation-02"],
       "objective": "완전 외부 조인에서 일치 쌍과 양쪽 미연결 행을 모두 센다.",
       "review_status": "reviewed"
+    },
+    "pandas-reindex-fill-scope-20261025": {
+      "concept_id": "pandas-select",
+      "level": 2,
+      "role": "application",
+      "family": "pandas-select:인덱스 정렬과 열 대입",
+      "requires": [
+        "pandas-select-01",
+        "pandas-alignment-20261017",
+        "pandas-null-01"
+      ],
+      "remediation": [
+        "pandas-select-01",
+        "pandas-alignment-20261017",
+        "pandas-null-01"
+      ],
+      "objective": "재색인 순서로 기존 값과 새 라벨 기본값을 배치하고 기존 결측을 구분한다.",
+      "review_status": "reviewed"
+    },
+    "numpy-squeeze-axis-20261025": {
+      "concept_id": "numpy-structure",
+      "level": 2,
+      "role": "application",
+      "family": "numpy-structure:축과 배열 크기",
+      "requires": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "remediation": ["numpy-shape-01", "numpy-index-foundation-01"],
+      "objective": "선택적 squeeze와 기본 squeeze의 축 제거 범위를 비교한다.",
+      "review_status": "reviewed"
+    },
+    "ml-imputer-median-scope-20261025": {
+      "concept_id": "ml-preprocessing",
+      "level": 2,
+      "role": "application",
+      "family": "ml-preprocessing:학습 기준의 재사용",
+      "requires": [
+        "ml-fit-foundation-01",
+        "ml-mean-foundation-01",
+        "stats-median-01",
+        "pandas-null-01"
+      ],
+      "remediation": [
+        "ml-fit-foundation-01",
+        "ml-mean-foundation-01",
+        "stats-median-01",
+        "pandas-null-01"
+      ],
+      "objective": "학습한 열별 중앙값을 새 자료의 결측 칸에만 적용한다.",
+      "review_status": "reviewed"
+    },
+    "sql-distinct-nocase-20261025": {
+      "concept_id": "sql-aggregation",
+      "level": 2,
+      "role": "application",
+      "family": "sql-aggregation:중복 방문과 사용자 단위",
+      "requires": ["sql-count-01", "sql-unique-visitors-20261020"],
+      "remediation": ["sql-count-01", "sql-unique-visitors-20261020"],
+      "objective": "ASCII 대소문자 비교 기준에 따른 알려진 고유 사용자 수의 차이를 구한다.",
+      "review_status": "reviewed"
+    },
+    "sql-halfopen-periods-20261025": {
+      "concept_id": "sql-joins",
+      "level": 3,
+      "role": "transfer",
+      "family": "sql-joins:연결 조건을 만족하는 행",
+      "requires": [
+        "sql-join-foundation-01",
+        "sql-composite-match-20261020",
+        "sql-rows-foundation-01"
+      ],
+      "remediation": [
+        "sql-join-foundation-01",
+        "sql-composite-match-20261020",
+        "sql-rows-foundation-01"
+      ],
+      "objective": "시작 포함/끝 제외 조건의 일치 쌍을 세고 인접 기간의 경계를 구별한다.",
+      "review_status": "reviewed"
     }
   },
   "legacy_catalog": [
