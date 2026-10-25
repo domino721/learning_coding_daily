@@ -814,6 +814,20 @@
         "tests/e2e/daily-content.spec.ts"
       ],
       "code_reference": "8c58214777df7676a461edad70e6e8ceabaf426f"
+    },
+    {
+      "id": "EV-060",
+      "record": "docs/planning/evidence/EV-060.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-25.json",
+        "curriculum/reviews/2026-10-25.json",
+        "curriculum/problem_bank.json",
+        "docs/content_batches/2026-10-25.md",
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/curriculum.json"
+      ],
+      "code_reference": "8abdec94c06094a60495b167b4ff7da8a0b7f583"
     }
   ]
 }
