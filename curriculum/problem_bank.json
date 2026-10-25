@@ -11811,16 +11811,16 @@
       "diagnostic_question": "b는 원래 있는 행인가요? c는 원래 있는 결측값인가요, 새 행인가요?",
       "choice_diagnostics": [
         {
-          "choice": "[True, False, False]",
-          "hypothesis": "b는 기존 결측이고 c는 새 라벨의0, a는기존10이어서 맞다."
-        },
-        {
           "choice": "[False, False, False]",
           "hypothesis": "fill_value를 fillna처럼 기존 결측까지 대치한다고 봤을 가능성."
         },
         {
           "choice": "[True, True, False]",
           "hypothesis": "새 라벨에도 fill_value가 적용되지 않는다고 봤을 가능성."
+        },
+        {
+          "choice": "[True, False, False]",
+          "hypothesis": "b는 기존 결측이고 c는 새 라벨의0, a는기존10이어서 맞다."
         },
         {
           "choice": "[False, True, False]",
@@ -11849,9 +11849,9 @@
         "기존 라벨의 값과 새로 추가된 라벨의 기본값을 구분하고, 기존 결측에 fillna를 호출했는지 확인하세요."
       ],
       "choices": [
-        "[True, False, False]",
         "[False, False, False]",
         "[True, True, False]",
+        "[True, False, False]",
         "[False, True, False]"
       ],
       "accepted": [],
@@ -11894,12 +11894,12 @@
       "diagnostic_question": "0번 축도 길이1인데, 두 호출에서 그 축을 제거하라고 요청했나요?",
       "choice_diagnostics": [
         {
-          "choice": "((1, 3), (3,))",
-          "hypothesis": "지정 축만 없앤 구조와 모든 길이1 축을 없앤 구조를 구분했다."
-        },
-        {
           "choice": "((3,), (3,))",
           "hypothesis": "axis=1을 무시하고 양쪽 모두 모든 길이1 축을 없앤다고 봤을 가능성."
+        },
+        {
+          "choice": "((1, 3), (3,))",
+          "hypothesis": "지정 축만 없앤 구조와 모든 길이1 축을 없앤 구조를 구분했다."
         },
         {
           "choice": "((1, 3), (1, 3))",
@@ -11928,8 +11928,8 @@
         "axis를 지정한 호출은 지정 축만, 지정하지 않은 호출은 길이1인 축들을 살펴보세요."
       ],
       "choices": [
-        "((1, 3), (3,))",
         "((3,), (3,))",
+        "((1, 3), (3,))",
         "((1, 3), (1, 3))",
         "((1, 1, 3), (3,))"
       ],
@@ -11969,10 +11969,6 @@
       "diagnostic_question": "새 행의 두 번째 칸은 대치 대상인가요? median 설정으로 첫 열에서 저장한 숫자는 무엇인가요?",
       "choice_diagnostics": [
         {
-          "choice": "[[3.0, 99.0]]",
-          "hypothesis": "첫 칸에 훈련 중앙값3을 적용하고 관측값99를 보존했다."
-        },
-        {
           "choice": "[[3.0, 20.0]]",
           "hypothesis": "모든 칸을 훈련 기준값으로 덮어쓴다고 봤을 가능성."
         },
@@ -11983,6 +11979,10 @@
         {
           "choice": "[[0.0, 99.0]]",
           "hypothesis": "strategy를 무시하고 결측을 항상0으로 채운다고 봤을 가능성."
+        },
+        {
+          "choice": "[[3.0, 99.0]]",
+          "hypothesis": "첫 칸에 훈련 중앙값3을 적용하고 관측값99를 보존했다."
         }
       ],
       "remediation": [
@@ -12008,10 +12008,10 @@
         "각 열의 중앙값을 먼저 구하고, 새 행의 결측 칸에만 적용해 보세요."
       ],
       "choices": [
-        "[[3.0, 99.0]]",
         "[[3.0, 20.0]]",
         "[[1.0, 99.0]]",
-        "[[0.0, 99.0]]"
+        "[[0.0, 99.0]]",
+        "[[3.0, 99.0]]"
       ],
       "accepted": [],
       "seconds": 150,
@@ -12054,12 +12054,12 @@
       "diagnostic_question": "각 집계에서 Ann과 ann은 서로 다른 사용자인가요? NULL을 하나의 사용자로 세었나요?",
       "choice_diagnostics": [
         {
-          "choice": "(3, 2)",
-          "hypothesis": "기본 구별3개와 NOCASE 구별2개를 계산하고 NULL은 제외했다."
-        },
-        {
           "choice": "(3, 3)",
           "hypothesis": "NOCASE가 DISTINCT에 영향을 주지 않는다고 봤을 가능성."
+        },
+        {
+          "choice": "(3, 2)",
+          "hypothesis": "기본 구별3개와 NOCASE 구별2개를 계산하고 NULL은 제외했다."
         },
         {
           "choice": "(4, 2)",
@@ -12087,7 +12087,7 @@
         "두 DISTINCT 표현식의 비교 기준이 같은지와 NULL의 COUNT 포함 여부를 나누어 보세요.",
         "첫 집계의 기본 문자 비교와 두 번째의 NOCASE가 Ann/ann을 어떻게 구분하는지 확인하세요."
       ],
-      "choices": ["(3, 2)", "(3, 3)", "(4, 2)", "(2, 2)"],
+      "choices": ["(3, 3)", "(3, 2)", "(4, 2)", "(2, 2)"],
       "accepted": [],
       "seconds": 150,
       "version": 1,

@@ -801,6 +801,19 @@
         "tests/test_accounts.py"
       ],
       "code_reference": "4dd7f75b684296d7abcf101b9419d6c57b2a04a2"
+    },
+    {
+      "id": "EV-059",
+      "record": "docs/planning/evidence/EV-059.md",
+      "artifacts": [
+        "backend/content_batches/2026-10-25.json",
+        "curriculum/problem_bank.json",
+        "curriculum/reviews/2026-10-25.json",
+        "src/curriculum.json",
+        "tests/test_daily_20261025.py",
+        "tests/e2e/daily-content.spec.ts"
+      ],
+      "code_reference": "8c58214777df7676a461edad70e6e8ceabaf426f"
     }
   ]
 }
