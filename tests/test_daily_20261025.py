@@ -14,6 +14,7 @@ import pytest
 from sklearn.impute import SimpleImputer
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved, reversioned
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -26,11 +27,11 @@ def test_previous_206_exercises_paths_cards_and_current_review_policy_are_preser
     assert saved['path_version'] == 'learning-paths-2.1'
     assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.1 rules/review preserved; 2.2 adds support step-down and task-form mixing
     for key,expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[key])) == expected, key
-        assert digest(LEARNING_PATHS['items'][key]) == saved['path_items'][key]
+        assert preserved('exercise', key, expected), key
+        assert preserved('path', key, saved['path_items'][key])
     cards = {c['id']:c for c in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
     for key,expected in saved['design_cards'].items():
-        assert digest(cards[key]) == expected, key
+        assert preserved('card', key, expected), key
     batch = json.loads(Path('backend/content_batches/2026-10-25.json').read_text())
     added = {e['id'] for e in batch['exercises']}
     assert batch['batch_id'] == 'codex-2026-10-25' and len(added) == 5
@@ -39,6 +40,8 @@ def test_previous_206_exercises_paths_cards_and_current_review_policy_are_preser
     old_families = {LEARNING_PATHS['items'][key]['family'] for key in saved['path_items']}
     assert all(LEARNING_PATHS['items'][key]['family'] in old_families for key in added)
     for key in added:
+        if reversioned(key):
+            continue
         diagnostics = cards[key]['choice_diagnostics']
         assert [entry['choice'] for entry in diagnostics] == list(BY_ID[key].choices)
         assert all(entry['hypothesis'] for entry in diagnostics)
@@ -94,6 +97,7 @@ def test_median_imputation_reuses_column_statistics_only_at_missing_cells(train,
 
 @pytest.mark.parametrize('users', [[], [None,None], ['Ann','ann','Bo',None], ['A','A','a'],
     ['A','B'], ['é','É','A','a'], ['1','01',' A','a']])
+@original('sql-distinct-nocase-20261025')
 def test_nocase_distinct_uses_ascii_folding_and_omits_null(users):
     translation = str.maketrans(string.ascii_uppercase,string.ascii_lowercase)
     known = [user for user in users if user is not None]
@@ -107,6 +111,7 @@ def test_nocase_distinct_uses_ascii_folding_and_omits_null(users):
 @pytest.mark.parametrize('days,periods', [([2,3,5],[(1,3),(3,5)]), ([],[(1,3)]), ([1,2],[]),
     ([1,2,3],[(1,3)]), ([2],[(1,3),(2,4)]), ([1,2],[(1,1),(2,2)]),
     ([None,2],[(None,3),(1,None),(1,3)]), ([5,3,2],[(3,5),(1,3)])])
+@original('sql-halfopen-periods-20261025')
 def test_halfopen_interval_join_matches_independent_pairs(days,periods):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE events(id INTEGER, day INTEGER)')
@@ -120,6 +125,7 @@ def test_halfopen_interval_join_matches_independent_pairs(days,periods):
         assert db.execute(BY_ID['sql-halfopen-periods-20261025'].code).fetchone()[0] == len(expected)
 
 
+@original('sql-halfopen-periods-20261025')
 def test_each_boundary_distractor_matches_the_specific_alternative_predicate():
     e = BY_ID['sql-halfopen-periods-20261025']
     with sqlite3.connect(':memory:') as db:

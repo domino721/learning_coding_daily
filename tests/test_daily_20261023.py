@@ -12,6 +12,7 @@ import pytest
 from sklearn.neighbors import KNeighborsClassifier
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -20,11 +21,11 @@ def test_previous_182_exercises_paths_cards_and_rules_are_preserved():
     digest = lambda value: hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     assert len(saved['exercises']) == 182 and LEARNING_PATHS['rules'] == saved['rules']
     for identifier, expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[identifier])) == expected, identifier
-        assert digest(LEARNING_PATHS['items'][identifier]) == saved['path_items'][identifier]
+        assert preserved('exercise', identifier, expected), identifier
+        assert preserved('path', identifier, saved['path_items'][identifier])
     cards = {card['id']: card for card in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
     for identifier, expected in saved['design_cards'].items():
-        assert digest(cards[identifier]) == expected, identifier
+        assert preserved('card', identifier, expected), identifier
     batch = json.loads(Path('backend/content_batches/2026-10-23.json').read_text())
     added = {e['id'] for e in batch['exercises']}
     assert batch['batch_id'] == 'codex-2026-10-23' and len(added) == 5
@@ -86,6 +87,7 @@ def test_neighbor_indices_follow_full_coordinate_distance_and_training_row_order
 
 @pytest.mark.parametrize('rows', [[], [(1,4)], [(3,3),(1,2),(2,5)], [(2,-3),(1,4),(3,0)],
     [(1,None),(2,2),(3,None),(4,-1)], [(1,None),(2,None)]])
+@original('sql-running-window-20261023')
 def test_window_preserves_rows_and_sums_only_prefix_non_null_values(rows):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE sales(id INTEGER, amount INTEGER)')
@@ -104,6 +106,7 @@ def test_window_preserves_rows_and_sums_only_prefix_non_null_values(rows):
     ([(1,50),(2,90),(3,90),(4,10)],2,1), ([(4,10),(3,90),(2,90),(1,50)],2,1),
     ([(1,1),(2,1)],2,0), ([(1,1),(2,1)],2,2), ([(1,1),(2,1)],2,9),
     ([(1,1),(2,1)],0,0), ([(1,1),(2,1)],9,1)])
+@original('sql-offset-page-20261023')
 def test_pagination_matches_total_order_then_positional_slice(rows,limit,offset):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE orders(id INTEGER, amount INTEGER)')

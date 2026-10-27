@@ -6,6 +6,7 @@ import { dirname } from "node:path";
 import { createServer } from "node:net";
 import { spawn, type ChildProcess } from "node:child_process";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
+import { enterAnswer } from "./answer";
 import firstBatch from "../../backend/content_batches/2026-10-17.json" with { type: "json" };
 import sqlBatch from "../../backend/content_batches/2026-10-18.json" with { type: "json" };
 import expansion from "../../curriculum/reviews/2026-10-19-expansion.json" with { type: "json" };
@@ -219,7 +220,9 @@ for (const batch of [
         expect(added.has(ex.id)).toBeTruthy();
         expect(solved.has(ex.id)).toBeFalsy();
         expect(ex.domain === "SQL").toBe(track === "sql");
-        await expect(page.locator(".exercise-card pre")).toHaveText(ex.code);
+        // A batch item re-versioned into a line item shows its code as tappable lines.
+        if (ex.kind !== "line")
+          await expect(page.locator(".exercise-card pre")).toHaveText(ex.code);
         await expect(page.getByText(ex.concept, { exact: true })).toHaveCount(
           0,
         );
@@ -231,18 +234,12 @@ for (const batch of [
             () => document.documentElement.scrollWidth <= innerWidth,
           ),
         ).toBeTruthy();
-        if (ex.response_mode === "choice")
-          await page.getByLabel(ex.answer, { exact: true }).check();
-        else {
-          const answer =
-            batch === expansion ||
-            batch === expansion20 ||
-            batch === expansion21 ||
-            batch === expansion23
-              ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
-              : ex.answer;
-          await page.getByRole("textbox").fill(answer);
-        }
+        const typed =
+          ex.response_mode !== "choice" &&
+          [expansion, expansion20, expansion21, expansion23].includes(batch)
+            ? (ex.accepted[0] ?? ex.answer.replace(/,\s+/g, ","))
+            : ex.answer;
+        await enterAnswer(page, ex, typed);
         await page.getByRole("button", { name: "답 확인하기" }).click();
         await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible({
           timeout: 15_000,

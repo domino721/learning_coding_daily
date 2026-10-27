@@ -9,6 +9,7 @@ import subprocess
 import pytest
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import preserved
 from backend.curriculum import (LEARNING_PATHS, concept_states, observations,
                                 recommendation_trace, review_due, select_exercises,
                                 validate_learning_paths)
@@ -69,8 +70,7 @@ def test_publishing_requires_every_target_to_have_an_acyclic_reviewed_path():
 def test_all_previously_deployed_exercises_and_versions_are_unchanged():
     saved=json.loads(Path('tests/fixtures/catalog-before-learning-paths.json').read_text())
     for identifier,digest in saved['exercises'].items():
-        value=json.dumps(asdict(BY_ID[identifier]),ensure_ascii=False,sort_keys=True,separators=(',',':'))
-        assert hashlib.sha256(value.encode()).hexdigest()==digest,identifier
+        assert preserved('exercise',identifier,digest),identifier
 
 
 def test_help_after_first_daily_success_is_still_seen_and_duplicates_do_not_promote():

@@ -11,6 +11,7 @@ import pandas as pd
 import pytest
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -19,11 +20,11 @@ def test_previous_154_exercises_paths_and_design_cards_are_preserved():
     digest = lambda value: hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     assert len(saved['exercises']) == 154
     for identifier, expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[identifier])) == expected, identifier
-        assert digest(LEARNING_PATHS['items'][identifier]) == saved['path_items'][identifier]
+        assert preserved('exercise', identifier, expected), identifier
+        assert preserved('path', identifier, saved['path_items'][identifier])
     cards = {card['id']: card for card in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
     for identifier, expected in saved['design_cards'].items():
-        assert digest(cards[identifier]) == expected, identifier
+        assert preserved('card', identifier, expected), identifier
     batch = json.loads(Path('backend/content_batches/2026-10-21.json').read_text())
     added = {item['id'] for item in batch['exercises']}
     assert batch['batch_id'] == 'codex-2026-10-21' and len(added) == 5
@@ -60,6 +61,7 @@ def test_linear_quantile_matches_sorted_fractional_position(values, q):
 
 
 @pytest.mark.parametrize('names', [['A', 'AB', 'A_B', 'B_A', None], [], ['A', None, 'B'], ['AB', 'AB'], ['A_', 'AXYZ', 'B_A']])
+@original('sql-like-width-20261021')
 def test_like_single_character_is_required_and_percent_can_be_empty(names):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE users(id INTEGER, name TEXT)')
@@ -78,6 +80,7 @@ def test_escaped_underscore_has_different_literal_meaning():
 
 
 @pytest.mark.parametrize('right', [[(1, 7)], [(1, 7), (1, 8)], [(2, 7)], [], [(None, 7)]])
+@original('sql-using-columns-20261021')
 def test_using_merges_only_join_key_and_retains_left_to_right_column_order(right):
     with sqlite3.connect(':memory:') as db:
         db.executescript('CREATE TABLE a(id INTEGER, amount INTEGER); INSERT INTO a VALUES(1,10); CREATE TABLE b(id INTEGER, bonus INTEGER);')

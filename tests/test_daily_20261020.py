@@ -11,6 +11,7 @@ import pytest
 from sklearn.metrics import confusion_matrix
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -19,8 +20,8 @@ def test_previous_137_exercises_and_paths_are_unchanged():
     digest = lambda value: hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     assert len(saved['exercises']) == 137
     for identifier, expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[identifier])) == expected, identifier
-        assert digest(LEARNING_PATHS['items'][identifier]) == saved['path_items'][identifier]
+        assert preserved('exercise', identifier, expected), identifier
+        assert preserved('path', identifier, saved['path_items'][identifier])
     daily = json.loads(Path('backend/content_batches/2026-10-20.json').read_text())
     daily_ids = {item['id'] for item in daily['exercises']}
     assert len(daily_ids) == 5 and not daily_ids & set(saved['exercises'])
@@ -67,6 +68,7 @@ def test_matrix_class_order_rows_and_columns_use_explicit_counts(truth, predicte
 
 
 @pytest.mark.parametrize('left,right', [([1, 1], [1, 2]), ([], []), ([1, 1], []), ([None], [None]), ([1], [2])])
+@original('sql-union-rows-20261020')
 def test_union_removes_duplicates_across_and_within_inputs(left, right):
     with sqlite3.connect(':memory:') as db:
         db.executescript('CREATE TABLE a(id INTEGER); CREATE TABLE b(id INTEGER);')
@@ -77,6 +79,7 @@ def test_union_removes_duplicates_across_and_within_inputs(left, right):
 
 
 @pytest.mark.parametrize('values,expected', [([1, 0, 0], (0, 0.33)), ([1, 1], (1, 1.0)), ([0, 0], (0, 0.0)), ([], (None, None))])
+@original('sql-division-rate-20261020')
 def test_ratio_type_conversion_happens_before_division(values, expected):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE events(done INTEGER)')

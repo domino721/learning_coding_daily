@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from backend.quality_gate import TASK_FORMS, load_baseline, validate_quality
+from backend.quality_gate import TASK_FORMS, load_baseline, published_view, validate_quality
 
 BANK = json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']
 FRESH = {c['id'] for c in BANK if c['source'] == 'app' and load_baseline().get(c['id']) != c['version']}
@@ -94,3 +94,27 @@ def test_layout_card_rules(kind, overrides, message):
 
 def test_task_forms_cover_the_planned_formats():
     assert {'output', 'condition-change', 'bug-line', 'equivalent-code', 'purpose-choice', 'step-order'} <= set(TASK_FORMS)
+
+
+def test_same_version_review_of_a_baseline_card_is_checked_but_needs_no_bump():
+    existing = next(c for c in BANK if c['source'] == 'app' and c['kind'] == 'choice' and c['id'] not in FRESH)
+    wrong = [c for c in existing['choices'] if c != existing['answer']]
+    reviewed = dict(existing, distractor_targets={c: '검수한 오개념' for c in wrong},
+                    app_difficulty=dict(existing['app_difficulty'], distractor_strength=2))
+    others = [c for c in BANK if c['id'] != existing['id']]
+    assert len(validate_quality(others + [reviewed])) == len(FRESH)
+    partial = dict(reviewed, distractor_targets={wrong[0]: '하나만'})
+    with pytest.raises(ValueError, match='distractor_targets'):
+        validate_quality(others + [partial])
+    weak = dict(reviewed, app_difficulty=dict(existing['app_difficulty'], distractor_strength=1))
+    with pytest.raises(ValueError, match='distractor_strength'):
+        validate_quality(others + [weak])
+
+
+def test_published_view_keeps_what_learners_see_and_drops_review_fields():
+    card = next(c for c in BANK if c['source'] == 'app')
+    view = published_view('card', card)
+    assert {'prompt', 'code', 'choices', 'answer', 'explanation', 'hints', 'version'} <= set(view)
+    assert not set(view) & {'distractor_targets', 'app_difficulty', 'task_form', 'review_record'}
+    assert published_view('exercise', {'prompt': 'p', 'difficulty': {'level': 1}}) == {'prompt': 'p'}
+    assert published_view('path', {'requires': [], 'task_form': 'output'}) == {'requires': []}

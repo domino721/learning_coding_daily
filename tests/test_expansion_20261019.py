@@ -16,6 +16,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved, REVERSIONED, reversioned
 from backend.curriculum import LEARNING_PATHS, select_exercises
 from scripts.validate_sql_content import sql_output, visible_setup
 
@@ -26,6 +27,8 @@ NEW = REVIEW['exercises']
 @pytest.mark.parametrize('item', NEW, ids=lambda item: item['id'])
 def test_authored_reference_and_unique_answer(item):
     ex = BY_ID[item['id']]
+    if reversioned(ex.id):
+        pytest.skip(REVERSIONED)
     if ex.domain == 'SQL':
         with sqlite3.connect(':memory:') as db:
             db.executescript(visible_setup(ex.code))
@@ -50,10 +53,8 @@ def test_all_119_deployed_exercises_are_unchanged_and_new_targets_are_gated():
     saved = json.loads(Path('tests/fixtures/catalog-before-expansion-20261019.json').read_text())
     assert len(saved['exercises']) == 119
     for identifier, expected in saved['exercises'].items():
-        current = json.dumps(asdict(BY_ID[identifier]), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
-        assert hashlib.sha256(current.encode()).hexdigest() == expected, identifier
-        path = json.dumps(LEARNING_PATHS['items'][identifier], ensure_ascii=False, sort_keys=True, separators=(',', ':'))
-        assert hashlib.sha256(path.encode()).hexdigest() == saved['path_items'][identifier], identifier
+        assert preserved('exercise', identifier, expected), identifier
+        assert preserved('path', identifier, saved['path_items'][identifier]), identifier
     assert len(NEW) == 18 and len({BY_ID[x['id']].concept_id for x in NEW}) == 18
     assert [x['level'] for x in NEW].count(2) == [x['level'] for x in NEW].count(3) == 9
     assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing
@@ -149,6 +150,7 @@ def test_rebinding_and_inplace_update_have_different_view_targets(inplace, expec
 
 
 @pytest.mark.parametrize('amount,expected', [(99, [1]), (100, [1, 2]), (None, [1])])
+@original('sql-condition-order-20261019')
 def test_sql_precedence_low_done_and_nullable_open(amount, expected):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE orders(id, status, amount)')
@@ -162,6 +164,7 @@ def test_sql_precedence_low_done_and_nullable_open(amount, expected):
     ([], (None, None)),
     ([('done', None), ('done', 10), ('open', 50)], (10., 5.)),
 ])
+@original('sql-conditional-average-20261019')
 def test_conditional_average_distinguishes_no_matches_empty_and_null_amount(rows, expected):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE orders(status, amount)')
@@ -170,6 +173,7 @@ def test_conditional_average_distinguishes_no_matches_empty_and_null_amount(rows
 
 
 @pytest.mark.parametrize('extra_customer,expected', [(False, (20, 13)), (True, (30, 13))])
+@original('sql-customer-totals-20261019')
 def test_preaggregate_preserves_same_budget_and_customers_without_orders(extra_customer, expected):
     with sqlite3.connect(':memory:') as db:
         db.executescript(BY_ID['sql-customer-totals-20261019'].reference_setup)

@@ -29,6 +29,20 @@ MIN_DISTRACTOR_STRENGTH = 2
 MAX_OUTPUT_SHARE = 0.5
 MIN_LEVEL3_CODE_LINES = 5
 
+# Review metadata that learners never see and grading never reads. It may be completed or corrected
+# under the same (id, version); any change outside these fields needs version + 1.
+EDITORIAL_FIELDS = {
+    'exercise': {'difficulty'},
+    'path': {'task_form'},
+    'card': {'task_form', 'distractor_targets', 'choice_diagnostics', 'app_difficulty', 'misconception',
+             'diagnostic_question', 'review_record', 'editorial_review'},
+}
+
+
+def published_view(kind, value):
+    """The part of an exercise, path item or design card that one (id, version) must keep forever."""
+    return {key: item for key, item in value.items() if key not in EDITORIAL_FIELDS[kind]}
+
 
 def load_baseline():
     return json.loads(BASELINE_PATH.read_text(encoding='utf-8'))['items']
@@ -49,15 +63,22 @@ def card_errors(card):
         errors.append(f"{card['id']}: 단계 3(전이) 문항은 출력 예측 형식으로 낼 수 없다")
     kind = card.get('kind')
     if kind in ('choice', 'line', 'order', 'multi'):
-        strength = card.get('app_difficulty', {}).get('distractor_strength')
-        if not isinstance(strength, int) or strength < MIN_DISTRACTOR_STRENGTH:
-            errors.append(f"{card['id']}: 객관식 오답 보기 강도(distractor_strength)는 {MIN_DISTRACTOR_STRENGTH} 이상으로 검수해야 한다")
-        targets = card.get('distractor_targets')
-        if not isinstance(targets, dict) or set(targets) != trap_keys(card, targets) or not all(isinstance(v, str) and v.strip() for v in targets.values()):
-            errors.append(f"{card['id']}: {TRAP_RULES[kind]}")
+        errors += distractor_errors(card)
     lines = card.get('code', '').count('\n') + 1 + (len(card.get('choices', [])) if kind == 'order' else 0)
     if level == 3 and lines < MIN_LEVEL3_CODE_LINES:
         errors.append(f"{card['id']}: 단계 3 문항 코드는 {MIN_LEVEL3_CODE_LINES}줄 이상이어야 한다")
+    return errors
+
+
+def distractor_errors(card):
+    """A reviewed choice-mode card names a misconception for each trap and rates them 2 or higher."""
+    errors = []
+    strength = card.get('app_difficulty', {}).get('distractor_strength')
+    if not isinstance(strength, int) or strength < MIN_DISTRACTOR_STRENGTH:
+        errors.append(f"{card['id']}: 객관식 오답 보기 강도(distractor_strength)는 {MIN_DISTRACTOR_STRENGTH} 이상으로 검수해야 한다")
+    targets = card.get('distractor_targets')
+    if not isinstance(targets, dict) or set(targets) != trap_keys(card, targets) or not all(isinstance(v, str) and v.strip() for v in targets.values()):
+        errors.append(f"{card['id']}: {TRAP_RULES[card.get('kind')]}")
     return errors
 
 
@@ -128,6 +149,9 @@ def validate_quality(cards, baseline=None):
     fresh = [c for c in app if is_new(c, baseline)]
     errors = [e for c in app for e in structure_errors(c)]
     errors += [e for c in fresh for e in card_errors(c)] + batch_errors(fresh)
+    # Same-version distractor reviews of baseline items are checked as soon as they are recorded.
+    errors += [e for c in app if not is_new(c, baseline) and 'distractor_targets' in c
+               and c.get('kind') in TRAP_RULES for e in distractor_errors(c)]
     if errors:
         raise ValueError('품질 게이트 실패:\n' + '\n'.join(errors))
     return fresh

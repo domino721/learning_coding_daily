@@ -54,8 +54,11 @@
 python3 -I - <<'PY'
 import json
 b=json.load(open('curriculum/problem_bank.json'))['exercises']
-app=[c for c in b if c['source']=='app']
-print('단계3 출력 예측:',[c['id'] for c in app if c.get('level')==3 and '출력' in c['prompt']])
+app=[c for c in b if c['source']=='app' and c.get('response_mode')!='essay']
+# 기존 기록 이전 E2E(browser-migration)가 현재 코드로 옛 SQL 기록의 입력을 보충하므로 같은 ID 형식 전환에서 뺀다.
+legacy={'sql-null-02','sql-where-02','sql-having-02','sql-count-02','sql-join-02','sql-join-03'}
+print('단계3 출력 예측:',[c['id'] for c in app if c.get('level')==3 and c.get('task_form') in (None,'output')
+                          and '출력' in c['prompt'] and c['id'] not in legacy])
 print('오답 보기 미검수:',[c['id'] for c in app if c['kind']=='choice' and c.get('app_difficulty',{}).get('distractor_strength',0)<2])
 PY
 ```

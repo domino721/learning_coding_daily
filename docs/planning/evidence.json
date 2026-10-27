@@ -880,6 +880,22 @@
         "backend/quality_gate.py"
       ],
       "code_reference": "230d5c018c492e6093feda4e1b9b7e3aced5f18d"
+    },
+    {
+      "id": "EV-064",
+      "record": "docs/planning/evidence/EV-064.md",
+      "artifacts": [
+        "backend/quality_gate.py",
+        "scripts/freeze-catalog.py",
+        "tests/preserved.py",
+        "tests/test_catalog_preservation.py",
+        "tests/test_quality_gate.py",
+        "tests/fixtures/catalog-published.json",
+        "tests/e2e/daily-content.spec.ts",
+        "docs/CONTENT_AUTOMATION.md",
+        "docs/CONTENT_QUALITY_REVIEW.md"
+      ],
+      "code_reference": "1b7b1f75fcfad2ff7fd12e3912bf52158c1f85b8"
     }
   ]
 }

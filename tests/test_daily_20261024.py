@@ -14,6 +14,7 @@ import pytest
 from sklearn.metrics import accuracy_score, balanced_accuracy_score
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -22,11 +23,11 @@ def test_previous_201_exercises_paths_cards_and_rules_are_preserved():
     digest = lambda v: hashlib.sha256(json.dumps(v, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     assert len(saved['exercises']) == 201 and LEARNING_PATHS['rules'] == saved['rules']
     for key, expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[key])) == expected, key
-        assert digest(LEARNING_PATHS['items'][key]) == saved['path_items'][key]
+        assert preserved('exercise', key, expected), key
+        assert preserved('path', key, saved['path_items'][key])
     cards = {c['id']: c for c in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
     for key, expected in saved['design_cards'].items():
-        assert digest(cards[key]) == expected, key
+        assert preserved('card', key, expected), key
     batch = json.loads(Path('backend/content_batches/2026-10-24.json').read_text())
     added = {e['id'] for e in batch['exercises']}
     assert batch['batch_id'] == 'codex-2026-10-24' and len(added) == 5
@@ -83,6 +84,7 @@ def test_balanced_accuracy_uses_equal_class_recall_weight(truth,prediction):
 
 @pytest.mark.parametrize('left,right', [([],[]), ([1,1,2,None],[2,None]), ([1,1,None],[]),
     ([],[None]), ([None],[None]), ([None],[2]), ([1,2],[None]), ([-1,2,2,3],[2,4])])
+@original('sql-except-set-20261024')
 def test_except_matches_distinct_set_difference_including_null(left,right):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE orders(id INTEGER)')
@@ -98,6 +100,7 @@ def test_except_matches_distinct_set_difference_including_null(left,right):
 
 @pytest.mark.parametrize('left,right', [([],[]), ([1,2],[2,3]), ([1],[]), ([],[2]),
     ([1],[1]), ([1],[2]), ([1,1],[1,1,1]), ([None],[None]), ([None,1,1],[None,1,2])])
+@original('sql-full-coverage-20261024')
 def test_full_join_matches_pair_enumeration_and_both_unmatched_sides(left,right):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE a(id INTEGER)')

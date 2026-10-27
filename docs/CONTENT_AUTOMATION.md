@@ -6,8 +6,8 @@
 
 하루에 아래 **두 가지를 합쳐 다섯 건** 처리한다. 새 문항 작성은 비어 있는 유형군이나 형식 전환 대상에만 허용한다.
 
-1. **형식 전환 2건**: 출력 예측 형식인 단계 3(조건 변화·전이) 문항을 `condition-change`, `bug-line`, `equivalent-code`, `purpose-choice`, `result-interpretation`, `step-order` 중 하나로 다시 쓴다. 2026-10-27(CR-015)부터 `kind`를 `line`(줄 고르기)·`order`(순서 맞추기)·`multi`(모두 고르기)로 바꿀 수 있으며, 작성 규칙과 검수 기록 항목은 `docs/CONTENT_GUIDELINES.md`를 따른다. 같은 ID의 `version`을 1 올리고 이전 버전 기록은 보존한다. 단계 3 코드는 5줄 이상, 데이터는 5행 이상의 합성 업무 데이터(월별 거래·고객·상품 등 가상의 값)로 한다.
-2. **오답 보기 검수 3건**: 객관식 문항의 오답 보기마다 겨냥한 오개념을 설계 카드 `distractor_targets`에 적고 `app_difficulty.distractor_strength`를 2 이상으로 올린다. 겨냥 오개념이 없는 보기는 교체한다. 보기 교체는 `version` 증가, 카드 필드만 보강하는 경우는 버전을 유지한다.
+1. **형식 전환 2건**: 출력 예측 형식인 단계 3(조건 변화·전이) 문항을 `condition-change`, `bug-line`, `equivalent-code`, `purpose-choice`, `result-interpretation`, `step-order` 중 하나로 다시 쓴다. 2026-10-27(CR-015)부터 `kind`를 `line`(줄 고르기)·`order`(순서 맞추기)·`multi`(모두 고르기)로 바꿀 수 있으며, 작성 규칙과 검수 기록 항목은 `docs/CONTENT_GUIDELINES.md`를 따른다. 같은 ID의 `version`을 1 올리고 이전 버전 기록은 보존한다. 이때 `backend/learning_paths.json`의 경로 항목에도 같은 `task_form`을 적는다(추천 learning-paths-2.2가 이 값으로 형식을 섞는다). 단계 3 코드는 5줄 이상, 데이터는 5행 이상의 합성 업무 데이터(월별 거래·고객·상품 등 가상의 값)로 한다. 그 문항의 첫 version을 위해 쓴 날짜별 경계 테스트는 `tests/preserved.py` 규칙에 따라 자동으로 건너뛰므로 고치거나 지우지 않는다.
+2. **오답 보기 검수 3건**: 객관식 문항의 오답 보기마다 겨냥한 오개념을 설계 카드 `distractor_targets`에 적고 `app_difficulty.distractor_strength`를 2 이상으로 올린다. 겨냥 오개념이 없는 보기는 교체한다. 보기 교체는 `version` 증가, 카드 필드만 보강하는 경우는 버전을 유지한다. 같은 version에서 바꿀 수 있는 것은 학습자가 보지 않는 편집 필드뿐이다: 설계 카드의 `distractor_targets`·`choice_diagnostics`·`misconception`·`diagnostic_question`·`app_difficulty`·`review_record`·`task_form`, `backend/difficulty.json`의 프로필, 경로의 `task_form`(`backend/quality_gate.py`의 `EDITORIAL_FIELDS`). 지문·코드·보기·정답·해설·힌트·단계가 바뀌면 version을 올린다. 같은 version의 검수도 `distractor_targets`가 모든 오답 보기를 덮고 강도 2 이상이어야 게이트를 통과한다.
 
 유형군 재분류(개념별 3~5개 family)는 기계 게이트가 아니라 별도 콘텐츠 작업이며 `docs/CONTENT_QUALITY_REVIEW.md`의 순서를 따른다.
 
@@ -19,7 +19,7 @@
 4. 직접 다시 풀고 실제 pandas/NumPy/SQLite/scikit-learn 참조 출력, 경계 사례, 정답 유일성·편집 품질을 확인한다. SQL은 모든 테이블의 열·전체 행을 코드 주석에 제시하고 `scripts/validate_sql_content.py`로 표시 입력과 참조 출력의 일치를 확인한다.
 5. 다음을 통과해야 게시한다. 모두 `bash scripts/check.sh`에 포함된다.
    - 품질 게이트 `backend/quality_gate.py`: 2026-10-26 기준선(`curriculum/quality_baseline.json`) 이후의 새 ID·버전 증가분은 `task_form` 필수, 단계 3은 출력 예측 금지·코드 5줄 이상, 객관식은 `distractor_strength` 2 이상과 오답별 `distractor_targets` 필수, 같은 검수 기록 안의 출력 예측 비율 50% 이하.
-   - 보존 스냅샷 `python3 scripts/freeze-catalog.py`: 같은 ID·버전의 내용 변경을 거부하고 새 항목만 추가한다. 게시 전 한 번 실행해 `tests/fixtures/catalog-published.json`을 갱신한다.
+   - 보존 스냅샷 `python3 scripts/freeze-catalog.py`: 학습자가 보는 내용(`published_view`)을 version별로 고정한다. 같은 ID·버전의 그 내용 변경과 version 감소를 거부하고 새 항목·새 version만 추가한다. 게시 전 한 번 실행해 `tests/fixtures/catalog-published.json`을 갱신한다.
    - `python3 scripts/export-content.py`로 웹 내보내기를 갱신하고 기존 문항 ID/버전·snapshot·origin·저장 키·사용자 기록·트랙·추천 규칙을 보존한다.
 6. 통과한 변경만 최신 main에 하나의 일관된 커밋으로 반영한다. 동시 변경은 비강제 갱신/expected SHA로 보존한다. 기존 Pages 작업과 실제 사이트의 해당 빌드를 확인한 뒤 성공을 알린다. 실패하면 정확한 단계를 보고한다.
 

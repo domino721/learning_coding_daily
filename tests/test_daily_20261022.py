@@ -12,6 +12,7 @@ import pytest
 from sklearn.preprocessing import MinMaxScaler
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved
 from backend.curriculum import LEARNING_PATHS
 
 
@@ -20,11 +21,11 @@ def test_previous_177_exercises_paths_cards_and_rules_are_preserved():
     digest = lambda value: hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     assert len(saved['exercises']) == 177 and LEARNING_PATHS['rules'] == saved['rules']
     for identifier, expected in saved['exercises'].items():
-        assert digest(asdict(BY_ID[identifier])) == expected, identifier
-        assert digest(LEARNING_PATHS['items'][identifier]) == saved['path_items'][identifier]
+        assert preserved('exercise', identifier, expected), identifier
+        assert preserved('path', identifier, saved['path_items'][identifier])
     cards = {card['id']: card for card in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
     for identifier, expected in saved['design_cards'].items():
-        assert digest(cards[identifier]) == expected, identifier
+        assert preserved('card', identifier, expected), identifier
     batch = json.loads(Path('backend/content_batches/2026-10-22.json').read_text())
     added = {item['id'] for item in batch['exercises']}
     assert batch['batch_id'] == 'codex-2026-10-22' and len(added) == 5
@@ -67,6 +68,7 @@ def test_correlation_matches_independent_centered_product_normalization(x, y):
 
 
 @pytest.mark.parametrize('pairs', [[(1, 1), (None, None), (None, 1), (1, None)], [], [(1, 1), (2, 2)], [(None, 1), (1, None)], [(1, 2), (2, 1)], [(None, None), (None, None)]])
+@original('sql-nullsafe-is-20261022')
 def test_sqlite_is_includes_both_null_but_not_one_null(pairs):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE pairs(id INTEGER, a INTEGER, b INTEGER)')
@@ -78,6 +80,7 @@ def test_sqlite_is_includes_both_null_but_not_one_null(pairs):
 
 
 @pytest.mark.parametrize('people', [[(1, 'A'), (2, 'A'), (3, 'B')], [], [(1, 'A')], [(1, 'A'), (2, 'A'), (3, 'A')], [(1, 'A'), (2, 'B')], [(1, None), (2, None)], [(3, 'A'), (1, 'A'), (2, 'B')]])
+@original('sql-self-pairs-20261022')
 def test_self_join_produces_each_unordered_team_pair_once(people):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE people(id INTEGER, team TEXT)')

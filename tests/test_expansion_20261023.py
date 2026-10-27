@@ -12,6 +12,7 @@ import pandas as pd
 import pytest
 
 from backend.content import BY_ID, EXERCISES
+from tests.preserved import original, preserved, REVERSIONED, reversioned
 from backend.curriculum import LEARNING_PATHS, select_exercises
 from scripts.validate_sql_content import sql_output, visible_setup
 
@@ -28,12 +29,12 @@ def test_all_187_existing_questions_paths_cards_drafts_concepts_and_rules_surviv
     old = json.loads(Path('tests/fixtures/catalog-before-expansion-20261023.json').read_text())
     assert len(old['exercises']) == 187
     for key, expected in old['exercises'].items():
-        assert digest(asdict(BY_ID[key])) == expected, key
-        assert digest(LEARNING_PATHS['items'][key]) == old['path_items'][key], key
+        assert preserved('exercise', key, expected), key
+        assert preserved('path', key, old['path_items'][key]), key
     bank = json.loads(Path('curriculum/problem_bank.json').read_text())
     cards = {card['id']: card for card in bank['exercises']}
     for key, expected in old['design_cards'].items():
-        assert digest(cards[key]) == expected, key
+        assert preserved('card', key, expected), key
     assert digest(bank['concepts']) == old['concepts']
     assert LEARNING_PATHS['rules'] == old['rules']
     assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing
@@ -47,6 +48,8 @@ def test_all_187_existing_questions_paths_cards_drafts_concepts_and_rules_surviv
 @pytest.mark.parametrize('item', NEW, ids=lambda item: item['id'])
 def test_reference_single_answer_hints_and_reviewed_path(item):
     ex = BY_ID[item['id']]
+    if reversioned(ex.id):
+        pytest.skip(REVERSIONED)
     if ex.domain == 'SQL':
         with sqlite3.connect(':memory:') as db:
             db.executescript(visible_setup(ex.code))
@@ -165,6 +168,7 @@ def test_array_coercion_changes_scalar_type_but_preserves_original_list():
 
 @pytest.mark.parametrize('rows', [[], [(1, 10, 2)], [(1, 0, 0), (2, 9, None)],
                                 [(1, None, 2), (2, -10, 2), (3, 10, -2)]])
+@original('sql-nullif-ratio-20261023')
 def test_sql_nullif_divisor_policy_keeps_all_rows(rows):
     with sqlite3.connect(':memory:') as db:
         db.execute('CREATE TABLE measures(id INTEGER, amount REAL, base REAL)')
@@ -176,6 +180,7 @@ def test_sql_nullif_divisor_policy_keeps_all_rows(rows):
 
 @pytest.mark.parametrize('blocked,expected', [([], 3), ([None], 0), ([1], 1),
                                           ([1, None], 0), ([1, 1], 1), ([8], 2)])
+@original('sql-empty-membership-20261023')
 def test_sql_empty_membership_is_distinct_from_a_null_member(blocked, expected):
     with sqlite3.connect(':memory:') as db:
         db.executescript(visible_setup(BY_ID['sql-empty-membership-20261023'].code))

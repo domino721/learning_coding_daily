@@ -1,1362 +1,1363 @@
 {
  "items": {
   "ml-balanced-recall-20261024": {
-   "design_card": "b6e88e7791f88b12a9c9e5dfae51edf77c5dae0b562628d4e7ed550daff4e4ee",
-   "exercise": "f629866fe37b818380924c3df19be1cd7259995747dcbd9419475e817ebeb456",
+   "design_card": "d8523c3bd4ca9ffd17b5760648ea639e79d46bd69868a1a0de9f07c39f75f936",
+   "exercise": "3e35aad5717bc86a8a84f9098b749a005873d890c0fdd3fd287dad7ffadb4085",
    "path_item": "84a6af3b6d0228e96c22fa1e0317a8475aed2460b08536baa8220c2c2c26ab1a",
    "version": 1
   },
   "ml-category-20261017": {
-   "design_card": "fbb39ea2424b5b117279f2a39e7f2751fd384de2a27b35a2a44e47c4b813a6d3",
-   "exercise": "fafcbd08ece9417b9f1f4db0742805578653c2cb8a5025ac6c05ca133414d9c1",
+   "design_card": "40d1e2c5439be8d07fe3e89d6fe90e7726e241f4d87cdf3d8d27d2a244631917",
+   "exercise": "a7c7a3ebc44f40002e3621c59b8d2bd81cf68c9ef5e93b2b7ff26b45294c0adb",
    "path_item": "4a405b1526a5b1fb943a0247a1abfda1b5a1ec6c520f4103c3d1e61f6a6125dd",
    "version": 1
   },
   "ml-confusion-order-20261020": {
-   "design_card": "c03e4dd76ed7cec15c3a5bd2c47adca280a8e580f0b46674482c309c30273f89",
-   "exercise": "5a9fc09af69c285e5baa6f2ec3ff063f05b0bfefe0c28c995cd67099266245b4",
+   "design_card": "346238ce2aac838e04eab09b2b544fff63f9d16dacb4e7bcfbd00330c5165f4a",
+   "exercise": "10d8fc15929cea2a3ad9a42cedc6851b8e041ba584dff277fe98bfe82a48b699",
    "path_item": "dfb96f253311c464a5afd4410b08cdedb3b4156c4ca181a60776c5eaaf260f15",
    "version": 1
   },
   "ml-constant-feature-20261020": {
-   "design_card": "031884a8eb11ec04e984c99cfd047d660b28f2b8c3bcf81122bcf37af783d350",
-   "exercise": "093b2ea033316980156e6153750ee7504c9ea3dc4c0b2065dbbdb4779ef67fef",
+   "design_card": "722deae935b645ed7d461b1e75669c43e81b253d231a867a9107fe6e8a0cf9ce",
+   "exercise": "fbbb4763d6e59b38c76c8275deb0691bc6b3651b5113c811c2bf3cdd79faae12",
    "path_item": "9f7e5467641c1a18e06f5638625cdff81f8f9cfe8117d0f0dd2f7498ae7d316c",
    "version": 1
   },
   "ml-eval-foundation-02": {
-   "design_card": "a1178d69cb389bac2342fe7c88d2cfe24f7a22d7e4cf45840c9dc540b8b26208",
-   "exercise": "0253310784602c4fa1908eeba233b7f29ca886864372935dcd2e3416840d332a",
+   "design_card": "1fc663e4672d0ba03b50b3a3cb7e61656a08142b0b19e05f92f1ff589cb7e89c",
+   "exercise": "7b96e7b0569b787e85025c3bdefa86f8499b44dec912c0d2660b063199de040f",
    "path_item": "c8a3c614f1218a769d2089b4c0be0f7708795da8544a55234ce5b3b6c6e1a391",
    "version": 1
   },
   "ml-eval-transfer-01": {
-   "design_card": "7d5969c2863f007e993d8d661fa0772efa8e942423aeec40287a231d3bf558af",
-   "exercise": "d02d96bffd5a11009677114eee23d8dc132d5a021519e7497f4c0c90079dd12e",
+   "design_card": "0d2dcb8f91272a1c953ac2cc1d98c2a76d600b0a5bf1be3d9cbbe8815d1e63e0",
+   "exercise": "6e47d21aede4bf562dfd834027e57a23174beebd57537b6c7e433ac6e63e9127",
    "path_item": "48090310e9747b324aa8e5d872a61c7124e838434d782770498188a3b2742ff6",
    "version": 1
   },
   "ml-eval-transfer-02": {
-   "design_card": "c05f9c86e72d011a2ae6af078ec4acddd8921282cda205d798e034ec282733f1",
-   "exercise": "fed21b21d020edd4443bdbcaa3f37f1c18ca4ecd9f32b9ef0e2e0bfdb500d200",
+   "design_card": "fa2501430e4c3d334fdac001496562fcb49de51e9cfa439f1ebffd7984bc714c",
+   "exercise": "dc4f9e4a068a1a4a895930e4b8a5dd26e20a8f7adb86138bdbac0fe6eeec6095",
    "path_item": "ce9ffe55fbac3860a9345f7d9258622772a590e4a10445a1adc9964422aff9f2",
    "version": 1
   },
   "ml-f1-balance-20261020": {
-   "design_card": "f57945f29b56eb0c0f023940dfb795e20cf41643f85ca2c5e01a535284bf89c4",
-   "exercise": "f1e9bb4dc5bb43a57b357f647d10fde645f01c442ad28de90c1a3bf9b92b2e90",
+   "design_card": "51e3180c20d81c4a65e1e729211777c1e7c77a616a17f5e2d028fdb1b1d19795",
+   "exercise": "beeb1f208e673826333626ad524e11a3f372d094985d7ade04d4365f37834ec4",
    "path_item": "c1f90cf629df94abd7385c09a2ad94f429ac16dfa9eca660e87ca16a85d1bff3",
    "version": 1
   },
   "ml-fit-foundation-01": {
-   "design_card": "d78051ee5793174bdbe596fb32240ca13e9f5b5ac3495e87aba5c792d05e48a3",
-   "exercise": "803aa1475e92c4c9b73fad1dc135771052deb8da111c0939091e416ce16560ad",
+   "design_card": "a74eada1e8492fc0ad62821ba339845152252757e5cf3c968ed8b8ef687978a2",
+   "exercise": "8a15ceeda1b0b3e07f82948deebb2a0e1d8b0d69ea9490ac144d938dc3e3c284",
    "path_item": "8360de8397d9906507e6f489b196a102595745da0acc7897981aba435e4294cd",
    "version": 1
   },
   "ml-group-isolation-20261020": {
-   "design_card": "9ac7fbdd5f39aacc05e42bed81337983c97a8b54def395f05a251285653e6a25",
-   "exercise": "12b23678037bd80aeb48fa417e3c33c0f69b3f357b278882d8afee683db5097d",
+   "design_card": "713bdc5bd232135fef66593dcb1214370690f931022f0eba9b90059a26007860",
+   "exercise": "6e593868dafc62ad1f320983421681bc64a70e73e3473a68bbef6baa3535828c",
    "path_item": "0e58da8f9fc6f569810a82740243d0b035254e48c715658a257d7a3a937c14e6",
    "version": 1
   },
   "ml-imputer-median-scope-20261025": {
-   "design_card": "7259f3c1ff6f06057703803d5f4d58555c431869f1f52c7e6c678e22bb748197",
-   "exercise": "2ae86b987f91cc13d6657dc8865757f05afa3e8cfbe93e4a17f50c454afcaa2e",
+   "design_card": "de4635d51137ffa8a46f2ba7a8197d04ee32f7f3f73cf17a120a97250555f4ce",
+   "exercise": "bfaf465cee30299fffc77201c1a8ff5f17cc094c8fad36404e142bf181d84d93",
    "path_item": "25ac51915d54a9a239a0efd750542ff4dffb8c97583f6861665f4a49cd1a72b8",
    "version": 1
   },
   "ml-leak-free-steps-form-01": {
-   "design_card": "9c8ff85d6574284e0a5110c69ea2de2547a6dc83b929e599b422d796f3990194",
-   "exercise": "9aaa2177e655915c44b034051223930b03bbf0c06b6fc07b05c8d56e9b550b04",
-   "path_item": "003acecf3a4909b51e615355ff8716c385ac453f6a82a1ee67437a1a108e0e68",
+   "design_card": "a5e644bf5ef9e86bc649ce0ffd9e9e3e17f4169cc268188386dbf9223567a3ad",
+   "exercise": "36262dbf2e18bcffacda590753b6113ba558cd57d2d03e9541bca534ac6652ee",
+   "path_item": "bb5bcbbcfb21a6fdacd995a5e252f3be37135d263e2db0850f04adb7fe001ce7",
    "version": 1
   },
   "ml-leakage-01": {
-   "design_card": "1fef6043df29f47b0b13ad7dab754672ae955c71a417094b6aa86e6b13257a2d",
-   "exercise": "3071a7dc551027af3c70b6802348dbe5f52ef792350288ccc04fc6d1602003fa",
+   "design_card": "3ea45be58938ebe94e2049bc29bbb9206e6a19ab21de5dadd16c9e39a5f10ce6",
+   "exercise": "ce4e77dde87b91984c6977a5d427b0fcfb3ccb08d931b5112b9cf3e86c77c8de",
    "path_item": "f419ca4fd65bc0d2a197d6386c33ecbbe5214642bc56cb6f87e14addc13e4590",
    "version": 2
   },
   "ml-leakage-02": {
-   "design_card": "49702064a39cad1803d2367a0473020054d5b1ed68644ba5af522365b441f4bb",
-   "exercise": "4a19dc8eda2e9f41fdee6ebe7faf102243a4934e28a282618a6bd1b3feaef310",
+   "design_card": "d281c8c7b728d82ecc5588d7dc639a611bc8ad2a5727adc9ff4adcbd1c1f297f",
+   "exercise": "cc6b7a2e5609991251156583243b5c22526f43afcbc4f9553897df4959d4f8fa",
    "path_item": "5e899fd2b4bbaa993203efe45c6deec5ac72454aec96b24b819a368bccaacf54",
    "version": 1
   },
   "ml-mean-foundation-01": {
-   "design_card": "d2ba2192e70c242fe15dd12f268a08bf26c6f061898f8c9a72c4245966250938",
-   "exercise": "2b54bb90ce2a25ac38a296b85022c717b08fcb7a89ac200b434f9962dadfd34f",
+   "design_card": "43d502f622180fc044943fc7bf7e85e53f76a9ce4d123361f38c9af4deb35723",
+   "exercise": "ed40aedbdc35e736feab10723842d01343ab334fe4a67d4ac290fc27933ece02",
    "path_item": "ea65e6b5026c349e5cb48f408fc4caca713f4a386aaf466db573d372eca3e1e3",
    "version": 1
   },
   "ml-metric-01": {
-   "design_card": "11e1b1dc9fa997db9e11ab4ab5a3e6c4ac8960af343c070cb7b03e6dbe6fe52e",
-   "exercise": "661a7ae72495da561c5cb909f302705fdbc115d65dfb157bf6581f41fdff98b9",
+   "design_card": "2212cb8e20eb9f398fb68c148afe6d8e3fb2991c4cdb11a5eee1e3ff3a58495e",
+   "exercise": "0e7a230ffdc4760d4caf04f9235aa9ddcc51351355a1f6f7227e00f6da34e144",
    "path_item": "c07a03391345a4c23b7babee426b694d9b199bbbf5cc4481abc213f75af441d2",
    "version": 2
   },
   "ml-metric-02": {
-   "design_card": "0614da06a693d901d0727e5ae11002c2c779a1b73af95b78c3cc7f384fc2935a",
-   "exercise": "d059daffef301671af879785adea27b1fa9b9df2c90c47e9a58988dc9b4f5713",
+   "design_card": "100fac4121f8741be53ce70473db17803d28aca2433c3de06b5aca15b587d7c9",
+   "exercise": "6ae4d2ddc50fba69ad39d5e6a30c8533a1a4e053d4a5ca2d19b36e9a66488578",
    "path_item": "5e30529510808dd4682410ef1e550c44aaaa0c6e227ac9fd3d21347c4e0a1875",
    "version": 1
   },
   "ml-metric-03": {
-   "design_card": "76ed04833854cd18371c942c9dc64b28a24ef0ed22a509ed08689bd7392847fc",
-   "exercise": "54228e26b92b77b4625d5fb6b82eb649f4bd1e157e09efed6f4fbd0c729dad8b",
+   "design_card": "0cfcf37e43b752024d58a7bbfd29001dd6d2052542709599fed8d8f32d83d227",
+   "exercise": "7ee8c9673ae5027b01c6c9bf0c162792362fc41f35daba7bbbec061ebfaea896",
    "path_item": "741943257ae4e07e20f9584c78f5676979570e6cfb0df0b8b413c63ec62fc844",
    "version": 1
   },
   "ml-metric-application-01": {
-   "design_card": "4942e4b535d6d477642d73ac762f9b79506c00cbea3b645241e959eef51b5659",
-   "exercise": "55b3bc056033f2823a9ba76ea737b001d9d4f5fc0350117b53eaf7218a80ca37",
+   "design_card": "5b3a9389313e08647f2fc417eb557d8e452260b461429af9daa307514875766d",
+   "exercise": "fdf0a15629dde0dfecbcb148e599d78336793cfbb772142bdb3a028fdecaee79",
    "path_item": "400e785e1c73dcdbfce0658228787022c08105693497d200c3bb1eb142a43eee",
    "version": 1
   },
   "ml-metric-foundation-02": {
-   "design_card": "fd0ed80ce92dd8100364901e2aeb96e4184242057d7ab22d9672514820610143",
-   "exercise": "1af2dc50100b350cf37f13eafaec1148cd8929d453738b6e34749f40b143cec2",
+   "design_card": "ac6258e5789567cd4c2cab3bba594a7cbfe6c313449c96eca850533c0420ce66",
+   "exercise": "2a4e79afde209919414decb10225952ad72e704b79192005ff04aea1316f6536",
    "path_item": "14ce899e650ec9b2745ee998b5bc4df7e40a3cd4ce75db889b85f5c504cac70b",
    "version": 1
   },
   "ml-minmax-clip-20261022": {
-   "design_card": "24b244ff6a4128599d8390945c59108802ce9fff8aaba6f3f0a1cd08ebb9cf95",
-   "exercise": "f52c5ef3204e4915c8620889799ba1b1c2bdcc342af10ac359fc467557d08405",
+   "design_card": "be1a62e5a133a8a3fc86c9351b34cbf4976f98faf894efdadc837a726ca58559",
+   "exercise": "a55728945ed48a79e438129efe5c6e86cfdf250e53aea2a9016c53911e93c0d7",
    "path_item": "26f63154106de94616daa3b0122116460f4c558b9ac2fd0459d5efb606dc0287",
    "version": 1
   },
   "ml-neighbor-01": {
-   "design_card": "05542aae3e8953250776fbc181b94b9561072c4ae0005017efc5fd0b63e6b2ae",
-   "exercise": "4230ed515bd417a693c8ecab7b7a00421dff49043e02ce00ec3783269dedf15f",
+   "design_card": "68ab7acd2f9b91ad66d299a2fb9c102af02ce95e7e3e77e36cf8a1c95bb87c45",
+   "exercise": "e8e52ba2d9e1f287c1eb27ca269d9d9ef732efc74878fb7c524a9ec01d4e94a0",
    "path_item": "e07ebf65fe89782596a42c71131df837a8b9d032a76ce10d0c028f4080bcddb9",
    "version": 2
   },
   "ml-neighbor-02": {
-   "design_card": "794326608cb74a299570bf2dd6e0fd64c47bcb7ec12f582e5987e1db843c8f93",
-   "exercise": "d2c7c46b026bfac13ead22f7d77a85578dc1bfddc69803041e4962e852a24c88",
+   "design_card": "72abb58b2761a27d66b030dac46e03ea0a6c8b70b8a25dcb100ab81eeb0f72a6",
+   "exercise": "7f3f48ad5e9eb379a599b9403bb12f5c983dc1d984edb1edd415a48673e45a96",
    "path_item": "b0568b90330b419bf2888ed2fe16664ab34356fc70c12b193777ceabf7a97f12",
    "version": 1
   },
   "ml-neighbor-foundation-01": {
-   "design_card": "d59c3f18219827f834d4664dbbee8802836dca6f25333d48e364f285562927a5",
-   "exercise": "18de40a18a1dbb4f62f097680a951e121eddd16857c56f9796691ff082728064",
+   "design_card": "17a9f611ab5cca67d0494803a00b817b2583008e3e13fa929e03f8ba3982d4c4",
+   "exercise": "44f724fa1bfea04f10311752cf252e562807a8105b7abe7ad4f57ee9f9db1fe3",
    "path_item": "52ab336d5c0f408e4c3cbd67f628a1510c9daf537ee72e64fcedfe117b5d45d5",
    "version": 1
   },
   "ml-neighbor-foundation-02": {
-   "design_card": "f4aac014f6208d5ba6d46e9225e9b040dcd8daed58fe7ce1b3dbedc9935fced8",
-   "exercise": "ad5d3d48875a8043ce0d506f5938b1636a604f7113309e093334d036f1f2bcce",
+   "design_card": "d35c795546d723f1e0564f4991d30923ef818f75954f9756fae0fe9288086274",
+   "exercise": "866996afe5e38417b4d73589e8ec7c96d1b5b72818a3c2fe5945e59fbb1c247d",
    "path_item": "05d6a1c70cb3cdb930de1eb6819788a0f6bbcebdaa951ba63363ae67de9eeb4a",
    "version": 1
   },
   "ml-neighbor-indices-20261023": {
-   "design_card": "f74b9d403ca5b85c35035f1c68ff79b68c88d0e4e7e083719dfefeccf9952ca2",
-   "exercise": "e2212e51cfc7c0fe1386f7cba8253e671b3783cd5f020f19e08dc2a58005c2fb",
+   "design_card": "3b6f04b8c9326e0cb3ac740831698b5426b46fb2c871ca07eadac4d6a7bd3cdd",
+   "exercise": "a10081b4dc475da8c3e1b7674a0342de37b85ff212ede66220823840d7c25909",
    "path_item": "99432c3ad3200cfbef09be9c2735924c5e365abc020685373dd26f5d83d9f8c8",
    "version": 1
   },
   "ml-neighbor-regression-20261019": {
-   "design_card": "3ca10713349afdf1f37a2a9e7a6083f55bdeb72bb799c6a3ec7c722da728b3a2",
-   "exercise": "5c4d79fe78462685aa40c3c778ff524ce8444f568a367b267232b100abc264c1",
+   "design_card": "1ceb825cef0a25662da9e32cb84fd856e22ca7aaac309d9a7b44201622bb4728",
+   "exercise": "ac5d921aa04a14b58722cc9cba4b6bd2a0b1f7fff3c5f685fcb4d636f456caea",
    "path_item": "188bf7ca1a4bba5a3d90690813674a898c49906f1e9b0977bf0f81f1d4f1de4a",
    "version": 1
   },
   "ml-neighbor-weights-20261020": {
-   "design_card": "b3796e58a13c49533a53b0fb9b763e063ad1258feb2387594dd629712bbb1860",
-   "exercise": "7b8be28c3c6c5cafba1fc1568ff3ddce5b11b3c50dbd301892e8afffe92f4b4f",
+   "design_card": "6e3165a26b84f0d0da7e2fb4c1672ef7d78013966effb639b83afe861af1411e",
+   "exercise": "ebbb71a86a4281147972b5972ca253866f394ab9a52ffe2f7ef94c79fa6ea4db",
    "path_item": "2d253dad339895f0022933d927a31b7b4f0df35da08c97b9260acc610dbc9418",
    "version": 1
   },
   "ml-recall-denominator-form-01": {
-   "design_card": "499b324f7157009058eb26d9ee325846138808fd8fda6f04a26d13921dc9d200",
-   "exercise": "8dce81e5f4136ffd17733ee191402470ea7dc2f3d0b7e3a2e1f723c56c4e55fb",
-   "path_item": "2c18a59141793a28cdf08ad461daf3a1acd19e3631ac507a19daca7eb406ae24",
+   "design_card": "7937552ca044606a61917fab735f907536c7314789e472cec85003fcc5590b79",
+   "exercise": "ceaefe3dde9d3b700d6aab332585ad42b5655bbdcb394b06f351a6a5f1a5d5dd",
+   "path_item": "5e2d4027f0d9c0d0195b69fad175e9f3602867feb3bdb2322a274845464f68c7",
    "version": 1
   },
   "ml-refit-state-20261019": {
-   "design_card": "5a59eebddcd262cd835f96fbe3c7fe86b8fad6a9cbf8982b9e785d378c74a5f5",
-   "exercise": "4589f5e43c32533bc3ba9516f1337b3c16d7ad2dc1be81b0ebabd3656c7cd2e2",
+   "design_card": "29873da291d801b16f14adada702afd3bb963c74c9907dea79cdbf43c7354e06",
+   "exercise": "c6cf5c0dcb41aaf0480387fbd1d37c38e41a54e05b5dc360478bb9d8ef20e316",
    "path_item": "a476bf88780179291f5e9eac2487d0399518a496f14c9ed7be0020d739bece19",
    "version": 1
   },
   "ml-scale-01": {
-   "design_card": "434c9432bbc53ad45216410d65c230025699ec7dc414c5e841ec1aacf3ed43c4",
-   "exercise": "05a38bc3ac83b95de3cc4124cc1f36d653cba919831bba9a2b24a4c32d47ad2a",
+   "design_card": "02ac15b41798efb73cd6fca58628975cf18904d6ab50adfdafdfe168175386d3",
+   "exercise": "3240c2fb23f1be2b40565dd4c8df6d99916251c013ad6ef23dc66cd04c2b773a",
    "path_item": "be282b3c663c0813bc3f4add7e9f51e81d0bb82be8a5ccb5dc35ed885af395b7",
    "version": 2
   },
   "ml-scale-02": {
-   "design_card": "0e697d3f9c0a06c8f4cdda53049cd0d02bacdfd8a1251bac9e850f33be2722b6",
-   "exercise": "5171ac34fcbce2ad6c5bdfb4357f48f2311b3eca4e3972a4dde5839e2dcb3569",
+   "design_card": "7e41f007c6f719cad13753e7f7feeaefad46d92c35b4ea67b1d199052f2b7928",
+   "exercise": "904c2ea7c3e795ae6bdcd425a021d110e6e6166b934e3455831978d9ac797cbe",
    "path_item": "a0fcce864f1159fa4f470a0a58e6620a19646ee9b6afb151d95d8525bfa0e1b9",
    "version": 1
   },
   "ml-scale-foundation-01": {
-   "design_card": "76ed8b6cd609c64910fdda501684a24d2d7da5b34511fc1ee8ef79b067748b74",
-   "exercise": "41c6d8af7bf7cc0a40c0ca5f2ee4f02ddb3ae78e9b96576774f7e4bba475a12d",
+   "design_card": "f2adc56a1bb9bc7aae77273e45ba2ddd6514fb4463553012572876819c0a28b3",
+   "exercise": "20ac5a9855d6bdead68bde2b368389da78a26d370a77eca3f084c7b172e96f56",
    "path_item": "a22d0dd1b787ef8231b3783b22764267770d9d0ffa03728f1821d24b655f2ff0",
    "version": 1
   },
   "ml-split-01": {
-   "design_card": "779300e41d375b8f6ea58721bd222d42015977b222b87d48451dbe0bf0e87445",
-   "exercise": "e1ce2f18c18f2f8204c20674bc95bb2942264ef7fd388e044ddc74a636517d3a",
+   "design_card": "eb0fe9b5371b16fff93aae7fc2a6d4d83955d750fdbeb7d7bdb1d8399570f516",
+   "exercise": "16bdcad7191c7382350af71df91ab61efb2bb6f05adfcde44053fb5770e79167",
    "path_item": "b4ac30fbd6587fd5968f8006b6be8859b1b839144dfaff6b187a60ffe9275ac6",
    "version": 2
   },
   "ml-split-02": {
-   "design_card": "1abb6694dbc2b56608119b0bf2b78317a8c1ed0835aa98ee46531a4dab2a88e1",
-   "exercise": "3e5c3e348d9fcabe02d233498afc4637e5c137e6c0d41bd4ad8e8d9e69bdb938",
+   "design_card": "e8f041afb72ba95660963fb5ab323023485183e0527f576fa5608b2015c59957",
+   "exercise": "c799385b4344c2551d2b57433e286d838c43c6c336c62040d7ab505d600f31e6",
    "path_item": "95a6179b9dfd7178e7acb72373ccca394b8188ddc4529dceafdfa8595db9f465",
    "version": 1
   },
   "ml-split-facts-form-01": {
-   "design_card": "197f8f2cfb74063dfdfaa93a3d4f10323dc75d4078195e8df48f70c126bc078f",
-   "exercise": "601d8ddaa61c455e3787d0fffc50cbe05d8e8fb8c569ee11558efe684d3e7b48",
-   "path_item": "f624bb08139c0ddb9ce83b3d376a54fb6a7eaeed33c25de3ba39199797ba1d0b",
+   "design_card": "fbddb78bba6e30999850715ab4f44f314ea96c9a3969670a5e6bf750105ad07b",
+   "exercise": "4c98b24800709ea96fb5652f47fde1de6138eda92f75240b7555696ca351b36b",
+   "path_item": "02f753cc47c586d4294151b964923fc0ddf4ec7807d96b4f87e0fe87f0790628",
    "version": 1
   },
   "ml-threshold-recall-20261019": {
-   "design_card": "709a48e635db58f77954b250ef3b0d1f608e44f0ebbd799807892217320161bd",
-   "exercise": "33929923020330c2e1b0c9fd198cdef5c3c88f256fd7464e53720bcd02886e11",
+   "design_card": "ca85b63b8406aa0b2b1b6a10a826894d94c773caaacd6bb047d26ae06e62c854",
+   "exercise": "6fdca940392bc397bc2f1a7432eeed6c2d47b4022b1bf979d3bd47488418c3ad",
    "path_item": "6e3cea092f7b0423eee551521537e6156dd9a5bf6565c9f78d80a59ca8845104",
    "version": 1
   },
   "ml-time-split-20261019": {
-   "design_card": "c4ebe8a8f99a3711a0a1614b57441b7231fe6974d1777ac8f8079f8768eafad9",
-   "exercise": "cd7349d291aef42ccf3a76caae628ed7e076dbde8060a1675c8c5461df51915a",
+   "design_card": "61519334ecd863a92decdf3d462cf35839dd9cf0fdb69f66d4e0626c307d1885",
+   "exercise": "47bc25a380d91288b3d2ed85df2bdbd116fab33e85fe3013e66a408005231ea6",
    "path_item": "245dd6b4cde7add875a58a38f49856602906eaf94bfde54a3bc69163870cd797",
    "version": 1
   },
   "ml-transform-foundation-01": {
-   "design_card": "eb2f000dab0c0dc48827d632ac02d61c7a850cd874bcb62873ea383ead8dea07",
-   "exercise": "62bc4886fbd621120dfd0d1da579a0e988e4ec7423d5a1965f91d9d6fcfdd06d",
+   "design_card": "95fa81719c83c8b18a29f310a545313476ce0a9b2822997861936d78e97d5a2f",
+   "exercise": "2b0dab13b3ef17a5e3ef4a0faa503b781e56c8429ac14d552f416a2dfe597bd5",
    "path_item": "624050e8108122ccb6c87e075f13c1411c6758290b85d58e0f51c3b7c792a504",
    "version": 1
   },
   "numpy-adjacent-diff-20261021": {
-   "design_card": "6ac7ce299d121c82d7a55085e03684435356c8f8e953557b5227115c54970eab",
-   "exercise": "baa4ee6474b89d35726feb93d73ccc2b7abd6b7a63db3dffb1b8f85e31a3afa3",
+   "design_card": "edf4ee72679c80969ff88101b151ce13492ac791b923d1e031f8f3bf42632fec",
+   "exercise": "b90905e61271c9d6faa4ea863fd7d097d1d08d8a0bfac9a1490f0944c3ceede9",
    "path_item": "73bd3e64add6bb18555cdb314a99647a5e636304b9815b79a5b0c1683652b61d",
    "version": 1
   },
   "numpy-axis-01": {
-   "design_card": "0cf5d9470dda8583b245e5458000729686a39f6cf18a6acf17169861e02523fb",
-   "exercise": "13897a71f3c18fbfeba7107a18e893ff831e65432e6004ba9f894278a78de589",
+   "design_card": "659911bbe7ae8bfa2239b95d611cc365ef89a08279578ae5c061d0ea26923a6b",
+   "exercise": "5889603c45d9f2695b231940ac41232fb98b02f1bfef7a987cb3611715b189da",
    "path_item": "67d3d36c47ed842b58d3752fe4e462d84cfa4f29965acd6661ec1bf123cd5811",
    "version": 2
   },
   "numpy-axis-02": {
-   "design_card": "c5f9c2ccf9187e9f6e02695cef48c919c6edb60cc811144973798fc5de64b287",
-   "exercise": "c07df910112d478fc81085f0b17a8674f4710998f7bed4726d9e572b1d3113ea",
+   "design_card": "d709ed7410e3f322e753d8f7e55043b0e4071e11297a149c51919524cf4d5d90",
+   "exercise": "6d2b4f3108f181c517bf344bec7d7c44b32e4ce9d679e02e216bcdba25331905",
    "path_item": "399d590c5fd4c3e906acc9bf23a729747e26a3f35e84d5bbe54bcf08795e031f",
    "version": 1
   },
   "numpy-axis-mean-form-01": {
-   "design_card": "24eac6e9d1a96a9577e2db287da81c88fe6190525e5761f0dacaece3ab5e63be",
-   "exercise": "8b91000f32d86efa77d9c1ef4cde62a21ceaab14e70c32e8281e765a75826d9d",
-   "path_item": "bfbd2c4954e35e607ada2135b0eb95569eab392e0c152857c44eacc21ecfe9ee",
+   "design_card": "576a60e92f83c70bbf228e78694d500c89feb9c8000488ee453c21bf236037f3",
+   "exercise": "b79a1167f85474abb595ff355739ba18abadbdd895020b2ad69e04df6117aa1a",
+   "path_item": "c0285a5a2dc4912f7c763f1b969bf89d88cfd8e7a8522cb9e0eb9c0b9c7770af",
    "version": 1
   },
   "numpy-broadcast-01": {
-   "design_card": "bf560c0a4ca47c65ba7e6219fd684dc5ff462dcdceabf21b4bd43050293bf98c",
-   "exercise": "eb308e7856ee357840b832b67fdc2bdd2a3e897c4f2cd0c3c7ef90fe75668303",
+   "design_card": "0325a03f09b2e4477c79ba7b9b828938d44dd2ec9b46dd4e9fca8f8f94c7c8c8",
+   "exercise": "ec1d12fb13b2a76fd6e975de67912ee334a4fbbd9f83b00f007405c0fa9f2506",
    "path_item": "15c5851aa432a9a96f548f8886cd0813b0790b5d4ea761b82e73050617145d73",
    "version": 2
   },
   "numpy-broadcast-02": {
-   "design_card": "fc2a9536c1237e8b8ed32282c5a37865b04cd17fd2e0716c83e7640ec0d3710f",
-   "exercise": "c8389d24e032b56091f34207eee19e5a2bfb358bac0589948c7e73ba44329783",
+   "design_card": "828f0699abbb2b5fe9731411b4dabbf8f24d216d6ab0117c94a327459130a62c",
+   "exercise": "77245f7b286ea553c7adb2674df68edf1a7d6fa2d650614038bd19e10d991321",
    "path_item": "c0da2218955d0db3f55970b9706d04c4b676b953c96622905ccba48e5aad2077",
    "version": 1
   },
   "numpy-broadcast-application-02": {
-   "design_card": "fbfca1beebc3d61cdc79dcd8b014aa7f13fd6f15abda94c162f141a79ed183dc",
-   "exercise": "550d20aa0d6a2e29172a6d84225575fb69b94fb8ae3e1a5836fca75b9b83fe36",
+   "design_card": "785b85369e3478b7ff8fdbcbb194163dd9f96189d8f60d8b4dc4b6b0c59d5db9",
+   "exercise": "191e74a865438216ff95e8d109a67f3388f58cea5fa4c21a16567422f875cb54",
    "path_item": "c191f57b735ebc21cd1eac5354b39bb59cfb79545eaeef281f3cf603e45adc46",
    "version": 1
   },
   "numpy-broadcast-foundation-01": {
-   "design_card": "822c0c34c2937ddb734322c1402ae86f9be3394575bd1765d4d328182fb0db7d",
-   "exercise": "d7c98341f454d3a3f05ed4eac9ff7a16a9a6767ac65a044a5445c93b604d18a4",
+   "design_card": "fc63cef729c48685d2b7387777196b961cd5e180ff3e4216d125a079e94928c1",
+   "exercise": "5811479a327096e44d4c3b9885a6ab1e027a8ee3eb2ba84a91ff6dcb0087fd49",
    "path_item": "d91ea44cee3b6ee78273cac228a3ab1cbd46d68ed5192654b0725aab06575e20",
    "version": 1
   },
   "numpy-broadcast-foundation-02": {
-   "design_card": "142ddc6e094568cf823b0584bf83ae974f417f4fcc447fe4f7b3d9ee7873ece6",
-   "exercise": "0fd6c727757b408412970edc93741d479b579506390fd88b134aeaf6295b4ec8",
+   "design_card": "d840715ee1a7d6d7c150c3d22edc69cedc2c51a792fc2b468dbb166b2a2968aa",
+   "exercise": "c1703e5529b834aede1e6358db0b662d367256fc727a34be8224b52bcaa15d84",
    "path_item": "d9d8133bcf3565d2c1198c159d29a7dfd2d8cf69680c294f9eede57c9b497e5b",
    "version": 1
   },
   "numpy-chained-write-20261020": {
-   "design_card": "88e5fac353139583a3f21b968ced9418e6ba331d8178278bb2e67910d995afe6",
-   "exercise": "54bcda28d0b99a9ddee9b70c9088576d81304c159280557a763152caecf73458",
+   "design_card": "39bfcff6816e5f0c28b04b1639d7f1adefdbe2dcae80b95e064f012f7b42e2fb",
+   "exercise": "e1e9fbd8ac494ff9784464494a0ed5ef4bc74a2032f68baefd03ecf796eeb9b8",
    "path_item": "bf471d86d46105142f5790482df32c448a4e814c061a44f4ea9904e4e20d7feb",
    "version": 1
   },
   "numpy-coercion-types-20261023": {
-   "design_card": "82602f8c66decdc9fe39d46cee733a00537434fa295a125b3db9b0dddaf10aac",
-   "exercise": "aecd92297ecda4931b800e25c45dd35562402403fcbf2f3faa722c627db06899",
+   "design_card": "87da9cd1835c7d85efdfcb2113cf23f5f6612999ecabf73163585d3ce27dd32c",
+   "exercise": "3b63a5cfc2f357d1be539e38dc3884667e2f5e2662511b3c4a0fd4da93bf5bc8",
    "path_item": "87dc5c0571da9c3fc5a26b5cc82b5189fdc1f1c4f74bb158349b33c0168ba080",
    "version": 1
   },
   "numpy-copy-timing-form-01": {
-   "design_card": "e639e4d0e50b34a6c89165ea878556b5e119a21be44b23faeeefe491ad95ade4",
-   "exercise": "f0c5ec0250ced0ccae337e8468e6498480033025c31c5fb912d6b375fbe6f127",
-   "path_item": "377e1cc5dfe1950f46f95d18f712e027ece41306b23b1941caafadedc5ecfa42",
+   "design_card": "eca1cc25ef03532ca00165897827350000c05a1c4101821367347bd2966210d9",
+   "exercise": "f723b3d06e45d133b224c98a2b47c4a093d0911dacb8c7e857b6e33b89a889b2",
+   "path_item": "9891d7b67e6208ef430aa1d794301d6bacfb8bbf98f4870f6cefbf1d8f69e421",
    "version": 1
   },
   "numpy-finite-average-20261021": {
-   "design_card": "cde329a8e4258eb0b40a4b93e6fb0c9433cf56c13f62b4aff40989b8b354dbe7",
-   "exercise": "27b66d7b091064ccef649eefb30d90bf0a17f6b0ba0c02d1a4d08e9239b75960",
+   "design_card": "3f09a72ed72cc67f49b39d08e4ef94f73505d5710a093b5a44df7fbfaba99919",
+   "exercise": "e8683a74eb8fd52bd4a460691d8bbbe868cf66538894bb25a7d3bfef6fa6ce3e",
    "path_item": "426a9ee0c424a801f278a349653bc6741d3c2b6e14bcb5cbd5e81992aa043edb",
    "version": 1
   },
   "numpy-finite-mask-20261021": {
-   "design_card": "70b4aae1e57aeca12dbc3f08f6e6f126716a3c4448c5d773d11e3374bfabe45f",
-   "exercise": "7295425bbf3453cc3e57addc049e9381d9b768eab1a1f15fdea759aa1971a919",
+   "design_card": "fe90b8389f6cb1a00263d4394c423509e895b2a8bfc4f143a4ba0e1cb6c31057",
+   "exercise": "c1f1f9ad9b02911fa3e4ffe238a6d42e957a5dcd806e740c41c53903abdc0e2e",
    "path_item": "ed0d1138f4f8a3d67b9e9f01eeac749a012869ef4f8cc3fe48d3eb79f3596eb3",
    "version": 1
   },
   "numpy-finite-ratios-20261023": {
-   "design_card": "7090123b4dc682e16991f3b63e5be4877c9667bc88cecc7c4d1c49d07ea61ef6",
-   "exercise": "1ed0544b7842735c60bd809a850931d94bbfdca5773fb5d8e80179cd4ab7a930",
+   "design_card": "a68bde31ea81100c7664eed582344144aff9788d889f6ca8c77a1c43aa4d4f7d",
+   "exercise": "3e7600350b33acc3c294acd1924dc28d81136653e4438012c275e6b181febd5a",
    "path_item": "8f16dc46bcf04b17a4f6728b0911c7264c8c1ab03393934f72be0588d7866c12",
    "version": 1
   },
   "numpy-finite-rows-20261023": {
-   "design_card": "7eea2843a7b4af64dd9d3d213ada0f64b8700f6c8e0d05178402bbcdd7bb4a47",
-   "exercise": "801bd7c89a76332c8e884468083ee8e611fda7104b8175a6f8c0d776b6c836d4",
+   "design_card": "245e6a2a2b4d1b57eb9e3fa82483543c706742c0a3bab48d2f4f9a37250738c1",
+   "exercise": "7fe782b43734501147a585c21064253777e4dfaf4a05dc7ca499840c4f96d763",
    "path_item": "08507601598554f73a2a5dd726f2ab087d5d1f28e05e883a80ba0c41d74f5852",
    "version": 1
   },
   "numpy-index-foundation-01": {
-   "design_card": "6270043e96e71ae957298484b2ec3979d6e89c131df1539bc5d9be6fe573f025",
-   "exercise": "f9d6342f9131cc37da8ab07534199ccc3a0e8b2463c1c1e92934d32189b3c80e",
+   "design_card": "7d3fa00faa6ef8287f291b2aac72dec4d507d822331c845bcaa4ca2bb457e44f",
+   "exercise": "8380bc2352cf3d0ca2ce300bd5b10e719c1ac8a06b120dd7e0d8ebda6f360e13",
    "path_item": "9c748e503a4b8a84bda1f8dc394ecfc996ef6063e74b72d23cfbc279f95b50ac",
    "version": 1
   },
   "numpy-integer-inputs-20261023": {
-   "design_card": "60f255c29a31cf935d0cf682a98062afe0736c1fceac3a44d92fc89d1848935c",
-   "exercise": "53c7cd4e093d9c247fd33c9ab341ffae31d01246a172b1603926b76ebdbbdbb6",
+   "design_card": "c798c36322bde51add7772c2a7a204e7a39b5c748f321378e0e3b708d67b4662",
+   "exercise": "fb61fcb3687091e0b946d109a62a0f25494bef5234bce010bad6625bd427a921",
    "path_item": "9bdd419f95b2d9e7a9ae75d1f3449bf520f445c04c8f44228a948c57e5c16081",
    "version": 1
   },
   "numpy-isin-order-20261021": {
-   "design_card": "4e3efd2a0e51082d195d586b8d20d6922fd9b81ceeb2b9e1525fdd6e56fd63a7",
-   "exercise": "6a8cf318f74635bc8f3dca450f263488439f72e2aaf9aad129d25d71702dfb6f",
+   "design_card": "9cbef6dee565ac1b0ea2f70a93710d863acb2572218734e7a8f9bc3eccd412dd",
+   "exercise": "06e554662979990b01dc25c5c81b64d7c764794d8ab6a5a7e2831a728b2b5d4c",
    "path_item": "d010056a844e09f54e5423defb8ae6659850600ee7b0b5a441894a163c748389",
    "version": 1
   },
   "numpy-isin-shape-20261021": {
-   "design_card": "9004bbd2c45949fbcf257118ad649e18d978b58028ef49c2d2526170c3cfef7d",
-   "exercise": "f733b9056a3969b8c66ddb1ce4d0413313a4ad5a2e350a268b00360360deb5f7",
+   "design_card": "8fb24ef4c02acd7132d0a39b2359508d402bb6fde6d5972bff061fa4f6696269",
+   "exercise": "eb55b1422ace4623232e3ebaaf8273a4912d83ee241b244992e955bda948b0ab",
    "path_item": "6ea2ecbc2eb9ff87afa8dbe41df13bd5b627db3c080b7f6152b0ec471f104333",
    "version": 1
   },
   "numpy-kept-axis-20261019": {
-   "design_card": "dbd0697bd8f945ab251d0f7ede1e9685ed09acca72fec79d811bba137d994e02",
-   "exercise": "0572b4a559ec4d32d1687a67c5b24ef6f9029e59a197627fad368aaee0c5d20b",
+   "design_card": "368a9a43a96442bda4e0e66cc6835348555c0a049770a230909abef1c16b810d",
+   "exercise": "8a1b2f411269d34894ec2cd9e92352c2f5277141d5afeae0ee7165a45177b8b3",
    "path_item": "12e330a86b266d1836dff9c917ae59d9b0f7c3db48c55f388f1ba654f434fb4b",
    "version": 1
   },
   "numpy-mask-01": {
-   "design_card": "27702f9194c116f749b72f2d3fe44f40bfc86fccc4a36941f4d63a2d8c79ff79",
-   "exercise": "9b4a403d88e74b3d7a5d5e5caaf46ccf74ad1e4d7ff3a8c443725d2498e12963",
+   "design_card": "88f4b2ef6d1a2bf0fa6342144f86082453e86dbd3221e79791d73dbbbd2b79af",
+   "exercise": "9e34dc1d2197bdb774f3e944a3bfaf4ddf37a62e4e9a8f3ed118fc0ac21bb0ff",
    "path_item": "ff5f5e97a7dd91273f88730c58023766358f8a3fd5067b13fd56adf5031b5b1c",
    "version": 2
   },
   "numpy-mask-02": {
-   "design_card": "9d16a71e1acbd26adc3ed4bc16a97f9d2c04d06567f91281dbe72b1b4a76fdbe",
-   "exercise": "fcc90131ca7b840a31a446194f8eeaf5edcac2946d257a64710dd8f8d9a8bab7",
+   "design_card": "aec9a14332ad0f289237730fecfa7187ba99a7eb836876ccca15d8c9b16f258e",
+   "exercise": "69206c8b502b3cc94d4767ff5c584723b773255d3fc942b508bf0b399de0c1bb",
    "path_item": "a011ad191c6baa20cb737cea2cfca9c3f7721606d5d0d5439a9305032ee6b76a",
    "version": 1
   },
   "numpy-mask-application-02": {
-   "design_card": "5bff1c3d84aadca462b2fe3503a86d287c0e55e206e64fc69d7e03d8c54630a2",
-   "exercise": "5a4ee3ea1d2f0db96bbbb1df070f0ad5c2d065f519575e660d30e98fba6338fa",
+   "design_card": "4692098b9c8d3fc08d6fb9cb2d1c058b567935cd19b3d13dc372ea3c40693f8c",
+   "exercise": "3f28e5890bce784f3383c9909902032e254c897560fd64ed0495d7b70bcd5e0e",
    "path_item": "032355b68d155997477c45b7d1f5ae2bb772ef1b91d0a50fc25dda4ba7e5226d",
    "version": 1
   },
   "numpy-mask-foundation-02": {
-   "design_card": "48b8ed47c58ec7394ea6c9bb0798ba8296bcb1dfadc3f5e8eef914f24d02f270",
-   "exercise": "87f2b1a74c17deb8a2acecd4306f62f45dcc5a590881f2480bfed5b461a31a1a",
+   "design_card": "a3bd66a8354a44407bba58acf94b2f7633ac18dfe1a446888634ba3f7d2d102c",
+   "exercise": "6f4216dd9642dca6035a9a02e7dbff69d5b09b532ce7877f65f027ff0b435866",
    "path_item": "5e33e31e66e967f052bb5368870a70bd31654f8d6e27b8ba10736393fa6fb0eb",
    "version": 1
   },
   "numpy-mask-state-20261019": {
-   "design_card": "ab60b1dfe163d06bb942f0b33b30a79223778d72b73ab80a3c0e0d1b348b80ef",
-   "exercise": "4e23db4b6963994208294c5e6f0936df2ce26b600a83f9fa1142014876290397",
+   "design_card": "f0c601e67a59e2d118f599c624bd8cf49b37cf31debb76f717d9a633297fe217",
+   "exercise": "6957858905b9044637b6949a887e095aa3033776c29a97cdbbc46272fe2c734e",
    "path_item": "a5519d26ff1f8be8caf51b993d4323dc43e5768f4c25099410403a28fd6cf422",
    "version": 1
   },
   "numpy-memory-foundation-01": {
-   "design_card": "e9d80e2aad5257fbdf7d68621af5dadd86eda597c1b12c0994778252920c65e6",
-   "exercise": "558a27d67ff89d0e0c47e6dabc1bc4a2d09294bb94694d5804350a35f84eaced",
+   "design_card": "563498a62259f5b543639019b4836c08da9a9b024a0f7312a9ca6eef70aaafd7",
+   "exercise": "26065d18402d3a55e8fce13dcd3503dc1e4f055278798799558caf114f7f7e9a",
    "path_item": "4eb7a1a8f76276008dadc8fa0cd42ba008648f6d8e7f7e157bbb4a6e90c25a6f",
    "version": 1
   },
   "numpy-memory-foundation-02": {
-   "design_card": "7b26c15fb44c31e6c79ad02a1d0e48bd4cf7a3cf97f3ffe5ed88a83e85684273",
-   "exercise": "a0e60c6823242c9a1aeaafa3854570eab111f50f7ac4e6a8100d6dad70c3d23d",
+   "design_card": "eefe610f99d91e89ca7cf5e1ddb526fe51f3f4e92ef9e71c12a8ec6c365696be",
+   "exercise": "0abc8fba33082fe04578a83845f96512a3055f89cf346e5970d32cd21c3f813c",
    "path_item": "0a3304cfc798990b6e742f6899c84fe50c0a82b086fa36e06dedf0c07819b505",
    "version": 1
   },
   "numpy-memory-transfer-01": {
-   "design_card": "402acdcadc86919075a938b180105eabfe5319a49a5c0c7dc3cf501519862995",
-   "exercise": "86ebbf2535eddc95f696effcd4879129f6583c5ceaa0f93b0bec01cfed51d26a",
+   "design_card": "5343eaf6c1139d13dc465c83bbad9ec672e425788f7cf2f798672c5539208052",
+   "exercise": "e00bf5cb72001980cad6d00d38b901c2bb0f09dd9e38dc4d9b2cd9ec284090ea",
    "path_item": "bdb71d3905ae2bf857f8aae02dd54a215e63ab402d8e78559f6a8674fff0ae29",
    "version": 1
   },
   "numpy-memory-transfer-02": {
-   "design_card": "0fe47f3efe8556f9d5a29e74b3c335153004fceb7b34e81eed8acc4ce940fc66",
-   "exercise": "63d294f4598275583efe227b9b3491a07b863ee13a6502b5634475ad97131cf3",
+   "design_card": "3ace80d8c10d2372e11c8bdf2257bf426cb56f795508dddabafc5ef613e37a0f",
+   "exercise": "3f555cff96f1af733cc3f8bf55233c8ae8e7a5280051383658c3d53588e13fbc",
    "path_item": "753a743cded31e390f960afb43720e50c447eba4a678b4e1d75d2fd0c09e1f7f",
    "version": 1
   },
   "numpy-rebind-view-20261019": {
-   "design_card": "1829677f712e58d8221925fe798df5e887469375a0e6f8cdf08076ef1c53713c",
-   "exercise": "c168c1c621b8dc6ffd45209d79ff6f47e9df43d401e2cc204ec58f4be4df5f22",
+   "design_card": "057badb3fcb98554a812cbbd89be769762a9fee90e37209c57d289192c818e33",
+   "exercise": "d0c5da630020c9fd539b4bff897dc82c66561ee083b41963d9063acaa2d6275b",
    "path_item": "e13e29cf2d54045b88e07b7dbd7283204f8688e36304f4cb0cd5c27977acb9ea",
    "version": 1
   },
   "numpy-reshape-columns-20261020": {
-   "design_card": "ecd775034f5bb012a01a883097e96d2652b3924084bbe4e568fabe13eb3c9c14",
-   "exercise": "f2fe53cd578879cc69094cae860ce132ba4e819fb8e2a224c48acb5606369d0c",
+   "design_card": "e6c83f4fa517b4c6f8614eee477fbd118df0c959ef127589c0596148e4c644ac",
+   "exercise": "8317435b48994ffbae9b2f69f7c469c64628e027f9e7f327714c75a228da7a7c",
    "path_item": "de8540cd0056618864c3c33725b110f51168857fdef196c8901ed8d1b45fd5e8",
    "version": 1
   },
   "numpy-row-all-20261023": {
-   "design_card": "476e437042478d48e3c1f3c96c8983abdca28f2b0e54bd3d1901a8eaf76ffdbd",
-   "exercise": "da63662c15a5fca6f6dd654a55524a80b200a7df0339c097b3004db35f76c301",
+   "design_card": "a2bf3a100ea2bd458f3e7b3439f0a793fc0fcfb6381734d1bce4b218994b5298",
+   "exercise": "43a72d6ccdf4f9d1c957ce22f9e54db66682ac6ab9487c3cb1ad79626ed0c429",
    "path_item": "7b4cae1fde5d5a55432efbc9eab89752e2e5f79747c544b88b848db735c9f3ac",
    "version": 1
   },
   "numpy-scalar-types-20261023": {
-   "design_card": "11d0ccb08703125c5908e7ff11bcf73955b72f333a75d7b822bab3b703e63f06",
-   "exercise": "063b60717d980a41c7da910ad6dedc6a444531d278ac7c078b2f2edad1f16114",
+   "design_card": "211d1103db783714aed390069d4e979bddd420b5f0e1907b82ac051b0fe24c0c",
+   "exercise": "f5675bfb4c93d3b8c4782c48d71f845696b1ab23630ec838e12d4ddfa0f8c3d9",
    "path_item": "e6f56b0fe148051c48389203ba6545ce137375c630f74c581aa8e1e45b70635d",
    "version": 1
   },
   "numpy-shape-01": {
-   "design_card": "50194feba4f3f86940160fcebe6f58ecb65e0fe7487a4f24184e4bb08a5d8633",
-   "exercise": "04acc0340a4630c81b1a8d336e9f1fbcf6f7843cc6adda5de282e00d228f123f",
+   "design_card": "4517620a0fc79381cc895b861a8ca77071f531c554e390246f07095b8c4706db",
+   "exercise": "5c57a228980c0c0578e8b86758e02b395f232c2b97167330dd6394f6090dbbd2",
    "path_item": "2061f48ba3d5caa9c7c901f0755766ffc05e224b13158991535c04e084b62799",
    "version": 2
   },
   "numpy-shape-02": {
-   "design_card": "2f3a04b433382b632efbb120a585cd805f00c78295c685aef1fcd13dee3a1401",
-   "exercise": "e78d7ab77646e0f948b3bb285479d0bd45bc123e900b522a33305ae664618888",
+   "design_card": "d0a171f7dd3dd2f9e3637195f93efa04750fac2ebbc74e8a2ba39e1284388b1c",
+   "exercise": "150edf118c411691c949454b4871f3eebc80993443b6be43131c814cc3e0abc3",
    "path_item": "93d46f55950a769a5b20808d9a71fb01e74cb7fa4404b286fbdd598abaf927ca",
    "version": 1
   },
   "numpy-shape-application-01": {
-   "design_card": "6753f636ce6c2cf3b683beceeee1935397beb65f98b37e51cfaad741815ddd17",
-   "exercise": "6a5b41eab801cfa3f12e3cb20b4a2009fc85fdf6bccba40f9fe644b4d79534d5",
+   "design_card": "0fb2b85f7c32644f024c2a894325a9e31f61e1459eb1f23edb8c54084ea928ea",
+   "exercise": "90fb26d14b90ae3b99b30bbd265160f014eb94aa092dc275e44621cd8f665266",
    "path_item": "aca65b32946707fa258ebc0c2d85aa26e4b60dcecad00159a554327a0696a057",
    "version": 1
   },
   "numpy-square-centering-20261019": {
-   "design_card": "c06b40e9ec4594f2c86600468ad14867a02862ea887c7292b20f98dbbef9f798",
-   "exercise": "3e27fe688426824b0825698d556611a6686d9eac4d293cf787c8298ccc0db823",
+   "design_card": "b501123c711e48ccac017cdc9cb23b4dc9eda2a3e10878d34b85f3c91daae0a1",
+   "exercise": "99cabe1977274938da5da3743023e997f428c51900b6a3086f3d29ca15d917b8",
    "path_item": "ca0d794ad9c4ec36e772034504ae3ee74878c7847b54b44b0f48578d54f0a75a",
    "version": 1
   },
   "numpy-squeeze-axis-20261025": {
-   "design_card": "0390c75eeac78f48f7d2bdd82396a660e82dcf6233725e1ac8a9f8769ccdb898",
-   "exercise": "dcee8c10e0eb1650645b2eae158eb80528812b8bac4682454ca0ef3934c12747",
+   "design_card": "0a0246cd0daf9d7e46d47a73941aa3a27785669ed15716ed09e9347f4acde485",
+   "exercise": "00c08ed7df98517bcc16849571b04debc5ac2d91ccce2a05c9a0ad3e4dbc3e85",
    "path_item": "576ce8e33ce430ae8f7e0e4445938ab9da96b3668867fe1c20a83556c6a3efae",
    "version": 1
   },
   "numpy-stack-concatenate-20261023": {
-   "design_card": "9f76788302da59181497a8cc3635b595727f2d5567f5f7fdb2eb782c01a79c66",
-   "exercise": "c89f95348ef1c43da6191300282316e36c32a81d37331a107421397ae277d08b",
+   "design_card": "1217b27cba920da267d5977f9a7733decf3433603ba15661ef41600903d7230a",
+   "exercise": "f4cfbf63ea40a4ea00019741f69c505dbc72811b775d8338a25822c9f2975055",
    "path_item": "f607af657930936fe3fad74e26e80485f3e6d501c8cdc1e6c136c6cf363c775a",
    "version": 1
   },
   "numpy-transpose-mean-20261020": {
-   "design_card": "f830ac8e2f5b807f251033a949c2487feff50444b5c9abdb1db5e266fd9e3159",
-   "exercise": "2111264999745f94fcb858683f5a706ed7fa2469f994ef712c48a4aeef5c27c7",
+   "design_card": "ec576abe83e9bbc0c04088d9f913185bb517af87dc49c16aed5ee4a766876b53",
+   "exercise": "0e08fb019499ed41a3c9163b48a008cdb989e0412d4c00b87a4e9c8c70f23c07",
    "path_item": "a06538b95847b29ab604c7d7ce457fa7960834db381db919605bea5a959eff99",
    "version": 1
   },
   "numpy-view-01": {
-   "design_card": "d2e059a94d0313d4aff3fcd774de8248b766783b36a985e293c2c38aa96db1f6",
-   "exercise": "18f1099a4f21bf0104c17a7ed3b25802e03d41a37a38334e4f2a069b97344cf8",
+   "design_card": "e36c56a5dedc0c2c82e1d3cbaef822d66a8f93546ec37f1ae0e5feefc9efe973",
+   "exercise": "10d2b2b4142db886a7561195759845a7f083daa197d2a303d42c4bd1dc9bdd79",
    "path_item": "038e3c8489f633bbcf0ccbc9a93eec94dfd9082857b851add9ce5d27cbb59060",
    "version": 2
   },
   "numpy-view-02": {
-   "design_card": "83f5f62619d5ee663554cb4b0ae114a3f860b0d0dcb108ed1ce55802f0a11907",
-   "exercise": "07522529139c81c99829d829a2656deedcb17a2125ac271b714682de8460a94e",
+   "design_card": "193d41b221ca331de2b3f6c4d489fa75398f1f58328c5e62dfafea0e606fcba2",
+   "exercise": "fadecbc99ceebeb9c6b01ab4549d19cabc1394776787d17efe1637ad6c0b1753",
    "path_item": "bda6105e8a7286aa30f873889a7227ef518c697e342cae0d92a6ed29bad54e05",
    "version": 1
   },
   "numpy-view-03": {
-   "design_card": "a79b3f779592943107bcd4042a0017cdba8ae5f90283bda3033e623bd347f4d5",
-   "exercise": "c267fb084b74de264410e31184976fd12628fddf8261ebc5fd6a022de26f8f26",
+   "design_card": "98604d85e525ad16e88c605c91d0f718b906541f8a7f180bb2c8702e70466521",
+   "exercise": "728c5af2bb4465d8adec10a567b21055df7e905e19ddf1c870d3b95b12c584ac",
    "path_item": "30cbef401c201a459defb2fc3c5aceaba0615d3ef4675ef33985c7ae8e97e79a",
    "version": 1
   },
   "numpy-where-20261017": {
-   "design_card": "aaba575762909190cc1873749fcec66651edc444da452119b52f745e7121ee8b",
-   "exercise": "98a5e9c1ad6215e5f1722e98f112df77bd23252eda0687b871564d7949e1a3a9",
+   "design_card": "67f57b6190f51a07e0160ff3c7ec83bc98534379b57e13ab6fb6fd1e5c953393",
+   "exercise": "597f8c8b044f5fdfdebfeb9ffb4935132b293afd6a9430f9f2fa7835dca399f5",
    "path_item": "4e16a4d1a42ba95ceed4270fbc899343668553144f4e5d928cb2af4aed53fd69",
    "version": 1
   },
   "numpy-where-columns-20261021": {
-   "design_card": "679a5b92284694ef5c4a80bd95a2889b05eb4ce167292127d8adb4fd4a08b7ac",
-   "exercise": "ad79617a3075deb521e58bf8c5c96b9d21b1cd4178559a9527ca9d10c0d01ba8",
+   "design_card": "7c67d8175cf3ac2f1833ff9c6852eff79deef73632354c301053a7b7f70d2037",
+   "exercise": "58a34852bdadb623cc5968ff6af4c50ae504396f8e9f9d838d87cf7906a285af",
    "path_item": "bac87211abe3d570f6d621601e7b7b2792a98517f7fb3f02289e29467e706378",
    "version": 1
   },
   "numpy-where-coordinates-20261023": {
-   "design_card": "e47b0357b87678bfc810debdd962c1d609d29e07b0a8076b26289e8986865299",
-   "exercise": "cb61f7e71e921149d470c2fee9a7fb748673ffba30e5bc04f9d3a380a8ba1fd7",
+   "design_card": "9bf151bf9ff82f5344458b22ce7e7d09e25392ae80b9061e2cbc92d5a67ca98a",
+   "exercise": "75aa0b7a46a4d3a03431885e1688b429ceaad268b1571952a0c7ac73d8d88c09",
    "path_item": "cca1694649abf2d1751605418a21120d37f680c92ce315ec9cbd7a28117f8148",
    "version": 1
   },
   "numpy-where-evaluation-20261023": {
-   "design_card": "d29a75f59761892ad1c8f0740c02a15080705a17f508b1cfb203fe69135d91cf",
-   "exercise": "4e184fb04859d6c8fd54dea4173b75b6db03e4fd6148a6e73a69615c8f4c4670",
+   "design_card": "c4641d8c0233a4aa94c5f084cb2391f0c21041709a17013d1da1e566ed745f79",
+   "exercise": "7b9263c815f5bbbce06ab3db90a8be8310e3c09c32b69df3da75fc6936fc2df6",
    "path_item": "11e2720f0f484fdf219f22825ae5bff7251b920da679487154a4eafa8b19f9ea",
    "version": 1
   },
   "numpy-where-positions-20261023": {
-   "design_card": "ac8b5e35bfe25ddf45a025f8b018b2c57e69eb51b040f76d64f727348b86e89e",
-   "exercise": "9de20828f64ae703b4e6014665373308c7c7f2663ee7fbc8b1839986d05af0c1",
+   "design_card": "fff26fb71c604eb06860d3c4ca388f2d5b3ed074493752bc241806fcc204a74f",
+   "exercise": "a8074caf89e691cdfa6c0d568fde4267777a50ca6efe56a63d000766dd4c7e3f",
    "path_item": "a62cf89146f81150b38dc778112a068bef86b6c77bc839f8acce78dbe71f4cd8",
    "version": 1
   },
   "numpy-where-source-20261021": {
-   "design_card": "6a505605955f2dad7a967b81d2428dcae55ea8eba07b839d95b4331006a56935",
-   "exercise": "f97acd3d146b64fc029a692022b4f0051ca12f489cb6eb642cdf3a5492694402",
+   "design_card": "db8df99103340b847309126876a6c1b473e500ceced4e07be6da1d41f9caa138",
+   "exercise": "882a293b83a176826fb9a5955483f232f0099cfcaeb0658f5721148742c2e400",
    "path_item": "0a08672c9c655d3b909e3f420b216806548f5d3f8c734911bf8c1dc6af5e7794",
    "version": 1
   },
   "pandas-alignment-20261017": {
-   "design_card": "5b455fa813a8d06a00f9b3af2e698e5fe78d62e0bd0a805cecad9abc3e94a56d",
-   "exercise": "933388c6e5b2200c2bb76ddce2f00f9fb97b9b365d89fb104a82df54ded766da",
+   "design_card": "74fbf84521b52558a3505332832f5d165736352eb5bb9b6b4f1dc6cb7cc2fe43",
+   "exercise": "cf289b3983bacd4f381d5a6320bfe04cad45e436525b9195258f9a701dbbfe9c",
    "path_item": "8f5ea419ef776671d584c08a48316458ab844afe23f048c731924ec22dffca56",
    "version": 1
   },
   "pandas-duplicate-members-20261024": {
-   "design_card": "6974d304c46171c3189d30c2803e66ab47856e29986fc688e5fc55657ec32dc4",
-   "exercise": "5a08b88fe5f7d3b4ee89916e10a505884519a46ed2d38f7be51a00afb2d291fa",
+   "design_card": "e4b1aee0f3c654ba23f250915c9bd21205dd31be68f10832efa81bed4890bb6c",
+   "exercise": "2a2edc29f74f2989c9ab98b7268a7012cf9cd271e4b6f5cdec7b01fe51d1192f",
    "path_item": "6dcb26ee6856da26fd81e60b9dfd4dc75ab167e96871019801521aee8b16b7b8",
    "version": 1
   },
   "pandas-fill-assign-form-01": {
-   "design_card": "388ad686a0aab36517b2a109e507f19d217128e88cd1a87535908688efcc6e9e",
-   "exercise": "6d63a60d46a1711b4ab5b2770d7c348f7fc65212bfefae0fdd7b0a14a7211cf2",
-   "path_item": "4d97093e8e30886131999f4e4e67d7d70a17456a5a5f6c4a0f8db329ed4660ea",
+   "design_card": "1de8c15a349dd272c8cee7bd7695ac538b3a16d86836b137606253ab4e6b192d",
+   "exercise": "771b8bb4e7e6ac8b2b1e148474e0bd15524c0a3c4c6d8720e410fedab8775554",
+   "path_item": "2c7cde20ef268101a8509933ee8625d0b804f7bec6f0f24eed12d95ab746a647",
    "version": 1
   },
   "pandas-fill-return-20261019": {
-   "design_card": "f16c5fa55c0f3fff885cfef0dfbe6a91a5f95895e6e28d559a8e8e4c2419f91c",
-   "exercise": "fa99ec8d3e9e31f2d9961fdca5bf20d3390de0fa2ee30bd0d8716083e25c137a",
+   "design_card": "4a780d65001e9991719803c23ba6807ee2e7fc8ba62afcee6e05d252b4d627d2",
+   "exercise": "5ac455f23f8e5e9add772f4879b89ff6117de39a6efa18adbf38059b345234fb",
    "path_item": "014aab46ca1065441e7115e0b09134fc6aaea1e40bf7a77a6976f8efd0bf12ca",
    "version": 1
   },
   "pandas-filter-01": {
-   "design_card": "cde182ae1bfa8affa947929a1a74bec925d0f42e16aaffb53d9317dfbf3d7b67",
-   "exercise": "280d9bb2762bcca2f33825e5c187849175ed591b2ef4e2a2d01c929f686510c0",
+   "design_card": "1e96f24cccba6eaef50c4348203b30d033ffbd206007a58d78ed48aca1778958",
+   "exercise": "8e3581654c78097b0fa7c73a74d45e6da0158799b2e9f532058f20c2d0442442",
    "path_item": "ba95217e626e8fbd966cad1605fb58194585089910b45afeaa778900a0c146d9",
    "version": 2
   },
   "pandas-filter-02": {
-   "design_card": "6a9ab401d56b3719f3404f0cc4e196618826cffe86b1782c1605716e6db1e992",
-   "exercise": "aec5e72c7188b948816d1da5be5be6c506dd5b0c35817fcbadf7ceaa5bb9fb5a",
+   "design_card": "bdc7cf975566e1bfc5b819b7629b3a5f7475cf2f6f4709509aa3aa3817cd3c34",
+   "exercise": "ced6b2eba8facc3707a241118b723afa55121bb423eca651bff70c8b38324632",
    "path_item": "caf274ca7928940d5e123b2d06f744ac33839e1c87bdbf53f124ea7101479ae4",
    "version": 2
   },
   "pandas-filter-03": {
-   "design_card": "27fbdcf804dcf689f7a32d45e638ff5062efd9362aec14f7b5d866e5ff65ab24",
-   "exercise": "3ac2f4523fcb78de412dab2a693b1abc57648de7a79b47457a140995d498b7ba",
+   "design_card": "a8ec590cb56c0911c6f5cc0bd3f2745853470f12fe111e1b3f065744076d1731",
+   "exercise": "292b1955ffd9ee83295706b82af6c8a87dd5fe328ff03e532af49db3527190be",
    "path_item": "ee3d16ac7a5abcaa560a0477ab3c03b2997306eac6f622b290642204500aae86",
    "version": 1
   },
   "pandas-filter-scaffold-01": {
-   "design_card": "39cc41ef24fb0a2a6ae51235fd6b636592bfe90764fc92e1d73fc22c3603141f",
-   "exercise": "b6bee8514dc98ab0f3c8df887362d0bae3ce0385ec02d98bf610cff805681722",
+   "design_card": "262ec7cb7112acb254f4fbe0a75f605c40fbca2b4a87b0b6babae80cbaba8a6f",
+   "exercise": "763355dfaca33a43a5d851eba1f436af5c0af7c2ccbc11b9e25cf4ed88eb2c8e",
    "path_item": "fd48259ae5d7ede0ba10d6743ea9f09ec1688a470b03dd0d89829c3d2f0e3c9d",
    "version": 1
   },
   "pandas-filter-scaffold-02": {
-   "design_card": "dfee9e8667b6b8d0f69f1f9eeea95e37193426708ca14c2830a7c7d5e1fdce0e",
-   "exercise": "b946a0952167f147ad78dbb99da2b01f7112f6660a96d0decff9f802ef008b16",
+   "design_card": "aa2cd103779d11dda9a6c677c43e810d50c780ae4016f8ace22e29b5a6130d95",
+   "exercise": "74f85d82eb7921a191933f615b4611ff2a6a9004e47e7a9de71ce2c36a34b154",
    "path_item": "69bfdfd067ec2c01c051b5a8b25abafc65e3fc86ebfee755a3bde9b66f873de8",
    "version": 1
   },
   "pandas-filter-transfer-02": {
-   "design_card": "28a7e6fbe38978d3c6d532ff8546974d8ac189ff32605279c9f68ce2288a2013",
-   "exercise": "c8be4eda6060a204151264160a05bf7a62a11a167605d316c3b185d35c576879",
+   "design_card": "988ed942ac344741a6b27252a8b7553e2718442feaee4f4b8bc8e53d0e05e071",
+   "exercise": "f5b093543629b9aa11084380ae31497a3a2170c06480a1d0986489d29dad871e",
    "path_item": "3979c185b94111215c15b7210cd1655816834018820e88eed2155042dfa07c90",
    "version": 1
   },
   "pandas-group-01": {
-   "design_card": "c45b8d06cd69656ea91efcc7ede68a2285dce9cd43df8d1d4ad3a37d545f5554",
-   "exercise": "df496da1ce18af8bf175389304b7d337d2aebdc193c5b5f7cff50aa71038dd71",
+   "design_card": "ca997470518f4ef176eb527dcc631cbaaa3302cb84aed7ca611000ea16db27bb",
+   "exercise": "fed32bf463ca4be0ad4e6e2c83a13abe069d5c802ad2be27eb2068aa6b767d99",
    "path_item": "f03de6db8428cd8c03f515cb3ccdfc78a1eb2f68e2d0708e3f6a50b28070aa48",
    "version": 2
   },
   "pandas-group-02": {
-   "design_card": "ad0e0a7b816faf4e627ded60dc6645e913e7a082b318d3f6601606c2550690c1",
-   "exercise": "84f0c1e36aaa0a99f95dbf51f05f65c4a262497b5e280f40fbb3bbdaae083f6a",
+   "design_card": "ab9c37bb0486e6d42ac88c5d38cb4d98974841c160b8ab69b3e4b41a104e54c5",
+   "exercise": "4bc08b1ec291e6f04951d53d3faf9072aa985b2d0bc567a7a310382a19c02a08",
    "path_item": "b054ea1f81288ce6883f5160e7a344c8a40bbc7a5c441eaca8e1e9e654cb05f1",
    "version": 2
   },
   "pandas-group-03": {
-   "design_card": "51e0ae7d4e696afede076313bfca0509ce4ee06a8e92f5bac190f50d2478a625",
-   "exercise": "2d8977fa9661e3aaa055b4431b5ed04d7b634a7737384963d608ef918018a53f",
+   "design_card": "eddfaace54322c2975eed29a11004029156c0e41d775b853ee5a8805629822e7",
+   "exercise": "66bc353f0b5066a818d2c88e06a6331f7231ba2cf3f1611b991e56bd0367876c",
    "path_item": "88b13d2a3f38080dabdd5e985586b06509fe72e40d593fa6ff297e7eeff37127",
    "version": 1
   },
   "pandas-group-04": {
-   "design_card": "788c8a971ddad57653865fde1a3e6245fbab071db5b26b18646a1033d42bb1d9",
-   "exercise": "8b93b5a164fd2527afc67edd7c335e25c4db245fe2f3cef42d0a6667bd299df2",
+   "design_card": "6d0c4b7cdf6ed81626b5074c4d551d385314f0b1885c0bfe302244851dcf0b7c",
+   "exercise": "54e4dc9d4c7c4155ade1a10d866d31d15184197e6b85a7a523537a4c6b427ece",
    "path_item": "028373dd71bf0ea2b59a8b02f203cd67758d5da5c50432d2cee25c884d50b0c3",
    "version": 1
   },
   "pandas-group-cumulative-20261023": {
-   "design_card": "88a09b4b4a99cc2b547316f6b1aee9f92d171a8dde9011bfca9d142cb966d989",
-   "exercise": "e798c625618cc438dc5a7e6c89aed56cbc62338bce208ee5a4165c9f0d250d51",
+   "design_card": "1f66a3f847211af4468f605a2cf157ed9bd2529809f3f3868f14692867646131",
+   "exercise": "6f99662fa92876d671113c3c5540cc040c0620b0fb06d48c01282db4ec0ebefd",
    "path_item": "6ed906085e095744a72c7866a7bc803d7352440a81454d8254b89b7548fbaed1",
    "version": 1
   },
   "pandas-group-scaffold-01": {
-   "design_card": "6970d24691505c0ec21caa8997507b1f447b0e6e14904beb80662f689ca57d0b",
-   "exercise": "a96c7fd1c7761d14fd143a880190473d3e9a2b8999fb852503ce509b7521eeea",
+   "design_card": "e339934f9bb975cc27a52f148acb80ade4ed7753d17bc9da673868cc1832fe45",
+   "exercise": "dacfb3bcf8e701a11371df700ec91dc6214b7b57ddf95df909a41302d2bde253",
    "path_item": "f766bd234397627eda736b055e375aa21d43c937c7d8e8f5f1110960777a02b3",
    "version": 1
   },
   "pandas-group-scaffold-02": {
-   "design_card": "966b9834ad33f6519f11d41e2b2339d1fd6b8d1f512301ceee5506a320b18f17",
-   "exercise": "7e058890b079f329af1136757423d7d696470e85548ed06262d0691a6b2e89b0",
+   "design_card": "dfe09ccfe2b1c62fda920ffb4545989e8e340674f23a3f813ccd3ae0ddf92592",
+   "exercise": "d8f6575d06a36b79d1915d28d9c5bc81c4055fed93163cfacb49bb9c79cc3f6c",
    "path_item": "481706236b08c12583c335946a9658bdad5f3910f0b82b068b280c29ae33cdac",
    "version": 1
   },
   "pandas-group-steps-form-01": {
-   "design_card": "723b144132b9c01c1f330c4994bf2b2861d1f551f7a464cfff2239140089a01f",
-   "exercise": "1f0c16af5f93ec42437184149f3680d9df41df7e698711d8df199618d8f9c0df",
-   "path_item": "ec8878ef4db5817640e928abac40a7d35600eec3cc84b85f79c7129ae3519b9d",
+   "design_card": "6a09f99cfb7b23d01f91cd049e539c123e7b9fceed3170ade168d5c7fb19a2d9",
+   "exercise": "23d14f0665dae38a50c5b1e8370b751202d85ef141f02d0fb4c1e928c3eaf56d",
+   "path_item": "a3f1e0c665361cefe4dc95809dfbafa3e3a8efd95600149703c7efac35630939",
    "version": 1
   },
   "pandas-group-transfer-02": {
-   "design_card": "e280ea5897f502f6fe1989187327ae5d941799b52f063b82b19fca742ef4b09a",
-   "exercise": "bd72f92d21b728ba5255fcfea235cd01cc895af27d387411a6e8fb07facc32d2",
+   "design_card": "063e54e1966c4c23746f5f87fc909587dfd09c63f0452b70dc8bb0cdd190436f",
+   "exercise": "3dff39e98dc3d5852c36f3ef37e72d8e98984f678c1182b453e458df3fe58bc4",
    "path_item": "25647c19e72e155c3e03fe009848e8a1006f618da1646911c9f6b82453b8f1ce",
    "version": 1
   },
   "pandas-isin-cells-20261023": {
-   "design_card": "409e3dbbe89f1878009ee1bb3906a8f25089e2ab92df76deef4eb480638e84a0",
-   "exercise": "cb51678f4589e6c73252661520c7dac0adc0f1636ec86582c14fcaaabac0cbcb",
+   "design_card": "0e7b614040d1e8872561bd451ee6d5bdb568099882b22647d0685e5eae1dbdb9",
+   "exercise": "26812b9bac34ac2527786bef33fb1f528d6f391d832c7d58b301929b65bb5b7f",
    "path_item": "7ac08dcb82b2000abd0ba4c1ffe4fdc672ac25892fdbd02a5a850d7bce099d50",
    "version": 1
   },
   "pandas-isin-column-rules-20261023": {
-   "design_card": "264cade5dc3fa8b422e711fe63635d08e6d23563c5d921bccd1d4edd920bae4d",
-   "exercise": "220371778097dc63d2b9a27ed4d5b05ce8c5bf6f2565bec31652f205f866ced4",
+   "design_card": "0e50adaba755c542b153107728de4dc998f54fa2fdb4a38653fb48ab613d6ea6",
+   "exercise": "da78f8b720c1a133930fabc9063a27babad32e921f282e815b091331782ea633",
    "path_item": "e7ce91bc8db69821825695ae05ba2e8fd3b739e1c30ecfb1b5cdd63fa9d68638",
    "version": 1
   },
   "pandas-isin-cross-columns-20261023": {
-   "design_card": "9d234f4b04ab01f688acac45324f3f3bae5e460c0a7ad5478c27d4cd6418d140",
-   "exercise": "7d1f1f21d8def7419a47ec3e3380b7dd0d28c033d036b5f5536ae74c7bbffe24",
+   "design_card": "1939d09acd8d65272e1f890f2f35386056f317b984e257f2184730c0f7508ebf",
+   "exercise": "474378057960b78d87cc4bc23fce48288c4216cb3c8a89ea09dc06b9c4210734",
    "path_item": "5a37a86ba9d9da06d08c7648acaeca8e5a80eb4902708139d1fb3f3f0a546148",
    "version": 1
   },
   "pandas-isin-labels-20261021": {
-   "design_card": "50ef9d53a74f9d735304b4e2875713069de58127c8511e3f49c259f37d502336",
-   "exercise": "56d6ae793fdeb596e79434ec03ec8a1b282e0f973b7ba8cceb1c2715a0612218",
+   "design_card": "26f853add462d55a43979d28298d969375ac3019e62653bb6be9e42e739e2bd6",
+   "exercise": "67bbd86e32990bf3b9611966f3e91e7bb694e97338fec16e1277b628524b03e5",
    "path_item": "96150638241a178e2e4e6e520debdeff802763c20026c4eeac857446dd6d0dec",
    "version": 1
   },
   "pandas-isin-values-20261021": {
-   "design_card": "c532fa2654ace560c9013dca8261c5d0027374c124937e1f96eaab500b0b7d0e",
-   "exercise": "3432ba4412986739c01077689cd473df9cb7b96428bd18177e82d391e7fbc591",
+   "design_card": "d9a6dbeade4ce941a8245e864ed50ba4b8860266a06d72236e6ad98d188a65d0",
+   "exercise": "03d4c708797734d7f85932735fe8e5993aff2fcc31df18bdaf2c839eb75fb6e3",
    "path_item": "fe65c357af2ca6f8daaaf41f972613ec0d4bdb25429a9d40dccbecf24803e053",
    "version": 1
   },
   "pandas-map-missing-20261022": {
-   "design_card": "3f1c0607be6ac242c5a16fab2271d3eb7ea0d4d586f10463ccecad0b427bbfe5",
-   "exercise": "db6a287c91d6aca95536c14593d6f9dca1a7ad88a34ea1c503f85bf8d29a9da2",
+   "design_card": "c18432adca8cbb044fdbc8d6fc39a9f04aa46f135764176c34869c83928e53b1",
+   "exercise": "5e535548dbd4b92418930cabb6a3c94e8237f0d1d243be2e7957cb6e0fa972d8",
    "path_item": "89e35737e794aad71e2a5d8b066b50b65a8905d6f4478d9443f99473422ec9f3",
    "version": 1
   },
   "pandas-mask-labels-20261019": {
-   "design_card": "98af0869c3c3b47b325df177a7296ee9262de6829e7596590e3273f9c94cdb10",
-   "exercise": "584ee348b3e8447255b997bb6ff886767c25715d2070e14fd36b98b41ac99ce9",
+   "design_card": "81a43199db44768964dae89e2d466f31066a6ae9ae15e79889b32d16ab2169d0",
+   "exercise": "f3def3657bf4bf6d98449337b3293c5295e52f8117b6441fc8b8df65c45c6134",
    "path_item": "b0d64b39f6fd04fc4b4c671b991fb6cfe19cf510a7cadc6cabdf59767d5ba876",
    "version": 1
   },
   "pandas-max-label-20261020": {
-   "design_card": "4ddfe8c068ce9a740bd9dbe5bdbfe542a316421900537e46d1b04d3e1f2a176a",
-   "exercise": "3fd405c294f6bdecae4e895cd00a2bd6d1242664a6749deaa081b3c2069d5584",
+   "design_card": "3d0693bd9c3ade5abd3cf9e5f875c4a457d95f795a5a442600b595c9abe56f46",
+   "exercise": "89dfb75ab4158cc576f8c0ada37079bf0b4f65964bcb473620208f4ffa1ca79a",
    "path_item": "d5e1fd964ecd01583e0d2e7d1f9778ff47b13c6dae29f5f89888817c48f5751d",
    "version": 1
   },
   "pandas-null-01": {
-   "design_card": "be66dd1495c3a3ccaa219d7013bb0a9818855e92298740e12192f41356a3f6c1",
-   "exercise": "8a266ada8202cd0be3e59d1b94c11d0f5c3fb89b85a63df65676b4bdd301d039",
+   "design_card": "feed3b4452bf44e075caf0cab36ac9acf7d9ed7c4a1f2d93077d0267d1b20217",
+   "exercise": "c7f133c41a814e658775650bbed20e7160ecdcc1ebee37d5a5e8caedf368cca1",
    "path_item": "122936f723025a95fc01f5ca7da2f576b2df3a702f842d66ded7f1b65c5a9639",
    "version": 2
   },
   "pandas-null-02": {
-   "design_card": "0f1d82b60a26738f4a6ab83b5f91e85a8041a9304f0b67aa6ef4c71caa6c5d91",
-   "exercise": "fd28aa10ad9f64bdf5fa1e8e2ff69ef38223e1b7cebba8e12d145007dda29f1e",
+   "design_card": "3ca524cd659026715b7c91a9501bf727b1e819994a9fb11b334d9bb054499d06",
+   "exercise": "0106db59cd984988c30d05a94dec897c6a89d099e943badeee942c2219f87684",
    "path_item": "6114ff94e0a05febaefed1a15bc8b31e180682c7b5ebf5bf1f0eebd58ce3c96a",
    "version": 2
   },
   "pandas-null-03": {
-   "design_card": "2f8593984d9273b44fc09f14b80e7d7c4ce94808b1e643c00abebb0b8c79307a",
-   "exercise": "b37c7f0e0a2e45ed58d14887cc4ca2091c91e79ddaca6377b9d4ec02ae534642",
+   "design_card": "42182b961d389c8da86a070b529c960c20fbc4ad7990e89709af89de3f2414cc",
+   "exercise": "900f4c6212c774abe0eeeead3d5257de2504370bfb71899b2647af377cf5272e",
    "path_item": "f4626f6aadbf8fc83d07b242fbbc14773694facd481b4f406feeef81e255bc26",
    "version": 1
   },
   "pandas-null-groups-20261019": {
-   "design_card": "209ec3ad717cae8f9cb95850eb7519bac90d85057d90a53284634442a4ad906a",
-   "exercise": "95176c72932dfe98261f1df38e34c49786304257f7436a97c19e684291993945",
+   "design_card": "77f427ce53f54d76b974b843fac1c17f6b55ef750a6ea0ade982af7c1ded1164",
+   "exercise": "e883d7bcfd07e25a1bc3f20dc5615f8e8d591c35863f89a137e52dedade43315",
    "path_item": "276e17673d8b5886c4202a47a33d3cdc043e54f25a05b4aae56ddf0a943aa2ee",
    "version": 1
   },
   "pandas-null-scaffold-01": {
-   "design_card": "d831925ed413a94b4e7b4f9ca42afa1631128a6061a3b80c0ae537a381a3f88f",
-   "exercise": "f8c586a40bf860287d545f3bd95a53865e53d7345bbe7f6f66b489e65333a3b6",
+   "design_card": "a4e12aa9ac518fd93d6ebe456424dd6754fec082713844916a5bd1d06fa58da8",
+   "exercise": "bc6c725861fc1d1a44599efc3bc525b2749e917cd2cf52ac6990e0a83eeb8f12",
    "path_item": "cfd6d1199e19dd31ca5df358e2ff48c6fed701c46f0b6ff2eab02032c5afd8c8",
    "version": 1
   },
   "pandas-null-scaffold-02": {
-   "design_card": "5de00e5c571d38d1a662da55054754c8daaa6d07c842629e15a54ceffd694a2c",
-   "exercise": "f0baf6a8c85de5993c45662b3a0d524a6cf41efc30e874fbbb061fafd106b891",
+   "design_card": "57a74d195e0934e5129460848e963538d0bc4dcc9a71cec4218799dbe7baf2c9",
+   "exercise": "ef7dd52f0bd3cf616e66d92bc3cddeefb4255a8253b8774dd133a7ac2696fdd0",
    "path_item": "04b67cac72f5610d764c8844ded76775213bbfa7aea5cc5598b0db21e4dd49f1",
    "version": 1
   },
   "pandas-null-transfer-02": {
-   "design_card": "2a3afafeed284e74d6583139c3a849f2ec688a9d93bd862177510275470445e9",
-   "exercise": "399659eca2be005295393a472f87a3c5f1875df73389803c069d6b137098d71c",
+   "design_card": "38a74c51e22b3d414b40a3d78b064a0f5ee229497aa3e08e0f939d283df4fa9f",
+   "exercise": "d8a3c34b8eabd0879dbb5742f1f4bb12cbfafc61a86a87b67beeb0ad6ffee237",
    "path_item": "c1be3318bf9a5c1818fa6a4298356a0492970bcdd3b2e4a8fa9a2a57099ef9a4",
    "version": 1
   },
   "pandas-paid-amounts-form-01": {
-   "design_card": "4f1b87c517510b5b6c07ae1bde915c62f2eaac39a7c3b2b203b763b2085d2bd4",
-   "exercise": "9e300be10d3360aa6114222848fbeb51b80f81c22a5ce6933c749a5b4438189d",
-   "path_item": "32521a3c237ef8bed923044fd4382f70f5108235dd6223164555d3598105204e",
+   "design_card": "d6e53baa146a3d8a99cab3ff121f6c118fa269817797c88684dcf18ccf964242",
+   "exercise": "f229807fd1aacafca35052f4a58fadaf0554676eca24d81769a207a29765b296",
+   "path_item": "280962a6a57a7ffc178d00377f4479664aafcb885d8350fd4d456e7a92d9203c",
    "version": 1
   },
   "pandas-reindex-fill-scope-20261025": {
-   "design_card": "c03b23a3698e808ec934ac51a1779c5ebc77701952a040ac3250053aef9f48f3",
-   "exercise": "86f17a661d3e2e0cf7fe5f107277dbdc9eaa18f31f227f86ab43f05e6d31cf9c",
+   "design_card": "9045fb5adbe14347a9ff56a480b5769b48dc5b6e9b5da66bc5263d45d2dfa23b",
+   "exercise": "4db431022378d78a81acd7668aa6377860b08e79896287c59fc864e03ce2a6eb",
    "path_item": "3ee88aa4c88f3550616c4e15693e23511a05333a21b2d06949a0009f3a6e41d0",
    "version": 1
   },
   "pandas-select-01": {
-   "design_card": "04bc94f18ce9a1b3c0ccf3fa5379b154c9ee6a7a6c84ca98a504942cb796365e",
-   "exercise": "e7f6fe2fbfb578a7e7943c984b066bfe41c05c9615356d9f236776263b9f0c63",
+   "design_card": "c63e9b7ccff4410175e02f63fdfe5e18b03e20a8cfd4f96647b26a2a2ee7086d",
+   "exercise": "179e7b62ac075b5fa83cd17c49f9e3e4e5a78c8c4fb0d0fbd939e5f4d357e4db",
    "path_item": "47bcda077038702e244ce0ef0a1a35ea851f7d4688d9f56edafc228025af78f8",
    "version": 2
   },
   "pandas-select-02": {
-   "design_card": "031882529011a5ad6fec037a6caf15efc5623a3f920e719e21f348cbfe03c5ec",
-   "exercise": "2a6aa600a427d4d49a8247b4a11b240e419a0934b8d0655a3102e63a577e3958",
+   "design_card": "bf5e814431f3316df81616f96c14da18ef9918adba6cb65e8f3d14f398f3ae1a",
+   "exercise": "12b1cf168e2231a92b36486a1be82abc34f2d774309744083abca7d7d8119336",
    "path_item": "1b9422d164929bcf7cd979be632aa1c405aee0a1cca16f454501aa56ea90d042",
    "version": 2
   },
   "pandas-select-03": {
-   "design_card": "571dabb5856ca6471abe7e8255818f3cfe919ee10018fc198e9d6400b43c335c",
-   "exercise": "be7be4dd13675976b5cf6ba82d9ac886fe67fd607b323887670b08d3d61f75f4",
+   "design_card": "97ede619b75889edc0de94c5ab87f0028a09f7558af202d57c270c3b275a0a09",
+   "exercise": "6193475a171d480fbb0f1d3ea6c129f7adf7cf63f79e79541d360c814e3f9977",
    "path_item": "07c73cc148b1ba72caecf6c43e12cda8a799844dae5af91dc2e55c5730ddd030",
    "version": 1
   },
   "pandas-select-scaffold-01": {
-   "design_card": "7ba414244cf8b2f076232222ced1c451675f5237e6459f7e4a237c5dff6d6602",
-   "exercise": "4792e1007b1a8667e26192c1dc95ff19a8f317a77b39cb13503574f7e57be730",
+   "design_card": "96495f2d681eaabd2493c5b723eb419dc128442863876b7c5106b647646e273f",
+   "exercise": "daef72733e6b12d9dfa73fb41b0d7e61b876727b825e3f2c8df4a7f94cafff3f",
    "path_item": "18efa0968930f8e0213b2e859749ffb4aead6db190b4761c0c895110bab2cc48",
    "version": 1
   },
   "pandas-select-scaffold-02": {
-   "design_card": "a7fa8a771a517f11bad7e5f689ab36c59006a6b9f09b26ef5d8ff1dc21a733ef",
-   "exercise": "1a1fe659e48eab560e4ca5c7a8ac7e6958ed6ba9a31d233f2ae1d28adc86f72c",
+   "design_card": "7c66480610162cc6a4a416469147c6779a20907ef7c1db16a8b976cf477b6071",
+   "exercise": "96ee06748f8142278c67afbf80f700381e1664e4567605aa543fc22abf19ed64",
    "path_item": "89d4f0bf427b26810f692e1ad7ecbbcd4d8bdcfb876e903610fafff051ca5f68",
    "version": 1
   },
   "pandas-select-transfer-02": {
-   "design_card": "2b9b242aaa36bcfb6502b2e685eb0e3be34b9e0e155a36107dbd6242d2985073",
-   "exercise": "8450b5b95408b82b778af1b617fda00bd88d25b17610224255d7aecffe47ab9e",
+   "design_card": "48c6a38088573cf198c795b0a2881047c2a9a0063bf89d44076a9291d3428bf9",
+   "exercise": "aad8497d63bfde6f78ad11c7483f1677194f3617e28a22a04e6b55a8cf09c397",
    "path_item": "02a9383a1e131f5068afcd0ef638bfd58b024824641a7f16aa62fe35428d1808",
    "version": 1
   },
   "pandas-sort-01": {
-   "design_card": "3cb93d6b5c0bce333669e2b0c3617c8661600311fb83d269ed36c54c9bb79c6a",
-   "exercise": "fcac4b40e90b812143f71e53a2caf1b0d1cffe0f46aaeff7d74429ac270a7378",
+   "design_card": "59bbc1702b976e099fa084dfb5bb8c6f86c63971eda36334afdd27f90bfa2330",
+   "exercise": "85e723604f8bb5450563825283ef6c031b08721f22f63ca1efd27671eb7ab8f9",
    "path_item": "e5598878fea49ef91199b9c9713da45a8835a5c7051003174a40599f6a95e7df",
    "version": 2
   },
   "pandas-sort-02": {
-   "design_card": "cf8624a671eaacddefe6caa4ffebd390e08b2982be625fd3f55b5e9aa10f3d74",
-   "exercise": "c96d57369be275cb25c1e37605ba83887f7b07abda7ccaf7f9a2cbedd3e5e17f",
+   "design_card": "a0d7d177c77e1e6b4e52f37585707ac7147a46e7fa7671e1d65574b9646fdafa",
+   "exercise": "6d1ce36e257d003129643d36fb4244f291527624a81dd1754981c073c6f7b22d",
    "path_item": "4eaad773b8c21a7990049426b5cf021bbc3cd8feabb01f5b2388768c124ea824",
    "version": 2
   },
   "pandas-sort-03": {
-   "design_card": "56c10e06406e47a7f38cb50310b9d7fda62c57371368ccadf0e6b6182f15a5f0",
-   "exercise": "b4cbc100e1800e1ea917eef04499316bb0bb861ecb1c273b02935ee015e06e0f",
+   "design_card": "73fb29e090e0c17e88161bf1c41164df1081fa9b5a5982f7fa4263a562e18ae4",
+   "exercise": "278203397e4180d1622eab01776b0a7bc956d20c1dad919aab3705cbbe6baa98",
    "path_item": "d205eb6f42ee179fe8023db2211134138c0161aa9d37136377517acc04262fb7",
    "version": 1
   },
   "pandas-sort-missing-20261019": {
-   "design_card": "9ef9dd96d2143da165fd54f2edf69373eb955438a5e0756296a1ee5f179ece97",
-   "exercise": "616c904771fd6bbfb48b46887f2aee6cd693b2ddec26a98c02e38f18f20b57a6",
+   "design_card": "672599bcdc680073a18f58ee62492d48a9bde2058195e2636ca18910c90642a7",
+   "exercise": "cb401836afabff5daee3399eb4b11e2eefd1c43415ac9fdc9896cb2efbdc2835",
    "path_item": "f0f1367894276e2d612b7b1ac32fc232bc2716a607f101a8a0463e936bd59c6f",
    "version": 1
   },
   "pandas-sort-scaffold-01": {
-   "design_card": "b10740e2ff8a9f961263149d2a348cd2f116d41c1273ccf9738d031ba2ae5c4d",
-   "exercise": "1fb5b8473272c654418bd40b8052ce20d3f4dc2d78ed22a37ea099e15cc0c24c",
+   "design_card": "1f553619fe4cb59a2fa7d86d04117416b47d8750c1fe223966decc1eb38ce3c8",
+   "exercise": "6d57222b3eba7e1fba81588d442f0c21fbde215eba23f912303019d5c6f41816",
    "path_item": "77c1cc53f0522e80286020023f3a567bc4ce39e27f6741b235b2d4a6b8210640",
    "version": 1
   },
   "pandas-sort-scaffold-02": {
-   "design_card": "80e74c257fb251b95a46f318c4d962fffecf128357fa75ab367a53e7ded1c759",
-   "exercise": "4438e444ed50105b3d8c2d28684702bee2b90365b26f01c727476b1fe301c9c2",
+   "design_card": "6760f3f01baa816f071a11efb5511cefa6fe8ad53d57c020d952262557d4785d",
+   "exercise": "53248a215c2d20c00f6045b336c286be28d08a5e4d650b610f4685211e56847e",
    "path_item": "d6fb12bf52fe485708ddcd50ffaf8ec764538b0e3ddc063b2eb56f899c542229",
    "version": 1
   },
   "pandas-tie-rank-20261021": {
-   "design_card": "b847a4d464ed91e0b3e5bf777794a277304da35077e51e670c6d3808fe1e244a",
-   "exercise": "2dda2db4abb02302607bd1c2659fa54aac0962fafeb2cbb32936ef5ef9db3eb6",
+   "design_card": "2d8f3a2cbe26bc791564a0a99dcd735160a82bbfe1cc38d69dd4516ceb683f3d",
+   "exercise": "4260e7bd8ca616433938eeda038a3096c6109bd673904a3fe46f255881f113a8",
    "path_item": "cc4ff705ec838dfda5b2f6c67bd87048f39791d7f3a284193eadef75a85c82e4",
    "version": 1
   },
   "pandas-top-order-20261020": {
-   "design_card": "aaccdee714087c979e20f625287f291ac53131266e1df04cdf7be2eadec94e19",
-   "exercise": "76561f0081467b7e7ae162de991db58ff4bc9827f486db97f5300eb171eb908e",
+   "design_card": "fc9a9af3255f657494c8f3eb101d7b607927d1126d46aa2b34db52ee559c58b3",
+   "exercise": "2885cc3f94cd94f09a16c6d46903bc1879e7e9ba60fe7028885ee0811eae5133",
    "path_item": "ea19374867ce995cded7be9b31b2981b6992d47d347f87ffddf3f0dfaee38e5a",
    "version": 1
   },
   "pandas-union-filter-20261019": {
-   "design_card": "adcc24d0714d5c421b7b48c40f32f6659802684463c7c926727f8287beb5afd6",
-   "exercise": "faadbf7bfe248b23ff97ee92da9ba78b159c6db14bb5c828f8e5cad2bd523d6d",
+   "design_card": "af1eab7583fc926140fd2c2cb573d1559d1a74ab6bc612327448fac0990de10d",
+   "exercise": "5eb9d2b137930ebb30c1a2fbd876c3f4a51ddcb1df365bf07a06f397c448d83f",
    "path_item": "ec28a2ec173ce1d23bf764042fd4ce8962a2a3f4c61b45edb01ad113848b9fd7",
    "version": 1
   },
   "pandas-unique-buyers-20261020": {
-   "design_card": "bdb07b507e749f0d5dd04472c8df2b48281c51eabb2df076e6f98434debdc956",
-   "exercise": "5ef93cda296c382406aab781cc0a425a7592bfec6230485043afb366be08ed3a",
+   "design_card": "64753c484371d47f12efb983f090da79b7731b10363c6d398688069eddfd5132",
+   "exercise": "8cae41cb07d22bfe8b55317b1c1b0d959d1c4a921916ce0464462f78824a6976",
    "path_item": "558fc6bb2ab5cb1a591415f1e27fafbe51fe4862f100774b402ea6a3721ff295",
    "version": 1
   },
   "pandas-valid-counts-20261021": {
-   "design_card": "8f402b8ccab3391890edb197a7d41e46640b1c36a4cda229dc732b7011398fd1",
-   "exercise": "0999ce0cd21c9f87c42f0a2a43d5c75e10330db1b61c2a1c25b53d3016a238b1",
+   "design_card": "509b9de98aa38c4fbabcf535cdaee30c244df9b6fe33b713c76bbfec232b06c4",
+   "exercise": "5783f64008ade1e7e1773243ac22431feed4fc59bb998bcdb909c5c912ed5dbb",
    "path_item": "92dd9a9a28369f346743fb563cf0ca5057c17fbc062cef1e34bf3dba87930bd7",
    "version": 1
   },
   "pandas-where-labels-20261021": {
-   "design_card": "b9b0d6743cb84b871fca5ebf251b7320091880affd447335fefcf0883e2270c8",
-   "exercise": "0bb0e7749198e8cbeba8872418a8a77edbf89d37ddd104743dce956ba8833541",
+   "design_card": "c83b3ea3e7ed3e080a741f493a30e2f33608b17e0186c0cdca1685078ce3cefc",
+   "exercise": "559e8212d1c87036f253ccec219b4d8246cacca5d4c5069fd98f028954af749d",
    "path_item": "960082d69d8b9e53684b3695cd92bf018f75468e78549e64f59e947ed1608759",
    "version": 1
   },
   "pandas-where-values-20261021": {
-   "design_card": "779cbd52994f66c7efa89f6399ca1fd708b72366dab89901e492f553d35480d3",
-   "exercise": "5b3bbf5cd1fb0b0d7f823b4bc2cca82d0dbd21477ed1c8f733d826bca2c1ec1a",
+   "design_card": "007403e5dedc22bc40001aee8b17f1ac410be928e15b6694da23c7172dc1d2dd",
+   "exercise": "1ee57295770ca84bc179efdc2597b4d6fc4b6496d1948f5f1a543a1fa047c968",
    "path_item": "d29a09baa8bea799951ec793479c00a2e6ce2da1e108ec719c6fe72af07b2e62",
    "version": 1
   },
   "python-bool-type-20261021": {
-   "design_card": "3e08873cab608e1d0156cfec38d4c45e748f32c6e915f8428e5fb03363eed7be",
-   "exercise": "d05abc54bb9e80cc58a3241ff35408b9bf1aa60ec9530ae3dfc17c22bb20234c",
+   "design_card": "dcc3d62334e4d2a345420f9375aba59a15d2a0afc02fac6b53b69b2c70c7505f",
+   "exercise": "a76775b683dc1c54d67ff4bd58de2fc6946842a42de36da3910064b39921bef9",
    "path_item": "7c373cdd4446e82f537abd499582975941c618a81cdce9695e6824ee445d1f7a",
    "version": 1
   },
   "python-column-types-20261021": {
-   "design_card": "87110d6c36f5e07d48edff01c803c48aee943676d0084e9f930bc19fde688be7",
-   "exercise": "5d03c95f2c5aa56906d6092ffeb908dbc19254fe887fa76764f7711d9582151b",
+   "design_card": "417a80d2ea0c895f80812e50473368824afa41e0353d348750d427b45eeb9177",
+   "exercise": "5f3d8ce28d41a02eca03833bc12681a16885cadb4a01073ced846f2e2fd36fee",
    "path_item": "0fe291e3472dd477cbc8fee7bfb4e18fcac63d19b96d3ab95cb0ef9c740a8bfc",
    "version": 1
   },
   "python-finite-inputs-20261021": {
-   "design_card": "69b63c43dd6e2be98e658bc4c4eff08386d6251b346d29d820673877b7e6461d",
-   "exercise": "95c654c8d7861ff8adba33feedac128f5e74b43ff5130806d975c278a8bce601",
+   "design_card": "f370b3305c9277557713d2631bbf7f916ac29bd1223ca4b0761f31353dd507af",
+   "exercise": "986a5f72de96bf5a81636fae2887a38f14e3d9d78757a6d678867c8e27fa4e27",
    "path_item": "6b0fbf1d2c126307c1a687116e98a7841288a59858b8c99b90dcff58de1bba3a",
    "version": 1
   },
   "python-numeric-inputs-20261021": {
-   "design_card": "24b23bb4409b3e7e0251fd68b51080cfce7f27dc2f7013d6a104cb3ba77e58ed",
-   "exercise": "0bb5ebc943b036651e65203a53fde2bb115cec43df16f62eaace2163e196d9fa",
+   "design_card": "0cb199f94478fa3e14bf345254c01280393eb7742f30fad596cfd0a13008055c",
+   "exercise": "1c06da9b859c24d612c5cd32fba2cad09839e2bb119d719270b61fef9272618c",
    "path_item": "2424a3489d67ec43f11ac066ed4c6bd6a8a0f272fd259ae9d813be3e5610c4a8",
    "version": 1
   },
   "sql-agg-transfer-02": {
-   "design_card": "8453ac0536e6b30985e93020343843cc364829e4a97c57dc7eb770b983b3f685",
-   "exercise": "77d22e282fa510732c4f2f02ac61c423f6369f6c77cbcb0e863ec5e56666c8f5",
+   "design_card": "f13062ea6f673f5663a453c6043aab137b8827ea0874228a25d5682b16f4cb0f",
+   "exercise": "6e8c7a92b7b5eff389977730d0e5ee82e4a96505a0029d4ec5b22bc138feb70e",
    "path_item": "f313b841dfa345ad51b616e99585c9cbe562847c5db26b3c51cee2341a0a9032",
    "version": 1
   },
   "sql-case-counts-20261021": {
-   "design_card": "05a8c61870bc1fb92ddfec0a4ff9bd5670052bbfc16b8a2cb3a81e8cd3f7fa04",
-   "exercise": "8cc1e09014393af8157e735d3267c56e46c0c7139b52bd0e0ed2d3120cc75362",
+   "design_card": "c915ca8acd06cf9ddbc0ba4fd8059a351973c908544dc4383d6f39b6f0022b46",
+   "exercise": "9ae2d87f25db01f283586c4308283f149fa8698fff3379ea0eb845f42910135f",
    "path_item": "6c43bec322f434cb920995542b6b6c4bfafdf2a7ba4dccb6b9d5ccf9f723cbbd",
    "version": 1
   },
   "sql-case-values-20261021": {
-   "design_card": "d5ffb794acdef72146e5c0c19c61ee68d8df6740dddcb9e4d3d706de9792f285",
-   "exercise": "bfdce0077349a8030eff085ea542ffb1da06ebefddba86880a9261dc68f7f6c5",
+   "design_card": "12a3bc63e83bcee0c04e4ff9abb2837dcc49cc6f15042cf1a8c3a7b6284e5d6c",
+   "exercise": "bb4ea9ea658ec2b109c4d4200130b51b76448907b63dfb28669f58d35b487acd",
    "path_item": "677a97a20288ba2ab89ca9ba3678fd1fc816b774fc6b20cbe0f2689491725171",
    "version": 1
   },
   "sql-clause-order-form-01": {
-   "design_card": "56f88f26a5968edc5cf1967b845e92b13fe4ac62b9b6de9621a6a0f81abdf373",
-   "exercise": "74ecdef0385b9159a8346f723b28f4a9ae87cb98b0d7285eeab91fb8c3cae5ab",
-   "path_item": "ca6065e2fcec320622cf410fccde856d4c874b75ea310224b01182a129a31658",
+   "design_card": "726c653d90600d6f80233599d771a160fa5e2186b0b20881645dda3b05301d0e",
+   "exercise": "e3599b021ab5d4febd7b1eeb65b350d7e52a8276be77f1dc3ea9c120cc4e96a3",
+   "path_item": "fa0eead918bba503725cb9a9f92580c6852dddeeb612a4dcb853afea60844486",
    "version": 1
   },
   "sql-composite-match-20261020": {
-   "design_card": "082640578a6ce63f00591a53f9e281ef77238184fcb0680bb3d7cab66614d14f",
-   "exercise": "39f55401803d5fa681a1248067dde01181e56ce0bff349c6a8f592e3ff3bea99",
+   "design_card": "41c2900e8a67832c4e3b6c1f2ebf3f11b315bffde8898a789c12d27bed462e55",
+   "exercise": "b47243eecfd1495aeb89243d2a0132524dff5db7349457c939e3ccf37a2955bb",
    "path_item": "7092b5d979f033036888ed5b74950ceea066093762fc5a5913e8680eccadda29",
    "version": 1
   },
   "sql-condition-order-20261019": {
-   "design_card": "89a6d8a0a5f84bc3e44f93cb4b6505f1c5bdb05b69203002223faa2649cf7f56",
-   "exercise": "ae9ad043088d620c50a50e9444902b7db6d732d3b29fccbf5b6c1b66bcde4a14",
+   "design_card": "3cdb7c367fa9caa92a5052a6ec7756cb9d23c886b2af194b74ddc90745ec2044",
+   "exercise": "783d580d4eff36b2b2e0f071ca5d43fa4550f0ea2e31ec14d8d87a51b56d30a9",
    "path_item": "69dfc36fa23f926007ce0548688e73b9567ca8de6e75d54c89e06e1297fb1bf1",
    "version": 1
   },
   "sql-conditional-average-20261019": {
-   "design_card": "21c9b85148ae166e4e91dc4553d93fda056726f53567d6383a5220b1a766a699",
-   "exercise": "27293d939eea464ae05bfb5bbc0610657ff21223d2366162c0aca708ca7ea542",
+   "design_card": "1fbe667e703ad8a2b69b0eef7629fa2c0a54694e4e41c07a03bbc9bb24a5be8e",
+   "exercise": "53eff4ffef0d31b7ecc61cd35c6c37c08942aed393538a0e29e83758c44cc6de",
    "path_item": "a23dfd003c3151cdf44656e2466c2572b5254f5efc80c1233df9fa76d9f118ac",
    "version": 1
   },
   "sql-count-01": {
-   "design_card": "033034382f01dd064f58ae6f4100bc551b7b2037abe583f3f055b8433ca2c7f7",
-   "exercise": "4f222fc8e74ef3339d04e677a0ee739b8925a8c620a5695e0557ac2a6bc76fdd",
+   "design_card": "26867bab76cefcf6a966dfe610bff8506e372ff04990fd46eeeea68fcfdaa92e",
+   "exercise": "5dbc61dba26b243aee3e31d6304251a2e6d7ec2767e7f231449354e29d4e6b67",
    "path_item": "43f9375aa183e45c51c52220230dc7c10bd2a4491a5d4f0fae088ec1a4da2efe",
    "version": 2
   },
   "sql-count-02": {
-   "design_card": "133749e940a91b7562874dfba9279c4b9e448ed49ad6687b14ee6ac524568552",
-   "exercise": "662ad0c1709d92ba98f19ecdccb4e3305b18ee3dc9b7282d0272b980b8f5e39b",
+   "design_card": "83d9e8de4e2a8f2e500f76eb318b140e8887b9a786d60bb95035af3e1911754a",
+   "exercise": "559161de1023b350a3f72922bd07b0556543a442c3bd15ea9723c78c334239b1",
    "path_item": "648738d190fae6001156738f3a310c4b6f5346e22c12ecaa99e5618c19da7125",
    "version": 2
   },
   "sql-customer-totals-20261019": {
-   "design_card": "9d1f1d9e511f4073575ea83a618513215f00ed7d127c0a262e6bea0077e2ab14",
-   "exercise": "2e8bf45036115a2c2e22133fc561e753e84e5412058bd4629762ae16c1066313",
+   "design_card": "42b54ac394799fd0c3fabf894b001d3712bc50713feabd3979dbbe769a2bed3c",
+   "exercise": "80b145980983fb892fd661659cafbc5289e689b97d5347ff7b5efaf456c22d0a",
    "path_item": "9c7a29538a98605e1f27f04a48ca642026288c967013a4199620a002c4390834",
    "version": 1
   },
   "sql-distinct-nocase-20261025": {
-   "design_card": "1e4d8bf06378b6c9a2afe9930cdfdcf9bcd601b0b21af82d43d4b128ffcb1eb1",
-   "exercise": "ccd2eb07e78e6ec97144195e79bcb04385f1488c6c70e0462a0380e71195a439",
+   "design_card": "adeb0b51a3ad9f058a36a59deb774abd1d1d0245ec65c555bf1e86cfb88f96d1",
+   "exercise": "580233216479e2fdbccbf6a0ea9ce28ad01548d3b94757cf363a0420356770f7",
    "path_item": "5ce33b5aaf84f89a34baee7dffc58d94331f6a56a7f61f95d4d8570692a8822c",
    "version": 1
   },
   "sql-distinct-sum-20261018": {
-   "design_card": "8e6e24133307160d75c6c366553218d17e1eaf6f95d048406c5c2fbe0b19978a",
-   "exercise": "79e67adee80dbb95fa3b2a05322c0169ec454b0533ccb82d95b982a4361589c4",
+   "design_card": "1618f2b30fea0cb485f4c698e989b5545c5fff74a97d4bb348042e8acd99b188",
+   "exercise": "c89a51e417f540d36bfbcdca625b4611fca9fc3097a0a4460703d211b50144aa",
    "path_item": "f34a853da5edf456e9457ce56c57bb4671934ef48ad7478d9ab5a7231be6dbd1",
    "version": 1
   },
   "sql-division-rate-20261020": {
-   "design_card": "f0512e36a571629f0421c6b10dcda7579fc89d016e7cedc52a9f0a97af43e522",
-   "exercise": "ebeb0384db37b72da4684103b09184eeb2e303b5333d504714aaa39629fd4913",
+   "design_card": "91ed004514c2541e4cfcd8ab96c9f31ab3bed097b1027eec2e7db880cada7f8e",
+   "exercise": "5bb654a2fd07025e69bf5b1abfa5317c0d470ff52f85b865781aeb9306f6468b",
    "path_item": "bf57e27730795c09f2a0f986f580ba06adde270afcee1500a3c76c6f9be3c3e3",
    "version": 1
   },
   "sql-empty-membership-20261023": {
-   "design_card": "0c4a4d4313a2baa5532a31ad2580f0df4ce4cad78325abbc8c37128aedaea66b",
-   "exercise": "c26f48eb9367d4db1b0e8a4d56cba0e271123cfe75d71a9df48ec3301a880efd",
+   "design_card": "3760e3f5225537e9bf1897a8d51d50c398a6c1ba88970509da86597160f6e99a",
+   "exercise": "afed34cf2e127ce7f427158cc8c2db429ff42e27b43c463949e99da9b9916ca6",
    "path_item": "42cf5d4dc2ba85fee86eeb255b4bca3bb981470c2543f7a4cbfa853678242160",
    "version": 1
   },
   "sql-empty-sum-20261018": {
-   "design_card": "97c7a392f13bca1f1fdb15a4f3a545f46e6965d85fdd529ecbb1a69eceda7ecd",
-   "exercise": "0723fe21ec33127a9c1d00187dfd5e755f0535779322be0183f09460f8f088eb",
+   "design_card": "dcbb1bdc27991127e24d2215c1e7ed95e5eecf3e39acb32cd2eca522b3d209af",
+   "exercise": "f29ceaae264fd9353f97f5eff31a049a111459072bf7c9f1d92d0ca7f02d0f18",
    "path_item": "8e0b47639917d6afd94214f8c1a37ff44fd642fd5b11af82a6c5899faca2785c",
    "version": 1
   },
   "sql-except-set-20261024": {
-   "design_card": "01685be9a95c8b248fbd275cafbcf756d5e415b36cb93742e78d540e5578e07f",
-   "exercise": "3a16f2ca10e841d3462b470972760a81a7989493c17c4561dd774d8a6e119bf0",
+   "design_card": "b42fbdd2e386b0c18de6d2ac5b2291decdbe853dab152f1e5556b29f0b09509f",
+   "exercise": "986b8807bb0858439f2d8c170728f8b5a177ef93b0c65232d29670d359423847",
    "path_item": "cb888bff73961dd4d781ce6cd1e2907df8266089e8a4d1493044373ab814d3f0",
    "version": 1
   },
   "sql-exists-20261017": {
-   "design_card": "cbcb3df960ee5ee228093fd3e37468546b98e1ad7f5c036c70e0db7c6eb1f22d",
-   "exercise": "f971674198613f17366940b62260875a7df9c2fcf22597646ccecc7fbf5dd40f",
+   "design_card": "790ea5e934d358e9d219289c7ac165721b4c3bc828a4976aaa78489417c73b42",
+   "exercise": "7af399f75fc7513eebe7dfc1c67b30b5d5743ba22ecc3791fdc5a1d8b1613cdc",
    "path_item": "5b4390c00ce6d2033ca68a893d9fce0cf0edef5ec7ea1ed8e67b9b20e5bed8a2",
    "version": 1
   },
   "sql-fanout-20261017": {
-   "design_card": "d40b24aa1003d16c6628922fbaed18d79a909814471de4e7d939573fdc693503",
-   "exercise": "26d93c89d83beec04f58aac456d8162692a16c505bdbfe439c24f48b15925310",
+   "design_card": "43f0912e5ad97e0b458a16c2b60a9032f403060472d3e64a76b7adc52591b1fd",
+   "exercise": "9e765864e1c3f6174a27742c32a249c2bdc1d44aee55e1498188e530a4df4568",
    "path_item": "7a626e4428e45898822adf531e3519b8b04c72302b025d87bcfacebaf6d35338",
    "version": 1
   },
   "sql-full-coverage-20261024": {
-   "design_card": "85eacb6286bcb2d68ec9e5f5a70189ea8018a982133e6bb16d85636d633432f3",
-   "exercise": "068a4bbcb0e70d706df7f5c0d7f8f42e6de5547abaec9582706fe3ee6bebd893",
+   "design_card": "470354e6c9c37dded3842a3ffd0d5108d8b04ff9f5f45671b9475702182298d1",
+   "exercise": "d1b5f564a8c9a3d1dea499b438e98169e05776e6de4a88b6ddae374188b3c5a6",
    "path_item": "a506291b701b48353f339c469d359ebc273022de7fffa65325747fbbd0681c15",
    "version": 1
   },
   "sql-group-clauses-form-01": {
-   "design_card": "64e6a0eb04434eb28a210433c6fbfdafb4a86bd20cd7928c70d008733cd174d3",
-   "exercise": "18cdff1d9770023b4ca3f682d2999ef1cae8f0b6379b8bdf5e9ec25619ddd5fd",
-   "path_item": "4de6a0eb4852cce5793c74ea1956e6364f515f3ceff628ba09ddf2572785c452",
+   "design_card": "9e2fdee3655ca25891e1a061f8fcd1c2e4eb301b6d834fd85a32a4fddc0e3b48",
+   "exercise": "23469f361cebeb75b155ba74b7e85e2b96027cf83c9e51b66eaaeb22aec0afb8",
+   "path_item": "e621a373defb6541681777e9d9c9155f7acd7db9d1fa7383810c7f6a7e5b1cf1",
    "version": 1
   },
   "sql-halfopen-periods-20261025": {
-   "design_card": "00d2ac718e85faaa61f4ff28a90e67ef5523d129b9319c34d2114182f0fa5334",
-   "exercise": "cb6bc4e61595e5c4f93785255d418980b0c4e2f2e1b1b96072dcba3984af5c77",
+   "design_card": "d5097ff717bafaa422b647681844ce1fb47b3af5043c2ac968d51002cfd2ccb3",
+   "exercise": "28edf6094e9f6f82ce46124ec347087eff65adba7aa3c0d614935160cb509569",
    "path_item": "28bf55508bf13483e18da2c897ffe09e46d6f48c45263061e70bbb69f839b2d8",
    "version": 1
   },
   "sql-having-01": {
-   "design_card": "4141d959ec142edd96b460301e198198c1438f01afc9586835bcb4244627bc00",
-   "exercise": "11e236053265d0eff925430bf1e0afe64f592c963223fb297dc69023092e99da",
+   "design_card": "d1c3fa61e7f4ed47b4b8f0be6e4b1a9234c46e85d4c20d3a7254e037e7f24588",
+   "exercise": "b8d56c44725dc819901513df92b67e42cafc2c0a3aefd7eb5944d26f69d36dc8",
    "path_item": "c312619468736e4d504c0839abafb9b81df5f1e04a02ef997f8ad967f33be2fa",
    "version": 2
   },
   "sql-having-02": {
-   "design_card": "88b924da24a45f248055d092a1ce102702876c1f109be12e7e7df4b073a94e26",
-   "exercise": "096054970db694f171aa5b4e0b69107e67fbd34003a81a22f7d91873c0fcdc17",
+   "design_card": "8e3dd161e52232ecc8b15c32a62420bd77ac59b4d2e171eff2b2ae463bd8804d",
+   "exercise": "69f6b5ddd9447810aa52783a287710afd9bd2cf375eaeaa2760bb188b40f322c",
    "path_item": "9dd6a380304611d40a8db0d7138156619a1a95efa842305dd1588a32eba027a8",
    "version": 2
   },
   "sql-join-01": {
-   "design_card": "c90e62130847f726b2e7fa875ef06cfcbbc708dc1b0a4f5df07e010f3ffd370f",
-   "exercise": "a9d807474b17cfc058dd401ffb79859c6264d23172c0189005de95ee55e57b23",
+   "design_card": "dfa60e750b6caffea7093cec664fe40a697ca3c8271a5372829880b09ba76080",
+   "exercise": "148dd0185bc73dd53d37f267570e6be64e7905d28678872a5e752662a79143da",
    "path_item": "d452932f7331c408d46ed640b1c74fe08276bb248f1cc10edc07fea234c47d84",
    "version": 2
   },
   "sql-join-02": {
-   "design_card": "8b83d5cc47c20cdc0f2ea44a338c9ff0da689df94e163ff30de71ac1c7b5aabe",
-   "exercise": "e6c3665c77cbd536b31bf91ac3f6aec4e72e30b9c7c465f0ee291080d4c782ff",
+   "design_card": "1e5f2063c62dfdc77a1bf72ff894c5ac904561d5fc8d770c1cc1445bef47b8be",
+   "exercise": "d910f2038ed079cec1dfe6511ab8208957b645d9099b4d2b99641a2a7aa48566",
    "path_item": "220dc3ccde07c78d6f2e7e74243e355d0c39d46c602ada5b5a39ee9c4aef67c4",
    "version": 2
   },
   "sql-join-03": {
-   "design_card": "2035f36e362a14cae38923f812dd9f3524eeab65d317b61b6012f55dc72716a6",
-   "exercise": "7d640acfb3e314e48ae1060404083cd1d6521040ce4062a244d563f74877fa8b",
+   "design_card": "07bb62768aec1ab1a72047a6ec3e65ae9c6af1a0cdd09bc00eedc484f66e1351",
+   "exercise": "b67e7ae8eeb70059adf3b440e357890fb70c7ee1a0f39cbf1e623fcefc979d29",
    "path_item": "b514f2f9eb8f6a82d88d4a459d78572df94228328ea7a3bd25a96512e8ec9b0e",
    "version": 2
   },
   "sql-join-foundation-01": {
-   "design_card": "19ce6fe8ff9ad4cdefddc3f322079940e5c5e77a5d9f1315fbe23b753b30d309",
-   "exercise": "ab3d07257ecb046710c9ac22fffba6a635cec46216e8fdc74ae98a39a276e88b",
+   "design_card": "f101cc0c6bb1ebcd470521aaf9bc59a33f08127d438615dc7a440935b25a5852",
+   "exercise": "1aa839c848bd010368da680d9944c51cda5890b290d892f9293b2b09e11b7cb4",
    "path_item": "5f108f6a710f8893915597af8fd03b1e36c4a1d98c4bbce8221710acab846872",
    "version": 1
   },
   "sql-join-foundation-02": {
-   "design_card": "2d7ab6ec4dd1f4b7bf46a9737cb69619d5c1166a04093033432381dd4301fa21",
-   "exercise": "0c6fbc3cad92db5b77dcc25e1030b9025a367a663259ffde4d96614f3b1263ec",
+   "design_card": "3f33210d1aa8f7d2872424030ca68f27c23a5dadca11ff177978d674a9c2f7f7",
+   "exercise": "3811e9acdaaf106985320aac662fefe58bfe62161dbc1f17f7ec5fb6954a98cf",
    "path_item": "5b9e5978adadbdfeb91e6a16f2fd5db825fca42ac548ff07d8451ec7e1a54407",
    "version": 1
   },
   "sql-join-transfer-02": {
-   "design_card": "2abdc3b044cf99cbd7e33d7390e30d9be88ef1d65a90959b0b6e2d67c9a4dd6a",
-   "exercise": "e6735d2e482db06ab6b1e9b6aafd0c48d8a74e49eaeb3df1c323efa2eaa6b1bc",
+   "design_card": "fa8636d08e56dc4db123e3353cd4718f669b769c8b03dfef27ba360573ed411d",
+   "exercise": "2b2028c0001baa33311619e83cdd68285138e536a4f75291c3dcc9d590fbdd2c",
    "path_item": "237ed61bcedc56216620aa46e92061c942e1617fdd2f6d9a1589d72db8d2d1d2",
    "version": 1
   },
   "sql-like-width-20261021": {
-   "design_card": "1b09501c7e2b337c2c9b905d77f036d796dcbeb4712c9c828db636092fa4dd40",
-   "exercise": "dd318ea8966f7e2c2bcd1ac9bf538729d9468d37a8b83222489ada93f59d438c",
+   "design_card": "dabcdd89ed06df8e92ec8dd233d256949f6d2eb14eff1946f93f9b70af696b49",
+   "exercise": "2588539c4dc94077ccf5c40492b63d3c2a303ddb219710f20596f7c893b429c6",
    "path_item": "117ec5a8e71d1e61c27fc88158bb7721e78608bffd5baf3fc7d2d93572cea61e",
    "version": 1
   },
   "sql-membership-duplicates-20261021": {
-   "design_card": "a062d5d8a01df88994fbb7ddc487bfecfa4f47244133f76cee96aa8f6df1f91b",
-   "exercise": "9043d7a3d8bded6b5f352ba2d09fd1f5e8067028134dc915a894dfa5f1420294",
+   "design_card": "3d838f7a64473772acfef8b6b1284693a04fd844c9925a90954301cfea3bee64",
+   "exercise": "f7895f900b8546e5320ff830bc44725faa3f6bdf976ad721321afde4595d6554",
    "path_item": "cd58649127280c54686c87fc647b01a292c26590cf2c183ddec64def6eb7824e",
    "version": 1
   },
   "sql-null-01": {
-   "design_card": "be91ae73fe8f2b289b5ac6346552a341d4112dd6fbb1d232b6bc83736e910208",
-   "exercise": "99b02404d094092080fb4720ec108677f502668bbdd538ab140ed850366c4248",
+   "design_card": "ce90ae119c37e28688bd0e4b0213cc049a49713bf52dc350317961d736eea5ee",
+   "exercise": "52195b3a5cab109700e1ba7b784ad4b7e52e6ab3627a95d13b3907057e8041d6",
    "path_item": "10c55eefb65f57ca6cbb7dec5bce81bd28bbc7cb94ef88e4f46d792c15649829",
    "version": 2
   },
   "sql-null-02": {
-   "design_card": "077f9a1310069d282a6a23aa381357d37d1bf531c3c6ed405857d2e98e72647e",
-   "exercise": "8857c7f0c60f48d64b9de001491c30cdeb386ea72ace4164901b8ac8ab5b68e2",
+   "design_card": "7c7f59e315f53de5058ce1e788380718bf6b16886b29440481c8d33e8d271220",
+   "exercise": "ad44fdfd23a6eddf9f43ef2515792104351f60ab1760bf5d6707ab638a3af1ca",
    "path_item": "1b565c1cbc9390f4f6424a2e0a32e3484ae569b77593899ac6c807523547dbdc",
    "version": 2
   },
   "sql-null-compare-form-01": {
-   "design_card": "1e7c4d333e97a6f6afdba456ea04413ce19102dfed907be4f5da906824fcc2ea",
-   "exercise": "dc33312eb0c17d25694542288f46026e1792a40c62143ff0669a267d53d5dbe7",
-   "path_item": "80236f031c0dddacf0376bdd208d9baf7afa6d9e529dab9c583e5a35c840181d",
+   "design_card": "3613e0aca8549eac1b4f75ef4ab6e472e4fcdd2d8697a1413e66840fdbbde984",
+   "exercise": "309d4f2350bf3c355beee9fb9c556e0ae52729624f4da0b69e49346753f56ec9",
+   "path_item": "b67489a3165cd90f569dc74aed7b1c9d65c22d4c51aba3ebd5e3f86a7cff29d1",
    "version": 1
   },
   "sql-null-count-20261018": {
-   "design_card": "b64c823782cc4cbd31f2682cb3a08ada7415c41ff32d431b21e2266967417afd",
-   "exercise": "51805a5a770d422e0973d4776c69a22bbcd16c25d99a3d34b98554b68df9255e",
+   "design_card": "cebb3958741ec238dd036979f54749415c1a9badbbfb898391866781eab4738a",
+   "exercise": "14198939791d1a1324227790098c47a83ef49a8200a3a06e9e8b28ce46587535",
    "path_item": "e5e43cd46c80c241e30ee57c2a2941d0297ad01086424cc623217d9b90c6195a",
    "version": 1
   },
   "sql-nullif-ratio-20261023": {
-   "design_card": "f567cdd41321ade9846707c700eaa4c83222136027d519845dbe82109a9d7a6b",
-   "exercise": "be71ed9551be7b9f64b09ee777199ed9d71fc88f0c55d6205d9b16ea15865016",
+   "design_card": "4076a05ad2c6e1140a6c455a45fd0cd27fe5c7e5e5786e9c55b71a7a087ad7f5",
+   "exercise": "e30cdc04d043b9da6ffc40b7001dad6de882aacfd604389414afc7d13237632f",
    "path_item": "4eff2b86f285ee8d3546081d53184a93dd3c67304204301c8acbf49921e17c51",
    "version": 1
   },
   "sql-nullsafe-is-20261022": {
-   "design_card": "4aed75d7c29c3e38ed034e6ba54520f4228ff480983482ab8af4477fee1a018b",
-   "exercise": "2d503682cc346e59ba855ec4b3b2f8e803cf991179657357c88ca0f1b28af7c9",
+   "design_card": "bde37f13ad47ed8259520416e596f6459f11eaf79be981bd47074c8e8d3bcff7",
+   "exercise": "529001576f50806855ba6d93b220c52850738649c00ec0e2ceceab8256e429b9",
    "path_item": "dba1f099acca9d35f3320a8366d2ed60887770a45149e9756920b1fa60b75428",
    "version": 1
   },
   "sql-offset-page-20261023": {
-   "design_card": "a7dd53ac6e299ca151c0b5691c1ddcfc428a78afd01ab3d810f67ce0f1513366",
-   "exercise": "85e62eded490f3caf21674ea1cb3ff453ac6f07bc0d24cc78a477199035a73b2",
+   "design_card": "4eb81980fb4974f3fe3e3b0be909b2962cf1de0d3cee9bb04d392ef42b103b94",
+   "exercise": "e126a20291f0a0e5c373cf9909fc478570bb1afddebff1efd53f18341b31c56f",
    "path_item": "08ff31022449c8462b36d07348a339dc0c9093b9f230cce1a43235c1688245e4",
    "version": 1
   },
   "sql-outer-count-form-01": {
-   "design_card": "949f26dc5a7c9da4e8466a358e4bebdf6c78b5f2f06e3baf133f045b3f3c95ab",
-   "exercise": "3254a70c871b9d9cc8f8e87123afbce5d4f2ebc29a2cbd17c4c68bb96e65344a",
-   "path_item": "a30aa9cd27798b19fc35bd4d4e244354889deb29543f13c116d57770caaffd28",
+   "design_card": "df3ba11effdf7d50cef5bc815876af21b5e128cf612b5c100e7dab9b4ae5ea98",
+   "exercise": "9642b5a74164d00699eca80b5d48c8a25870f23d889da6f749d933bc655e776c",
+   "path_item": "8870bc5f8ecfcf490b531b3a88fd88f56f504ca735a4819c74fefdb8808e64e0",
    "version": 1
   },
   "sql-outer-filter-form-01": {
-   "design_card": "d5fadf62d3cd18600b5cf09382ebaccf1230d577cea95d3c71df3f339792d492",
-   "exercise": "ba27b7c6e96ce396f2425d0742c97ba09e12f62051742a1e02da8249a589a847",
-   "path_item": "932755548905e7f99c1dd1c838760eea352e45d44c09afcc00b5b5e5dd67e2d3",
+   "design_card": "79d986bd8280a42bc013b891d035433fcd9bf813ccaf7c84f532acdf1f68e9dc",
+   "exercise": "4763d07e95bd57cc756570709c61112d80bba8ab3b85999b27a56406f5463235",
+   "path_item": "88c5fdf10c1d58fc9e1c89599f2cd9912133f94412c2f5524fabf551f556ba72",
    "version": 1
   },
   "sql-qualified-join-20261018": {
-   "design_card": "2d08dc0d51f43bb0e371dc3f8292556d649890fdb98466e8a99a126b31710acd",
-   "exercise": "5bebec4b7c6557acef6e7115a5208ee1a7997703c3ef18fb9f275240ef4b8b77",
+   "design_card": "a31c3a783f8e2bc00feef07da23a2c09dc4ada8c32a8953fe2784e811ea1418a",
+   "exercise": "d9c03ef374164c77aa07ca61b416cb34f8d2ae14269b2aecddd609fa2ef6bbc0",
    "path_item": "9aec25d26774f62b9bfe9d71fdf21b6c39e21374c590bb01842ce1ac9127fa27",
    "version": 1
   },
   "sql-refund-average-20261018": {
-   "design_card": "691df2545b838ebce64718e4ada7832df7ad616d23d37fe24370c64a869b3dad",
-   "exercise": "7b653a5fa97bb5b48484128426718d022d2da7dd988f3d19ba8a9b1590dccdc6",
+   "design_card": "6ca58329b7af32ce80a8f48f810b4489e40b28bd7d8e973d27322cbff8dbc44b",
+   "exercise": "19351888746648f43a3b4602648d8ff16fbf9703e4024fdcd3592c0cf7989137",
    "path_item": "b94b20981d40102f5340e1126b12d3e9a7ef9f37cc245ab0b5ce381f495f9615",
    "version": 1
   },
   "sql-rows-foundation-01": {
-   "design_card": "ba34ee99950cbacb2b7880f768763af69d47850758b31951ee7e90c655d4803d",
-   "exercise": "5b46611dd6793686b4b1f875f5687d2a07283a1a4d53e55fdeb7afaa4f246c7f",
+   "design_card": "813129a82fdd8aadb1a322055258d2f360a60c8317f3dba3513285c5c06c3233",
+   "exercise": "c2092d888ef20ef3290d5392a5e748467309b45c9a91430d8d4b595c899d315e",
    "path_item": "869eb48e80aa0965702669171afc6b08172b662e05e89dfcbf86738c976aebbe",
    "version": 1
   },
   "sql-rows-foundation-02": {
-   "design_card": "4a5f18a3c18dbba5738dbd931bdefa642349cdccc688799e0ba986be6acc0fb9",
-   "exercise": "2a461b6a6e8389fbfb904b1b783cca46987d4eac413aff91970e611e29e5bfe0",
+   "design_card": "6b1bae500c12380b21fb93a196dd1b630baf0cc502cf942c86686a5b9188785b",
+   "exercise": "2f9c9d9ed32b51052d7c3f15bd4f5a1b9b5620f7c8fedcfbd876f668f0c9abbb",
    "path_item": "efb7264a4b8db154323ba9c27b3a5fe4af51f276b4b2df9740ca4eb132ddae19",
    "version": 1
   },
   "sql-rows-foundation-03": {
-   "design_card": "01cf8bbf4dc486a2b5db0a5f879048f44c44d1b6d9136e73149856f3f694f4ed",
-   "exercise": "39cfbe7a603ef5fd5b929a387b1aed0d29ae7cfdfe794f05b0dc37a47af502d1",
+   "design_card": "bc5c2d576fb78f578cf699eca83694067e638f10cbb3eb1e8a3cdac677223e2a",
+   "exercise": "3c29875afebfcc0445b1b6af42e277b1d7a16c86212d7c70d11877e3391c3b50",
    "path_item": "f9d4ca9629b61e587ac4f88533a765914c023f7e7ec219c44facef66195adc7e",
    "version": 1
   },
   "sql-rows-foundation-04": {
-   "design_card": "ee11cb57c2c1e987655db07cc160f8012cd6a689d1c4c25e2f42686b3178b2c6",
-   "exercise": "ef25915a8cd916ddb4e2ee824f59d3314c48c8482e9cd0ef8bd225ce938c5de4",
+   "design_card": "f8480bc9625b0e184d78f44a4fb49bac18e9a9e505dd8e6280e2e4519955c513",
+   "exercise": "6d16fff554587e40f17159ca20620067bf1383a643859bef4f99d808ca216e77",
    "path_item": "e437febb99a26da04f9da5d6bbd38853d09f76e1decff56b343fbc16cea6750b",
    "version": 1
   },
   "sql-rows-transfer-02": {
-   "design_card": "cf4d786d5092a7d5baf26774715fd5fe8baa4b20d58592897c97d6543f960961",
-   "exercise": "eacb2629db458a11387ee0058226eefadce14e22aa9b0959c323dad9f3c70cb4",
+   "design_card": "db64a6fc6b121c9b5ab771b6487bff68628fc25f8e74dabed7bee0d8ca7b3bfc",
+   "exercise": "2977f6c50385022da0f9f8d04a5980f8b60c1f1291aec685f8a2c571b4d2db43",
    "path_item": "48519245747a930df0dd4f785ae90e0a326e0a72f7fe28e55b26c1bd127c742f",
    "version": 1
   },
   "sql-running-window-20261023": {
-   "design_card": "908c9eba6316cd5314652402a4df6be8eec90130f746eec76a97b9946ec28418",
-   "exercise": "040a929c9010f0d4d45cb5727dd5e7048a870a49099739623c0f92a5bd2d6ba2",
+   "design_card": "5c9d3bc4f0bb91c2ce759e397cc9e8ca9e2ecba2e88068ccc165e6accd82c262",
+   "exercise": "6412a91a4e56049f580536157703bd7471914e905cdd4e3d1b3f8c74f314544f",
    "path_item": "f924aaf5b4a2ccacf19dd14a59bdd3657584698b379b7c0f7797252b5801e6c9",
    "version": 1
   },
   "sql-self-pairs-20261022": {
-   "design_card": "77fa8dce7fac34f72973d2777b16225aa0f783fed658dac41305ae486d02f25b",
-   "exercise": "bb7d8f3f6c00cebb1efc47a91b1aa2951ab8ce85dee135bad06ebbcbdbc3dad0",
+   "design_card": "4666199595678d8cbbcf27f28b721da562cd787d4f1e866d7dc345d5cf5b04cf",
+   "exercise": "91e6b00276069889151c5b3f93aad98625af68fd9d2c215c6f75a3c2b1587171",
    "path_item": "c405a1a93569e5a8a291d0aa4072ff167e9b69b97bd555aed5ba1a0bcfc560e6",
    "version": 1
   },
   "sql-union-rows-20261020": {
-   "design_card": "3a5ecbeb89abd0dfc8056b82128337d36289f42f0c75a754dd7b0defb31449b9",
-   "exercise": "5b13a6761fecf6652ed09639fe91ae0542828f577e4fae33fd1650f2277336f7",
+   "design_card": "d38ee1fdd8d96ab93a4e11a2e8ddd6a30632e9cea134b868ff4bee9d16a49c58",
+   "exercise": "aa33b45ffda0fddb8bea73fa4bafbd4c86ae548e909a023a63bfdc3bcede1557",
    "path_item": "a977e50e83cd4e18c40d0afbf2c8de8239d54c57937d18cafed52a11886ec2ad",
    "version": 1
   },
   "sql-unique-visitors-20261020": {
-   "design_card": "79627ad0fe07b5cc77f8ad62b774cd856fb76c09cac63e1d36797b4c71af7c49",
-   "exercise": "03cf8f59d5b99ab248d12f86c182949adf2803ecf9491c88d13d5aec48665f58",
+   "design_card": "94b614728d2ac3bf2fbf9689dc3dd1e8e40098b229ee6ffa26e56c7edafe727b",
+   "exercise": "99d591b2e2cbefb799d7a28143707e24bf81cdf99dc297dafb8f8ec8f051b2ef",
    "path_item": "f1ceebfe9d1de3296ee8c06f598f4a923f6413e64606ee315d793dcf21fa5354",
    "version": 1
   },
   "sql-using-columns-20261021": {
-   "design_card": "31a53eb077b667cac4c76b0c8caacca94d2ed3d5e5d1064767238d243b7f369a",
-   "exercise": "5e63bbfa1373a32e08434a2dcbb2e6ac0128afa6c4ea4d59cbdc74bdfc91a827",
+   "design_card": "5d9856785e1a9698dcea6072e987b167306dd0f86c0a929a4dc5af023d479760",
+   "exercise": "ea6f966f963129d252a4f9af4dd65cbbd78f63a4c338c8ce55b7644a80ceeacd",
    "path_item": "e30e51b06b66d16e5c00a6352b45abf876636efed547298bc937b852b79aa672",
    "version": 1
   },
   "sql-where-01": {
-   "design_card": "dc4afc89b1552ac73924da58bb105d044e1222fe6403d5e5b4f7e557def22018",
-   "exercise": "dc70df30d0b02112d1b4ba514d16fd18b68eae0efdead0aedfb6afde042d548d",
+   "design_card": "036dd5eb0f7bd8583402c44eb7bb8ce3407eb33ad7a744c4df922fe304d3ce84",
+   "exercise": "b136777ff11c0ca94dff3117d2393f7ed6cc2176ddec343d8e9342c74b9c8701",
    "path_item": "d3ea6642bd6f09576071e9b9eb303362ab9c5ea5d76ef0b70073149faee41af4",
    "version": 2
   },
   "sql-where-02": {
-   "design_card": "95bea2a0c33940b0fba8f5f3d4f888b8d039105029ec84f92f746cedd38b98b9",
-   "exercise": "2afc22d59657b638c9c9974bbeb0eaba7db82a6cf23d4444be837eff0fa5e212",
+   "design_card": "b7f17a1c584639560ed7837697bb929f92dbc1d04163626a9169355c3b62f706",
+   "exercise": "6dfeceed8c4f55ed802cca196ad314d039d5299d841802ef39c100f0f750c545",
    "path_item": "34b968f4f39926e263781663467ad0b95b6af8118594fa115427e529a5a99f8e",
    "version": 2
   },
   "stats-ab-01": {
-   "design_card": "8254347bbdea2699eb9cc572ef8b21f1a46e1af3fa8a6485fcf8bc1bd27c0dc4",
-   "exercise": "1882eb444ef95cf26dc2d05b3a3d86ef1b6e3b282309a2e5553d4340e668cdd4",
+   "design_card": "d6df930199711494432773d121e6aeb696244e2978317b2548802255b9bf09d9",
+   "exercise": "9017b1eb2ba4de84d3f8110b71acf4e82912d746a6318d2edf070ec14b86cd74",
    "path_item": "56c58b05bb514a73fd29494c423f3416ce446d26b48ba7eb3392231fdffb0c62",
    "version": 2
   },
   "stats-ab-02": {
-   "design_card": "35df9f418b690c4d7c3365d471d2079dda82c9be0693639752aea9dfecbaf93e",
-   "exercise": "e8904c92ecfa66bef4c41297a7010ba8eaa2f4547d3daa87495a5c9cef1d98ec",
+   "design_card": "2019b7af66e4fffb80c5d0aa5dc1143826ec6258f8e01894bc88d8531896074d",
+   "exercise": "d856e4dd6ebe9df6fb012ac4d5bcbf6cb8bd5a04e9bc4b8dcb23ed5fb42c0d00",
    "path_item": "3c3b5311909c073331cfe5ded31f86a7682aafd81feaba4578cce5669388da99",
    "version": 1
   },
   "stats-compound-change-20261024": {
-   "design_card": "dbf5744e42b5f030d2b54f894b349ff0994d4f436d82217c7fa36b5f4d043100",
-   "exercise": "be1d21cd4b0ac93b3670257eb6d5c4dd214a5491a4efec5c54c00051cd85bcf3",
+   "design_card": "45132213dd10ba9be243b93b5fbdb733fc99a0f33c7b720776614e6469a4e1a8",
+   "exercise": "460c5b818d82f36c2cffb30da9f3550819f550cf36dd6258532141189aa6af38",
    "path_item": "0e303a2de76a5032700657b3a71186bf75234c1639a287971c959cb3d81c039d",
    "version": 1
   },
   "stats-conditional-01": {
-   "design_card": "0ec8336be586cb0ee7c4e3dcc75198d34071b8743f47bd5cea0c4d07ea2f3425",
-   "exercise": "7b1e7bd4b60fda9f321b9cbf2108f3924b21bec9321b27050e7d0e1a7a7222bc",
+   "design_card": "302baee02fb8d3f2bde3441bab658385dc98aecb85f306b51523992c00d08ae3",
+   "exercise": "623efc0b638bdcfe4c81f9143d2f7218b444b6ba1dc43af90fd808c0a67510ab",
    "path_item": "dc7e4e7e0e91aba98c666f361533a8c173185e630f4e86d24d740369f43a711e",
    "version": 2
   },
   "stats-conditional-02": {
-   "design_card": "50a5da7e39a554c75a8e83ae6489aee69d5955d553aa5eafef9f03df9f52036a",
-   "exercise": "939a93ae7a8cd7e51ac5fb1c20cdc5caeed6f7dee14e7abd6e53eeee1bd08066",
+   "design_card": "69dca1f860b9ac2424e691a7e76a94b76b6f909fdcb6afbde39fb8904de624d7",
+   "exercise": "6db05ae44fa8c895b283911bca77722cb7e8b9fc9dafb787768f00aabbabbe03",
    "path_item": "23f093b21be1bce63a0373bd92025e4b9719977b618628bc22cd8b7da9d6cae6",
    "version": 1
   },
   "stats-conditional-03": {
-   "design_card": "369f1aa949f6dd96a5ad8734487924ebba460e2944277359797ba671f7b9143d",
-   "exercise": "d376833b94ab62a06c5d20d6b215dbcfffb2f9b0dea25663aebbe1a27203319c",
+   "design_card": "e0f353c415272f8173847e15a54ee16ddec6e0d9ec4a5cda5f366fcf59b34436",
+   "exercise": "0e2b46ce8736d606b28f2eae07ad4b5cd3034c2381c1fefc5092650d84eda1e7",
    "path_item": "39f099364fedc9d7b3ab83ff0f77c8eceecbcf63be2a969d72a86b917aa969a2",
    "version": 1
   },
   "stats-correlation-scale-20261022": {
-   "design_card": "fea8f73120b7f3dd1e47b40e08d19ced0ee5f8f9dc7c100c933f158237ae7356",
-   "exercise": "e48743699e3c2feb31792ad56bfee9302ac69d78633d05ecf3c1653701384e55",
+   "design_card": "48be45fff414444ced01b3c12feaf9f94d085efddffc375af673e6a42b7f9ddd",
+   "exercise": "2ad42f0089485570021265cb5370e26bd115bf7c318d4de39759ae75ab442082",
    "path_item": "406fde3dbd698104f2861beb5bf073ff22cff165610e706b78daf8c28d7ce71b",
    "version": 1
   },
   "stats-linear-quantile-20261021": {
-   "design_card": "bbd16ef12189f37cd3278ede53cea08773f97ed76ad81438b4e9b4d11d33e9b7",
-   "exercise": "0e0b30ff649f609ab340b5ca389018b0d0b5192bad0e49680fadcfe5adb52f16",
+   "design_card": "8d043b0ec05f4df9378ccf81fa330d3cc83a050086d3faa5588c2d8fc287fc32",
+   "exercise": "1f669bf99d9a92ecd31fc4ddf7d7e5398dcc46a5718cc8937b897b6f38fe02b1",
    "path_item": "796552eec2f61a3b4173540f955f4a89125592058d6489f8847606f0918e7849",
    "version": 1
   },
   "stats-median-01": {
-   "design_card": "d58eba4319ca68ce7a3987a20cbfe4a31d7567bfc8747cba0571a0db93531504",
-   "exercise": "692bfc4ddc4cb5165209fe8536f4dd970a279dea894102f7dcd9888de273ea70",
+   "design_card": "097f305e15d07ec430e4065fab117f3e2c98ea05080b1877af6e1a2b39686e78",
+   "exercise": "6383990c08d392cfd1fd6ebfeb75450ec9cfc19ea25145c48de98301afa70bec",
    "path_item": "07f5d4acf09521267c11c08334cc66cba81bb2f5bc6891b9bb520ad28f9aeef0",
    "version": 2
   },
   "stats-median-02": {
-   "design_card": "b2ed70d0912c7e77b7da4804f7c5e2a0ad671e939c5f2c6a82899116471ec0f6",
-   "exercise": "e5c603ed81a0ae7dc01400b958fb554eb3c012c88ac18d7e273bd2fe6a429207",
+   "design_card": "ef59a6cd0ac044895787c2528c68f5121cd433dc80b0f3c5635ec84fd5dfe073",
+   "exercise": "6f4d79768daaa8cdc1d70f55695699a0933342a42263c1b0f05a40e3676be7df",
    "path_item": "a8c391664403f985f2b5a5f69f4b4c0fd3c05fa7eeeab013d14726fbb9448793",
    "version": 1
   },
   "stats-median-pooling-20261020": {
-   "design_card": "0146ac9ba837201522e1b6eb7d75ffeb05597307432adcca55a0ad0a8367e5d9",
-   "exercise": "f176913cfa9de36e224b0f932b610721981db8cab960d19076530f234f0b29ca",
+   "design_card": "aedb49f70ef5f77f65b2a5dd91a4420ad39b51f8366d037b13c6647ea7a40af5",
+   "exercise": "fd91aa054b2225b109a631525c159c24409ae5fd42849d0eb1a6633b7a2e68c0",
    "path_item": "85778c70ec72b17b90a6923b7be9365a6302e98c10f11a91afa9981f7f6ab312",
    "version": 1
   },
   "stats-negative-scale-20261019": {
-   "design_card": "730be0bec0d468838fc13bbe8359a7cff3ff55d3cf4f95b72cd662f8ad0c76a9",
-   "exercise": "48e02b4586f6d7843bae856b7267f78b10152d2e2617c1098dc9b0445e423551",
+   "design_card": "6db2970a4d07d2e395bacfe911f909870842104fd74609fa7fa5519ad1ee5f6f",
+   "exercise": "bc199ff606939788d0f404f87572ad3a6016e4a85f805ce645bb97acab40e76e",
    "path_item": "f24219a6201ad136439724a6da2007c5838877e9c7cf2438f1dbe7cf74ecb671",
    "version": 1
   },
   "stats-outlier-shift-form-01": {
-   "design_card": "d3210ae348de3e1d799a267393840d813f60259091b5a0f10d2779e11bd6620e",
-   "exercise": "39374106331dd661910a64d8ade2787fcbfd2c24d47ccbe8d12198809e03ba53",
-   "path_item": "19708ab79e0cb979bac07392d47c777ae65e6b4285736382330550c2125f3302",
+   "design_card": "1a4d929296e245899b533a828f38acb13bfb4f15d56ddab9ff6756b703964d89",
+   "exercise": "33d88117c02d80c1291b6e9e8d1a51daeff2bee5e55626ba4948b1340c3c59ab",
+   "path_item": "fd47c1011c002c327b4463756b1a80f854fe5101f1cec73a423cf8d3181f717b",
    "version": 1
   },
   "stats-pooled-rate-form-01": {
-   "design_card": "1bb48fdf4b7a018f128ab95547f1940c655428d25f678a8dad2da063114fea6f",
-   "exercise": "d39cecf501c25be446a3e9dd0a7516fd6a4be6b8d1857aeda8a24b777758fc39",
-   "path_item": "e65d8b81bbf571efea28c0fd9cd0a17d4941b3ac184a4a503484057b8f342c27",
+   "design_card": "e66f3ed4f4d2b3480e110b7787d5153a4f3f3ca06ba77764baa82a6a004461c6",
+   "exercise": "94d4f0cbc2752eb31c661e9e007108a617748c88b456355e06bbaf073a1df12a",
+   "path_item": "f9de6d310684f5babec96a7186e60b49516204491dcb513837a0f9de738290fa",
    "version": 1
   },
   "stats-rate-foundation-02": {
-   "design_card": "e2f04731906162854a38f21727e9d50135e82bb530136a1d61a13472bb664167",
-   "exercise": "2df14aa2f9e0081809b5ada76a132d1ed8893e5c0652be8279d2d002bef0e6b7",
+   "design_card": "77ae19d245489982da6b4c870a2a9da2c8816384e274c6a8a21a8e58a3a8beb4",
+   "exercise": "549160e10e8b9e89424fed0f4b5829514f9fb1ee4acb43e638aaf5e400c019c4",
    "path_item": "b15bd963262ebf114cf66bcefa725a45995ce8c8ffcd5a2a0cbb81e2c83a76ca",
    "version": 1
   },
   "stats-rate-transfer-02": {
-   "design_card": "8e904ba7b0b86b1f85b8135c565b1d3507938e1021ce8f382ce07c0cbb3c974c",
-   "exercise": "acf022932b6abd62a9d9dfa877afe76b829fb89da2b22c17d13ab4fe571cc385",
+   "design_card": "64bd0ed88639efe5a7a35070f69af32d4d1552e60723532331149db14b915469",
+   "exercise": "a933d7cee51528e285c6fd7b9544d31819e29b3cdfa6acfff01f7c4dedf87b90",
    "path_item": "0dda98f60bd1fc486df3add53ee3b1c1a5c40d7f0c1a9f2c447c1090b01603e1",
    "version": 1
   },
   "stats-std-01": {
-   "design_card": "ea0b65a20505dd62cf00175f6fbd6d0c078e860bb559717d9998a62807f2da7b",
-   "exercise": "64580844cfa0989c11e6e9d16c4f7daabf2880977acbadd482a6b9e2e2738a11",
+   "design_card": "3a5210573338f609ab1c640a5c11386a47dafbe9b0ecd9cee605781689c69f04",
+   "exercise": "1a4f785fcd5318d7daf802b673a48e74053c4fa4948a74b2e6c62330864eeda2",
    "path_item": "4a35fa1d43e764a053b322a3fe8d6b8876feeacc78c66b5bf3770cf819739caa",
    "version": 2
   },
   "stats-std-02": {
-   "design_card": "1d9a61ec63c55fcb7648ab18d3710bdc5c348c2164aec64509c9e9781a2bfe30",
-   "exercise": "e2e9b84323be8c03d279f8f5e7a19302ac7afb70469f09f61addc6e34c04b9e0",
+   "design_card": "64332af5384485fd79889c09d15732ea45495d88f2b81dc5a9118228e288c731",
+   "exercise": "f2453dff4323d65c917d26bc15546a6ba979fe8280cbaff33b525a7c616dc5df",
    "path_item": "ca2d4355dbd6f487bb418c59c0af768190f482c19fbd3904479a9ed048a0f77c",
    "version": 1
   },
   "stats-summary-application-02": {
-   "design_card": "e765fe260890c6a974df960d0855d5adbf6b81871e8f17367a11c7cbb1e19ece",
-   "exercise": "1f37c48b1d4cd022d98e6429aabe9e8847972142d2e6a68239e2763e503e7f53",
+   "design_card": "4aacd8c1b8244d1cb425cbeb94b3b703152a1154449e96a2839fdc21ca28bf7b",
+   "exercise": "055be1c123ab931270b2c8b653ccadd82c333821573cacf20f89041be5d83a6c",
    "path_item": "e58055938a956bc064e289a7c8bd7226d2e6685ba2ab857816d0313a8d2f3d6c",
    "version": 1
   },
   "stats-summary-foundation-02": {
-   "design_card": "3fcc2310d51c1c9ac547128e085f5c0a172d711d797250ef7c12a70a7cca07e9",
-   "exercise": "51b06523b5d997a492e62d228520f1e3b2183fb548a013fc3607bb2fb077ef6c",
+   "design_card": "4c84ae895f98b01fdedb9a3b8e4c3368745b277b587f2a2713b5eaeed6f79d6c",
+   "exercise": "5e2b8ecb97a1018adee27fbc48f71d26dd70df75704439d506ffb627a1628bef",
    "path_item": "3517c7e15dc5f5ebbeed4f09bde9812ef03043b3c2e86f49180867422cbde3c2",
    "version": 1
   },
   "stats-two-denominators-20261019": {
-   "design_card": "dc39913b960db78b9156adaf38c8bc0629d905251be16f1a288d088a625a5c62",
-   "exercise": "23dab545ccffe1518d69839653f5691833d1a6bb3411abec2e61a4169db85fc7",
+   "design_card": "bc1de7f8c8372b61c9a684bbee9176c33bcccd43fe5b0cfadcbd8b6fb71700b6",
+   "exercise": "02848ea5fe748ec13ea60f5a84d22c3e6664c727912092af2cf38fd3f60e6c24",
    "path_item": "32f42adeb8c00ed4a5e62837e62ac35db3447c45b429c20ee8932d2e44bb068d",
    "version": 1
   },
   "stats-user-session-20261020": {
-   "design_card": "4c8521ad43c2aee7a3c15637c44526d13c6fc6d97b5f8c58e7f5c4f56be8bf6a",
-   "exercise": "e360a8a5d816ae973ba6b1f5ef284c27b3cf53c2b0aa32db7e15bf7bff1f8d96",
+   "design_card": "cbc30cbfc48275a2c70710ed91f745729f0b02cd86c33265721d691100e4edde",
+   "exercise": "fefe4b353be87eda2b617484470b6b64d72f216d8c98b76660612a0386b7996b",
    "path_item": "dd3694248da4b60fd2f343e3fb295f95ff67f2395bb4b8769016b28f0b5a938d",
    "version": 1
   },
   "stats-weight-01": {
-   "design_card": "aa21ec9958dc5e1b5630f220baecf8c274816cca9c64331fee986c00b14e8540",
-   "exercise": "e7f6081fc61e57e1abf2ab9669ae2781561e29ce8bf251298af5e007ae9a8341",
+   "design_card": "eebaded6d00d2636b61030de1924fc05792c986ba15a32b3408419b0bbd9ef9e",
+   "exercise": "8871676181ef355f4f7b1dccba3bcad047780067a0626b7dcfefbc51d5076d05",
    "path_item": "f1cded2018bc182f664569eb14ce741127779a0fd1c33c3fb950d564bfa920a7",
    "version": 2
   },
   "stats-weight-02": {
-   "design_card": "141ed721a2a40ce4d60a7ec6d05f8bc59d21c77cee7959aefc1b0c9dbe2cfd72",
-   "exercise": "0b727a9d0552b7cd8b2db67b451e861b7c74486f8b0e8979333d3bbb3a67208c",
+   "design_card": "18414416fb6454f5c3744f4cb8ea71251f61053e8d5e0933bda6571339a2184e",
+   "exercise": "edd905503f97e2e46e3fe362c30f0711561c609dacc0ab98264bd9cf5649d0bb",
    "path_item": "36758b3d0202f770ddb50620b70bbbb6d1c59ecf5cec8eed6691c67a82facf74",
    "version": 1
   }
  },
+ "projection": "published-view-v1",
  "rules": {
   "level2_days": 2,
   "level2_items": 2,
