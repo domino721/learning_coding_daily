@@ -867,6 +867,19 @@
         "tests/e2e/formats.spec.ts"
       ],
       "code_reference": "2da5e54e25443b60c953bb69e54563ce8d480a0c"
+    },
+    {
+      "id": "EV-063",
+      "record": "docs/planning/evidence/EV-063.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/answerFormat.ts",
+        "src/StructuredAnswer.tsx",
+        "backend/format_content.json",
+        "backend/quality_gate.py"
+      ],
+      "code_reference": "230d5c018c492e6093feda4e1b9b7e3aced5f18d"
     }
   ]
 }
