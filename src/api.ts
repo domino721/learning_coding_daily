@@ -1,5 +1,6 @@
 import { browserApi } from "./browserApi";
 import { ApiError } from "./errors";
+import type { ItemKind } from "./answerFormat";
 export { ApiError } from "./errors";
 export type Track = {
   id: string;
@@ -29,7 +30,7 @@ export type Exercise = {
   id: string;
   version: number;
   concept: string;
-  kind: "choice" | "blank";
+  kind: ItemKind;
   title: string;
   prompt: string;
   code: string;

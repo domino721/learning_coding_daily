@@ -66,6 +66,12 @@
    "path_item": "25ac51915d54a9a239a0efd750542ff4dffb8c97583f6861665f4a49cd1a72b8",
    "version": 1
   },
+  "ml-leak-free-steps-form-01": {
+   "design_card": "9c8ff85d6574284e0a5110c69ea2de2547a6dc83b929e599b422d796f3990194",
+   "exercise": "9aaa2177e655915c44b034051223930b03bbf0c06b6fc07b05c8d56e9b550b04",
+   "path_item": "003acecf3a4909b51e615355ff8716c385ac453f6a82a1ee67437a1a108e0e68",
+   "version": 1
+  },
   "ml-leakage-01": {
    "design_card": "1fef6043df29f47b0b13ad7dab754672ae955c71a417094b6aa86e6b13257a2d",
    "exercise": "3071a7dc551027af3c70b6802348dbe5f52ef792350288ccc04fc6d1602003fa",
@@ -162,6 +168,12 @@
    "path_item": "2d253dad339895f0022933d927a31b7b4f0df35da08c97b9260acc610dbc9418",
    "version": 1
   },
+  "ml-recall-denominator-form-01": {
+   "design_card": "499b324f7157009058eb26d9ee325846138808fd8fda6f04a26d13921dc9d200",
+   "exercise": "8dce81e5f4136ffd17733ee191402470ea7dc2f3d0b7e3a2e1f723c56c4e55fb",
+   "path_item": "2c18a59141793a28cdf08ad461daf3a1acd19e3631ac507a19daca7eb406ae24",
+   "version": 1
+  },
   "ml-refit-state-20261019": {
    "design_card": "5a59eebddcd262cd835f96fbe3c7fe86b8fad6a9cbf8982b9e785d378c74a5f5",
    "exercise": "4589f5e43c32533bc3ba9516f1337b3c16d7ad2dc1be81b0ebabd3656c7cd2e2",
@@ -198,6 +210,12 @@
    "path_item": "95a6179b9dfd7178e7acb72373ccca394b8188ddc4529dceafdfa8595db9f465",
    "version": 1
   },
+  "ml-split-facts-form-01": {
+   "design_card": "197f8f2cfb74063dfdfaa93a3d4f10323dc75d4078195e8df48f70c126bc078f",
+   "exercise": "601d8ddaa61c455e3787d0fffc50cbe05d8e8fb8c569ee11558efe684d3e7b48",
+   "path_item": "f624bb08139c0ddb9ce83b3d376a54fb6a7eaeed33c25de3ba39199797ba1d0b",
+   "version": 1
+  },
   "ml-threshold-recall-20261019": {
    "design_card": "709a48e635db58f77954b250ef3b0d1f608e44f0ebbd799807892217320161bd",
    "exercise": "33929923020330c2e1b0c9fd198cdef5c3c88f256fd7464e53720bcd02886e11",
@@ -232,6 +250,12 @@
    "design_card": "c5f9c2ccf9187e9f6e02695cef48c919c6edb60cc811144973798fc5de64b287",
    "exercise": "c07df910112d478fc81085f0b17a8674f4710998f7bed4726d9e572b1d3113ea",
    "path_item": "399d590c5fd4c3e906acc9bf23a729747e26a3f35e84d5bbe54bcf08795e031f",
+   "version": 1
+  },
+  "numpy-axis-mean-form-01": {
+   "design_card": "24eac6e9d1a96a9577e2db287da81c88fe6190525e5761f0dacaece3ab5e63be",
+   "exercise": "8b91000f32d86efa77d9c1ef4cde62a21ceaab14e70c32e8281e765a75826d9d",
+   "path_item": "bfbd2c4954e35e607ada2135b0eb95569eab392e0c152857c44eacc21ecfe9ee",
    "version": 1
   },
   "numpy-broadcast-01": {
@@ -274,6 +298,12 @@
    "design_card": "82602f8c66decdc9fe39d46cee733a00537434fa295a125b3db9b0dddaf10aac",
    "exercise": "aecd92297ecda4931b800e25c45dd35562402403fcbf2f3faa722c627db06899",
    "path_item": "87dc5c0571da9c3fc5a26b5cc82b5189fdc1f1c4f74bb158349b33c0168ba080",
+   "version": 1
+  },
+  "numpy-copy-timing-form-01": {
+   "design_card": "e639e4d0e50b34a6c89165ea878556b5e119a21be44b23faeeefe491ad95ade4",
+   "exercise": "f0c5ec0250ced0ccae337e8468e6498480033025c31c5fb912d6b375fbe6f127",
+   "path_item": "377e1cc5dfe1950f46f95d18f712e027ece41306b23b1941caafadedc5ecfa42",
    "version": 1
   },
   "numpy-finite-average-20261021": {
@@ -516,6 +546,12 @@
    "path_item": "6dcb26ee6856da26fd81e60b9dfd4dc75ab167e96871019801521aee8b16b7b8",
    "version": 1
   },
+  "pandas-fill-assign-form-01": {
+   "design_card": "388ad686a0aab36517b2a109e507f19d217128e88cd1a87535908688efcc6e9e",
+   "exercise": "6d63a60d46a1711b4ab5b2770d7c348f7fc65212bfefae0fdd7b0a14a7211cf2",
+   "path_item": "4d97093e8e30886131999f4e4e67d7d70a17456a5a5f6c4a0f8db329ed4660ea",
+   "version": 1
+  },
   "pandas-fill-return-20261019": {
    "design_card": "f16c5fa55c0f3fff885cfef0dfbe6a91a5f95895e6e28d559a8e8e4c2419f91c",
    "exercise": "fa99ec8d3e9e31f2d9961fdca5bf20d3390de0fa2ee30bd0d8716083e25c137a",
@@ -598,6 +634,12 @@
    "design_card": "966b9834ad33f6519f11d41e2b2339d1fd6b8d1f512301ceee5506a320b18f17",
    "exercise": "7e058890b079f329af1136757423d7d696470e85548ed06262d0691a6b2e89b0",
    "path_item": "481706236b08c12583c335946a9658bdad5f3910f0b82b068b280c29ae33cdac",
+   "version": 1
+  },
+  "pandas-group-steps-form-01": {
+   "design_card": "723b144132b9c01c1f330c4994bf2b2861d1f551f7a464cfff2239140089a01f",
+   "exercise": "1f0c16af5f93ec42437184149f3680d9df41df7e698711d8df199618d8f9c0df",
+   "path_item": "ec8878ef4db5817640e928abac40a7d35600eec3cc84b85f79c7129ae3519b9d",
    "version": 1
   },
   "pandas-group-transfer-02": {
@@ -694,6 +736,12 @@
    "design_card": "2a3afafeed284e74d6583139c3a849f2ec688a9d93bd862177510275470445e9",
    "exercise": "399659eca2be005295393a472f87a3c5f1875df73389803c069d6b137098d71c",
    "path_item": "c1be3318bf9a5c1818fa6a4298356a0492970bcdd3b2e4a8fa9a2a57099ef9a4",
+   "version": 1
+  },
+  "pandas-paid-amounts-form-01": {
+   "design_card": "4f1b87c517510b5b6c07ae1bde915c62f2eaac39a7c3b2b203b763b2085d2bd4",
+   "exercise": "9e300be10d3360aa6114222848fbeb51b80f81c22a5ce6933c749a5b4438189d",
+   "path_item": "32521a3c237ef8bed923044fd4382f70f5108235dd6223164555d3598105204e",
    "version": 1
   },
   "pandas-reindex-fill-scope-20261025": {
@@ -858,6 +906,12 @@
    "path_item": "677a97a20288ba2ab89ca9ba3678fd1fc816b774fc6b20cbe0f2689491725171",
    "version": 1
   },
+  "sql-clause-order-form-01": {
+   "design_card": "56f88f26a5968edc5cf1967b845e92b13fe4ac62b9b6de9621a6a0f81abdf373",
+   "exercise": "74ecdef0385b9159a8346f723b28f4a9ae87cb98b0d7285eeab91fb8c3cae5ab",
+   "path_item": "ca6065e2fcec320622cf410fccde856d4c874b75ea310224b01182a129a31658",
+   "version": 1
+  },
   "sql-composite-match-20261020": {
    "design_card": "082640578a6ce63f00591a53f9e281ef77238184fcb0680bb3d7cab66614d14f",
    "exercise": "39f55401803d5fa681a1248067dde01181e56ce0bff349c6a8f592e3ff3bea99",
@@ -948,6 +1002,12 @@
    "path_item": "a506291b701b48353f339c469d359ebc273022de7fffa65325747fbbd0681c15",
    "version": 1
   },
+  "sql-group-clauses-form-01": {
+   "design_card": "64e6a0eb04434eb28a210433c6fbfdafb4a86bd20cd7928c70d008733cd174d3",
+   "exercise": "18cdff1d9770023b4ca3f682d2999ef1cae8f0b6379b8bdf5e9ec25619ddd5fd",
+   "path_item": "4de6a0eb4852cce5793c74ea1956e6364f515f3ceff628ba09ddf2572785c452",
+   "version": 1
+  },
   "sql-halfopen-periods-20261025": {
    "design_card": "00d2ac718e85faaa61f4ff28a90e67ef5523d129b9319c34d2114182f0fa5334",
    "exercise": "cb6bc4e61595e5c4f93785255d418980b0c4e2f2e1b1b96072dcba3984af5c77",
@@ -1026,6 +1086,12 @@
    "path_item": "1b565c1cbc9390f4f6424a2e0a32e3484ae569b77593899ac6c807523547dbdc",
    "version": 2
   },
+  "sql-null-compare-form-01": {
+   "design_card": "1e7c4d333e97a6f6afdba456ea04413ce19102dfed907be4f5da906824fcc2ea",
+   "exercise": "dc33312eb0c17d25694542288f46026e1792a40c62143ff0669a267d53d5dbe7",
+   "path_item": "80236f031c0dddacf0376bdd208d9baf7afa6d9e529dab9c583e5a35c840181d",
+   "version": 1
+  },
   "sql-null-count-20261018": {
    "design_card": "b64c823782cc4cbd31f2682cb3a08ada7415c41ff32d431b21e2266967417afd",
    "exercise": "51805a5a770d422e0973d4776c69a22bbcd16c25d99a3d34b98554b68df9255e",
@@ -1048,6 +1114,18 @@
    "design_card": "a7dd53ac6e299ca151c0b5691c1ddcfc428a78afd01ab3d810f67ce0f1513366",
    "exercise": "85e62eded490f3caf21674ea1cb3ff453ac6f07bc0d24cc78a477199035a73b2",
    "path_item": "08ff31022449c8462b36d07348a339dc0c9093b9f230cce1a43235c1688245e4",
+   "version": 1
+  },
+  "sql-outer-count-form-01": {
+   "design_card": "949f26dc5a7c9da4e8466a358e4bebdf6c78b5f2f06e3baf133f045b3f3c95ab",
+   "exercise": "3254a70c871b9d9cc8f8e87123afbce5d4f2ebc29a2cbd17c4c68bb96e65344a",
+   "path_item": "a30aa9cd27798b19fc35bd4d4e244354889deb29543f13c116d57770caaffd28",
+   "version": 1
+  },
+  "sql-outer-filter-form-01": {
+   "design_card": "d5fadf62d3cd18600b5cf09382ebaccf1230d577cea95d3c71df3f339792d492",
+   "exercise": "ba27b7c6e96ce396f2425d0742c97ba09e12f62051742a1e02da8249a589a847",
+   "path_item": "932755548905e7f99c1dd1c838760eea352e45d44c09afcc00b5b5e5dd67e2d3",
    "version": 1
   },
   "sql-qualified-join-20261018": {
@@ -1204,6 +1282,18 @@
    "design_card": "730be0bec0d468838fc13bbe8359a7cff3ff55d3cf4f95b72cd662f8ad0c76a9",
    "exercise": "48e02b4586f6d7843bae856b7267f78b10152d2e2617c1098dc9b0445e423551",
    "path_item": "f24219a6201ad136439724a6da2007c5838877e9c7cf2438f1dbe7cf74ecb671",
+   "version": 1
+  },
+  "stats-outlier-shift-form-01": {
+   "design_card": "d3210ae348de3e1d799a267393840d813f60259091b5a0f10d2779e11bd6620e",
+   "exercise": "39374106331dd661910a64d8ade2787fcbfd2c24d47ccbe8d12198809e03ba53",
+   "path_item": "19708ab79e0cb979bac07392d47c777ae65e6b4285736382330550c2125f3302",
+   "version": 1
+  },
+  "stats-pooled-rate-form-01": {
+   "design_card": "1bb48fdf4b7a018f128ab95547f1940c655428d25f678a8dad2da063114fea6f",
+   "exercise": "d39cecf501c25be446a3e9dd0a7516fd6a4be6b8d1857aeda8a24b777758fc39",
+   "path_item": "e65d8b81bbf571efea28c0fd9cd0a17d4941b3ac184a4a503484057b8f342c27",
    "version": 1
   },
   "stats-rate-foundation-02": {

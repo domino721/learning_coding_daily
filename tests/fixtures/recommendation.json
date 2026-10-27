@@ -15,6 +15,13 @@
       "sql-where-01",
       "stats-median-01",
       "ml-split-01"
+    ],
+    "selected_current": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-clause-order-form-01",
+      "stats-median-01",
+      "ml-split-01"
     ]
   },
   {
@@ -52,7 +59,14 @@
       "level": 1,
       "independent_count": 3,
       "evidence_days": 1
-    }
+    },
+    "selected_current": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-clause-order-form-01",
+      "stats-median-01",
+      "ml-split-01"
+    ]
   },
   {
     "name": "different days and questions",
@@ -77,6 +91,13 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ],
+    "selected_current": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-clause-order-form-01",
       "stats-median-01",
       "ml-split-01"
     ]
@@ -104,6 +125,13 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ],
+    "selected_current": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-clause-order-form-01",
       "stats-median-01",
       "ml-split-01"
     ]
@@ -146,6 +174,13 @@
     "selected_current": [
       "pandas-select-01",
       "pandas-select-02",
+      "sql-clause-order-form-01",
+      "numpy-shape-01",
+      "stats-median-01"
+    ],
+    "selected_v21": [
+      "pandas-select-01",
+      "pandas-select-02",
       "pandas-select-scaffold-01",
       "python-column-types-20261021",
       "python-bool-type-20261021"
@@ -176,6 +211,13 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-where-01",
+      "stats-median-01",
+      "ml-split-01"
+    ],
+    "selected_current": [
+      "pandas-select-01",
+      "numpy-shape-01",
+      "sql-clause-order-form-01",
       "stats-median-01",
       "ml-split-01"
     ]

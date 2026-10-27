@@ -362,6 +362,34 @@
       "alternatives": "기존 문항 전체를 즉시 재작성하는 방법은 개별 검수 없이 대량 변경이 되어 제외했다. 게이트를 기존 문항까지 소급하는 방법은 84개 문항 게시가 막혀 베타가 중단되므로 기준선 면제를 택했다. 지침 문서만 바꾸는 방법은 생성 에이전트가 지키지 않아도 배포되는 현재 문제를 해결하지 못한다.",
       "baseline": "설계/계획 1.10.0",
       "implementation_commit": null
+    },
+    {
+      "id": "CR-015",
+      "date": "2026-10-27",
+      "title": "문항 조작 형식 3종 추가와 추천 learning-paths-2.2",
+      "status": "applied",
+      "authorization": "사용자가 2026-10-27 ‘현재 서비스 알고리즘 더 고도화하고, 문제들 지금보다 더 종류 다양하게 만들 수 있어?’라고 요청했다. AGENTS.md에 따라 명시적 변경 요청을 승인 근거로 구현·검증·기록까지 진행한다.",
+      "impact": {
+        "scope": "REQ-014 해석 확장: kind에 line·order·multi 추가(응답 모드 choice·번호 답). 새 형식 15문항. 품질 게이트·SQL 검증·재실행 테스트 확장. 추천 learning-paths-2.2(한 단계 아래 보충·개념당 보충 우선 2문항·과제 형식 섞기·다른 형식 다시 연습). 비교 스크립트 scripts/compare-engines.py. 새 WBS-380.",
+        "data": "기존 211개 (id, version)·경로·카드·rules·review·origin/key·기록 계약 보존. 새 형식 답은 번호 문자열이라 기존 제출·백업 검증 규칙(response_mode choice/short/essay)과 호환된다. Exercise 필드는 추가하지 않았다.",
+        "cost": "기존 무료 GitHub Pages 유지, 신규 비용·서비스·외부 전송 없음. 모델 API 호출 없음.",
+        "schedule": "이번 작업 트리에서 구현·검증. 원격 저장·게시는 사용자 확인 뒤 진행하고 Pages 실행과 공개 자산 대조로 확인한다.",
+        "requirements": [
+          "REQ-005",
+          "REQ-007",
+          "REQ-008",
+          "REQ-011",
+          "REQ-012",
+          "REQ-014",
+          "REQ-019"
+        ],
+        "tasks": [
+          "WBS-380"
+        ]
+      },
+      "alternatives": "IRT·BKT 같은 확률 모형은 베타 3명·실측 로그 부재로 추정이 불안정하고 추천 이유를 설명하기 어려워 WBS-520/530 자료 확보 뒤로 미뤘다. 무작위 섞기는 재현성과 웹/서버 일치를 깨므로 마지막 동점 처리에만 과제 형식을 넣었다. 새 형식을 response_mode로 추가하는 방법은 기존 백업 검증·모드 전환 계약을 바꿔야 해 kind로 구분했다. Exercise에 필드를 추가하는 방법은 게시된 211개의 보존 해시를 모두 바꾸므로 제외했다.",
+      "baseline": "설계/계획 1.11.0",
+      "implementation_commit": null
     }
   ]
 }

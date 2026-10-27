@@ -60,7 +60,7 @@ def test_142_existing_exercises_paths_rules_and_concepts_are_preserved():
     assert LEARNING_PATHS['rules'] == saved['rules']
     bank = json.loads(Path('curriculum/problem_bank.json').read_text())
     assert digest(bank['concepts']) == saved['concepts']
-    assert LEARNING_PATHS['version'] == 'learning-paths-2.1'  # 2.0 rules preserved; 2.1 adds the review variation policy
+    assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing
     new_ids = {item['id'] for item in NEW}
     assert len(new_ids) == len(NEW) == 12
     assert new_ids.isdisjoint(saved['exercises'])

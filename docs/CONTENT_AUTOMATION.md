@@ -6,7 +6,7 @@
 
 하루에 아래 **두 가지를 합쳐 다섯 건** 처리한다. 새 문항 작성은 비어 있는 유형군이나 형식 전환 대상에만 허용한다.
 
-1. **형식 전환 2건**: 출력 예측 형식인 단계 3(조건 변화·전이) 문항을 `condition-change`, `bug-line`, `equivalent-code`, `purpose-choice`, `result-interpretation` 중 하나로 다시 쓴다. 같은 ID의 `version`을 1 올리고 이전 버전 기록은 보존한다. 단계 3 코드는 5줄 이상, 데이터는 5행 이상의 합성 업무 데이터(월별 거래·고객·상품 등 가상의 값)로 한다.
+1. **형식 전환 2건**: 출력 예측 형식인 단계 3(조건 변화·전이) 문항을 `condition-change`, `bug-line`, `equivalent-code`, `purpose-choice`, `result-interpretation`, `step-order` 중 하나로 다시 쓴다. 2026-10-27(CR-015)부터 `kind`를 `line`(줄 고르기)·`order`(순서 맞추기)·`multi`(모두 고르기)로 바꿀 수 있으며, 작성 규칙과 검수 기록 항목은 `docs/CONTENT_GUIDELINES.md`를 따른다. 같은 ID의 `version`을 1 올리고 이전 버전 기록은 보존한다. 단계 3 코드는 5줄 이상, 데이터는 5행 이상의 합성 업무 데이터(월별 거래·고객·상품 등 가상의 값)로 한다.
 2. **오답 보기 검수 3건**: 객관식 문항의 오답 보기마다 겨냥한 오개념을 설계 카드 `distractor_targets`에 적고 `app_difficulty.distractor_strength`를 2 이상으로 올린다. 겨냥 오개념이 없는 보기는 교체한다. 보기 교체는 `version` 증가, 카드 필드만 보강하는 경우는 버전을 유지한다.
 
 유형군 재분류(개념별 3~5개 family)는 기계 게이트가 아니라 별도 콘텐츠 작업이며 `docs/CONTENT_QUALITY_REVIEW.md`의 순서를 따른다.

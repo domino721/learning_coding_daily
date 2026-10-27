@@ -68,6 +68,11 @@ def attach_metadata(exercises):
     return result
 
 
+def task_form(ex):
+    """What the learner is asked to do. Items authored before task forms are read from the code."""
+    return LEARNING_PATHS['items'][ex.id].get('task_form') or ('fill-blank' if '____' in ex.code else 'output')
+
+
 def observations(sessions, by_id):
     result=[];seen=set()
     for s in sorted(sessions,key=lambda s:(s['local_day'],s.get('batch',0),s['id'])):
@@ -110,6 +115,8 @@ def concept_states(sessions, by_id):
         result[concept['id']]={**concept,'level':level,'label':LEVELS[level],
             'independent_count':distinct,'evidence_days':days,'observed_count':len(rows),
             'family_count':families,'retention_observed':retained,'needs_support':needs_support,
+            # Level of the item that last needed help; support practice steps one level below it.
+            'support_level':all_rows[support]['level'] if needs_support else 0,
             'evidence_status':'unassessed' if not all_rows else 'observed',
             'ready_for_probe':bool(rows and rows[-1]['independent'] and days>=2),
             'status':'기초 보완 중' if needs_support else '진단 전' if not all_rows else '관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 확인 중'}
@@ -139,7 +146,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         state=states[ex.concept_id]
         prereq=all(states[c]['independent_count']>0 for c in state['prerequisites'])
         # One independent foundation result permits a level-2 probe, not a mastery claim.
-        limit=1 if state['needs_support'] else 3 if state['level']>=2 else 2 if state['independent_count']>0 else 1
+        limit=max(1,state['support_level']-1) if state['needs_support'] else 3 if state['level']>=2 else 2 if state['independent_count']>0 else 1
         return prereq and ex.level<=limit and all(known(key) for key in LEARNING_PATHS['items'][ex.id]['requires'])
     due=sorted([ex for ex in exercises if ex.id in progress and progress[ex.id].get('due',progress[ex.id].get('due_day','9999'))<=today and ex.id not in done_today and eligible(ex)],
                key=lambda ex:(progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
@@ -155,7 +162,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         # A recently solved item is reviewed through a different, unseen exercise of the same concept.
         siblings=[c for c in pool if c.concept_id==ex.concept_id]
         remediation=LEARNING_PATHS['items'][ex.id]['remediation']
-        return min(siblings,key=lambda c:(0 if c.id in remediation else 1,abs(c.level-ex.level),exercises.index(c)),default=None)
+        return min(siblings,key=lambda c:(0 if c.id in remediation else 1,int(task_form(c)==task_form(ex)),abs(c.level-ex.level),exercises.index(c)),default=None)
     selected=[];review_concepts=set()
     if not extra:
         for ex in due:
@@ -168,9 +175,13 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
             review_concepts.add(ex.concept_id)
     counts={c['domain']:0 for c in CONCEPTS}
     concept_picks={c['id']:(1 if c['id'] in obs_today else 0) for c in CONCEPTS}
-    for ex,_ in selected:
-        counts[ex.domain]+=1
-        concept_picks[ex.concept_id]+=1
+    forms={}  # task forms already in this batch; the last tie-break mixes what is asked
+    support_picks={}  # support outranks new concepts only for as many items as recovery needs
+    def count(ex):
+        counts[ex.domain]+=1;concept_picks[ex.concept_id]+=1
+        forms[task_form(ex)]=forms.get(task_form(ex),0)+1
+        if states[ex.concept_id]['needs_support']:support_picks[ex.concept_id]=support_picks.get(ex.concept_id,0)+1
+    for ex,_ in selected:count(ex)
     required_l1={req for ex in exercises if ex.id not in progress for req in LEARNING_PATHS['items'][ex.id]['requires'] if not known(req)}
     progressed_concepts={by_id[pid].concept_id for pid in progress if pid in by_id}
     while pool and len(selected)<5:
@@ -178,16 +189,18 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
             st=states[ex.concept_id]
             fam=LEARNING_PATHS['items'][ex.id]['family']
             new_fam=0 if fam not in solved_families.get(ex.concept_id,set()) else 1
-            if st['needs_support']:
-                return (0,counts[ex.domain],0,0,ex.level,0,new_fam,exercises.index(ex))
+            form=forms.get(task_form(ex),0)
+            if st['needs_support'] and support_picks.get(ex.concept_id,0)<LEARNING_PATHS['rules']['recovery_items']:
+                target=max(1,st['support_level']-1)
+                return (0,counts[ex.domain],0,0,abs(target-ex.level),0,new_fam,form,exercises.index(ex))
             if ex.concept_id not in progressed_concepts:
-                return (1,counts[ex.domain],0,concept_picks[ex.concept_id],1,ex.level-1,0,exercises.index(ex))
+                return (1,counts[ex.domain],0,concept_picks[ex.concept_id],1,ex.level-1,0,form,exercises.index(ex))
             redundant_l1=int(ex.level==1 and st['independent_count']>0 and ex.id not in required_l1)
             target=1 if st['independent_count']==0 else 2 if st['level']==1 else 3
             probe_ready=0 if (st['independent_count']>0 and st['level']==1 and ex.level==2 and new_fam==0) else 1
-            return (1,counts[ex.domain],redundant_l1,concept_picks[ex.concept_id],probe_ready,abs(target-ex.level),new_fam,exercises.index(ex))
+            return (1,counts[ex.domain],redundant_l1,concept_picks[ex.concept_id],probe_ready,abs(target-ex.level),new_fam,form,exercises.index(ex))
         ex=min(pool,key=sort_key)
-        selected.append((ex,'new'));counts[ex.domain]+=1;concept_picks[ex.concept_id]+=1
+        selected.append((ex,'new'));count(ex)
         solved_families.setdefault(ex.concept_id,set()).add(LEARNING_PATHS['items'][ex.id]['family'])
         pool.remove(ex)
         if ex.level==3:pool=[candidate for candidate in pool if candidate.level<3]
@@ -246,7 +259,7 @@ def recommendation_trace(selected, sessions, by_id):
                   'evidence_days':states[ex.concept_id]['evidence_days'],
                   'reason':'예정된 복습으로 기억을 다시 확인해요.' if category=='review' else
                     '최근 본 문제 대신 같은 개념을 다른 문제로 확인해요.' if category=='practice' else
-                    '도움이 필요했던 개념의 기초를 먼저 확인해요.' if states[ex.concept_id]['needs_support'] else
+                    ('막혔던 문제보다 한 단계 아래에서 다시 확인해요.' if ex.level>=2 else '도움이 필요했던 개념의 기초를 먼저 확인해요.') if states[ex.concept_id]['needs_support'] else
                     '다음 단계에 필요한 기초를 먼저 확인해요.' if ex.level==1 else
                     '확인한 기초를 다른 조건에 적용해요.'}
                  for ex,category in selected]}

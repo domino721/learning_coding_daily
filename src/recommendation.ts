@@ -15,9 +15,17 @@ type PathSpec = {
   family: string;
   requires: string[];
   remediation?: string[];
+  task_form?: string;
 };
 const policy = curriculum.learning_paths;
 const paths = policy.items as Record<string, PathSpec>;
+// What the learner is asked to do. Items authored before task forms are read from the code.
+export function taskForm(ex: { id: string; code: string }) {
+  return (
+    paths[ex.id]?.task_form ||
+    (ex.code.includes("____") ? "fill-blank" : "output")
+  );
+}
 export function observations(sessions: Session[]) {
   const seen = new Set<string>();
   return [...sessions]
@@ -123,6 +131,8 @@ export function conceptStates(sessions: Session[]) {
       family_count: families,
       retention_observed: retained,
       needs_support: needsSupport,
+      // Level of the item that last needed help; support practice steps one level below it.
+      support_level: needsSupport ? allRows[support].level : 0,
       evidence_status: allRows.length ? "observed" : "unassessed",
       ready_for_probe: !!rows.length && rows.at(-1)!.independent && days >= 2,
       status: needsSupport
@@ -183,7 +193,7 @@ export function selectExercises(
   const eligible = (ex: Source) => {
     const s = states.get(ex.concept_id)!;
     const limit = s.needs_support
-      ? 1
+      ? Math.max(1, s.support_level - 1)
       : s.level >= 2
         ? 3
         : s.independent_count > 0
@@ -222,6 +232,7 @@ export function selectExercises(
     const remediation = paths[ex.id].remediation ?? [];
     const key = (c: Source) => [
       remediation.includes(c.id) ? 0 : 1,
+      taskForm(c) === taskForm(ex) ? 1 : 0,
       Math.abs(c.level - ex.level),
       exercises.indexOf(c),
     ];
@@ -257,11 +268,22 @@ export function selectExercises(
   const counts = new Map(curriculum.concepts.map((c) => [c.domain, 0])),
     conceptPicks = new Map(
       curriculum.concepts.map((c) => [c.id, obsToday.has(c.id) ? 1 : 0]),
-    );
-  for (const [ex] of selected) {
+    ),
+    // Task forms already in this batch; the last tie-break mixes what is asked.
+    forms = new Map<string, number>(),
+    // Support outranks new concepts only for as many items as recovery needs.
+    supportPicks = new Map<string, number>();
+  const count = (ex: Source) => {
     counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
     conceptPicks.set(ex.concept_id, (conceptPicks.get(ex.concept_id) ?? 0) + 1);
-  }
+    forms.set(taskForm(ex), (forms.get(taskForm(ex)) ?? 0) + 1);
+    if (states.get(ex.concept_id)!.needs_support)
+      supportPicks.set(
+        ex.concept_id,
+        (supportPicks.get(ex.concept_id) ?? 0) + 1,
+      );
+  };
+  for (const [ex] of selected) count(ex);
   const requiredL1 = new Set(
       exercises
         .filter((ex) => !progress[ex.id])
@@ -278,10 +300,17 @@ export function selectExercises(
       newFam = solvedFamilies.get(ex.concept_id)?.has(fam) ? 1 : 0,
       dom = counts.get(ex.domain) ?? 0,
       pick = conceptPicks.get(ex.concept_id) ?? 0,
+      form = forms.get(taskForm(ex)) ?? 0,
       idx = exercises.indexOf(ex);
-    if (st.needs_support) return [0, dom, 0, 0, ex.level, 0, newFam, idx];
+    if (
+      st.needs_support &&
+      (supportPicks.get(ex.concept_id) ?? 0) < policy.rules.recovery_items
+    ) {
+      const target = Math.max(1, st.support_level - 1);
+      return [0, dom, 0, 0, Math.abs(target - ex.level), 0, newFam, form, idx];
+    }
     if (!progressedConcepts.has(ex.concept_id))
-      return [1, dom, 0, pick, 1, ex.level - 1, 0, idx];
+      return [1, dom, 0, pick, 1, ex.level - 1, 0, form, idx];
     const redundantL1 =
         ex.level === 1 && st.independent_count > 0 && !requiredL1.has(ex.id)
           ? 1
@@ -302,6 +331,7 @@ export function selectExercises(
       probeReady,
       Math.abs(target - ex.level),
       newFam,
+      form,
       idx,
     ];
   };
@@ -315,8 +345,7 @@ export function selectExercises(
     });
     const ex = pool.shift()!;
     selected.push([ex, "new"]);
-    counts.set(ex.domain, (counts.get(ex.domain) ?? 0) + 1);
-    conceptPicks.set(ex.concept_id, (conceptPicks.get(ex.concept_id) ?? 0) + 1);
+    count(ex);
     if (!solvedFamilies.has(ex.concept_id))
       solvedFamilies.set(ex.concept_id, new Set());
     solvedFamilies.get(ex.concept_id)!.add(paths[ex.id].family);
@@ -361,7 +390,9 @@ export function recommendationTrace(
             : category === "practice"
               ? "최근 본 문제 대신 같은 개념을 다른 문제로 확인해요."
               : state.needs_support
-                ? "도움이 필요했던 개념의 기초를 먼저 확인해요."
+                ? ex.level >= 2
+                  ? "막혔던 문제보다 한 단계 아래에서 다시 확인해요."
+                  : "도움이 필요했던 개념의 기초를 먼저 확인해요."
                 : ex.level === 1
                   ? "다음 단계에 필요한 기초를 먼저 확인해요."
                   : "확인한 기초를 다른 조건에 적용해요.",

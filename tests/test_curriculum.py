@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 from sklearn.preprocessing import StandardScaler
 
-from backend.content import EXERCISES
+from backend.content import EXERCISES, LAYOUT_KINDS
 from scripts.validate_sql_content import sql_output
 
 
@@ -46,7 +46,11 @@ def run_sql(exercise):
             assert str([row[0] for row in db.execute(exercise.code)]) == exercise.answer == '[1]'
 
 
-@pytest.mark.parametrize('exercise', EXERCISES, ids=lambda ex: ex.id)
+# Line/order/multi answers are option numbers; tests/test_format_content.py re-runs them.
+CLASSIC = [ex for ex in EXERCISES if ex.kind not in LAYOUT_KINDS]
+
+
+@pytest.mark.parametrize('exercise', CLASSIC, ids=lambda ex: ex.id)
 def test_authored_exercise_with_real_library_or_sql(exercise):
     assert len(exercise.hints) == 2
     if exercise.choices:
@@ -89,7 +93,7 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
             assert exercise.answer == EXPECTED[exercise.id]
 
 
-@pytest.mark.parametrize('exercise', EXERCISES, ids=lambda ex: ex.id)
+@pytest.mark.parametrize('exercise', CLASSIC, ids=lambda ex: ex.id)
 def test_every_exercise_supports_choice_and_direct_answer(exercise):
     assert len(set(exercise.choices)) == len(exercise.choices) == 4
     assert exercise.matches(exercise.answer)

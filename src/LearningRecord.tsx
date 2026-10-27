@@ -3,6 +3,7 @@ import SyncPanel from "./SyncPanel";
 import { useEffect, useState } from "react";
 import { api, type Dashboard, type Session } from "./api";
 import ExerciseReview from "./ExerciseReview";
+import { answerText, isLayoutKind } from "./answerFormat";
 import {
   createBackup,
   parseBackup,
@@ -278,7 +279,10 @@ export function LearningRecord({
                 </span>
                 {(i.last_answer || i.draft) && (
                   <p className="submitted-answer">
-                    내 답안: {i.last_answer || i.draft}
+                    내 답안:{" "}
+                    {isLayoutKind(i.kind)
+                      ? answerText(i, i.last_answer || i.draft || "")
+                      : i.last_answer || i.draft}
                   </p>
                 )}
                 {i.answer && (

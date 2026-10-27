@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import type { Exercise } from "./api";
 import CodeBlock from "./CodeBlock";
+import { answerText, isLayoutKind } from "./answerFormat";
+import { LinePicker, MultiPicker, OrderBuilder } from "./StructuredAnswer";
 import { formatTime, useActiveTime } from "./useActiveTime";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
+const layouts: Record<string, { eyebrow: string; format: string }> = {
+  line: { eyebrow: "문제가 되는 줄을 찾아보세요", format: "줄 고르기" },
+  order: { eyebrow: "코드를 순서대로 배치해 보세요", format: "순서 맞추기" },
+  multi: { eyebrow: "해당하는 것을 모두 골라 보세요", format: "모두 고르기" },
+};
 const buildId = typeof __BUILD_ID__ === "string" ? __BUILD_ID__ : "dev";
 export function reportText(item: Exercise, build = buildId) {
   return [
@@ -85,6 +92,7 @@ export default function ExerciseCard({
     heading.current?.focus();
   }, []);
   const wrong = !done && item.last_correct === false;
+  const layout = isLayoutKind(item.kind) ? layouts[item.kind] : undefined;
   return (
     <>
       <div className="lesson-meta">
@@ -110,9 +118,10 @@ export default function ExerciseCard({
       <section className="exercise-card" aria-labelledby="question-title">
         <div className="exercise-heading">
           <p className="eyebrow">
-            {item.kind === "choice"
-              ? "결과를 생각해 보세요"
-              : "작은 빈칸을 채워 보세요"}
+            {layout?.eyebrow ??
+              (item.kind === "choice"
+                ? "결과를 생각해 보세요"
+                : "작은 빈칸을 채워 보세요")}
           </p>
           <div className="exercise-time">
             <span>예상 {Math.ceil(item.estimated_seconds / 60)}분</span>
@@ -135,23 +144,28 @@ export default function ExerciseCard({
           </p>
         )}
         <p className="prompt">
-          {mode === "choice"
+          {layout
             ? item.prompt
-                .replaceAll("입력하세요", "고르세요")
-                .replaceAll("구하세요", "고르세요")
-            : item.prompt.replaceAll("고르세요", "입력하세요")}
+            : mode === "choice"
+              ? item.prompt
+                  .replaceAll("입력하세요", "고르세요")
+                  .replaceAll("구하세요", "고르세요")
+              : item.prompt.replaceAll("고르세요", "입력하세요")}
         </p>
-        <CodeBlock
-          code={item.code}
-          language={item.domain}
-          exerciseId={item.id}
-        />
+        {item.kind !== "line" && item.code && (
+          <CodeBlock
+            code={item.code}
+            language={item.domain}
+            exerciseId={item.id}
+          />
+        )}
         <p className="question-format">
-          {mode === "choice"
-            ? "객관식"
-            : mode === "essay"
-              ? "서술형"
-              : "단답형"}{" "}
+          {layout?.format ??
+            (mode === "choice"
+              ? "객관식"
+              : mode === "essay"
+                ? "서술형"
+                : "단답형")}{" "}
           ·{" "}
           {item.difficulty?.label ?? (item.level === 2 ? "적용" : "기초 확인")}
         </p>
@@ -167,7 +181,31 @@ export default function ExerciseCard({
               onAnswer(draft, readSeconds());
           }}
         >
-          {mode === "choice" ? (
+          {item.kind === "line" ? (
+            <LinePicker
+              item={item}
+              value={draft}
+              onChange={setDraft}
+              disabled={busy || done || exhausted}
+              done={done}
+            />
+          ) : item.kind === "order" ? (
+            <OrderBuilder
+              item={item}
+              value={draft}
+              onChange={setDraft}
+              disabled={busy || done || exhausted}
+              done={done}
+            />
+          ) : item.kind === "multi" ? (
+            <MultiPicker
+              item={item}
+              value={draft}
+              onChange={setDraft}
+              disabled={busy || done || exhausted}
+              done={done}
+            />
+          ) : mode === "choice" ? (
             <fieldset disabled={busy || done || exhausted} className="choices">
               <legend className="sr-only">답안 선택</legend>
               {item.choices.map((choice, i) => (
@@ -294,8 +332,11 @@ export default function ExerciseCard({
                   </p>
                 </>
               )}
-              <p className="solution">
-                정답 <code>{item.answer}</code>
+              <p className={`solution${layout ? " layout-answer" : ""}`}>
+                정답{" "}
+                <code>
+                  {layout ? answerText(item, item.answer ?? "") : item.answer}
+                </code>
               </p>
               <p>{item.explanation}</p>
               <button

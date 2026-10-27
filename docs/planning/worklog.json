@@ -1062,6 +1062,20 @@
       ],
       "summary": "일일 콘텐츠 작업을 새 5문항에서 형식 전환 2·오답 보기 검수 3으로 전환(docs/CONTENT_AUTOMATION.md, 설계/계획 1.10.0). backend/quality_gate.py와 curriculum/quality_baseline.json(기존 206개 면제)·tests/test_quality_gate.py 추가. scripts/freeze-catalog.py와 tests/fixtures/catalog-published.json·tests/test_catalog_preservation.py로 보존 검사 단일화. 앱 상단 배포본 식별자(__BUILD_ID__)와 해설 화면 ‘이 문제 신고 내용 복사’. scripts/analyze-backups.py 주간 집계. 문항 본문·보기·경로·rules·기록 계약 변경 없음. 검증 EV-061. 원격 저장/게시 전, Codex 예약 본문 갱신은 사용자 조치.",
       "commit": null
+    },
+    {
+      "id": "LOG-090",
+      "date": "2026-10-27",
+      "tasks": [
+        "WBS-380",
+        "WBS-370"
+      ],
+      "changes": [
+        "CR-015",
+        "CR-014"
+      ],
+      "summary": "로컬 checkout이 원격보다 3커밋 뒤처진 상태에서 CR-014 미커밋 작업을 .git/local-backups와 stash로 백업하고 origin/main 2da5e54로 fast-forward한 뒤 다시 적용했다. 원격 EV-058·LOG-084와 겹친 로컬 기록은 EV-061·LOG-089로 바꾸고, 2026-10-25 게시 5문항을 품질 기준선에 넣었다. CR-015: kind에 line·order·multi를 추가(응답 모드 choice·번호 답, 서버/브라우저 동일 검증, 단답형 전환 제외)하고 새 형식 15문항(Python10/SQL5)을 작성했다. 정답을 모르는 별도 검수자가 15개를 다시 풀어 모두 일치했고 지적한 힌트·지문을 고쳤다. 품질 게이트·SQL 검증·tests/test_format_content.py가 형식별 오답 근거와 모든 변형을 재실행한다. 추천 learning-paths-2.2(한 단계 아래 보충·개념당 보충 우선 2문항·과제 형식 섞기·다른 형식 다시 연습)를 웹/서버에 같게 구현하고 scripts/compare-engines.py로 2.1과 가상 비교했다. 검증 EV-062. 원격 저장/게시 전.",
+      "commit": null
     }
   ]
 }

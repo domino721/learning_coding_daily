@@ -24,6 +24,7 @@ import {
   reviewDue,
   recommendationTrace,
 } from "./recommendation";
+import { isLayoutKind, validChoiceAnswer } from "./answerFormat";
 const TIMEZONE = "Asia/Seoul";
 const sources = new Map<string, Source>(
   curriculum.exercises.map((ex) => [ex.id, ex]),
@@ -519,8 +520,9 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
   if (route[2] === "mode") {
     if (!validMode(body.response_mode) || body.response_mode === "essay")
       throw new ApiError("풀이 모드를 확인해 주세요.", 422);
+    // Line/order/multi items have no typed form; only classic items switch modes.
     for (const pending of session.items)
-      if (pending.status === "pending")
+      if (pending.status === "pending" && !isLayoutKind(pending.kind))
         pending.response_mode = body.response_mode;
     await saveRecords(data);
     return session;
@@ -572,7 +574,10 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     typeof body.attempt_id !== "string"
   )
     throw new ApiError("문제에 맞는 답안을 입력해 주세요.", 422);
-  if (item.response_mode === "choice" && !source.choices.includes(body.answer))
+  if (
+    item.response_mode === "choice" &&
+    !validChoiceAnswer(source.kind, body.answer, source.choices)
+  )
     throw new ApiError("보기에서 답을 골라 주세요.", 422);
   if (item.attempts_count >= 2) {
     complete(data, session, item, "incorrect", true);

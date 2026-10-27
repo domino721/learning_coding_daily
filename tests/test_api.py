@@ -435,3 +435,24 @@ def test_existing_over_limit_short_answer_is_preserved_and_cannot_retry(learning
     assert saved['last_answer']=='old wrong answer'
     with connect(path) as db:
         assert db.execute('SELECT count(*) FROM attempts').fetchone()[0]==0
+
+
+def test_structured_answers_are_validated_and_graded_on_the_server(learning):
+    client, _, _ = learning
+    session = start(client, 'sql')
+    item = next(i for i in session['items'] if i['kind'] == 'order')
+    ex = BY_ID[item['id']]
+    for malformed in ('1,1,2,3', '5,1,2,3', 'SELECT id', '2,4,1,3,', ex.choices[0]):
+        assert answer(client, session, item, malformed).status_code == 422
+    url = f"/api/sessions/{session['id']}"
+    classic = next(i for i in session['items'] if i['kind'] not in ('line', 'order', 'multi'))
+    changed = client.post(url + '/mode', json={'exercise_id': classic['id'], 'response_mode': 'short'}).json()
+    # A typed mode never applies to line/order/multi items; classic items still switch.
+    modes = {i['id']: i['response_mode'] for i in changed['items']}
+    assert modes[item['id']] == 'choice' and modes[classic['id']] == 'short'
+    trap = next(o for o in ('4,2,1,3', '1,2,3,4') if o != ex.answer)
+    assert answer(client, session, item, trap).json()['correct'] is False
+    done = answer(client, session, item, ex.answer).json()
+    finished = next(i for i in done['session']['items'] if i['id'] == item['id'])
+    assert done['correct'] is True and finished['status'] == 'correct' and finished['attempts_count'] == 2
+    assert finished['answer'] == ex.answer and finished['last_answer'] == ex.answer

@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "review_id": "formats-2026-10-27",
+  "date": "2026-10-27",
+  "change": "CR-015",
+  "tasks": ["WBS-380"],
+  "status": "reviewed",
+  "method": "Claude가 앱 밖에서 직접 작성하고, 정답을 모르는 별도 검수 에이전트가 다시 풀어 대조했다. tests/test_format_content.py가 정답·허용 순서·오답 순서·보기별 결과·고친 코드를 실제 pandas/NumPy/scikit-learn/SQLite로 다시 실행한다. 모델 API 호출 없음.",
+  "independent_review": {
+    "blind_answers_matching_key": 15,
+    "items": 15,
+    "checks": "정답을 모르는 상태로 15개를 먼저 풀어 기록한 뒤 정답표와 대조했다. 순서 맞추기 5개는 쓰지 않는 줄 선택을 포함한 모든 순서를 실행해 정답·허용 순서 외에는 목표 출력이 나오지 않음을 확인했다.",
+    "fixes_applied": [
+      "stats-outlier-shift-form-01: 범위를 위치 기반으로 오해하게 만드는 힌트 두 개와 해설 마지막 문장을 고쳤다.",
+      "numpy-axis-mean-form-01: 지문에 데이터 순서(1주 차 3일 다음 2주 차 3일)를 밝히고 축 설명을 사라지는 축 기준으로 통일했다.",
+      "pandas-fill-assign-form-01: 4번 줄 함정 설명과 지문 마지막 문장을 고쳤다.",
+      "sql-outer-count-form-01: SUM(o.id IS NOT NULL)이 0이 되는 이유를 해설에 넣고 용어를 짝 없는 행으로 통일했다.",
+      "ml-leak-free-steps-form-01: 쓰지 않을 줄을 바로 알려 주던 힌트 2를 비교 질문으로 바꿨다.",
+      "sql-group-clauses-form-01: HAVING을 GROUP BY 앞에 둔 순서를 함정에 추가했다.",
+      "그 밖에 힌트 2가 답을 거의 말하던 3개(sql-null-compare, sql-outer-filter, ml-split-facts)와 지문·해설 표현 6곳을 다듬었다."
+    ]
+  },
+  "items": [
+    {
+      "id": "sql-clause-order-form-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "reference_output": "[4, 2]",
+      "boundary": "amount가 정확히 2000인 주문 2가 >= 조건에 포함된다. 세 오답 순서는 SQLite에서 모두 문법 오류다."
+    },
+    {
+      "id": "sql-null-compare-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "[]",
+      "fix": {
+        "lines": {
+          "7": "  AND coupon IS NULL"
+        },
+        "rows": [[2], [3]]
+      },
+      "boundary": "쿠폰이 NULL이지만 1500원인 주문 5는 고친 쿼리에서도 제외된다. 빈 문자열 쿠폰은 입력에 없다."
+    },
+    {
+      "id": "sql-group-clauses-form-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 2,
+      "reference_output": "['C', 'A']",
+      "boundary": "WHERE가 없으면 B가 7000으로 포함되어 ['B', 'C', 'A']가 된다. 세 오답 순서는 SQLite에서 모두 문법 오류다."
+    },
+    {
+      "id": "sql-outer-count-form-01",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "[2, 1, 0]",
+      "boundary": "주문 11은 금액만 NULL인 실제 주문이다. 고객 3의 짝 없는 행은 o.id·o.amount가 모두 NULL이다."
+    },
+    {
+      "id": "sql-outer-filter-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "['kim', 'lee']",
+      "fix": {
+        "lines": {
+          "8": "LEFT JOIN orders AS o ON o.customer_id = c.id AND o.status = 'paid'",
+          "9": ""
+        },
+        "rows": [
+          ["kim", 3000],
+          ["lee", 4000],
+          ["park", 0]
+        ]
+      },
+      "boundary": "park의 유일한 주문이 환불이다. kim의 환불 2000은 고친 쿼리에서도 합계에서 빠진다."
+    },
+    {
+      "id": "pandas-paid-amounts-form-01",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "reference_output": "[3000, 4000]",
+      "boundary": "행 라벨은 기본 정수 0~3이라 paid라는 라벨이 없다. hold 행은 조건에서 빠진다."
+    },
+    {
+      "id": "pandas-fill-assign-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "3000.0",
+      "fix": {
+        "lines": {
+          "3": "df[\"amount\"] = df[\"amount\"].fillna(0)"
+        },
+        "output": "2000.0"
+      },
+      "boundary": "pandas 2.x 기준이며 fillna의 inplace 인수를 쓰지 않는다. 고친 코드는 세 값을 모두 분모에 넣는다."
+    },
+    {
+      "id": "pandas-group-steps-form-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 3,
+      "reference_output": "{'C': 8500, 'A': 5500}",
+      "boundary": "B는 환불 6000을 빼면 1000이라 제외된다. 개별 결제 주문 중 5000 이상은 없다."
+    },
+    {
+      "id": "numpy-axis-mean-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "[10.0, 11.0]",
+      "fix": {
+        "lines": {
+          "4": "daily_mean = table.mean(axis=0)"
+        },
+        "output": "[10.5, 9.5, 11.5]"
+      },
+      "boundary": "reshape(3, 2)로 바꾸고 axis=1을 쓰면 값 3개가 나오지만 주와 요일이 섞인 [10.0, 9.5, 12.0]이라 고친 결과가 아니다."
+    },
+    {
+      "id": "numpy-copy-timing-form-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "reference_output": "[3, -1, 4, -2] [3, 0, 4, 0]",
+      "boundary": "0은 음수가 아니라 바뀌지 않는다. 두 오답 순서는 실행되지만 출력이 목표와 다르다."
+    },
+    {
+      "id": "stats-pooled-rate-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "0.2",
+      "fix": {
+        "lines": {
+          "4": "overall = sum(buyers) / sum(visitors)"
+        },
+        "output": "0.12"
+      },
+      "boundary": "두 채널 방문자 수가 같다면 단순 평균과 전체 비율이 같아져 결함이 드러나지 않는다. 이 입력은 900:100이다."
+    },
+    {
+      "id": "stats-outlier-shift-form-01",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 2,
+      "reference_output": "True",
+      "boundary": "mean은 정수 입력이라 32와 212를 정확히 비교한다. 바뀐 값이 여전히 최댓값이라 정렬 위치가 유지된다."
+    },
+    {
+      "id": "ml-leak-free-steps-form-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 3,
+      "reference_output": "[1.13, -0.57]",
+      "boundary": "random_state=0으로 분할이 고정된다. 누수 순서도 실행은 되지만 평가 입력의 변환값이 달라진다."
+    },
+    {
+      "id": "ml-recall-denominator-form-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "0.6",
+      "fix": {
+        "lines": {
+          "4": "recall = hits / sum(t == 1 for t in y_true)"
+        },
+        "output": "0.75"
+      },
+      "boundary": "예측 양성 5건과 실제 양성 4건이 달라야 결함이 드러난다. 둘이 같으면 정밀도와 재현율이 같아진다."
+    },
+    {
+      "id": "ml-split-facts-form-01",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 1,
+      "reference_output": "True",
+      "boundary": "x의 값이 모두 달라 집합 교집합으로 겹침을 확인할 수 있다. random_state=1의 train은 x[:6]과 다르다."
+    }
+  ]
+}

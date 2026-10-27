@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
+import { enterAnswer } from "./answer";
 
 test("independent courses use unique pools, capped choices and preserved history", async ({
   page,
@@ -123,9 +124,7 @@ test("independent courses use unique pools, capped choices and preserved history
     expect(ex.domain === "SQL").toBe(track === "sql");
     expect(seen.has(ex.id)).toBe(false);
     seen.add(ex.id);
-    if (ex.response_mode === "choice")
-      await page.getByLabel(ex.answer, { exact: true }).check();
-    else await page.getByRole("textbox").fill(ex.answer);
+    await enterAnswer(page, ex);
     await page.getByRole("button", { name: "답 확인하기" }).click();
     await expect(page.getByText("작은 한 걸음, 완료!")).toBeVisible();
     count++;

@@ -27,6 +27,15 @@ export default function CodeBlock({
         code = corrected.code;
     }
   }
+  return (
+    <pre className={sql ? "sql-code" : undefined}>
+      <code>{highlight(code, sql)}</code>
+    </pre>
+  );
+}
+
+// Render tokens as text spans; shared by the line picker for per-line highlighting.
+export function highlight(code: string, sql: boolean) {
   const pattern = sql
     ? /--[^\n]*|'(?:''|[^'])*'|"(?:""|[^"])*"|\b(?:SELECT|FROM|WHERE|GROUP|BY|ORDER|HAVING|AS|JOIN|LEFT|RIGHT|INNER|ON|AND|OR|NOT|NULL|IS|IN|DISTINCT|WITH|OVER|PARTITION|ASC|DESC|CASE|WHEN|THEN|ELSE|END|LIMIT|COUNT|SUM|AVG|MIN|MAX|COALESCE|ROW_NUMBER)\b|\b\d+(?:\.\d+)?\b/gi
     : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
@@ -56,9 +65,5 @@ export default function CodeBlock({
     offset = match.index + token.length;
   }
   parts.push(code.slice(offset));
-  return (
-    <pre className={sql ? "sql-code" : undefined}>
-      <code>{parts}</code>
-    </pre>
-  );
+  return parts;
 }

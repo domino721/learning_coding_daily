@@ -7413,6 +7413,570 @@
       },
       "reference_setup": "CREATE TABLE orders(id INTEGER);\nINSERT INTO orders VALUES(1),(NULL),(2);\nCREATE TABLE blocked(id INTEGER);",
       "reference_output": "3"
+    },
+    {
+      "id": "sql-clause-order-form-01",
+      "concept": "SQL 절의 작성 순서",
+      "kind": "order",
+      "title": "조회문 순서 맞추기",
+      "prompt": "금액이 2000 이상인 주문의 id를 큰 번호부터 조회하려고 합니다. 아래 네 줄을 모두 사용해 SQL을 쓰는 순서대로 배치하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, amount INTEGER);\n-- INSERT INTO orders VALUES(1,1500),(2,2000),(3,900),(4,3200);",
+      "answer": "2,4,1,3",
+      "explanation": "SQL은 SELECT → FROM → WHERE → ORDER BY 순서로 씁니다. 실제 처리는 FROM에서 행을 읽고 WHERE로 거른 뒤 정렬하지만, 쓰는 순서는 이와 다릅니다. 2000 이상인 주문 2와 4를 큰 번호부터 정렬해 [4, 2]가 됩니다. FROM을 맨 앞에 두거나, WHERE를 FROM 앞이나 ORDER BY 뒤에 두면 문법 오류가 납니다.",
+      "hints": [
+        "SQL 문장은 어떤 열을 가져올지 밝히는 줄로 시작합니다.",
+        "행을 거르는 조건은 테이블을 정한 다음에, 정렬은 결과가 정해진 뒤 마지막에 붙습니다."
+      ],
+      "choices": [
+        "WHERE amount >= 2000",
+        "SELECT id",
+        "ORDER BY id DESC;",
+        "FROM orders"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "네 절을 작성 순서로 배치하는 기초다. 결과 [4, 2]는 조건과 정렬이 모두 맞아야 나온다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id INTEGER, amount INTEGER); INSERT INTO orders VALUES(1,1500),(2,2000),(3,900),(4,3200);",
+      "reference_output": "[4, 2]"
+    },
+    {
+      "id": "sql-null-compare-form-01",
+      "concept": "NULL 비교와 IS NULL",
+      "kind": "line",
+      "title": "쿠폰 없는 주문 조회 점검",
+      "prompt": "쿠폰을 쓰지 않은(coupon이 NULL인) 2000원 이상 주문 2, 3을 조회하려 했는데 결과가 비어 있습니다. 결과를 비게 만든 줄을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, coupon TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'WELCOME',3000),(2,NULL,5000),(3,NULL,2000),(4,'VIP',7000),(5,NULL,1500);\nSELECT id\nFROM orders\nWHERE amount >= 2000\n  AND coupon = NULL\nORDER BY id;",
+      "answer": "7",
+      "explanation": "coupon = NULL은 NULL과의 비교라 어느 행에서도 참이 되지 않고 알 수 없음(Unknown)이 됩니다. WHERE는 참인 행만 남기므로 결과가 비었습니다. 7번 줄을 AND coupon IS NULL로 바꾸면 [2, 3]이 나옵니다. 6번 줄의 amount >= 2000은 주문 1~4를 남기므로 원인이 아니고, 8번 줄의 정렬은 행 수를 바꾸지 않습니다.",
+      "hints": [
+        "각 조건이 혼자 있을 때 몇 행을 남기는지 차례로 세어 보세요.",
+        "NULL은 값이 아니라 '알 수 없음'입니다. NULL을 = 로 비교하면 결과가 무엇이 될지 생각해 보세요."
+      ],
+      "choices": ["4", "5", "6", "7", "8"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-rows",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "IS NULL 기초를 결함 찾기로 옮긴 적용이다. 조건 두 개 중 하나가 모든 행을 지우는지 판단한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "CREATE TABLE orders(id INTEGER, coupon TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'WELCOME',3000),(2,NULL,5000),(3,NULL,2000),(4,'VIP',7000),(5,NULL,1500);",
+      "reference_output": "[]"
+    },
+    {
+      "id": "sql-group-clauses-form-01",
+      "concept": "WHERE·GROUP BY·HAVING의 위치",
+      "kind": "order",
+      "title": "팀 집계 조회문 조립",
+      "prompt": "결제 완료(paid) 주문만 팀별로 합산해 합계가 5000 이상인 팀을 합계가 큰 순서로 조회하려고 합니다. 여섯 줄을 모두 사용해 순서대로 배치하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE sales(team TEXT, amount INTEGER, status TEXT);\n-- INSERT INTO sales VALUES('A',3000,'paid'),('A',2500,'paid'),('B',6000,'refund'),('B',1000,'paid'),('C',4000,'paid'),('C',4500,'paid');",
+      "answer": "5,2,4,6,1,3",
+      "explanation": "쓰는 순서는 SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY입니다. WHERE는 묶기 전에 개별 주문을 걸러 환불 주문을 합계에서 빼고, HAVING은 묶은 뒤 팀 합계를 거릅니다. 결제 합계는 A 5500·B 1000·C 8500이라 결과는 ['C', 'A']입니다. WHERE를 GROUP BY 뒤에 쓰거나 HAVING을 GROUP BY 앞이나 ORDER BY 뒤에 쓰면 문법 오류가 납니다.",
+      "hints": [
+        "개별 주문에 대한 조건과 팀 합계에 대한 조건을 먼저 나누어 보세요.",
+        "개별 행 조건은 묶기 전에, 합계 조건은 GROUP BY 바로 다음에 옵니다."
+      ],
+      "choices": [
+        "HAVING SUM(amount) >= 5000",
+        "FROM sales",
+        "ORDER BY SUM(amount) DESC;",
+        "WHERE status = 'paid'",
+        "SELECT team",
+        "GROUP BY team"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "concept_id": "sql-aggregation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "HAVING 키워드 기초를 여섯 절의 조립으로 넓힌 적용이다. 환불 주문이 행 조건에서 빠져야 결과가 맞다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "CREATE TABLE sales(team TEXT, amount INTEGER, status TEXT); INSERT INTO sales VALUES('A',3000,'paid'),('A',2500,'paid'),('B',6000,'refund'),('B',1000,'paid'),('C',4000,'paid'),('C',4500,'paid');",
+      "reference_output": "['C', 'A']"
+    },
+    {
+      "id": "sql-outer-count-form-01",
+      "concept": "외부 조인 뒤 COUNT 대상",
+      "kind": "multi",
+      "title": "주문 없는 고객의 건수",
+      "prompt": "고객별 주문 수를 구하되 주문이 없는 고객 3도 0으로 나와야 합니다. 빈칸에 넣었을 때 결과가 [2, 1, 0]이 되는 식을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, name TEXT);\n-- INSERT INTO customers VALUES(1,'kim'),(2,'lee'),(3,'park');\n-- CREATE TABLE orders(id INTEGER, customer_id INTEGER, amount INTEGER);\n-- INSERT INTO orders VALUES(10,1,3000),(11,1,NULL),(12,2,2000);\nSELECT ____ AS order_count\nFROM customers AS c\nLEFT JOIN orders AS o ON o.customer_id = c.id\nGROUP BY c.id\nORDER BY c.id;",
+      "answer": "2,4",
+      "explanation": "LEFT JOIN은 주문이 없는 고객 3도 주문 쪽 열이 모두 NULL인 한 행으로 남깁니다. COUNT(*)와 COUNT(c.id)는 그 행을 세어 1이 되고, COUNT(o.id)는 NULL을 세지 않아 0입니다. SUM(o.id IS NOT NULL)은 연결된 주문마다 1을 더하고, 고객 3의 행에서는 NULL이 아닌 0(거짓)을 더하므로 같은 결과입니다. SUM(o.id)였다면 고객 3은 NULL이 됩니다. COUNT(o.amount)는 금액이 비어 있는 주문 11을 빼서 고객 1이 1이 되므로 주문 수와 다릅니다.",
+      "hints": [
+        "고객 3은 조인 결과에 몇 행으로 남는지, 그 행의 주문 쪽 열 값이 무엇인지 먼저 적어 보세요.",
+        "COUNT(열)은 그 열이 NULL인 행을 세지 않습니다. 주문이 있으면 항상 값이 있는 열이 무엇인지 보세요."
+      ],
+      "choices": [
+        "COUNT(*)",
+        "COUNT(o.id)",
+        "COUNT(o.amount)",
+        "SUM(o.id IS NOT NULL)",
+        "COUNT(c.id)"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-aggregation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "COUNT의 NULL 제외 규칙을 외부 조인의 짝 없는 행과 결측 금액에 함께 적용하는 전이다. 다섯 식을 각각 판단해야 한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "CREATE TABLE customers(id INTEGER, name TEXT); INSERT INTO customers VALUES(1,'kim'),(2,'lee'),(3,'park'); CREATE TABLE orders(id INTEGER, customer_id INTEGER, amount INTEGER); INSERT INTO orders VALUES(10,1,3000),(11,1,NULL),(12,2,2000);",
+      "reference_output": "[2, 1, 0]"
+    },
+    {
+      "id": "sql-outer-filter-form-01",
+      "concept": "외부 조인의 오른쪽 조건 위치",
+      "kind": "line",
+      "title": "사라진 고객 찾기",
+      "prompt": "모든 고객의 결제 완료(paid) 금액 합계를 구하고, 결제 완료 주문이 없는 고객은 0으로 보여 주려 합니다. 그런데 결과에 kim과 lee만 나오고 park가 사라졌습니다. 원인이 되는 줄을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, name TEXT);\n-- INSERT INTO customers VALUES(1,'kim'),(2,'lee'),(3,'park');\n-- CREATE TABLE orders(id INTEGER, customer_id INTEGER, amount INTEGER, status TEXT);\n-- INSERT INTO orders VALUES(10,1,3000,'paid'),(11,1,2000,'refund'),(12,2,4000,'paid'),(13,3,5000,'refund');\nSELECT c.name, COALESCE(SUM(o.amount), 0) AS paid_total\nFROM customers AS c\nLEFT JOIN orders AS o ON o.customer_id = c.id\nWHERE o.status = 'paid'\nGROUP BY c.id\nORDER BY c.id;",
+      "answer": "9",
+      "explanation": "LEFT JOIN 직후에는 park도 환불 주문 13과 연결된 한 행으로 남습니다. 그런데 9번 줄의 WHERE o.status = 'paid'가 조인 뒤의 행을 거르면서 park의 행을 지워 내부 조인처럼 동작합니다. 결제 조건을 ON o.customer_id = c.id AND o.status = 'paid'처럼 조인 조건으로 옮기면 park는 연결된 주문 없이 남고 COALESCE로 0이 됩니다. 고칠 때는 조건을 8번 줄로 옮기지만, park의 행을 지우는 줄은 9번입니다. 8번 줄의 LEFT JOIN은 고객을 보존하고, 6번 줄의 COALESCE와 10번 줄의 GROUP BY는 행을 지우지 않습니다.",
+      "hints": [
+        "LEFT JOIN 직후 park의 행이 있는지, 그 행의 o.status 값이 무엇인지 적어 보세요.",
+        "WHERE는 조인이 끝난 뒤의 행을 거릅니다. park의 유일한 행이 그 조건을 통과하는지 확인해 보세요."
+      ],
+      "choices": ["6", "7", "8", "9", "10", "11"],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "concept_id": "sql-joins",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "LEFT JOIN 보존 규칙을 조건 위치 결함으로 옮긴 전이다. 조인·필터·집계 순서를 함께 추적해야 한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "CREATE TABLE customers(id INTEGER, name TEXT); INSERT INTO customers VALUES(1,'kim'),(2,'lee'),(3,'park'); CREATE TABLE orders(id INTEGER, customer_id INTEGER, amount INTEGER, status TEXT); INSERT INTO orders VALUES(10,1,3000,'paid'),(11,1,2000,'refund'),(12,2,4000,'paid'),(13,3,5000,'refund');",
+      "reference_output": "['kim', 'lee']"
+    },
+    {
+      "id": "pandas-paid-amounts-form-01",
+      "concept": "조건 선택 식의 동치",
+      "kind": "multi",
+      "title": "결제 금액을 꺼내는 식",
+      "prompt": "결제 완료(paid) 주문의 금액만 꺼내려고 합니다. 빈칸에 넣었을 때 마지막 줄이 [3000, 4000]을 출력하는 식을 모두 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\n    \"status\": [\"paid\", \"refund\", \"paid\", \"hold\"],\n    \"amount\": [3000, 1500, 4000, 2500],\n})\nprint(____.tolist())",
+      "answer": "1,3,5",
+      "explanation": "조건 df[\"status\"] == \"paid\"는 0번과 2번 행만 True입니다. loc[조건, 열], 행을 거른 뒤 열 고르기, 열을 고른 뒤 조건 걸기는 모두 같은 Series [3000, 4000]을 만듭니다. df.loc[\"paid\", \"amount\"]는 paid를 행 라벨로 찾아 KeyError가 나고, [[\"amount\"]]는 한 열짜리 DataFrame이라 tolist()가 없어 오류가 납니다.",
+      "hints": [
+        "각 식이 행을 값 조건으로 고르는지, 행 라벨로 찾는지 먼저 나누어 보세요.",
+        "마지막에 tolist()를 부를 수 있으려면 결과가 DataFrame이 아니라 Series여야 합니다."
+      ],
+      "choices": [
+        "df.loc[df[\"status\"] == \"paid\", \"amount\"]",
+        "df.loc[\"paid\", \"amount\"]",
+        "df[df[\"status\"] == \"paid\"][\"amount\"]",
+        "df[df[\"status\"] == \"paid\"][[\"amount\"]]",
+        "df[\"amount\"][df[\"status\"] == \"paid\"]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-filter",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "열 선택과 조건 필터 기초를 다섯 표현의 동치 판단으로 넓힌 적용이다. 반환 자료형과 라벨 조회를 함께 구분한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[3000, 4000]"
+    },
+    {
+      "id": "pandas-fill-assign-form-01",
+      "concept": "결측 대체 결과의 반영",
+      "kind": "line",
+      "title": "0으로 채운 평균 점검",
+      "prompt": "결측 금액을 0으로 보고 평균을 내야 하므로 2000.0이 나와야 하는데 3000.0이 출력됩니다. 0으로 채운 값이 평균 계산에 쓰이지 않은 원인이 되는 줄을 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"amount\": [2000, None, 4000]})\ndf[\"amount\"].fillna(0)\nmean_amount = df[\"amount\"].mean()\nprint(mean_amount)",
+      "answer": "3",
+      "explanation": "fillna(0)는 원본을 바꾸지 않고 0으로 채운 새 Series를 돌려줍니다. 3번 줄은 그 결과를 저장하지 않아 df의 결측이 그대로 남고, 4번 줄의 mean()은 결측을 뺀 (2000+4000)/2 = 3000.0을 계산합니다. 3번 줄을 df[\"amount\"] = df[\"amount\"].fillna(0)으로 바꾸면 6000/3 = 2000.0입니다. 2번 줄의 None은 결측으로 저장되고, mean()이 결측을 0으로 세지 않는 것은 정상 동작입니다.",
+      "hints": [
+        "평균을 내는 순간 amount 열에 결측이 남아 있는지 생각해 보세요.",
+        "pandas의 많은 메서드는 원본을 바꾸지 않고 새 결과를 돌려줍니다. 돌려준 값을 어디에 저장했는지 보세요."
+      ],
+      "choices": ["2", "3", "4", "5"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "concept_id": "pandas-null",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "fillna 기초를 반환값 미저장 결함 찾기로 옮긴 적용이다. 평균의 분모가 바뀌는지 추적한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "3000.0"
+    },
+    {
+      "id": "pandas-group-steps-form-01",
+      "concept": "필터·그룹·그룹 조건의 순서",
+      "kind": "order",
+      "title": "팀 리포트 처리 순서",
+      "prompt": "결제 완료(paid) 주문만 팀별로 합산하고, 합계가 5000 이상인 팀을 합계가 큰 순서로 출력해야 합니다. 출력은 {'C': 8500, 'A': 5500}입니다. 다섯 줄 중 필요한 네 줄을 골라 순서대로 배치하세요. 한 줄은 쓰지 않습니다.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\n    \"team\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"],\n    \"amount\": [3000, 2500, 6000, 1000, 4000, 4500],\n    \"status\": [\"paid\", \"paid\", \"refund\", \"paid\", \"paid\", \"paid\"],\n})",
+      "answer": "2,4,1,3",
+      "explanation": "결제 주문만 남긴 paid를 팀별로 합산하면 A 5500·B 1000·C 8500입니다. 합계 조건은 합산한 totals에 걸어야 A와 C가 남고, 큰 순서로 출력하면 {'C': 8500, 'A': 5500}입니다. 쓰지 않는 줄 paid[paid[\"amount\"] >= 5000]은 주문 한 건의 금액을 거르는 조건이라, 5000 이상인 결제 주문이 없어 빈 결과가 됩니다. 출력 줄을 걸러 내는 줄보다 먼저 두면 B까지 출력됩니다.",
+      "hints": [
+        "5000 이상이라는 조건이 주문 한 건의 금액에 대한 것인지, 팀 합계에 대한 것인지 정하세요.",
+        "합계 조건은 합계가 만들어진 다음에만 걸 수 있고, 출력은 모든 처리가 끝난 뒤입니다."
+      ],
+      "choices": [
+        "totals = totals[totals >= 5000]",
+        "paid = df[df[\"status\"] == \"paid\"]",
+        "print(totals.sort_values(ascending=False).to_dict())",
+        "totals = paid.groupby(\"team\")[\"amount\"].sum()",
+        "paid = paid[paid[\"amount\"] >= 5000]"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "pandas",
+      "level": 3,
+      "concept_id": "pandas-group",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "그룹 합계 기초를 쓰지 않을 줄 고르기와 네 단계 순서 구성으로 옮긴 전이다. SQL의 WHERE/HAVING 구분과 같은 판단이다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "{'C': 8500, 'A': 5500}"
+    },
+    {
+      "id": "numpy-axis-mean-form-01",
+      "concept": "집계 축과 결과 모양",
+      "kind": "line",
+      "title": "요일별 평균 점검",
+      "prompt": "2주 동안 매주 3일씩 기록한 판매량(1주 차 3일, 2주 차 3일 순서)에서 요일별 평균 3개가 나와야 하는데 값이 2개만 출력됩니다. 원인이 되는 줄을 고르세요.",
+      "code": "import numpy as np\nsales = np.array([12, 8, 10, 9, 11, 13])\ntable = sales.reshape(2, 3)  # 행: 주\ndaily_mean = table.mean(axis=1)\nprint(daily_mean.tolist())",
+      "answer": "4",
+      "explanation": "table은 2행(주) × 3열(요일)입니다. axis=1을 쓰면 열 축이 사라지고 행(주)마다 평균 하나가 남아 주별 평균 [10.0, 11.0]이 됩니다. 요일별 평균은 행 축을 없애는 axis=0으로 구하며, 결과는 [10.5, 9.5, 11.5]입니다. 3번 줄의 reshape(2, 3)은 지문의 데이터 순서(1주 차 3일 다음 2주 차 3일)와 맞고, tolist()는 값의 개수를 바꾸지 않습니다.",
+      "hints": [
+        "table의 모양 (2, 3)에서 결과에 남아야 하는 축이 어느 쪽인지 정하세요.",
+        "axis로 지정한 축이 집계 뒤 사라집니다. 요일(열)이 남으려면 어느 축을 없애야 할까요?"
+      ],
+      "choices": ["2", "3", "4", "5"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "concept_id": "numpy-structure",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "축 집계 기초를 결과 모양 결함 찾기로 옮긴 적용이다. reshape의 의미와 axis의 의미를 함께 확인한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[10.0, 11.0]"
+    },
+    {
+      "id": "numpy-copy-timing-form-01",
+      "concept": "복사 시점과 원본 변경",
+      "kind": "order",
+      "title": "원본 보존 순서",
+      "prompt": "바꾸기 전 원래 값과 음수를 0으로 바꾼 배열을 차례로 출력하려고 합니다. 출력이 [3, -1, 4, -2] [3, 0, 4, 0]이 되도록 네 줄을 모두 사용해 순서대로 배치하세요.",
+      "code": "import numpy as np",
+      "answer": "3,4,1,2",
+      "explanation": "copy()는 그 순간의 값을 따로 저장합니다. 원래 값 [3, -1, 4, -2]를 남기려면 x를 만든 뒤, 음수를 0으로 바꾸기 전에 복사해야 합니다. 바꾼 뒤에 복사하면 backup도 [3, 0, 4, 0]이 되고, 출력한 뒤에 바꾸면 바뀐 값이 출력에 나오지 않습니다.",
+      "hints": [
+        "backup에 담겨야 하는 값이 바꾸기 전 값인지, 바꾼 뒤 값인지 정하세요.",
+        "copy()는 호출한 시점의 값을 복사하며, 그 뒤 x가 바뀌어도 따라 바뀌지 않습니다."
+      ],
+      "choices": [
+        "x[x < 0] = 0",
+        "print(backup.tolist(), x.tolist())",
+        "x = np.array([3, -1, 4, -2])",
+        "backup = x.copy()"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 1,
+      "concept_id": "numpy-memory",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "복사본 기초를 네 줄의 순서로 확인하는 기초 문항이다. 변경과 복사의 선후만 정하면 된다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[3, -1, 4, -2] [3, 0, 4, 0]"
+    },
+    {
+      "id": "stats-pooled-rate-form-01",
+      "concept": "비율 평균과 전체 비율",
+      "kind": "line",
+      "title": "전체 구매율 점검",
+      "prompt": "두 채널을 합친 전체 구매율(전체 구매자 ÷ 전체 방문자) 0.12가 나와야 하는데 0.2가 출력됩니다. 원인이 되는 줄을 고르세요.",
+      "code": "visitors = [900, 100]  # A, B 채널 방문자\nbuyers = [90, 30]\nrates = [b / v for b, v in zip(buyers, visitors)]\noverall = sum(rates) / len(rates)\nprint(round(overall, 2))",
+      "answer": "4",
+      "explanation": "채널별 구매율은 0.1과 0.3으로 맞게 계산됩니다. 4번 줄은 두 비율을 단순 평균해 0.2를 만드는데, 방문자 수가 900명과 100명으로 달라 두 비율에 같은 무게를 주면 안 됩니다. 전체 구매율은 sum(buyers) / sum(visitors) = 120/1000 = 0.12입니다. round(…, 2)는 0.12를 0.2로 바꾸지 않습니다.",
+      "hints": [
+        "채널별 비율 0.1과 0.3이 각각 몇 명을 대표하는지 비교해 보세요.",
+        "비율을 그대로 평균 내면 방문자가 100명인 채널도 900명인 채널과 같은 무게를 갖습니다."
+      ],
+      "choices": ["2", "3", "4", "5"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "concept_id": "stats-rates",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "가중 평균 기초를 비율 합산 결함 찾기로 옮긴 적용이다. 집단 크기 차이를 분모에 반영해야 한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "0.2"
+    },
+    {
+      "id": "stats-outlier-shift-form-01",
+      "concept": "이상치에 대한 대표값의 민감도",
+      "kind": "multi",
+      "title": "값 하나가 커졌을 때",
+      "prompt": "마지막 값이 100에서 1000으로 잘못 입력됐습니다. 빈칸에 넣었을 때 True가 출력되는 식, 즉 바뀌기 전과 값이 같은 통계를 모두 고르세요.",
+      "code": "from statistics import mean, median, mode\nbefore = [12, 15, 15, 18, 100]\nafter = [12, 15, 15, 18, 1000]\nprint(____)",
+      "answer": "1,3,4",
+      "explanation": "정렬했을 때 가운데 값(15), 가장 작은 값(12), 가장 자주 나온 값(15)은 마지막 값이 커져도 그대로라 세 식이 True입니다. 평균은 합이 900 늘어 32에서 212로 바뀌고, 범위(최댓값 - 최솟값)는 88에서 988로 바뀝니다. 중앙값과 최빈값은 극단값 하나에 잘 흔들리지 않습니다. 최솟값이 그대로인 것은 잘못 입력된 값이 가장 큰 값이기 때문이며, 평균은 모든 값의 합을, 범위는 최댓값을 직접 쓰므로 함께 바뀝니다.",
+      "hints": [
+        "바뀐 것은 가장 큰 값 하나뿐입니다. 각 통계의 결과가 그 값의 크기에 따라 달라지는지 확인해 보세요.",
+        "정렬해도 1000은 맨 끝 자리 그대로입니다. 맨 끝 값이 바뀌면 함께 바뀌는 통계가 무엇인지 하나씩 따져 보세요."
+      ],
+      "choices": [
+        "median(before) == median(after)",
+        "mean(before) == mean(after)",
+        "min(before) == min(after)",
+        "mode(before) == mode(after)",
+        "max(before) - min(before) == max(after) - min(after)"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "통계",
+      "level": 2,
+      "concept_id": "stats-summaries",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "중앙값 기초를 다섯 요약값의 조건 변화 판단으로 넓힌 적용이다. 각 식을 따로 판단해야 한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "ml-leak-free-steps-form-01",
+      "concept": "분할 뒤 학습 데이터로만 기준 맞추기",
+      "kind": "order",
+      "title": "누수 없는 전처리 순서",
+      "prompt": "평가 데이터의 정보가 표준화 기준(평균·표준편차)에 섞이지 않게 평가 데이터를 표준화해 출력하려고 합니다. 여섯 줄 중 필요한 다섯 줄을 골라 순서대로 배치하세요. 한 줄은 쓰지 않습니다.",
+      "code": "import numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nX = np.array([[10.0], [20.0], [30.0], [40.0], [50.0], [60.0], [70.0], [80.0]])",
+      "answer": "2,4,1,6,3",
+      "explanation": "먼저 나눠야 학습 데이터만 따로 얻을 수 있고, 표준화 기준은 그 학습 데이터로만 fit합니다. 그다음 같은 기준으로 평가 데이터를 transform해 출력합니다. scaler.fit(X)는 평가 데이터까지 포함한 평균·표준편차를 써서 평가 데이터의 정보가 기준에 섞이므로 쓰지 않습니다. transform을 fit보다 먼저 두면 기준이 없어 오류가 납니다. StandardScaler()를 만드는 줄은 분할 앞에 두어도 결과가 같습니다.",
+      "hints": [
+        "기준을 맞출 데이터(fit)와 기준을 적용할 데이터(transform)를 먼저 구분하세요.",
+        "학습 데이터 변수는 분할 뒤에야 생깁니다. 두 fit 줄 중 어느 쪽이 평가 데이터의 값까지 보게 되는지 비교해 보세요."
+      ],
+      "choices": [
+        "scaler.fit(X_train)",
+        "X_train, X_test = train_test_split(X, test_size=0.25, random_state=0)",
+        "print(X_test_scaled.round(2).ravel().tolist())",
+        "scaler = StandardScaler()",
+        "scaler.fit(X)",
+        "X_test_scaled = scaler.transform(X_test)"
+      ],
+      "accepted": ["4,2,1,6,3"],
+      "seconds": 180,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 3,
+      "concept_id": "ml-preprocessing",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 3,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "fit/transform 기초를 쓰지 않을 누수 줄 고르기와 다섯 단계 순서로 옮긴 전이다. 순서와 기준 데이터를 함께 판단한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "[1.13, -0.57]"
+    },
+    {
+      "id": "ml-recall-denominator-form-01",
+      "concept": "재현율의 분모",
+      "kind": "line",
+      "title": "재현율 계산 점검",
+      "prompt": "실제 양성 4건 중 모델이 찾아낸 비율(재현율) 0.75가 나와야 하는데 0.6이 출력됩니다. 원인이 되는 줄을 고르세요.",
+      "code": "y_true = [1, 0, 1, 1, 0, 0, 1, 0]\ny_pred = [1, 1, 0, 1, 0, 1, 1, 0]\nhits = sum(t == 1 and p == 1 for t, p in zip(y_true, y_pred))\nrecall = hits / sum(p == 1 for p in y_pred)\nprint(round(recall, 2))",
+      "answer": "4",
+      "explanation": "hits는 실제와 예측이 모두 1인 3건으로 맞게 셉니다. 4번 줄은 분모로 예측이 1인 5건을 써서 정밀도 3/5 = 0.6을 계산했습니다. 재현율은 실제 양성 4건이 분모이므로 hits / sum(t == 1 for t in y_true) = 0.75입니다. round(…, 2)는 값을 바꾸지 않습니다.",
+      "hints": [
+        "지문의 재현율 설명에서 무엇 중에서 찾아냈는지가 분모입니다.",
+        "예측이 1인 개수와 실제가 1인 개수를 각각 세어 보고, 어느 쪽이 4인지 확인하세요."
+      ],
+      "choices": ["3", "4", "5"],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 2,
+      "concept_id": "ml-metrics",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "재현율 기초를 분모 결함 찾기로 옮긴 적용이다. 직접 센 값으로 두 지표를 구분한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "0.6"
+    },
+    {
+      "id": "ml-split-facts-form-01",
+      "concept": "분할 크기와 겹침 없음",
+      "kind": "multi",
+      "title": "분할 결과에서 참인 것",
+      "prompt": "아래처럼 8개 값을 학습용과 평가용으로 나눴습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "from sklearn.model_selection import train_test_split\nx = [10, 20, 30, 40, 50, 60, 70, 80]\ntrain, test = train_test_split(x, test_size=0.25, random_state=1)\nprint(____)",
+      "answer": "1,3,5",
+      "explanation": "test_size=0.25는 8개 중 2개를 평가용으로 떼므로 len(test)는 2, len(train)은 6입니다. 각 값은 한쪽에만 들어가 겹치지 않고, 두 부분을 합쳐 정렬하면 원래 x가 됩니다. train_test_split은 기본으로 섞은 뒤 나누므로 train이 앞의 6개 x[:6]과 같다고 볼 수 없습니다.",
+      "hints": [
+        "test_size가 평가용과 학습용 중 어느 쪽 크기를 정하는지 먼저 확인하세요.",
+        "분할한 두 부분을 합치면 원래 x와 어떤 관계인지, 기본 설정에서 순서가 유지되는지 생각해 보세요."
+      ],
+      "choices": [
+        "len(test) == 2",
+        "len(train) == 2",
+        "(set(train) & set(test)) == set()",
+        "train == x[:6]",
+        "sorted(train + test) == x"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "scikit-learn",
+      "level": 1,
+      "concept_id": "ml-evaluation",
+      "response_mode": "choice",
+      "difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 1,
+        "distractor_strength": 3,
+        "rationale": "분할 크기 기초를 다섯 사실의 참·거짓 판단으로 확인하는 기초다. 섞임 여부는 출력 없이 기본값으로 판단한다.",
+        "calibration": "editorial-20261027-formats; 실제 참조·오답 경로 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "reference_setup": "",
+      "reference_output": "True"
     }
   ],
   "tracks": [
@@ -7421,14 +7985,14 @@
       "name": "Python 데이터 분석",
       "description": "pandas · NumPy · 통계 · 머신러닝",
       "available": true,
-      "exercise_count": 158
+      "exercise_count": 168
     },
     {
       "id": "sql",
       "name": "SQL",
       "description": "행 조건 · 집계 · 테이블 연결",
       "available": true,
-      "exercise_count": 48
+      "exercise_count": 53
     },
     {
       "id": "algorithms",
@@ -7550,7 +8114,7 @@
   ],
   "learning_paths": {
     "schema_version": 1,
-    "version": "learning-paths-2.1",
+    "version": "learning-paths-2.2",
     "rules": {
       "level2_items": 2,
       "level2_days": 2,
@@ -10022,6 +10586,191 @@
         ],
         "objective": "시작 포함/끝 제외 조건의 일치 쌍을 세고 인접 기간의 경계를 구별한다.",
         "review_status": "reviewed"
+      },
+      "sql-clause-order-form-01": {
+        "concept_id": "sql-rows",
+        "level": 1,
+        "role": "foundation",
+        "family": "sql-rows:조회문 절 순서",
+        "requires": [],
+        "remediation": ["sql-rows-foundation-01"],
+        "objective": "SELECT·FROM·WHERE·ORDER BY를 쓰는 순서를 처리 순서와 구분해 조회문을 조립한다.",
+        "review_status": "reviewed",
+        "task_form": "step-order"
+      },
+      "sql-null-compare-form-01": {
+        "concept_id": "sql-rows",
+        "level": 2,
+        "role": "application",
+        "family": "sql-rows:NULL 비교 결함 찾기",
+        "requires": ["sql-where-01", "sql-rows-foundation-02"],
+        "remediation": ["sql-rows-foundation-02", "sql-where-01"],
+        "objective": "빈 결과의 원인이 NULL을 = 로 비교한 줄임을 찾아 IS NULL과 구분한다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "sql-group-clauses-form-01": {
+        "concept_id": "sql-aggregation",
+        "level": 2,
+        "role": "application",
+        "family": "sql-aggregation:집계 조회문 조립",
+        "requires": ["sql-count-01", "sql-having-01"],
+        "remediation": ["sql-having-01", "sql-count-01"],
+        "objective": "행 조건(WHERE)과 그룹 조건(HAVING)의 위치를 구분해 집계 조회문을 조립한다.",
+        "review_status": "reviewed",
+        "task_form": "step-order"
+      },
+      "sql-outer-count-form-01": {
+        "concept_id": "sql-aggregation",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-aggregation:외부 조인 뒤 건수",
+        "requires": [
+          "sql-null-count-20261018",
+          "sql-unique-visitors-20261020",
+          "sql-join-foundation-02"
+        ],
+        "remediation": [
+          "sql-null-count-20261018",
+          "sql-join-foundation-02",
+          "sql-unique-visitors-20261020"
+        ],
+        "objective": "LEFT JOIN이 남긴 짝 없는 행에서 COUNT 대상 열에 따라 0과 1이 갈리는 이유를 설명하고 같은 결과의 식을 모두 고른다.",
+        "review_status": "reviewed",
+        "task_form": "equivalent-code"
+      },
+      "sql-outer-filter-form-01": {
+        "concept_id": "sql-joins",
+        "level": 3,
+        "role": "transfer",
+        "family": "sql-joins:외부 조인 조건 위치",
+        "requires": ["sql-join-foundation-02", "sql-join-01"],
+        "remediation": ["sql-join-foundation-02", "sql-join-01"],
+        "objective": "조인 뒤 WHERE의 오른쪽 열 조건이 LEFT JOIN의 보존 행을 지우는 결함을 찾고 ON 조건과 구분한다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "pandas-paid-amounts-form-01": {
+        "concept_id": "pandas-filter",
+        "level": 2,
+        "role": "application",
+        "family": "pandas-filter:같은 행·열을 고르는 식",
+        "requires": ["pandas-select-01", "pandas-filter-01"],
+        "remediation": ["pandas-filter-01", "pandas-select-01"],
+        "objective": "불리언 조건으로 행을, 이름으로 열을 고르는 여러 표현이 같은 Series를 만드는지 판단한다.",
+        "review_status": "reviewed",
+        "task_form": "equivalent-code"
+      },
+      "pandas-fill-assign-form-01": {
+        "concept_id": "pandas-null",
+        "level": 2,
+        "role": "application",
+        "family": "pandas-null:대체 결과 반영 결함",
+        "requires": ["pandas-null-01", "pandas-null-02"],
+        "remediation": ["pandas-null-02", "pandas-null-01"],
+        "objective": "반환값을 저장하지 않은 fillna 호출이 평균의 분모를 바꾸지 못하는 결함을 찾는다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "pandas-group-steps-form-01": {
+        "concept_id": "pandas-group",
+        "level": 3,
+        "role": "transfer",
+        "family": "pandas-group:처리 단계 순서",
+        "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
+        "remediation": [
+          "pandas-group-02",
+          "pandas-group-01",
+          "pandas-filter-01"
+        ],
+        "objective": "행 필터·그룹 합계·합계 조건·정렬 출력의 순서를 정하고 개별 행 조건과 그룹 조건을 구분한다.",
+        "review_status": "reviewed",
+        "task_form": "step-order"
+      },
+      "numpy-axis-mean-form-01": {
+        "concept_id": "numpy-structure",
+        "level": 2,
+        "role": "application",
+        "family": "numpy-structure:집계 축 결함",
+        "requires": ["numpy-shape-01", "numpy-axis-01"],
+        "remediation": ["numpy-axis-01", "numpy-shape-01"],
+        "objective": "결과 모양이 틀린 원인이 집계 축 지정임을 찾고, 남겨야 할 축에서 axis 값을 정한다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "numpy-copy-timing-form-01": {
+        "concept_id": "numpy-memory",
+        "level": 1,
+        "role": "foundation",
+        "family": "numpy-memory:복사 시점",
+        "requires": ["numpy-shape-01"],
+        "remediation": ["numpy-memory-foundation-02"],
+        "objective": "copy()가 호출 시점의 값을 보존한다는 점을 이용해 원본 보존과 변경의 순서를 정한다.",
+        "review_status": "reviewed",
+        "task_form": "step-order"
+      },
+      "stats-pooled-rate-form-01": {
+        "concept_id": "stats-rates",
+        "level": 2,
+        "role": "application",
+        "family": "stats-rates:비율 합산 결함",
+        "requires": ["stats-weight-01", "stats-rate-foundation-02"],
+        "remediation": ["stats-weight-01", "stats-rate-foundation-02"],
+        "objective": "크기가 다른 집단의 비율을 단순 평균한 줄을 찾고 전체 비율의 분자·분모를 다시 세운다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "stats-outlier-shift-form-01": {
+        "concept_id": "stats-summaries",
+        "level": 2,
+        "role": "application",
+        "family": "stats-summaries:조건 변화와 대표값",
+        "requires": ["stats-median-01", "stats-summary-foundation-02"],
+        "remediation": ["stats-median-01", "stats-summary-foundation-02"],
+        "objective": "값 하나가 극단적으로 바뀔 때 평균·중앙값·최솟값·최빈값·범위 중 무엇이 바뀌는지 판단한다.",
+        "review_status": "reviewed",
+        "task_form": "condition-change"
+      },
+      "ml-leak-free-steps-form-01": {
+        "concept_id": "ml-preprocessing",
+        "level": 3,
+        "role": "transfer",
+        "family": "ml-preprocessing:누수 없는 처리 순서",
+        "requires": [
+          "ml-fit-foundation-01",
+          "ml-transform-foundation-01",
+          "ml-scale-01"
+        ],
+        "remediation": [
+          "ml-scale-01",
+          "ml-fit-foundation-01",
+          "ml-transform-foundation-01"
+        ],
+        "objective": "분할·기준 학습·적용·출력의 순서를 정하고 전체 데이터로 기준을 맞추는 누수 줄을 배제한다.",
+        "review_status": "reviewed",
+        "task_form": "step-order"
+      },
+      "ml-recall-denominator-form-01": {
+        "concept_id": "ml-metrics",
+        "level": 2,
+        "role": "application",
+        "family": "ml-metrics:지표 분모 결함",
+        "requires": ["ml-metric-01", "ml-metric-foundation-02"],
+        "remediation": ["ml-metric-foundation-02", "ml-metric-01"],
+        "objective": "재현율 대신 정밀도의 분모를 쓴 줄을 찾고 실제 양성과 예측 양성의 분모를 구분한다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
+      },
+      "ml-split-facts-form-01": {
+        "concept_id": "ml-evaluation",
+        "level": 1,
+        "role": "foundation",
+        "family": "ml-evaluation:분할 결과 해석",
+        "requires": ["ml-split-01"],
+        "remediation": ["ml-split-01", "ml-eval-foundation-02"],
+        "objective": "train_test_split 결과의 크기·겹침 없음·순서 섞임을 구분해 항상 참인 사실을 고른다.",
+        "review_status": "reviewed",
+        "task_form": "result-interpretation"
       }
     },
     "legacy_catalog": [

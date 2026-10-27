@@ -56,7 +56,7 @@ def test_all_119_deployed_exercises_are_unchanged_and_new_targets_are_gated():
         assert hashlib.sha256(path.encode()).hexdigest() == saved['path_items'][identifier], identifier
     assert len(NEW) == 18 and len({BY_ID[x['id']].concept_id for x in NEW}) == 18
     assert [x['level'] for x in NEW].count(2) == [x['level'] for x in NEW].count(3) == 9
-    assert LEARNING_PATHS['version'] == 'learning-paths-2.1'  # 2.0 rules preserved; 2.1 adds the review variation policy
+    assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing
     assert LEARNING_PATHS['rules'] == dict(level2_items=2, level2_days=2, level3_items=3,
                                          level3_days=3, level3_transfer_days=2,
                                          recovery_items=2, max_transfer_per_batch=1)

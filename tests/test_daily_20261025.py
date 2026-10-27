@@ -23,7 +23,8 @@ def test_previous_206_exercises_paths_cards_and_current_review_policy_are_preser
     assert len(saved['exercises']) == 206
     assert LEARNING_PATHS['rules'] == saved['rules']
     assert LEARNING_PATHS['review'] == saved['review']
-    assert LEARNING_PATHS['version'] == saved['path_version'] == 'learning-paths-2.1'
+    assert saved['path_version'] == 'learning-paths-2.1'
+    assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.1 rules/review preserved; 2.2 adds support step-down and task-form mixing
     for key,expected in saved['exercises'].items():
         assert digest(asdict(BY_ID[key])) == expected, key
         assert digest(LEARNING_PATHS['items'][key]) == saved['path_items'][key]

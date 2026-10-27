@@ -19,7 +19,7 @@ from backend.accounts import Accounts
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
-from backend.content import BY_ID, EXERCISES, TRACKS
+from backend.content import BY_ID, EXERCISES, LAYOUT_KINDS, TRACKS, valid_choice_answer
 from backend.storage import connect
 
 
@@ -361,8 +361,11 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
         with connect(storage_path()) as db:
             pending_item(db, session_id, body.exercise_id)
-            db.execute("UPDATE session_items SET response_mode=? WHERE session_id=? AND status='pending'",
-                       (body.response_mode, session_id))
+            # Line/order/multi items have no typed form; only classic items switch modes.
+            for row in db.execute("SELECT * FROM session_items WHERE session_id=? AND status='pending'", (session_id,)).fetchall():
+                if authored(row).kind not in LAYOUT_KINDS:
+                    db.execute("UPDATE session_items SET response_mode=? WHERE session_id=? AND exercise_id=?",
+                               (body.response_mode, session_id, row["exercise_id"]))
             return snapshot(db, session_id)
 
     @app.post("/api/sessions/{session_id}/answers")
@@ -378,7 +381,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
             exercise = authored(item)
             mode = item["response_mode"] or ("choice" if exercise.kind == "choice" else "short")
             if (not body.answer.strip() or (mode != "essay" and len(body.answer) > 200)
-                    or (mode == "choice" and body.answer not in exercise.choices)):
+                    or (mode == "choice" and not valid_choice_answer(exercise.kind, body.answer, exercise.choices))):
                 raise HTTPException(422, "문제에 맞는 답안을 입력해 주세요.")
             if mode == "essay": raise HTTPException(422, "서술형은 보류 중이에요. 작성한 답안은 학습 기록에 보관됩니다.")
             if mode in ("choice", "short") and item["attempts_count"] >= 2:

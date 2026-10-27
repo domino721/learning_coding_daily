@@ -77,9 +77,40 @@ def validate(exercise):
                 reference.executescript(exercise.reference_setup)
                 if table_data(shown) != table_data(reference):
                     raise ValueError(f'{exercise.id}: displayed inputs differ from reference_setup')
+        if exercise.kind in ('line', 'order', 'multi'):
+            validate_layout(shown, exercise)
+            return
         rows = shown.execute(exercise.code.replace('____', exercise.answer)).fetchall()
         if exercise.kind != 'blank' and sql_output(rows, exercise.answer) != exercise.answer:
             raise ValueError(f'{exercise.id}: displayed inputs do not reproduce the answer')
+
+
+def validate_layout(db, exercise):
+    """Line: the shown query gives reference_output. Order: every correct order gives it.
+    Multi: exactly the answer options give it when placed in ____."""
+    expected = exercise.reference_output
+    if not expected:
+        raise ValueError(f'{exercise.id}: {exercise.kind} SQL needs reference_output')
+    def output(sql):
+        return sql_output(db.execute(sql).fetchall(), expected)
+    if exercise.kind == 'line':
+        if output(exercise.code) != expected:
+            raise ValueError(f'{exercise.id}: displayed query does not reproduce reference_output')
+    elif exercise.kind == 'order':
+        for order in (exercise.answer, *exercise.accepted):
+            sql = exercise.code + '\n' + '\n'.join(exercise.choices[int(n) - 1] for n in order.split(','))
+            if output(sql) != expected:
+                raise ValueError(f'{exercise.id}: order {order} does not reproduce reference_output')
+    else:
+        hits = []
+        for number, option in enumerate(exercise.choices, 1):
+            try:
+                if output(exercise.code.replace('____', option)) == expected:
+                    hits.append(str(number))
+            except (sqlite3.Error, ValueError):
+                pass
+        if ','.join(hits) != exercise.answer:
+            raise ValueError(f'{exercise.id}: options {hits} reproduce reference_output, answer is {exercise.answer}')
 
 
 def validate_all(exercises):

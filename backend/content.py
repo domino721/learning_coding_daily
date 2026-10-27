@@ -34,6 +34,20 @@ class Exercise:
                    for value in (self.answer, *self.accepted))
 
 
+LAYOUT_KINDS = ('line', 'order', 'multi')
+
+
+def valid_choice_answer(kind: str, answer: str, choices) -> bool:
+    """Mirror of src/answerFormat.ts: order/multi answers are 1-based option numbers."""
+    if kind not in ('order', 'multi'):
+        return answer in choices
+    if not re.fullmatch(r'\d+(,\d+)*', answer):
+        return False
+    picked = [int(value) for value in answer.split(',')]
+    return (all(1 <= n <= len(choices) for n in picked) and len(set(picked)) == len(picked)
+            and (kind == 'order' or picked == sorted(picked)))
+
+
 def normalize_answer(value: str) -> str:
     # Ignore layout and quote style, preserving spaces and escapes inside strings.
     result, quote, escaped, spacing = [], None, False, False
@@ -336,6 +350,8 @@ from backend.daily_content import authored_batches
 EXERCISES += authored_batches(Exercise)
 from backend.scaffold_content import authored_scaffolds
 EXERCISES += authored_scaffolds(Exercise)
+from backend.format_content import authored_formats
+EXERCISES += authored_formats(Exercise)
 from backend.curriculum import attach_metadata
 EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}

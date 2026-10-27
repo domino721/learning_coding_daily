@@ -6,8 +6,10 @@ import {
   selectExercises,
   reviewDue,
   recommendationTrace,
+  taskForm,
 } from "./recommendation";
 import type { Session } from "./api";
+import { answerText, isLayoutKind, type ItemKind } from "./answerFormat";
 import type { Progress } from "./records";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
@@ -66,7 +68,7 @@ function showExercise() {
     );
   };
   $("exercise-detail").innerHTML =
-    `<article><h3>${escape(e.title)}</h3><p><code>${escape(e.id)}</code> · v${e.version} · ${escape(e.response_mode)} · ${e.response_mode === "essay" ? "보류 문항" : "활성 문항"}</p><p>${escape(e.prompt)}</p><pre>${escape(e.code)}</pre><details><summary>정답·힌트·해설 확인</summary><p>정답: <code>${escape(e.answer)}</code></p><ol>${e.hints.map((h) => `<li>${escape(h)}</li>`).join("")}</ol><p>${escape(e.explanation)}</p><p>보기: ${e.choices.map((c) => escape(c)).join(" / ")}</p></details><h3>이 문항의 난이도 판단</h3><pre>${escape(JSON.stringify(e.difficulty, null, 2))}</pre><p>유형군: <code>${escape(path.family)}</code></p><p>목표: ${escape(path.objective)}</p><h3>선수에서 목표까지</h3>${route(e.id)}<p>보충 후보: ${path.remediation.map((id) => escape(byId.get(id)?.title ?? id)).join(" → ")}</p></article>`;
+    `<article><h3>${escape(e.title)}</h3><p><code>${escape(e.id)}</code> · v${e.version} · ${escape(e.response_mode)} · ${e.response_mode === "essay" ? "보류 문항" : "활성 문항"}</p><p>${escape(e.prompt)}</p><pre>${escape(e.code)}</pre><details><summary>정답·힌트·해설 확인</summary><p>정답: <code>${escape(isLayoutKind(e.kind) ? answerText(e, e.answer) : e.answer)}</code></p><ol>${e.hints.map((h) => `<li>${escape(h)}</li>`).join("")}</ol><p>${escape(e.explanation)}</p><p>보기: ${e.choices.map((c) => escape(c)).join(" / ")}</p></details><h3>이 문항의 난이도 판단</h3><pre>${escape(JSON.stringify(e.difficulty, null, 2))}</pre><p>유형군: <code>${escape(path.family)}</code> · 과제 형식: <code>${escape(taskForm(e))}</code></p><p>목표: ${escape(path.objective)}</p><h3>선수에서 목표까지</h3>${route(e.id)}<p>보충 후보: ${path.remediation.map((id) => escape(byId.get(id)?.title ?? id)).join(" → ")}</p></article>`;
 }
 function showConcept() {
   const c = curriculum.concepts.find((c) => c.id === concept.value)!;
@@ -135,7 +137,7 @@ function simulate() {
         throw Error("힌트는0~2, 시도는0이상 정수입니다.");
       const item = {
         ...ex,
-        kind: ex.kind as "choice" | "blank",
+        kind: ex.kind as ItemKind,
         response_mode: ex.response_mode as "choice" | "short" | "essay",
         estimated_seconds: ex.seconds,
         category: "new" as const,
