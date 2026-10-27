@@ -231,6 +231,8 @@ def validate_learning_paths(exercises):
             raise ValueError('An advanced target needs a lower-level prerequisite in its concept')
         if ex.level==3 and not any(by_id[key].concept_id==ex.concept_id and by_id[key].level==2 for key in node['requires']):
             raise ValueError('A transfer target needs an application step')
+    from backend.quality_gate import validate_quality
+    validate_quality(list(cards.values()))
 
 
 def recommendation_trace(selected, sessions, by_id):

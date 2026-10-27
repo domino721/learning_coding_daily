@@ -1050,6 +1050,18 @@
       ],
       "summary": "새5개 문항8c58214 뒤 보기위치/카드/웹원본을 보완한 최종main8abdec9를 비강제 저장했다. 최종SHA Pages40146618330/관리40146618332 completed/success. 품질121029221340 로그의 단일Python1002/Node21/모바일48(서버비해당9제외) 통과, publish121029992564의 Deploy/공개HTML·최종문제데이터청크포함전체JS/CSS SHA256일치 EV-060으로 최종게시 완료를 확인했다. 초기계정테스트시계 실패/보완과 추가보기재배치·로컬재검증은 EV-058/059로 구분한다. 기존206개·경로/카드·운영2.1/7일간격·기록 보존, 보관211/활성Python158·SQL48. 기준선1.9.0·다음WBS-520 및 실제학습효과/시간보정 관찰 유지. 배포후근거만 skip ci로 저장한다.",
       "commit": "8abdec94c06094a60495b167b4ff7da8a0b7f583"
+    },
+    {
+      "id": "LOG-089",
+      "date": "2026-10-26",
+      "tasks": [
+        "WBS-370"
+      ],
+      "changes": [
+        "CR-014"
+      ],
+      "summary": "일일 콘텐츠 작업을 새 5문항에서 형식 전환 2·오답 보기 검수 3으로 전환(docs/CONTENT_AUTOMATION.md, 설계/계획 1.10.0). backend/quality_gate.py와 curriculum/quality_baseline.json(기존 206개 면제)·tests/test_quality_gate.py 추가. scripts/freeze-catalog.py와 tests/fixtures/catalog-published.json·tests/test_catalog_preservation.py로 보존 검사 단일화. 앱 상단 배포본 식별자(__BUILD_ID__)와 해설 화면 ‘이 문제 신고 내용 복사’. scripts/analyze-backups.py 주간 집계. 문항 본문·보기·경로·rules·기록 계약 변경 없음. 검증 EV-061. 원격 저장/게시 전, Codex 예약 본문 갱신은 사용자 조치.",
+      "commit": null
     }
   ]
 }

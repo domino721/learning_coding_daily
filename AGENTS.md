@@ -37,6 +37,7 @@
 
 ## 구현과 완료
 
+- 일일 콘텐츠 작업은 `docs/CONTENT_AUTOMATION.md`(2026-10-26 계약)를 따른다. 새 ID·버전 증가분은 `backend/quality_gate.py`의 게이트(task_form·오답 보기 겨냥 오개념·단계 3 형식·배치 형식 배분)를 통과해야 게시된다. 검수 근거는 `curriculum/reviews/YYYY-MM-DD.json` 한 파일과 LOG 1건으로 남기고, 날짜별 테스트 파일·fixture·Markdown·EV를 추가하지 않는다. 보존 검사는 `python3 scripts/freeze-catalog.py`로 단일 스냅샷을 갱신한다.
 - 모든 문제 제작·수정은 `docs/CURRICULUM_DESIGN.md`, `docs/ADAPTIVE_LEARNING.md`, `docs/CURRICULUM_LOG.md`를 함께 확인한다. 문제 수보다 목표 문항에 도달하는 선수 경로와 근거 기반 수준 판단을 우선한다. `backend/learning_paths.json`과 `curriculum/problem_bank.json`에 경로·카드·검토 상태를 작성하고 웹/서버 추천과 출시 검사를 일치시킨다. 기초 문항 부재를 높은 최소 난이도로 우회하지 않는다.
 - 문항 추가 시 원격 ID와 충돌하지 않는지 확인하고, 목표·새 개념·선수·과제 유형군·오답 가설·진단 질문·두 단계 힌트·보충·변형·지연 복습을 기록한다. 새 카드를 자동 승인하지 않는다. 단계·임계값 변경은 버전·반례·공통 이력의 웹/서버 비교·실험을 누적 기록한다.
 

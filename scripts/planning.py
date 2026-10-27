@@ -268,7 +268,7 @@ def validate(root=ROOT, base=None, check_generated=True):
             require(path_for(root, name).is_file() and path_for(root,name).read_text() == expected, f'generated document stale: {name}; run planning.py render')
     # The preserved legacy document retains its original relative links unchanged.
     for markdown in [root / 'README.md', root / 'AGENTS.md', *(root / 'docs').rglob('*.md')]:
-        if markdown == path_for(root, registry['legacy']['path']): continue
+        if markdown.resolve() == path_for(root, registry['legacy']['path']): continue
         for target in re.findall(r'\[[^\]]+\]\(([^\s)]+)\)', markdown.read_text()):
             if target.startswith(('https://','http://','mailto:','#')): continue
             target = target.split('#')[0]

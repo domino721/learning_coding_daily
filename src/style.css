@@ -165,6 +165,15 @@ code {
   letter-spacing: 1px;
   margin-left: 3px;
 }
+.build-id {
+  font-size: 10px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.report-button {
+  margin-top: 8px;
+  font-size: 12px;
+}
 .header-note {
   font-size: 11px;
   color: var(--muted);

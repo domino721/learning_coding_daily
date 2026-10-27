@@ -828,6 +828,23 @@
         "src/curriculum.json"
       ],
       "code_reference": "8abdec94c06094a60495b167b4ff7da8a0b7f583"
+    },
+    {
+      "id": "EV-061",
+      "record": "docs/planning/evidence/EV-061.md",
+      "artifacts": [
+        "backend/quality_gate.py",
+        "curriculum/quality_baseline.json",
+        "tests/test_quality_gate.py",
+        "scripts/freeze-catalog.py",
+        "tests/fixtures/catalog-published.json",
+        "tests/test_catalog_preservation.py",
+        "scripts/analyze-backups.py",
+        "docs/CONTENT_AUTOMATION.md",
+        "src/App.tsx",
+        "src/ExerciseCard.tsx"
+      ],
+      "code_reference": "4dd7f75b684296d7abcf101b9419d6c57b2a04a2"
     }
   ]
 }

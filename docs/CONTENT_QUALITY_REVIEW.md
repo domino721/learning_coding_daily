@@ -32,3 +32,24 @@
 
 - 한 것: 복습 변형 규칙(learning-paths-2.1, CR-013)으로 같은 문항 반복을 줄였다. 위 감사 수치를 확정했다.
 - 하지 않은 것: 문항 본문·보기·유형군은 바꾸지 않았다. 1~4번은 개별 검수가 필요한 콘텐츠 작업이라 별도 배치로 진행한다.
+
+## 2026-10-26 조치 (CR-014, WBS-370)
+
+- 재집계: 보관 206문항(앱 원본) 중 지문에 ‘출력’이 들어간 문항 81%, `distractor_strength` 0인 문항 84개(38%), 코드 길이 중앙값 4줄, 단답형 25개.
+- 일일 계약 전환: 새 5문제/일을 중단하고 형식 전환 2건·오답 보기 검수 3건/일로 바꿨다. 자세한 절차는 `docs/CONTENT_AUTOMATION.md`.
+- 기계 게이트: `backend/quality_gate.py`가 `validate_learning_paths` 끝에서 실행된다. `curriculum/quality_baseline.json`에 고정한 기존 206개 (id, version)은 면제하고, 새 ID와 버전 증가분에만 `task_form`·오답별 `distractor_targets`·`distractor_strength`≥2·단계 3 출력 예측 금지·코드 5줄 이상·검수 기록당 출력 예측 50% 이하를 요구한다. 기존 문항을 고치면 버전이 올라가므로 자동으로 게이트 대상이 된다.
+- 보존 검사 단일화: 날짜별 `catalog-before-*.json`과 날짜별 테스트 대신 `tests/fixtures/catalog-published.json` 하나를 `scripts/freeze-catalog.py`로 갱신한다. 같은 ID·버전의 내용 변경은 스크립트가 거부한다. 기존 날짜별 테스트는 과거 근거로 유지한다.
+- 관찰 도구: `scripts/analyze-backups.py`로 테스터 백업 파일을 문항별로 집계한다. 앱 상단에 배포본 식별자를 표시하고 해설 화면에 ‘이 문제 신고 내용 복사’를 추가했다.
+- 하지 않은 것: 문항 본문·보기·유형군은 바꾸지 않았다. 정비 1~3번은 위 계약에 따라 일일 배치가 처리하고, 유형군 재분류는 별도 콘텐츠 작업이다.
+
+### 정비 대상 목록 뽑기
+
+```bash
+python3 -I - <<'PY'
+import json
+b=json.load(open('curriculum/problem_bank.json'))['exercises']
+app=[c for c in b if c['source']=='app']
+print('단계3 출력 예측:',[c['id'] for c in app if c.get('level')==3 and '출력' in c['prompt']])
+print('오답 보기 미검수:',[c['id'] for c in app if c['kind']=='choice' and c.get('app_difficulty',{}).get('distractor_strength',0)<2])
+PY
+```

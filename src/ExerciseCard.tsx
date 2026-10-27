@@ -3,6 +3,28 @@ import type { Exercise } from "./api";
 import CodeBlock from "./CodeBlock";
 import { formatTime, useActiveTime } from "./useActiveTime";
 const labels = { new: "새 개념", review: "복습", practice: "다시 연습" };
+const buildId = typeof __BUILD_ID__ === "string" ? __BUILD_ID__ : "dev";
+export function reportText(item: Exercise, build = buildId) {
+  return [
+    "[매일코딩 문제 신고]",
+    `문항: ${item.id} v${item.version}`,
+    `배포본: ${build}`,
+    `결과: ${item.status} · 시도 ${item.attempts_count}회 · 힌트 ${item.hints_used}회`,
+    `내 답: ${item.last_answer ?? "(없음)"}`,
+    "신고 내용: ",
+  ].join("\n");
+}
+async function copyReport(item: Exercise, done: (note: string) => void) {
+  const text = reportText(item);
+  try {
+    await navigator.clipboard.writeText(text);
+    done("복사했어요. 운영자에게 붙여 넣어 보내 주세요.");
+  } catch {
+    window.prompt("아래 내용을 복사해 운영자에게 보내 주세요.", text);
+    done("신고 내용을 표시했어요.");
+  }
+  setTimeout(() => done(""), 4000);
+}
 export default function ExerciseCard({
   recommendation,
   item,
@@ -32,6 +54,7 @@ export default function ExerciseCard({
   const mode =
     item.response_mode ?? (item.kind === "choice" ? "choice" : "short");
   const [draftStatus, setDraftStatus] = useState("");
+  const [reported, setReported] = useState("");
   useEffect(() => {
     if (
       item.status !== "pending" ||
@@ -275,6 +298,13 @@ export default function ExerciseCard({
                 정답 <code>{item.answer}</code>
               </p>
               <p>{item.explanation}</p>
+              <button
+                type="button"
+                className="text-button muted report-button"
+                onClick={() => void copyReport(item, setReported)}
+              >
+                {reported || "이 문제 신고 내용 복사"}
+              </button>
             </div>
           ) : (
             <div className="learning-tools">

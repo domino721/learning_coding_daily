@@ -275,6 +275,9 @@ export default function App() {
           </span>
           매일코딩<span className="beta">EARLY</span>
         </button>
+        <span className="build-id" title="배포본 식별자">
+          {typeof __BUILD_ID__ === "string" ? __BUILD_ID__ : "dev"}
+        </span>
         <button
           className="theme-toggle"
           aria-label="다크 테마"
