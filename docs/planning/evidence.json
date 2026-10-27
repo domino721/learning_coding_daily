@@ -896,6 +896,16 @@
         "docs/CONTENT_QUALITY_REVIEW.md"
       ],
       "code_reference": "1b7b1f75fcfad2ff7fd12e3912bf52158c1f85b8"
+    },
+    {
+      "id": "EV-065",
+      "record": "docs/planning/evidence/EV-065.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/quality.yml",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "0d6754a6a7f985466a3c321cf8f820f595e4054f"
     }
   ]
 }

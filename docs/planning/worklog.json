@@ -1102,6 +1102,18 @@
       ],
       "summary": "사용자가 전달한 Codex 기록에서 10-26 00:27 예약 본문 교체, 같은 날 09:02 실행의 게시 보류(원격에 계약 없음), 이후 예약 ‘일시 정지됨’을 확인했다. 계약대로 하루치 정비를 흉내 내자 날짜별 보존 테스트가 version 증가·편집 필드 보강을 막아 14개가 실패했고 대상 목록 명령이 새 형식 문항을 잘못 뽑았다. 편집 필드 정의(published_view)·같은 version 검수 게이트·스냅샷 형식 published-view-v1(1b7b1f7에서 1회 재구성)·날짜별 테스트 공통 규칙(tests/preserved.py)·대상 목록 명령·E2E 입력 도우미를 고쳤다. 수정 뒤 같은 흉내가 1050 passed/9 skipped로 통과했고 실제 상태는 check.sh와 모바일 E2E 49 passed 통과 EV-064. 예약 재개는 사용자 조치.",
       "commit": null
+    },
+    {
+      "id": "LOG-093",
+      "date": "2026-10-27",
+      "tasks": [
+        "WBS-370"
+      ],
+      "changes": [
+        "CR-014"
+      ],
+      "summary": "보존 검사 수정 0d6754a를 비강제 push했다. Pages 40503758683 1회차는 실행기의 Playwright 의존성 설치가 10분 걸려 quality 15분 제한으로 취소됐고(pytest 1061 통과 뒤 E2E 진행 중, 실패 기록 없음) 실패 작업만 재실행한 2회차에서 quality(pytest1061/Node24/모바일49)·publish success, 관리 40503758878 success. 공개 자산이 같은 commit 로컬 빌드와 일치하고 문항 청크는 230d5c0 게시본과 같다 EV-065. Codex 예약 재개는 사용자 조치.",
+      "commit": "0d6754a6a7f985466a3c321cf8f820f595e4054f"
     }
   ]
 }
