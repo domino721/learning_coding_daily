@@ -960,6 +960,17 @@
         "tests/test_learning_paths.py"
       ],
       "code_reference": "849928608a4b326844348e869353cdf2b92fc947"
+    },
+    {
+      "id": "EV-069",
+      "record": "docs/planning/evidence/EV-069.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "backend/basics_content.json",
+        "backend/extension_content.json"
+      ],
+      "code_reference": "4a4d568f617a546a8ac4120e34ddc0c5c1729b8b"
     }
   ]
 }
