@@ -286,3 +286,100 @@ test("recent independent success is reviewed through a sibling until the gap pas
     ["pandas-select-01", "review"],
   );
 });
+test("independent success on three different days graduates from daily and extra review", () => {
+  const ex = curriculum.exercises.find((e) => e.id === "pandas-select-01")!;
+  const days = ["2026-10-01", "2026-10-08", "2026-10-15"];
+  const progress: Record<string, any> = {};
+  for (const day of days)
+    progress[ex.id] = {
+      ...reviewDue(day, progress[ex.id] ?? {}, true),
+      last_day: day,
+      completed: 1,
+    };
+  const today = progress[ex.id].due;
+  assert.equal(progress[ex.id].streak, 3);
+  const sessions = [
+    ...days.map((day, index) => ({
+      id: `s-${index}`,
+      local_day: day,
+      batch: 0,
+      items: [
+        {
+          ...ex,
+          status: "correct",
+          response_mode: "short",
+          hints_used: 0,
+          attempts_count: 1,
+        },
+      ],
+    })),
+    // Every other item was already shown today, so only the due review could fill a batch.
+    {
+      id: "today",
+      local_day: today,
+      batch: 0,
+      items: curriculum.exercises
+        .filter((e) => e.id !== ex.id)
+        .map((e) => ({ id: e.id, status: "pending" })),
+    },
+  ] as any;
+  const before = { [ex.id]: { ...progress[ex.id], streak: 2 } };
+  for (const extra of [false, true]) {
+    assert.deepEqual(
+      selectExercises(sessions, progress, today, extra, "python"),
+      [],
+    );
+    assert.deepEqual(
+      selectExercises(sessions, before, today, extra, "python").map(
+        ([e, category]) => [e.id, category],
+      ),
+      [[ex.id, "review"]],
+    );
+  }
+});
+test("leftover slots take due reviews when no new item fits", () => {
+  const solved = [
+    "pandas-select-01",
+    "numpy-shape-01",
+    "stats-median-01",
+    "ml-split-01",
+  ];
+  const progress: Record<string, any> = {};
+  for (const id of solved)
+    progress[id] = {
+      ...reviewDue("2026-10-01", {}, true),
+      last_day: "2026-10-01",
+      completed: 1,
+    };
+  const sessions = [
+    ...solved.map((id, index) => ({
+      id: `s-${index}`,
+      local_day: "2026-10-01",
+      batch: index,
+      items: [
+        {
+          ...curriculum.exercises.find((e) => e.id === id)!,
+          status: "correct",
+          response_mode: "short",
+          hints_used: 0,
+          attempts_count: 1,
+        },
+      ],
+    })),
+    // Every other item was already shown today, so no new item can fill the batch.
+    {
+      id: "today",
+      local_day: "2026-10-20",
+      batch: 0,
+      items: curriculum.exercises
+        .filter((e) => !solved.includes(e.id))
+        .map((e) => ({ id: e.id, status: "pending" })),
+    },
+  ] as any;
+  assert.deepEqual(
+    selectExercises(sessions, progress, "2026-10-20", false, "python").map(
+      ([e, category]) => [e.id, category],
+    ),
+    solved.map((id) => [id, "review"]),
+  );
+});

@@ -29,6 +29,7 @@ PROFILES = {
     'steady': '모든 문제를 첫 시도에 힌트 없이 맞힌다.',
     'transfer-slip': '단계 3 문제는 처음 만날 때 도움을 받고, 이후 복습에서는 맞힌다.',
     'uneven': '문제·날짜 해시의 1/4에서 도움을 받는다.',
+    'struggling': '문제·날짜 해시의 1/2에서 도움을 받는다.',
 }
 
 
@@ -49,7 +50,7 @@ def independent(profile, ex, day, attempted):
         return True
     if profile == 'transfer-slip':
         return not (ex.level == 3 and ex.id not in attempted)
-    return int(hashlib.sha256(f'{ex.id}:{day}'.encode()).hexdigest(), 16) % 4 != 0
+    return int(hashlib.sha256(f'{ex.id}:{day}'.encode()).hexdigest(), 16) % (2 if profile == 'struggling' else 4) != 0
 
 
 def replay(engine, profile, track, days, start):
@@ -65,13 +66,17 @@ def replay(engine, profile, track, days, start):
             attempted.add(ex.id)
             items.append({**asdict(ex), 'status': 'correct' if solo else 'revealed',
                           'hints_used': 0 if solo else 1, 'attempts_count': 1})
-            due, streak = engine.review_due(day, progress.get(ex.id, {}), solo)
+            prior = progress.get(ex.id)
+            due, streak = engine.review_due(day, prior or {}, solo)
             progress[ex.id] = {'due': due, 'streak': streak, 'last_day': day,
                                'completed': progress.get(ex.id, {}).get('completed', 0) + 1}
             served.append({'day': day, 'id': ex.id, 'category': category, 'level': ex.level,
                            'form': current.task_form(ex), 'kind': ex.kind,
                            'support': states[ex.concept_id]['needs_support'], 'concept': ex.concept_id,
-                           'independent': solo})
+                           'independent': solo,
+                           # Days a wrong or helped item waited past its next-day retry.
+                           'retry_late': (date.fromisoformat(day) - date.fromisoformat(prior['due'])).days
+                           if prior and not prior['streak'] else None})
         if items:
             sessions.append({'id': f'{profile}-{track}-{offset}', 'track_id': track, 'local_day': day,
                              'batch': 0, 'items': items})
@@ -86,10 +91,17 @@ def summarize(served, final, track):
     forms = [len({r['form'] for r in rows}) for rows in batches.values()]
     support = [r for r in served if r['support']]
     concepts = [c for c in final.values() if (c['domain'] == 'SQL') == (track == 'sql')]
+    shown = Counter(r['id'] for r in served)
+    late = [r['retry_late'] for r in served if r['retry_late'] is not None]
     return {
         'sessions': len(batches),
         'served': len(served),
-        'distinct_items': len({r['id'] for r in served}),
+        'distinct_items': len(shown),
+        # Served items the learner had already seen, and items shown four or more times.
+        'repeat_share': round((len(served) - len(shown)) / len(served), 2) if served else 0,
+        'items_shown_4plus': sum(count >= 4 for count in shown.values()),
+        'retry_days_late': round(sum(late) / len(late), 1) if late else 0,
+        'short_sessions': sum(len(rows) < 5 for rows in batches.values()),
         'mean_forms_per_session': round(sum(forms) / len(forms), 2) if forms else 0,
         'sessions_with_4plus_same_form': sum(max(Counter(r['form'] for r in rows).values()) >= 4 for rows in batches.values()),
         'line_order_multi_items_seen': len({r['id'] for r in served if r['kind'] in LAYOUT_KINDS}),
@@ -122,7 +134,7 @@ def main():
     results = []
     for profile in PROFILES:
         # steady and transfer-slip do not depend on the calendar; one start date is enough.
-        starts = [first + timedelta(days=7 * k) for k in range(args.starts if profile == 'uneven' else 1)]
+        starts = [first + timedelta(days=7 * k) for k in range(args.starts if profile in ('uneven', 'struggling') else 1)]
         for track in ('python', 'sql'):
             for days in args.days:
                 results.append({'profile': profile, 'track': track, 'days': days, 'runs': len(starts),

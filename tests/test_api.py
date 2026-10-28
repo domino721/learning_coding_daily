@@ -102,8 +102,9 @@ def test_midnight_new_session_and_due_review_cap(learning):
     today = start(client)
     assert today["local_day"] == '2026-10-16'
     assert today["id"] != previous["id"]
-    assert [item["category"] for item in today["items"]].count("review") == 3
-    assert [item["category"] for item in today["items"]].count("new") == 2
+    # Five helped items are due: review slots grow from 2 to the cap of 4 and one new item stays (2.3).
+    assert [item["category"] for item in today["items"]].count("review") == 4
+    assert [item["category"] for item in today["items"]].count("new") == 1
     assert answer(client, previous, previous["items"][0]).status_code == 409
     assert client.get(f"/api/sessions/{previous['id']}").json()["finished"] is True
 

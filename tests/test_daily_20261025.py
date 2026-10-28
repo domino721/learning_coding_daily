@@ -23,9 +23,9 @@ def test_previous_206_exercises_paths_cards_and_current_review_policy_are_preser
     digest = lambda v: hashlib.sha256(json.dumps(v,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     assert len(saved['exercises']) == 206
     assert LEARNING_PATHS['rules'] == saved['rules']
-    assert LEARNING_PATHS['review'] == saved['review']
+    assert LEARNING_PATHS['review'] == {**saved['review'], 'graduate_streak': 3, 'daily_slots': 2, 'max_daily_slots': 4}  # 2.3 adds graduation and review slots; the 2.1 repeat gap is unchanged
     assert saved['path_version'] == 'learning-paths-2.1'
-    assert LEARNING_PATHS['version'] == 'learning-paths-2.2'  # 2.1 rules/review preserved; 2.2 adds support step-down and task-form mixing
+    assert LEARNING_PATHS['version'] == 'learning-paths-2.3'  # 2.1 rules/review preserved; 2.2 adds support step-down and task-form mixing, 2.3 review graduation
     for key,expected in saved['exercises'].items():
         assert preserved('exercise', key, expected), key
         assert preserved('path', key, saved['path_items'][key])

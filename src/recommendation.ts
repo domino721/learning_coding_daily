@@ -205,13 +205,23 @@ export function selectExercises(
       paths[ex.id].requires.every(known)
     );
   };
+  // Solved independently on enough different days in a row: the item leaves the review queue,
+  // unless its concept is in support and still needs independent results to recover.
+  const graduated = (ex: Source) =>
+    (progress[ex.id]?.streak ?? 0) >= policy.review.graduate_streak &&
+    !states.get(ex.concept_id)!.needs_support;
   const due = exercises
     .filter(
       (ex) =>
-        progress[ex.id]?.due <= today && !doneToday.has(ex.id) && eligible(ex),
+        progress[ex.id]?.due <= today &&
+        !graduated(ex) &&
+        !doneToday.has(ex.id) &&
+        eligible(ex),
     )
     .sort(
       (a, b) =>
+        // A wrong or helped item is retried before scheduled checks of solved items.
+        Number(!!progress[a.id].streak) - Number(!!progress[b.id].streak) ||
         progress[a.id].due.localeCompare(progress[b.id].due) ||
         exercises.indexOf(a) - exercises.indexOf(b),
     );
@@ -248,9 +258,15 @@ export function selectExercises(
   };
   const selected: [Source, "new" | "review" | "practice"][] = [];
   const reviewConcepts = new Set<string>();
+  // Review slots grow past the daily share only to fit pending retries, and always leave room for a new item.
+  const retries = due.filter((ex) => !progress[ex.id].streak).length,
+    reviewSlots = Math.min(
+      policy.review.max_daily_slots,
+      Math.max(policy.review.daily_slots, retries),
+    );
   if (!extra)
     for (const ex of due) {
-      if (selected.length >= 3) break;
+      if (selected.length >= reviewSlots) break;
       if (!recentlySeen(ex)) {
         selected.push([ex, "review"]);
         reviewConcepts.add(ex.concept_id);
@@ -353,13 +369,12 @@ export function selectExercises(
       for (let i = pool.length - 1; i >= 0; i--)
         if (pool[i].level === 3) pool.splice(i, 1);
   }
-  if (extra)
-    for (const ex of due) {
-      if (selected.length >= 5) break;
-      if (recentlySeen(ex)) continue;
-      if (!selected.some(([x]) => x.id === ex.id))
-        selected.push([ex, "review"]);
-    }
+  // Slots no eligible new item can fill go to due reviews instead of leaving the batch short.
+  for (const ex of due) {
+    if (selected.length >= 5) break;
+    if (recentlySeen(ex)) continue;
+    if (!selected.some(([x]) => x.id === ex.id)) selected.push([ex, "review"]);
+  }
   return selected;
 }
 export function recommendationTrace(

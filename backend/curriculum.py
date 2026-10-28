@@ -148,8 +148,12 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         # One independent foundation result permits a level-2 probe, not a mastery claim.
         limit=max(1,state['support_level']-1) if state['needs_support'] else 3 if state['level']>=2 else 2 if state['independent_count']>0 else 1
         return prereq and ex.level<=limit and all(known(key) for key in LEARNING_PATHS['items'][ex.id]['requires'])
-    due=sorted([ex for ex in exercises if ex.id in progress and progress[ex.id].get('due',progress[ex.id].get('due_day','9999'))<=today and ex.id not in done_today and eligible(ex)],
-               key=lambda ex:(progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
+    # Solved independently on enough different days in a row: the item leaves the review queue,
+    # unless its concept is in support and still needs independent results to recover.
+    graduated=lambda ex:(progress[ex.id].get('streak') or 0)>=LEARNING_PATHS['review']['graduate_streak'] and not states[ex.concept_id]['needs_support']
+    due=sorted([ex for ex in exercises if ex.id in progress and progress[ex.id].get('due',progress[ex.id].get('due_day','9999'))<=today and not graduated(ex) and ex.id not in done_today and eligible(ex)],
+               # A wrong or helped item is retried before scheduled checks of solved items.
+               key=lambda ex:(1 if progress[ex.id].get('streak') else 0,progress[ex.id].get('due',progress[ex.id].get('due_day')),exercises.index(ex)))
     pool=[ex for ex in exercises if ex.id not in progress and ex.id not in done_today and eligible(ex)]
     gap_days=LEARNING_PATHS['review']['repeat_gap_days']
     def recently_seen(ex):
@@ -164,9 +168,12 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         remediation=LEARNING_PATHS['items'][ex.id]['remediation']
         return min(siblings,key=lambda c:(0 if c.id in remediation else 1,int(task_form(c)==task_form(ex)),abs(c.level-ex.level),exercises.index(c)),default=None)
     selected=[];review_concepts=set()
+    # Review slots grow past the daily share only to fit pending retries, and always leave room for a new item.
+    retries=sum(1 for ex in due if not progress[ex.id].get('streak'))
+    review_slots=min(LEARNING_PATHS['review']['max_daily_slots'],max(LEARNING_PATHS['review']['daily_slots'],retries))
     if not extra:
         for ex in due:
-            if len(selected)>=3:break
+            if len(selected)>=review_slots:break
             if not recently_seen(ex):selected.append((ex,'review'));review_concepts.add(ex.concept_id);continue
             if ex.concept_id in review_concepts:continue
             other=substitute(ex)
@@ -204,11 +211,11 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         solved_families.setdefault(ex.concept_id,set()).add(LEARNING_PATHS['items'][ex.id]['family'])
         pool.remove(ex)
         if ex.level==3:pool=[candidate for candidate in pool if candidate.level<3]
-    if extra:
-        for ex in due:
-            if len(selected)>=5:break
-            if recently_seen(ex):continue
-            if ex.id not in {x.id for x,_ in selected}:selected.append((ex,'review'))
+    # Slots no eligible new item can fill go to due reviews instead of leaving the batch short.
+    for ex in due:
+        if len(selected)>=5:break
+        if recently_seen(ex):continue
+        if ex.id not in {x.id for x,_ in selected}:selected.append((ex,'review'))
     return selected
 
 

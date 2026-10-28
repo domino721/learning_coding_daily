@@ -8119,7 +8119,7 @@
   ],
   "learning_paths": {
     "schema_version": 1,
-    "version": "learning-paths-2.2",
+    "version": "learning-paths-2.3",
     "rules": {
       "level2_items": 2,
       "level2_days": 2,
@@ -8130,7 +8130,10 @@
       "max_transfer_per_batch": 1
     },
     "review": {
-      "repeat_gap_days": 7
+      "repeat_gap_days": 7,
+      "graduate_streak": 3,
+      "daily_slots": 2,
+      "max_daily_slots": 4
     },
     "items": {
       "pandas-select-01": {

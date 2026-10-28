@@ -223,5 +223,138 @@
     ],
     "first": "pandas-select-01",
     "excluded": []
+  },
+  {
+    "name": "one review short of graduation returns as itself",
+    "track": "python",
+    "day": "2026-10-15",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-08"
+      }
+    ],
+    "first": "pandas-select-01",
+    "excluded": []
+  },
+  {
+    "name": "independent success on three different days graduates from review",
+    "track": "python",
+    "day": "2026-10-29",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-08"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-15"
+      }
+    ],
+    "first": "pandas-alignment-20261017",
+    "excluded": ["pandas-select-01"]
+  },
+  {
+    "name": "help resets the graduation streak",
+    "track": "python",
+    "day": "2026-10-30",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-08"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-15",
+        "hints": 1
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-16"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-23"
+      },
+      {
+        "id": "pandas-select-02",
+        "day": "2026-10-29"
+      }
+    ],
+    "first": "pandas-select-01",
+    "excluded": []
+  },
+  {
+    "name": "graduated item returns while its concept needs support",
+    "track": "python",
+    "day": "2026-10-29",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-08"
+      },
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-15"
+      },
+      {
+        "id": "pandas-select-03",
+        "day": "2026-10-28",
+        "status": "revealed",
+        "hints": 1
+      }
+    ],
+    "first": "pandas-select-01",
+    "excluded": []
+  },
+  {
+    "name": "wrong or helped items are retried before scheduled checks",
+    "track": "python",
+    "day": "2026-10-21",
+    "records": [
+      {
+        "id": "pandas-select-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "numpy-shape-01",
+        "day": "2026-10-01"
+      },
+      {
+        "id": "stats-median-01",
+        "day": "2026-10-20",
+        "status": "revealed",
+        "hints": 1
+      },
+      {
+        "id": "ml-split-01",
+        "day": "2026-10-20",
+        "status": "revealed",
+        "hints": 1
+      },
+      {
+        "id": "pandas-filter-01",
+        "day": "2026-10-20",
+        "attempts": 2
+      }
+    ],
+    "first": "stats-median-01",
+    "excluded": ["pandas-select-01", "numpy-shape-01"]
   }
 ]

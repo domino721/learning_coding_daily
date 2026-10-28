@@ -156,7 +156,7 @@ def test_recent_independent_review_varies_the_exercise_but_helped_items_are_retr
     assert 'pandas-select-01' not in {e.id for e,_ in picked}
     assert len({e.id for e,_ in picked})==len(picked)
     trace=recommendation_trace(picked,sessions,BY_ID)
-    assert trace['review']=={'repeat_gap_days':7} and trace['items'][0]['reason']=='최근 본 문제 대신 같은 개념을 다른 문제로 확인해요.'
+    assert trace['review']=={'repeat_gap_days':7,'graduate_streak':3,'daily_slots':2,'max_daily_slots':4} and trace['items'][0]['reason']=='최근 본 문제 대신 같은 개념을 다른 문제로 확인해요.'
     extra=select_exercises(EXERCISES,sessions,progress,'2026-10-23',extra=True,track='python')
     assert 'pandas-select-01' not in {e.id for e,_ in extra}
     later=select_exercises(EXERCISES,sessions,progress,'2026-10-27',track='python')
@@ -173,3 +173,28 @@ def test_two_recent_items_of_one_concept_take_a_single_practice_slot():
     practice=[e for e,c in picked if c=='practice']
     assert len(practice)==1 and practice[0].concept_id=='pandas-select'
     assert not {'pandas-select-01','pandas-select-02'}&{e.id for e,_ in picked}
+
+
+def test_independent_success_on_three_days_graduates_from_daily_and_extra_review():
+    sample={'track':'python','records':[{'id':'pandas-select-01','day':day} for day in ('2026-10-01','2026-10-08','2026-10-15')]}
+    sessions,progress=history(sample)
+    today=progress['pandas-select-01']['due']
+    assert progress['pandas-select-01']['streak']==3
+    # Every other item was already shown today, so only the due review could fill a batch.
+    sessions.append({'id':'today','track_id':'python','local_day':today,'batch':0,
+                     'items':[{'id':ex.id,'status':'pending'} for ex in EXERCISES if ex.id!='pandas-select-01']})
+    before={'pandas-select-01':{**progress['pandas-select-01'],'streak':2}}
+    for extra in (False,True):
+        assert select_exercises(EXERCISES,sessions,progress,today,extra=extra,track='python')==[]
+        assert select_exercises(EXERCISES,sessions,before,today,extra=extra,track='python')==[(BY_ID['pandas-select-01'],'review')]
+
+
+def test_leftover_slots_take_due_reviews_when_no_new_item_fits():
+    solved=['pandas-select-01','numpy-shape-01','stats-median-01','ml-split-01']
+    sessions,progress=history({'track':'python','records':[{'id':key,'day':'2026-10-01'} for key in solved]})
+    today='2026-10-20'
+    # Every other item was already shown today, so no new item can fill the batch.
+    sessions.append({'id':'today','track_id':'python','local_day':today,'batch':0,
+                     'items':[{'id':ex.id,'status':'pending'} for ex in EXERCISES if ex.id not in solved]})
+    picked=select_exercises(EXERCISES,sessions,progress,today,track='python')
+    assert [(ex.id,category) for ex,category in picked]==[(key,'review') for key in solved]
