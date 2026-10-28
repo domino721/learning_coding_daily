@@ -1114,6 +1114,18 @@
       ],
       "summary": "보존 검사 수정 0d6754a를 비강제 push했다. Pages 40503758683 1회차는 실행기의 Playwright 의존성 설치가 10분 걸려 quality 15분 제한으로 취소됐고(pytest 1061 통과 뒤 E2E 진행 중, 실패 기록 없음) 실패 작업만 재실행한 2회차에서 quality(pytest1061/Node24/모바일49)·publish success, 관리 40503758878 success. 공개 자산이 같은 commit 로컬 빌드와 일치하고 문항 청크는 230d5c0 게시본과 같다 EV-065. Codex 예약 재개는 사용자 조치.",
       "commit": "0d6754a6a7f985466a3c321cf8f820f595e4054f"
+    },
+    {
+      "id": "LOG-094",
+      "date": "2026-10-28",
+      "tasks": [
+        "WBS-370"
+      ],
+      "changes": [
+        "CR-014"
+      ],
+      "summary": "최신 main fc35efd에서 일일 정비 5건: pandas-select-03 v1→2 equivalent-code/multi, pandas-filter-03 v1→2 bug-line/line(각 합성 업무5행). pandas-filter-01·pandas-null-01 v2의 편집 필드 검수, pandas-sort-01 v2→3의 근거 약한 보기5000→라벨1 교체. 모든 대상 distractor_strength2·보기별 오개념 작성. Codex 자체 재풀이·실제 pandas 보기별 실행·경계11건·품질 게이트 통과. 새 ID0, 기존226개/기록·rules·복습 계약 보존. 검수 원본 curriculum/reviews/2026-10-28.json. 전체 scripts/check.sh(Python1061/Node24·포맷·타입·빌드)와 모바일49(서버 비해당10 제외) 통과. 별도320px 실풀이5개·과거snapshot224개 및 이전버전3개·새로고침 보존 통과. freeze/export·planning 검사 통과. 비강제 단일커밋으로 게시하며 원격Pages/공개자산 일치는 해당 실행과 최종보고에서 확인한다. 새 EV·기준선 없음.",
+      "commit": "fc35efddf50df115fe034ce3af61cdfc9302e731"
     }
   ]
 }

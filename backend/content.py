@@ -112,9 +112,9 @@ PANDAS = [
         "pandas-sort-01", "값 정렬과 위치 인덱싱", "choice", "주문 목록 출력",
         "아래 코드의 출력값을 고르세요.",
         'import pandas as pd\ndf = pd.DataFrame({"amount": [3000, 9000, 5000]})\nordered = df.sort_values("amount", ascending=False)\nprint(ordered["amount"].iloc[0])',
-        '9000', 'ascending=False로 큰 값부터 정렬하고 iloc[0]으로 첫 위치를 읽으므로 9000입니다. 기존 행 라벨 0을 읽는 것과 다릅니다.',
+        '9000', 'ascending=False로 큰 값부터 정렬하면 값은 9000·5000·3000, 행 라벨은 1·2·0 순서입니다. iloc[0]은 현재 첫 위치의 값 9000을 읽습니다. 원본 라벨 0의 값 3000이나 첫 행의 라벨 1, 위치 번호 0을 반환하는 것이 아닙니다.',
         ('ordered에 들어 있는 순서가 원본과 같은지 살펴보세요.', 'iloc은 행 라벨이 아니라 현재 위치를 기준으로 접근합니다.'),
-        ('3000', '5000', '9000', '0'),
+        ('3000', '1', '9000', '0'), version=3,
     ),
     Exercise(
         "pandas-group-01", "단일 열 집계", "blank", "일일 지표 완성",

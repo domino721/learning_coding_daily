@@ -67,9 +67,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "점수 코드 검토: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "행 마스크와 열 선택·전체 마스크 길이·남은 행 수를 구분한다. 오답은 열 개수, 원본 길이, 불리언 Series를 허용하지 않는다는 혼동을 각각 겨냥한다.",
+    "calibration": "editorial-codex-2026-10-28; 추정 난이도·시간이며 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "numpy-axis-01": {
     "concept_id": "numpy-structure",
@@ -127,9 +127,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "주문 데이터 확인: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "isna의 결측 판단과 True 합계를 연결한다. None 미인식·유효값 수·마스크 전체 길이를 결측 수와 구분하는 기초 확인이다.",
+    "calibration": "editorial-codex-2026-10-28; 추정 난이도·시간이며 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "numpy-broadcast-01": {
     "concept_id": "numpy-broadcast",
@@ -187,9 +187,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "주문 목록 출력: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "내림차순 첫 값과 원본 첫 값·정렬 후 행 라벨·위치 번호를 구분한다. 오답 5000은 구체적 오개념 근거가 약해 최대값 행의 라벨인 1로 교체했다.",
+    "calibration": "editorial-codex-2026-10-28; 추정 난이도·시간이며 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "numpy-mask-01": {
     "concept_id": "numpy-mask",
@@ -361,27 +361,27 @@
   },
   "pandas-select-03": {
     "concept_id": "pandas-select",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "품절 상품의 가격 합: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "5개 상품의 비연속 라벨에서 조건 행과 가격 열을 구분하고, 열 우선/행 우선 표현식의 동치를 판단한다. 두 개의 동치 식과 조건 반전·열 혼동을 비교하는 전이 과제다.",
+    "calibration": "editorial-codex-2026-10-28; 추정 난이도·시간이며 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "pandas-filter-03": {
     "concept_id": "pandas-filter",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "허용 구간 점검: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "5개 주문의 두 경계를 업무 요구와 비교하고 잘못 포함된 상한 행의 원인 줄을 진단한다. 경계값·포함 설정·선택·표시 단계를 분리하는 전이 과제다.",
+    "calibration": "editorial-codex-2026-10-28; 추정 난이도·시간이며 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "pandas-null-03": {
     "concept_id": "pandas-null",

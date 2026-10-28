@@ -72,7 +72,8 @@
       "requires": ["pandas-select-01"],
       "remediation": ["pandas-select-01"],
       "objective": "점수 코드 검토: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "numpy-axis-01": {
       "concept_id": "numpy-structure",
@@ -130,7 +131,8 @@
       "requires": ["pandas-select-01"],
       "remediation": ["pandas-select-01"],
       "objective": "주문 데이터 확인: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "numpy-broadcast-01": {
       "concept_id": "numpy-broadcast",
@@ -180,7 +182,8 @@
       "requires": ["pandas-select-01"],
       "remediation": ["pandas-select-01"],
       "objective": "주문 목록 출력: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "numpy-mask-01": {
       "concept_id": "numpy-mask",
@@ -330,7 +333,8 @@
       "requires": ["pandas-select-01", "pandas-alignment-20261017"],
       "remediation": ["pandas-select-01", "pandas-alignment-20261017"],
       "objective": "품절 상품의 가격 합: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
     },
     "pandas-filter-03": {
       "concept_id": "pandas-filter",
@@ -344,7 +348,8 @@
         "pandas-filter-02"
       ],
       "objective": "허용 구간 점검: 조건식의 경계 포함 여부와 필터 뒤 남는 원소를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "bug-line"
     },
     "pandas-null-03": {
       "concept_id": "pandas-null",
