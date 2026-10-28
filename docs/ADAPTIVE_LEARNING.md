@@ -11,7 +11,7 @@
 
 이는 문서 전용 실험이 아니라 새 기본/추가 학습 추천에 적용하는 구현이다. 기존 묶음은 저장한 문제·형식·진도를 유지한다. 18개 개념의 기존 Python/SQL 트랙과 기본 5문제 목표·선택적 추가 학습을 보존한다.
 
-CR-017(2026-10-28)부터 트랙은 Python 기초(`python-basics`)·Python 데이터 분석(`python`)·SQL(`sql`) 셋이다. 트랙 판정만 바뀌었고(`python`에서 domain Python 제외) 선택 규칙·rules·review는 learning-paths-2.3 그대로다. 개념은 31개이며 새 13개도 같은 기초→적용→전이 규칙을 따른다. 가상 재생에서 SQL은 이전 엔진과 결과가 같았다([비교](experiments/tracks-cr017-20261028.json)).
+CR-017(2026-10-28)부터 트랙은 Python 기초(`python-basics`)·Python 데이터 분석(`python`)·SQL(`sql`) 셋이다. 트랙 판정만 바뀌었고(`python`에서 domain Python 제외) 선택 규칙·rules·review는 learning-paths-2.3 그대로다. 개념은 35개(CR-018로 Python 기초 4개 추가)이며 새 개념도 같은 기초→적용→전이 규칙을 따른다. 가상 재생에서 SQL은 이전 엔진과 결과가 같았다([비교](experiments/tracks-cr017-20261028.json)).
 
 ## 출시 전에 만드는 커리큘럼
 

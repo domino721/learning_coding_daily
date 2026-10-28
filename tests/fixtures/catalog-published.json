@@ -882,6 +882,66 @@
    "path_item": "d29a09baa8bea799951ec793479c00a2e6ce2da1e108ec719c6fe72af07b2e62",
    "version": 1
   },
+  "py-class-01": {
+   "design_card": "816682ac028a58653e4f1f4bba5d8e1b927993b1205d2d3511a215fbf9275e00",
+   "exercise": "632d7b86b91bb7103ef3179d3fec1a14e317df8c170115824ce83181868eb109",
+   "path_item": "4fb29a1c6d72128001dc9aaea3a34bd7ff0cfe555ba74612cdeed2e9612bf369",
+   "version": 1
+  },
+  "py-class-02": {
+   "design_card": "e962f5bfb5603f449d7c6983467d3e4a27a3cabb546fd2cb169fff80a44ec705",
+   "exercise": "b9870914b105b9f196f2e6d4a1187f5d0a1267f1c3dcc0fe8cd51d050620962f",
+   "path_item": "49b2115cc34ac98e106fcae3b0de450ab9f6e1bcc7a46b1852ae81ca19381b9b",
+   "version": 1
+  },
+  "py-class-03": {
+   "design_card": "e8e615e1ce7192872714ef7d3997449c56c5a6ddfd436f441b4957ba8f5d3b83",
+   "exercise": "64fd696c50a087affc608bfb2784e276a4fe6baff1588dfa02da5d7da201fd49",
+   "path_item": "789db9680eba2fc2ed7399b62eeee9bd8eceb6eee08b2975ded0ae3d358c2378",
+   "version": 1
+  },
+  "py-class-04": {
+   "design_card": "739e4b6e93612adb129723cb523f394f8724f669ebb92631a40190f611aa9e9e",
+   "exercise": "5fe010ab838cda5935fb0eb569ca034bd0c7fa0f2198cb9200219983a09c0a60",
+   "path_item": "fd19141c0a9c09fb0d38d0474c1cb880f29db16d711e5e285c59ca8fb95ccadb",
+   "version": 1
+  },
+  "py-class-05": {
+   "design_card": "66934a93ce9b9c6065937af845cd9c44f5fd9cf78e59cfbf348492ce82f04bd2",
+   "exercise": "5672e0f2f046ce97790a21165bc3c552922ca699bfa9f1c5b304a453e053fed6",
+   "path_item": "b72238fae856e8fc732951097929c644c70e7e6ac117f379832c4bd8b832823e",
+   "version": 1
+  },
+  "py-class-deco-01": {
+   "design_card": "dff38d87883412d704e3d56e5625989612287a8dd62a7758a3e821eb482201ac",
+   "exercise": "17fb27e9f3234e0ae207fee0b6555ad26b67214aae3b9509960ef137d18eefd6",
+   "path_item": "2b578706af7e8bb3059e607fba9548aabf75b6d2a4e547e2a80f1ba6240e25fa",
+   "version": 1
+  },
+  "py-class-deco-02": {
+   "design_card": "6ffa4712ea0b297b92ec760e9f4cdcf3dbc55c24c103d640428994b61c8c945b",
+   "exercise": "d087e0f4ff05e20c7143a3e426bc984fc7a7760fd9b9ece6115aac71874ab6ae",
+   "path_item": "29e812e6096c661a5b48cec0f9cc9f0d33c52f30285dd5f0f66658b64affd1f2",
+   "version": 1
+  },
+  "py-class-deco-03": {
+   "design_card": "569f2b8190c758a8d45257eca84acc2e1c38d134a6a4be842267f5464afee92a",
+   "exercise": "444c122ea8a094f244a4f2fab83290202323bf8b20c2858cf280446876c55a11",
+   "path_item": "9521fde73356be7f6725b1def939e041413df19456c9ec9a23f55103887cbd71",
+   "version": 1
+  },
+  "py-class-deco-04": {
+   "design_card": "0263847f45f60657d5a1ec6a5624fb1b8ac0cb78ecd757a1fc51a20fc6e0c5b9",
+   "exercise": "0bf2403fb346e7a326ef9e57b297950fd5a1b3c567ad67f419e60396e0ce6901",
+   "path_item": "dbaa3aad9411bab1dab40f6e27bcc7f45c06da0286e707a121bce04e674d9417",
+   "version": 1
+  },
+  "py-class-deco-05": {
+   "design_card": "4f9195423cdb9392760ccefce742b90ce74e2898c156465fb2efa4669ae6daf3",
+   "exercise": "49c4584164884c3915eb7a5e743e38b37bff366104a8a77b5bfcc123b5ea1a0c",
+   "path_item": "9aeb6f1289fbf2bb53a8f80ffb8fa1632d4574c70d5adcc5c5cf2a6c04c71f88",
+   "version": 1
+  },
   "py-control-01": {
    "design_card": "36d2dad60a9c00e39128356f85533ba23668c6008acc7a4318e03a5044ba7c8c",
    "exercise": "07c4031ae274dedf2ca35e0a52d9a2b6712138914ad2e96a3537a0aa5c861422",
@@ -966,6 +1026,42 @@
    "path_item": "c19560f88e1649d723aa79ab28a01e68cd49778ae12d874391759d7504960c5f",
    "version": 1
   },
+  "py-error-01": {
+   "design_card": "51a52ad006458e57faf1dc110fd2fe1c55466b3e3ef55e99c6cd15a05d3afe1e",
+   "exercise": "987cdd60430f9aa8874f4b3bc6d0b651f1aae5efb32c285f46663496f77ea21f",
+   "path_item": "63a9f8f733614f29335292f28421f72822d2216b30047e888e61f5480618ad9e",
+   "version": 1
+  },
+  "py-error-02": {
+   "design_card": "9cb27cfdc40c6751402afde81c0fd8b04a456d6997a18365b468c03e2f7dabc8",
+   "exercise": "d9c5041010a88f5ca3bd8e48e417a86c7f36a39aa640ad91516b8287f0f28baa",
+   "path_item": "79326ff85ac929663f7b7f9ba63d33b737da9adc55f618279494d9875be332df",
+   "version": 1
+  },
+  "py-error-03": {
+   "design_card": "b55425144b2c9ff03d34bf1e78e0f2482b9a96c5ab69af029d6ed019c72c169d",
+   "exercise": "b5a91ab9a13b711f23c7996ccfc6fd02e8b54dfb583dbae9a6f2ebe829351808",
+   "path_item": "d9d9c2d9c49c22af7cae27902738e0bc3ec39ad43b7990b6191d02286fa0a79e",
+   "version": 1
+  },
+  "py-error-04": {
+   "design_card": "84548d38644579729bf01ef1070f2232557d57640d028ee450d6e783d3947c23",
+   "exercise": "722bd3942bb024a01a46df938c3937e0e33e5f7fd577bcf2d9c7ac7b462f90ca",
+   "path_item": "01016bcc90363c5fa3a3abda39b549bbaf229b5273fdd3b1a4063f0b4a1ed660",
+   "version": 1
+  },
+  "py-error-05": {
+   "design_card": "a6377da5e77e697714b433452c33299dc50e46adb41e280a3a9c52655c5ed33c",
+   "exercise": "e47084b38230f1c620409b71e6f1c8bd527c1fc13605007ebf433a18fa240ec6",
+   "path_item": "7113f97e78e51459a9c2927e7d43bcda5251426b673cc4cee8075c0504c1bd38",
+   "version": 1
+  },
+  "py-error-06": {
+   "design_card": "8b96f9521791fcc4129237a7dd584fe736251a88307e16d341524e5ab165530a",
+   "exercise": "07319c2cb651c95c4f96fb5ec76f920a5fb7d9992e06b162cf2c458d465e18d2",
+   "path_item": "09d3d33cf802f92d12cde6c495b833b4a39bcad3efb7c14afea5633fcfb157a2",
+   "version": 1
+  },
   "py-func-01": {
    "design_card": "31ab195aad833fdbb955659ee51dcdfa04115030ae285a20c0b439f9d16a3b1e",
    "exercise": "b5bd91d2ef0616ae48fddfa5d9af36a0c75dd81cf25d11d64ecb436d4d903e11",
@@ -988,6 +1084,36 @@
    "design_card": "d1ebe1188d69f34adbd54068ef1a4b4c937b050d6a66374d3c3aebbf14b0f815",
    "exercise": "f3471b6747bcb10816ab0fc918c630ab9953e15071e9ae75191835e81527c4bb",
    "path_item": "35776aa179ebb149f9b2d0181aad739f97870904752cf18930b822cbcde41f04",
+   "version": 1
+  },
+  "py-iter-01": {
+   "design_card": "0a7334f713c1e14f5d26bdc8f6140c91954845edd02c2e3997fe5cefc82aef7f",
+   "exercise": "ab47688fd9e09f51d36088acff1a04e7b58fbbf85bfaff4893f317f75dc69e6d",
+   "path_item": "ef61e8e07308add38ce0a1c93cd23fc66f5fa1ea3f1141583339775cdae2d8fc",
+   "version": 1
+  },
+  "py-iter-02": {
+   "design_card": "bce8e30540e81f7599414529e3420692fcfd15dbc6aac8bea88eaec712585a3c",
+   "exercise": "8331ebcd0a055fb6680e28b1e4ee8eb66d27d9929aa91ec459bd0d31d3ec0139",
+   "path_item": "51b7e3c67c066e4091fabe6996f701ee0726b93dc4de49711148248b4714ec5e",
+   "version": 1
+  },
+  "py-iter-03": {
+   "design_card": "9dd1800d3afddb4ce6e0293025f234fbb7afe39efe8d71a07f9d90ca40d5d9ff",
+   "exercise": "418259d3e911d93b406bb9541f2e5bde5aa81476a1b39d6fc7391ca5357311aa",
+   "path_item": "ce4c1bc6f2b71eaaf03a04a3dc03a09afca901fc32bf4a8cf0f812566987479a",
+   "version": 1
+  },
+  "py-iter-04": {
+   "design_card": "6390c8c0663afde1b13f8e5b9d767e16b862ea30ea7541840b059c4e052fcb83",
+   "exercise": "8c85c0e9ad813d7aaa60bacc4d1bb3b2872c01194f1b4e2225cadaf189899512",
+   "path_item": "7a2f282ea47f130e628e5f1694aa826f9cd299e6db8911cbcbd2a0d1d56dff56",
+   "version": 1
+  },
+  "py-iter-05": {
+   "design_card": "b0c4837eccf0cdbea1c748e8af0a619e2dde96efa2b52ec6cefc1a683fce3a97",
+   "exercise": "01fdc65e7f5efe42d752258b2f9e6333243874250f68ac79fa66e32fe7e0fbd1",
+   "path_item": "8a165ef6c70b83642524f9050b5066ebac94d3b8c2ddfd3c8ca4347257d736fa",
    "version": 1
   },
   "py-list-01": {

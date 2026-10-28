@@ -971,6 +971,19 @@
         "backend/extension_content.json"
       ],
       "code_reference": "4a4d568f617a546a8ac4120e34ddc0c5c1729b8b"
+    },
+    {
+      "id": "EV-070",
+      "record": "docs/planning/evidence/EV-070.md",
+      "artifacts": [
+        "backend/basics_content.json",
+        "backend/curriculum.py",
+        "src/curriculum.json",
+        "curriculum/reviews/2026-10-28-basics-2.json",
+        "tests/test_format_content.py",
+        "tests/preserved.py"
+      ],
+      "code_reference": "b26c9f70b178c685abce9d47f0b50f96f22594b9"
     }
   ]
 }

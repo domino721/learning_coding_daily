@@ -1,8 +1,14 @@
 {
   "schema_version": 1,
   "status": "reviewed",
-  "change": "CR-017",
-  "review_record": "curriculum/reviews/2026-10-28-tracks.json",
+  "change": [
+    "CR-017",
+    "CR-018"
+  ],
+  "review_record": [
+    "curriculum/reviews/2026-10-28-tracks.json",
+    "curriculum/reviews/2026-10-28-basics-2.json"
+  ],
   "exercises": [
     {
       "id": "py-values-01",
@@ -1239,6 +1245,581 @@
       "level": 3,
       "reference_setup": "",
       "reference_output": "None {'total': 1}"
+    },
+    {
+      "id": "py-class-01",
+      "concept": "__init__과 인스턴스 속성",
+      "kind": "choice",
+      "title": "계좌 입금 기록",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "class Account:\n    def __init__(self, owner, balance=0):\n        self.owner = owner\n        self.balance = balance\n\n    def deposit(self, amount):\n        self.balance += amount\n\na = Account(\"kim\")\nb = Account(\"lee\", 1000)\na.deposit(500)\nb.deposit(200)\nprint(a.balance, b.balance)",
+      "answer": "500 1200",
+      "explanation": "클래스는 객체를 만드는 틀이고, __init__은 객체를 만들 때 한 번 실행되어 self.owner·self.balance 같은 인스턴스 속성을 그 객체에 붙입니다. a는 기본값 0, b는 넘긴 1000으로 시작합니다. a.deposit(500)을 부르면 self가 a를 가리켜 a의 balance만 500이 되고, b.deposit(200)은 b의 balance를 1200으로 만듭니다. 같은 클래스에서 나온 객체라도 속성은 따로 가집니다.",
+      "hints": [
+        "a와 b가 각자 자기 balance를 갖는지, 하나를 함께 쓰는지 먼저 정하세요.",
+        "self는 메서드를 부른 그 객체를 가리킵니다. self.balance를 바꾸면 그 객체의 속성만 바뀝니다."
+      ],
+      "choices": [
+        "500 1200",
+        "1700 1700",
+        "0 1000",
+        "500 200"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "500 1200"
+    },
+    {
+      "id": "py-class-02",
+      "concept": "클래스 속성과 인스턴스 속성",
+      "kind": "choice",
+      "title": "주문 수 세기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "class Order:\n    count = 0\n\n    def __init__(self, item):\n        self.item = item\n        Order.count += 1\n\na = Order(\"pen\")\nb = Order(\"cup\")\na.count = 100\nprint(Order.count, a.count, b.count)",
+      "answer": "2 100 2",
+      "explanation": "count = 0은 클래스에 하나만 있는 클래스 속성이고, __init__의 Order.count += 1이 객체를 만들 때마다 그 값을 늘려 2가 됩니다. a.count = 100은 클래스 속성을 바꾸지 않고 a에만 count라는 인스턴스 속성을 새로 만듭니다. 그래서 a.count는 자기 속성 100을, 자기 속성이 없는 b.count는 클래스 속성 2를 읽습니다. 객체로 읽은 값과 클래스 값이 달라지는 원인이 됩니다.",
+      "hints": [
+        "Order.count와 a.count가 같은 곳을 가리키는지, a.count = 100 뒤에도 그런지 나누어 보세요.",
+        "객체에서 이름을 읽을 때는 객체 자신의 속성을 먼저 찾고, 없으면 클래스 속성을 봅니다."
+      ],
+      "choices": [
+        "100 100 100",
+        "2 2 2",
+        "2 100 2",
+        "1 100 1"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "2 100 2"
+    },
+    {
+      "id": "py-class-03",
+      "concept": "가변 클래스 속성의 공유",
+      "kind": "multi",
+      "title": "공용 장바구니 점검",
+      "prompt": "두 장바구니 객체를 만들고 한쪽에만 상품을 넣었습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "class Cart:\n    items = []\n\n    def add(self, item):\n        self.items.append(item)\n\na = Cart()\nb = Cart()\na.add(\"pen\")\nprint(____)",
+      "answer": "1,2,3",
+      "explanation": "items = []는 클래스에 하나만 있는 리스트입니다. a.add(\"pen\")의 self.items는 a에 items 속성이 없어 클래스의 리스트를 찾고, append는 그 리스트를 제자리에서 고칩니다. 그래서 a.items, b.items, Cart.items가 모두 같은 리스트 [\"pen\"]이므로 1번·2번·3번이 참입니다. 객체마다 따로 장바구니가 필요하면 __init__에서 self.items = []로 만들어야 합니다. a.count = 100처럼 대입하면 객체에만 새 속성이 생기지만, append처럼 고치면 함께 쓰는 리스트 자체가 바뀝니다.",
+      "hints": [
+        "items = []가 객체마다 만들어지는지, 클래스에 하나만 있는지 먼저 정하세요.",
+        "self.items.append(...)는 대입이 아니라 이미 있는 리스트를 고칩니다. 객체에 items가 없으면 클래스의 items를 찾아 고칩니다."
+      ],
+      "choices": [
+        "len(Cart.items) == 1",
+        "b.items == [\"pen\"]",
+        "a.items is b.items",
+        "Cart.items == []",
+        "b.items == []"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-class-04",
+      "concept": "상속·오버라이드와 super()",
+      "kind": "choice",
+      "title": "보고서 제목 만들기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "class Report:\n    def title(self):\n        return \"보고서\"\n\n    def render(self):\n        return \"[\" + self.title() + \"]\"\n\nclass SalesReport(Report):\n    def title(self):\n        return \"매출 \" + super().title()\n\nprint(Report().render(), SalesReport().render())",
+      "answer": "[보고서] [매출 보고서]",
+      "explanation": "SalesReport는 Report를 물려받아 render는 그대로 쓰고 title만 다시 정의(오버라이드)합니다. SalesReport().render()를 부르면 render 안의 self가 SalesReport 객체라서 self.title()은 자식의 title을 부르고, 그 안의 super().title()이 부모의 \"보고서\"를 가져와 \"매출 보고서\"가 됩니다. Report().render()는 부모의 title을 써서 [보고서]입니다. 자식에 render가 없어도 부모 것을 물려받으므로 오류가 나지 않습니다.",
+      "hints": [
+        "SalesReport 객체로 render를 부르면 render 안의 self가 어떤 객체인지 생각해 보세요.",
+        "self.title()은 self가 가리키는 객체의 클래스부터 메서드를 찾고, super().title()은 부모 클래스의 것을 부릅니다."
+      ],
+      "choices": [
+        "[보고서] [보고서]",
+        "[보고서] [매출 보고서]",
+        "[매출 보고서] [매출 보고서]",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "[보고서] [매출 보고서]"
+    },
+    {
+      "id": "py-class-05",
+      "concept": "self 속성과 지역 이름",
+      "kind": "line",
+      "title": "바구니 합계 점검",
+      "prompt": "상품을 담을 때마다 바구니 합계(self.total)를 늘리려 했는데 2500이 아니라 0이 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 담을 때마다 바구니 합계(self.total)를 늘린다\nclass Basket:\n    def __init__(self):\n        self.total = 0\n\n    def add(self, price, qty=1):\n        total = self.total + price * qty\n        return self.total\n\nb = Basket()\nb.add(1000, 2)\nb.add(500)\nprint(b.total)",
+      "answer": "7",
+      "explanation": "7번 줄은 self.total에 더한 값을 지역 이름 total에 넣을 뿐, 객체의 속성 self.total은 바꾸지 않습니다. 그래서 두 번 담아도 b.total은 처음 값 0입니다. `self.total = self.total + price * qty`(또는 `self.total += price * qty`)로 객체 속성에 대입하면 2500이 됩니다. __init__은 객체를 만들 때 한 번만 실행되고, 인자 순서(price=1000, qty=2)도 맞습니다. 함수의 지역 이름 규칙이 메서드에도 그대로 적용됩니다.",
+      "hints": [
+        "add를 두 번 부른 뒤 b 객체에 남아 있는 속성 값을 따라가 보세요.",
+        "메서드 안에서 self. 없이 대입한 이름은 메서드가 끝나면 사라지는 지역 이름입니다."
+      ],
+      "choices": [
+        "4",
+        "7",
+        "8",
+        "11",
+        "13"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "0"
+    },
+    {
+      "id": "py-class-deco-01",
+      "concept": "@property 계산 속성",
+      "kind": "choice",
+      "title": "상품 금액 계산",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "class Item:\n    def __init__(self, price, qty):\n        self.price = price\n        self.qty = qty\n\n    @property\n    def total(self):\n        return self.price * self.qty\n\nit = Item(1200, 3)\nit.qty = 5\nprint(it.total, Item(100, 2).total)",
+      "answer": "6000 200",
+      "explanation": "@property는 메서드를 괄호 없이 속성처럼 읽게 해 주는 데코레이터입니다. it.total을 읽을 때마다 total 메서드가 실행되므로, qty를 5로 바꾼 뒤에는 1200 × 5 = 6000입니다. 객체를 만들 때 한 번 계산해 저장하는 값이 아닙니다. 다른 객체 Item(100, 2)는 자기 속성으로 계산해 200입니다. 괄호를 붙여 it.total()로 부르면 오히려 6000이라는 숫자를 호출하게 되어 오류가 납니다.",
+      "hints": [
+        "it.total을 읽는 순간 무엇이 실행되는지, 그때 qty는 얼마인지 생각해 보세요.",
+        "@property를 붙인 메서드는 괄호 없이 속성처럼 읽지만, 읽을 때마다 메서드가 다시 실행됩니다."
+      ],
+      "choices": [
+        "3600 200",
+        "6000 6000",
+        "오류 발생",
+        "6000 200"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "6000 200"
+    },
+    {
+      "id": "py-class-deco-02",
+      "concept": "@dataclass가 만드는 메서드",
+      "kind": "choice",
+      "title": "좌표 객체 비교",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: int\n    y: int = 0\n\np = Point(3)\nq = Point(3, 0)\nprint(p, p == q)",
+      "answer": "Point(x=3, y=0) True",
+      "explanation": "@dataclass는 클래스 본문의 필드(x: int, y: int = 0)를 보고 __init__, __repr__, __eq__를 자동으로 만듭니다. Point(3)은 y에 기본값 0이 들어가고, print는 __repr__ 덕분에 Point(x=3, y=0)처럼 필드 이름과 값을 보여 줍니다. ==는 같은 객체인지가 아니라 필드 값이 모두 같은지 비교하므로 True입니다. 데이터를 담는 클래스를 짧게 쓰는 표준 방법이라 AI가 쓴 코드에 자주 나옵니다.",
+      "hints": [
+        "@dataclass가 __init__ 말고 어떤 메서드를 더 만들어 주는지 떠올려 보세요.",
+        "@dataclass는 필드 목록으로 __init__, 보기 좋은 출력(__repr__), 필드 값 비교(__eq__)를 만들어 줍니다."
+      ],
+      "choices": [
+        "Point(x=3, y=0) False",
+        "Point(x=3, y=0) True",
+        "Point(3, 0) True",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "Point(x=3, y=0) True"
+    },
+    {
+      "id": "py-class-deco-03",
+      "concept": "dataclass 가변 기본값과 field",
+      "kind": "multi",
+      "title": "고객별 장바구니",
+      "prompt": "고객마다 따로 쓰는 장바구니 목록을 만들려고 합니다. 빈칸에 넣었을 때 ['pen'] []이 출력되는 식을 모두 고르세요.",
+      "code": "from dataclasses import dataclass, field\n\n@dataclass\nclass Cart:\n    owner: str\n    items: list = ____\n\na = Cart(\"kim\")\nb = Cart(\"lee\")\na.items.append(\"pen\")\nprint(a.items, b.items)",
+      "answer": "2,5",
+      "explanation": "함수의 가변 기본값처럼 기본값 리스트 하나를 모든 객체가 함께 쓰면 한 고객의 상품이 다른 고객에게도 보입니다. @dataclass는 이를 막으려고 []나 field(default=[])처럼 바뀌는 값을 기본값으로 바로 주면 클래스를 만드는 순간 ValueError를 냅니다. field(default_factory=list)는 객체를 만들 때마다 list()를 불러 새 리스트를 주므로 a와 b가 따로 갖습니다. lambda: []도 새 리스트를 만드는 함수라 결과가 같습니다. None은 리스트가 아니라 append에서 AttributeError가 납니다.",
+      "hints": [
+        "기본값 리스트가 객체마다 새로 만들어져야 하는지, 하나를 함께 써도 되는지 먼저 생각해 보세요.",
+        "@dataclass는 리스트처럼 바뀌는 값을 기본값으로 바로 쓰는 것을 막고, 객체를 만들 때마다 새 값을 만들 함수를 받습니다."
+      ],
+      "choices": [
+        "None",
+        "field(default_factory=list)",
+        "[]",
+        "field(default=[])",
+        "field(default_factory=lambda: [])"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "['pen'] []"
+    },
+    {
+      "id": "py-class-deco-04",
+      "concept": "@classmethod와 @staticmethod",
+      "kind": "multi",
+      "title": "환율 변환 객체",
+      "prompt": "달러 금액으로 객체를 만드는 메서드를 정의했습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "class Money:\n    rate = 1300\n\n    def __init__(self, won):\n        self.won = won\n\n    @classmethod\n    def from_usd(cls, usd):\n        return cls(usd * cls.rate)\n\n    @staticmethod\n    def fmt(won):\n        return f\"{won:,}원\"\n\nm = Money.from_usd(2)\nprint(____)",
+      "answer": "1,3,5",
+      "explanation": "@classmethod를 붙인 from_usd는 객체 없이 Money.from_usd(2)로 부르고, 첫 인자 cls에 Money 클래스가 들어갑니다. cls(2 × 1300)은 Money(2600)과 같아 Money 객체를 돌려주므로 1번과 5번이 참입니다. 1달러면 won은 1300이라 2번은 거짓이고, 돌려준 값은 숫자가 아니라 Money 객체라 4번도 거짓입니다. @staticmethod fmt는 self·cls 없이 받은 값만 쓰는 함수라 클래스로도 객체로도 부를 수 있어 3번이 참입니다. 다른 단위로 객체를 만드는 ‘대체 생성자’에 @classmethod를 씁니다.",
+      "hints": [
+        "from_usd가 받는 첫 인자 cls에 무엇이 들어가는지, 그 메서드가 무엇을 돌려주는지 따라가 보세요.",
+        "@classmethod는 객체 대신 클래스를 첫 인자로 받고, @staticmethod는 self도 cls도 받지 않는 보통 함수입니다."
+      ],
+      "choices": [
+        "m.won == 2600",
+        "Money.from_usd(1).won == 1",
+        "m.fmt(100) == \"100원\"",
+        "type(Money.from_usd(1)) is int",
+        "isinstance(m, Money)"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-class-deco-05",
+      "concept": "dataclass 비교 메서드와 포함 검사",
+      "kind": "line",
+      "title": "중복 좌표 정리 점검",
+      "prompt": "같은 좌표는 한 번만 담으려 했는데 2가 아니라 3이 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "from dataclasses import dataclass\n\n# 같은 좌표는 한 번만 담는다\n@dataclass(eq=False)\nclass Point:\n    x: int\n    y: int\n\npoints = [Point(1, 2), Point(1, 2), Point(3, 4)]\nunique = []\nfor p in points:\n    if p not in unique:\n        unique.append(p)\nprint(len(unique))",
+      "answer": "4",
+      "explanation": "in은 리스트의 원소마다 ==로 비교합니다. @dataclass는 기본으로 필드 값을 비교하는 __eq__를 만들지만, 4번 줄의 eq=False는 그 생성을 끕니다. 그러면 ==는 같은 객체인지만 비교해 두 번째 Point(1, 2)를 새 값으로 보고 담아 3이 됩니다. @dataclass로 바꾸면 필드 값이 같은 좌표를 같다고 판단해 2가 됩니다. in·==·list.remove·count가 모두 이 __eq__를 쓰므로, 데이터를 담는 클래스에서 비교 규칙은 결과를 바꿉니다.",
+      "hints": [
+        "p not in unique가 두 번째 Point(1, 2)를 이미 담긴 것과 같다고 판단하는지 생각해 보세요.",
+        "in은 원소마다 ==로 비교하고, 클래스의 ==가 무엇을 비교할지는 그 클래스의 __eq__가 정합니다."
+      ],
+      "choices": [
+        "4",
+        "9",
+        "11",
+        "12",
+        "13"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "3"
+    },
+    {
+      "id": "py-error-01",
+      "concept": "예외 종류 구분",
+      "kind": "choice",
+      "title": "조회 오류 분류",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "data = {\"kim\": [80, 90]}\nerrors = []\nfor key, idx in [(\"kim\", 5), (\"lee\", 0), (\"kim\", \"0\")]:\n    try:\n        data[key][idx]\n    except Exception as error:\n        errors.append(type(error).__name__)\nprint(errors)",
+      "answer": "['IndexError', 'KeyError', 'TypeError']",
+      "explanation": "\"kim\"의 리스트는 길이 2라 [5]는 범위 밖이므로 IndexError, \"lee\"는 딕셔너리에 없는 키라 KeyError, 리스트 번호에 문자 \"0\"을 쓰면 정수가 아니라 TypeError입니다. 오류 이름은 원인의 종류를 알려 주는 첫 단서입니다. KeyError·IndexError는 ‘없는 것을 찾음’, TypeError는 ‘자료형이 맞지 않음’, ValueError는 ‘자료형은 맞지만 값이 맞지 않음’(예: int(\"abc\"))입니다. except Exception as error와 type(error).__name__으로 오류 이름을 꺼낼 수 있습니다.",
+      "hints": [
+        "세 조회를 하나씩 따라가며 data[key]와 [idx] 중 어느 단계에서 멈추는지 적어 보세요.",
+        "오류 이름은 무엇이 잘못됐는지를 말해 줍니다. 없는 것을 찾았는지(키·번호), 맞지 않는 자료형을 썼는지 구분해 보세요."
+      ],
+      "choices": [
+        "['KeyError', 'IndexError', 'TypeError']",
+        "['IndexError', 'KeyError', 'ValueError']",
+        "['ValueError', 'KeyError', 'TypeError']",
+        "['IndexError', 'KeyError', 'TypeError']"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "['IndexError', 'KeyError', 'TypeError']"
+    },
+    {
+      "id": "py-error-02",
+      "concept": "try·except·else·finally 순서",
+      "kind": "choice",
+      "title": "처리 단계 기록",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "log = []\nfor b in [2, 0]:\n    try:\n        x = 10 / b\n    except ZeroDivisionError:\n        log.append(\"오류\")\n    else:\n        log.append(\"성공\")\n    finally:\n        log.append(\"정리\")\nprint(log)",
+      "answer": "['성공', '정리', '오류', '정리']",
+      "explanation": "b가 2이면 try가 성공해 else(\"성공\") 다음 finally(\"정리\")가 실행됩니다. b가 0이면 ZeroDivisionError가 나서 except(\"오류\") 다음 finally(\"정리\")가 실행됩니다. finally는 오류 여부와 상관없이 그 try 블록이 끝날 때마다 마지막에 실행되어 파일 닫기·연결 해제 같은 정리에 씁니다. else는 오류가 없을 때만 실행되는 자리라, 성공했을 때만 할 일을 try 안에 섞지 않게 해 줍니다.",
+      "hints": [
+        "b가 2일 때와 0일 때 각각 어느 블록이 실행되는지 차례로 적어 보세요.",
+        "else는 오류가 없을 때만, except는 오류가 났을 때만 실행됩니다. finally가 언제 실행되는지 두 경우 모두 확인하세요."
+      ],
+      "choices": [
+        "['성공', '정리', '오류', '정리']",
+        "['성공', '오류', '정리']",
+        "['성공', '정리', '오류']",
+        "['정리', '성공', '정리', '오류']"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "['성공', '정리', '오류', '정리']"
+    },
+    {
+      "id": "py-error-03",
+      "concept": "except 순서와 넓은 예외",
+      "kind": "choice",
+      "title": "입력 변환 결과",
+      "prompt": "같은 변환 함수에 세 가지 입력을 넣었습니다. 출력값을 고르세요.",
+      "code": "def parse(text):\n    try:\n        return int(text)\n    except Exception:\n        return \"기타 오류\"\n    except ValueError:\n        return \"숫자 아님\"\n\nprint(parse(\"12\"), parse(\"abc\"), parse(None))",
+      "answer": "12 기타 오류 기타 오류",
+      "explanation": "except 절은 if·elif처럼 위에서부터 검사해 처음 맞는 하나만 실행합니다. \"abc\"는 ValueError를 내지만 ValueError도 Exception의 한 종류라 첫 except Exception에서 잡혀 \"기타 오류\"가 되고, 아래의 except ValueError는 실행될 기회가 없습니다. None은 TypeError를 내고 역시 Exception에 잡힙니다. 구체적인 예외를 먼저, 넓은 Exception을 마지막에 써야 의도대로 나뉩니다.",
+      "hints": [
+        "\"abc\"와 None이 각각 어떤 오류를 내는지, except 절은 어떤 순서로 검사되는지 나누어 보세요.",
+        "except 절은 위에서부터 차례로 검사해 처음 맞는 하나만 실행합니다. Exception은 거의 모든 오류를 포함합니다."
+      ],
+      "choices": [
+        "12 기타 오류 기타 오류",
+        "12 숫자 아님 기타 오류",
+        "12 숫자 아님 숫자 아님",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "12 기타 오류 기타 오류"
+    },
+    {
+      "id": "py-error-04",
+      "concept": "여러 예외를 함께 잡기",
+      "kind": "multi",
+      "title": "입력값 숫자 변환",
+      "prompt": "숫자로 바꿀 수 없는 값은 0으로 처리하려고 합니다. 빈칸에 넣었을 때 [7, 0, 0]이 출력되는 식을 모두 고르세요.",
+      "code": "def to_int(value):\n    try:\n        return int(value)\n    except ____:\n        return 0\n\nprint([to_int(v) for v in [\"7\", \"x\", None]])",
+      "answer": "3,4",
+      "explanation": "\"x\"는 int로 바꿀 수 없어 ValueError, None은 자료형이 맞지 않아 TypeError를 냅니다. 두 오류를 함께 잡으려면 3번처럼 튜플로 묶거나, 둘을 모두 포함하는 4번 Exception을 씁니다. 5번 ValueError or TypeError는 or가 앞 값을 돌려줘 ValueError 하나와 같으므로 None의 TypeError가 그대로 터집니다. 2번 ValueError만, 1번 TypeError만 쓰면 다른 하나가 잡히지 않습니다. 다만 Exception은 예상하지 못한 버그까지 0으로 숨길 수 있어, 잡을 오류를 좁히는 쪽이 안전합니다.",
+      "hints": [
+        "\"x\"와 None이 각각 어떤 오류를 내는지 먼저 정하세요.",
+        "여러 예외를 한 번에 잡으려면 예외들을 튜플로 묶습니다. or로 이은 식은 먼저 하나의 값으로 계산된 뒤 쓰입니다."
+      ],
+      "choices": [
+        "TypeError",
+        "ValueError",
+        "(ValueError, TypeError)",
+        "Exception",
+        "ValueError or TypeError"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "[7, 0, 0]"
+    },
+    {
+      "id": "py-error-05",
+      "concept": "트레이스백 줄과 원인 줄",
+      "kind": "line",
+      "title": "주문 합계 오류 추적",
+      "prompt": "아래 코드를 실행하자 7번 줄에서 TypeError: unsupported operand type(s) for +: 'int' and 'str' 오류가 났습니다. amounts에는 금액이 숫자로 담겨 있어야 합니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# 쉼표로 나뉜 주문 기록에서 금액 합계를 낸다\nrows = [\"kim,3000\", \"lee,1500\", \"park,2000\"]\namounts = []\nfor row in rows:\n    name, amount = row.split(\",\")\n    amounts.append(amount)\ntotal = sum(amounts)\nprint(total)",
+      "answer": "6",
+      "explanation": "split(\",\")은 문자열을 나누므로 amount는 \"3000\" 같은 문자열이고, 6번 줄은 그 문자열을 그대로 리스트에 넣습니다. 7번 줄의 sum은 0부터 더하기 시작해 0 + \"3000\"을 하다가 int와 str을 더할 수 없어 TypeError를 냅니다. 트레이스백이 가리키는 곳은 7번 줄이지만 원인은 숫자로 바꾸지 않고 담는 6번 줄이며, `amounts.append(int(amount))`로 고치면 amounts에 숫자가 담겨 6500이 됩니다. 7번 줄을 sum(map(int, amounts))로 바꿔도 합계는 나오지만 amounts에는 여전히 문자열이 남습니다. 오류 메시지의 자료형(int와 str)을 보고 그 값이 어디서 만들어졌는지 거슬러 올라가는 것이 트레이스백 읽기의 핵심입니다.",
+      "hints": [
+        "오류가 난 7번 줄에서 sum이 받은 amounts 안의 값이 무슨 자료형인지 거슬러 올라가 보세요.",
+        "트레이스백은 오류가 터진 줄을 알려 줄 뿐입니다. 문제가 된 값이 amounts에 들어가는 순간을 찾아보세요."
+      ],
+      "choices": [
+        "2",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "TypeError"
+    },
+    {
+      "id": "py-error-06",
+      "concept": "예외를 삼키는 처리",
+      "kind": "line",
+      "title": "금액 합계 누락 점검",
+      "prompt": "숫자가 아닌 칸(\"-\")만 건너뛰고 금액을 모두 더하려 했는데 2300이 아니라 1100이 출력됐습니다. 입력 칸(cells)의 값은 바꾸지 않아야 합니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 숫자가 아닌 칸만 건너뛰고 금액을 모두 더한다\ncells = [\"1,200\", \"800\", \"-\", \"300\"]\ntotal = 0\nfor cell in cells:\n    try:\n        total += int(cell)\n    except ValueError:\n        pass\nprint(total)",
+      "answer": "6",
+      "explanation": "int(\"1,200\")은 쉼표 때문에 ValueError를 내고, except ValueError: pass가 이를 조용히 넘겨 1200원이 빠집니다. 그래서 800 + 300 = 1100입니다. 원인은 금액 문자열을 그대로 int로 바꾸는 6번 줄이며, `int(cell.replace(\",\", \"\"))`로 쉼표를 지우면 \"-\"만 건너뛰어 2300이 됩니다. except를 Exception으로 넓히면 더 많은 오류를 숨길 뿐입니다. 예외를 삼키는 코드는 결과를 틀리게 만들어도 오류가 보이지 않으므로, 건너뛴 값을 따로 모아 확인하는 습관이 필요합니다.",
+      "hints": [
+        "네 칸이 각각 total에 더해지는지, 건너뛰어지는지 하나씩 따라가 보세요.",
+        "건너뛴 칸이 \"-\" 하나뿐인지 확인해 보세요. except ... pass는 오류가 난 칸을 아무 기록 없이 넘깁니다."
+      ],
+      "choices": [
+        "2",
+        "6",
+        "7",
+        "8"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "1100"
+    },
+    {
+      "id": "py-iter-01",
+      "concept": "반복자는 한 번만 돈다",
+      "kind": "choice",
+      "title": "이름·점수 묶음 재사용",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "names = [\"kim\", \"lee\"]\nscores = [80, 95]\npairs = zip(names, scores)\nfirst = list(pairs)\nsecond = list(pairs)\nprint(len(first), len(second))",
+      "answer": "2 0",
+      "explanation": "zip은 리스트가 아니라 값을 하나씩 꺼내 주는 반복자를 돌려줍니다. list(pairs)가 끝까지 꺼내 [(\"kim\", 80), (\"lee\", 95)]를 만든 뒤 pairs는 비어 있어, 두 번째 list(pairs)는 오류 없이 빈 리스트가 됩니다. map·filter·생성기·파일 객체도 같습니다. 같은 묶음을 여러 번 쓰려면 처음에 list로 바꿔 저장해 두세요. 디버깅하려고 print(list(it))을 끼워 넣었다가 뒤의 코드가 빈 결과를 받는 실수가 흔합니다.",
+      "hints": [
+        "pairs가 리스트인지, 값을 하나씩 꺼내 주고 끝나는 반복자인지 생각해 보세요.",
+        "zip·map·filter와 생성기는 끝까지 한 번 돌면 비게 되는 반복자입니다."
+      ],
+      "choices": [
+        "2 2",
+        "오류 발생",
+        "4 0",
+        "2 0"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "2 0"
+    },
+    {
+      "id": "py-iter-02",
+      "concept": "enumerate와 zip의 길이",
+      "kind": "choice",
+      "title": "상품 번호 매기기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "items = [\"pen\", \"cup\", \"book\"]\nprices = [1200, 4000]\npairs = zip(items, prices)\nfor n, (item, price) in enumerate(pairs, start=1):\n    last = (n, item, price)\nprint(last)",
+      "answer": "(2, 'cup', 4000)",
+      "explanation": "zip은 가장 짧은 리스트가 끝나면 멈춰 (\"pen\", 1200), (\"cup\", 4000) 두 쌍만 만듭니다. book은 짝이 없어 조용히 빠집니다. enumerate(..., start=1)은 번호를 1부터 매기므로 마지막 반복의 n은 2입니다. 그래서 last는 (2, \"cup\", 4000)입니다. 길이가 다른 데이터를 zip하면 오류 없이 일부가 사라지므로, Python 3.10부터는 zip(..., strict=True)로 길이가 다르면 오류를 내게 할 수 있습니다.",
+      "hints": [
+        "zip(items, prices)가 몇 쌍을 만드는지, enumerate가 몇부터 세는지 나누어 보세요.",
+        "zip은 가장 짧은 쪽이 끝나면 멈추고, enumerate의 start는 첫 번호를 정합니다."
+      ],
+      "choices": [
+        "(3, 'book', None)",
+        "(1, 'cup', 4000)",
+        "(2, 'cup', 4000)",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "(2, 'cup', 4000)"
+    },
+    {
+      "id": "py-iter-03",
+      "concept": "생성기의 지연 실행",
+      "kind": "choice",
+      "title": "번호 생성 순서",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "log = []\n\ndef numbers():\n    for n in [1, 2, 3]:\n        log.append(f\"make {n}\")\n        yield n * 10\n\ngen = numbers()\nlog.append(\"start\")\nfirst = next(gen)\nlog.append(f\"got {first}\")\nprint(log)",
+      "answer": "['start', 'make 1', 'got 10']",
+      "explanation": "yield가 들어 있는 함수는 부르면 본문을 실행하지 않고 생성기 객체만 돌려줍니다. 그래서 log에는 \"start\"가 먼저 들어갑니다. next(gen)을 부르면 그제야 본문이 실행되어 \"make 1\"을 남기고 yield에서 10을 돌려준 뒤 멈춥니다. 나머지 2·3은 다음 next를 기다립니다. 필요할 때만 값을 만드는 이 지연 실행 덕분에 큰 파일이나 끝없는 데이터도 조금씩 처리할 수 있습니다.",
+      "hints": [
+        "numbers()를 부른 줄에서 함수 본문이 실제로 실행되는지 생각해 보세요.",
+        "yield가 있는 함수는 부를 때 생성기만 만들고, next를 부를 때마다 다음 yield까지만 실행됩니다."
+      ],
+      "choices": [
+        "['make 1', 'make 2', 'make 3', 'start', 'got 10']",
+        "['make 1', 'start', 'got 10']",
+        "['start', 'make 1', 'got 10']",
+        "['start', 'make 1', 'make 2', 'make 3', 'got 10']"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "['start', 'make 1', 'got 10']"
+    },
+    {
+      "id": "py-iter-04",
+      "concept": "defaultdict와 Counter",
+      "kind": "multi",
+      "title": "고객별 주문 묶기",
+      "prompt": "고객별 주문 상품을 묶었습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "from collections import Counter, defaultdict\n\norders = [(\"kim\", \"pen\"), (\"lee\", \"cup\"), (\"kim\", \"book\")]\nby_customer = defaultdict(list)\nfor name, item in orders:\n    by_customer[name].append(item)\nprint(____)",
+      "answer": "1,4,5",
+      "explanation": "defaultdict(list)는 대괄호로 없는 키를 읽는 순간 빈 리스트를 만들어 넣어 주므로, 키 확인 없이 by_customer[name].append(item)을 쓸 수 있습니다. 그래서 4번이 참이고, 없는 \"park\"도 대괄호로 읽으면 KeyError 대신 []가 되어 5번이 참입니다. 반면 get과 in은 키를 만들지 않아 2번의 get(\"park\")는 None, 3번은 False입니다. Counter는 값마다 개수를 세어 most_common(1)이 가장 많은 [(\"kim\", 2)]를 돌려주므로 1번이 참입니다. 직접 쓰던 d[k] = d.get(k, 0) + 1을 Counter·defaultdict로 줄인 코드가 많습니다.",
+      "hints": [
+        "defaultdict(list)가 없는 키를 만났을 때 무엇을 하는지, get과 in은 어떻게 다른지 나누어 보세요.",
+        "defaultdict는 대괄호로 없는 키를 읽을 때만 기본값을 만들어 넣고, get과 in은 키를 만들지 않습니다. Counter는 값마다 개수를 셉니다."
+      ],
+      "choices": [
+        "Counter(n for n, _ in orders).most_common(1) == [(\"kim\", 2)]",
+        "by_customer.get(\"park\") == []",
+        "\"park\" in by_customer",
+        "by_customer[\"kim\"] == [\"pen\", \"book\"]",
+        "by_customer[\"park\"] == []"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-iter-05",
+      "concept": "groupby는 이웃한 값만 묶는다",
+      "kind": "line",
+      "title": "고객별 주문 건수 점검",
+      "prompt": "고객별 주문 건수를 [('kim', 3), ('lee', 2)]로 만들려 했는데 같은 고객이 여러 번 나왔습니다. 주문 기록(orders)의 순서는 그대로 두어야 합니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "from itertools import groupby\n\n# 고객별 주문 건수를 [(고객, 건수), ...]로 만든다\norders = [\"kim\", \"lee\", \"kim\", \"kim\", \"lee\"]\nsummary = []\nfor name, group in groupby(orders):\n    summary.append((name, len(list(group))))\nprint(summary)",
+      "answer": "6",
+      "explanation": "itertools.groupby는 SQL의 GROUP BY와 달리 바로 이웃한 같은 값만 한 묶음으로 만듭니다. 시간 순서 기록에서는 kim이 떨어져 있어 kim 1건·lee 1건·kim 2건·lee 1건으로 나뉩니다. 6번 줄에서 groupby(sorted(orders))로 정렬한 사본을 묶으면 같은 고객이 붙어 kim 3건·lee 2건이 되고, 원래 orders의 순서도 그대로 남습니다. 개수만 필요하면 Counter(orders)가 더 간단합니다.",
+      "hints": [
+        "groupby가 만든 묶음을 차례로 적어 보고, 같은 고객이 왜 여러 번 나오는지 보세요.",
+        "itertools.groupby는 바로 이웃한 같은 값만 한 묶음으로 만듭니다. SQL의 GROUP BY처럼 전체를 모아 주지 않습니다."
+      ],
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "[('kim', 1), ('lee', 1), ('kim', 2), ('lee', 1)]"
     }
   ]
 }

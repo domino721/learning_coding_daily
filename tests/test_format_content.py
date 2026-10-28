@@ -1,7 +1,8 @@
 """Line/order/multi items: re-run every authored variant recorded in each item's review record.
 
 Order: the answer and accepted orders print reference_output; every trap order fails or differs.
-Line: the shown code prints reference_output (the reported wrong result); the review fix gives the target.
+Line: the shown code prints reference_output (the reported wrong result), or stops with the exception named
+in the review entry's `raises`; the review fix gives the target.
 Multi: exactly the answer options print reference_output when placed in ____.
 Only repository-owned snippets run, in a separate isolated interpreter (never the API process).
 """
@@ -112,6 +113,10 @@ def test_every_variant_reproduces_its_reviewed_result(ex, results):
             stdout, error = results[(ex.id, label)]
             if expected == 'fix':
                 assert error is None and stdout == fix['output'], label
+                continue
+            if label == 'shown' and 'raises' in ENTRIES[ex.id]:
+                # A traceback item stops with the reported exception; its fix must run cleanly.
+                assert error == ENTRIES[ex.id]['raises'] == ex.reference_output, (label, error)
                 continue
             output = None if error else stdout
         assert (output == ex.reference_output) == (expected == 'same'), (label, output)

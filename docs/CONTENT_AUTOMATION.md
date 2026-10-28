@@ -11,7 +11,7 @@
 
 유형군 재분류(개념별 3~5개 family)는 기계 게이트가 아니라 별도 콘텐츠 작업이며 `docs/CONTENT_QUALITY_REVIEW.md`의 순서를 따른다.
 
-CR-017(2026-10-28)로 추가된 66문항은 원본이 `backend/basics_content.json`(Python 기초)과 `backend/extension_content.json`(SQL 함수·윈도·데이터 변경, NumPy·pandas의 @)에 있다. 이 문항들은 게시 전에 게이트(단계 3 비출력 형식·오답 보기 강도 2 이상)를 통과했으므로 정비 우선순위 목록의 대상이 아니다. 고칠 때는 같은 원본 파일에서 version을 올린다.
+CR-017(2026-10-28)로 추가된 66문항과 CR-018의 Python 기초 21문항은 원본이 `backend/basics_content.json`(Python 기초)과 `backend/extension_content.json`(SQL 함수·윈도·데이터 변경, NumPy·pandas의 @)에 있다. 이 문항들은 게시 전에 게이트(단계 3 비출력 형식·오답 보기 강도 2 이상)를 통과했으므로 정비 우선순위 목록의 대상이 아니다. 고칠 때는 같은 원본 파일에서 version을 올린다.
 
 ## 절차
 

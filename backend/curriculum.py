@@ -39,6 +39,11 @@ CONCEPTS = [
     {'id':'sql-functions','name':'문자열·날짜 함수','domain':'SQL','prerequisites':['sql-rows']},
     {'id':'sql-windows','name':'윈도 함수','domain':'SQL','prerequisites':['sql-aggregation']},
     {'id':'sql-modify','name':'데이터 변경과 제약','domain':'SQL','prerequisites':['sql-rows']},
+    # CR-018: the second Python 기초 batch.
+    {'id':'py-class','name':'클래스와 객체','domain':'Python','prerequisites':['py-func']},
+    {'id':'py-class-deco','name':'@property와 @dataclass','domain':'Python','prerequisites':['py-class','py-decorator']},
+    {'id':'py-error','name':'예외와 트레이스백','domain':'Python','prerequisites':['py-func']},
+    {'id':'py-iter','name':'반복자와 생성기','domain':'Python','prerequisites':['py-control']},
 ]
 LEVELS = {1:'기초 확인', 2:'적용', 3:'조건 변화·전이'}
 ESSAYS = {'numpy-view-03','sql-join-03','stats-conditional-03','ml-leakage-01','ml-leakage-02'}
@@ -75,6 +80,10 @@ RATIONALES = {
 'sql-functions':'함수가 돌려주는 값과 문자열로 저장된 날짜·숫자의 비교 규칙을 구분한다.',
 'sql-windows':'행을 줄이지 않고 구간·순서 안에서 계산되는 값과 동점 처리를 추적한다.',
 'sql-modify':'변경 대상 행·제약 위반·트랜잭션 결과를 실행 후 상태로 판단한다.',
+'py-class':'객체마다 따로 갖는 속성과 클래스가 함께 쓰는 속성, 상속된 메서드의 호출 순서를 추적한다.',
+'py-class-deco':'@property·@classmethod·@dataclass가 만들어 주는 메서드와 그 실행 시점을 판단한다.',
+'py-error':'예외의 종류와 except·finally의 실행 순서, 오류가 난 줄과 원인 줄을 구분한다.',
+'py-iter':'반복자가 값을 한 번씩만 꺼내 주고 생성기가 필요할 때만 실행된다는 점을 추적한다.',
 }
 
 def concept_id(exercise_id):
