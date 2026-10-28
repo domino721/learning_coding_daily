@@ -984,6 +984,16 @@
         "tests/preserved.py"
       ],
       "code_reference": "b26c9f70b178c685abce9d47f0b50f96f22594b9"
+    },
+    {
+      "id": "EV-071",
+      "record": "docs/planning/evidence/EV-071.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "backend/basics_content.json"
+      ],
+      "code_reference": "a1e2f79d3160a5982ca858c07498826d04532496"
     }
   ]
 }
