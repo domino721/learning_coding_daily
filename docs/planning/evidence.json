@@ -923,6 +923,17 @@
         "docs/ADAPTIVE_LEARNING.md"
       ],
       "code_reference": "98809b6cd2d375cee6942a59e7033c26aacbc93a"
+    },
+    {
+      "id": "EV-067",
+      "record": "docs/planning/evidence/EV-067.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "src/recommendation.ts",
+        "backend/learning_paths.json"
+      ],
+      "code_reference": "93341e8fa83b3180af9559bcd2fcf9918a8c82a3"
     }
   ]
 }
