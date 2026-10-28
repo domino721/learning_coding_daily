@@ -356,5 +356,65 @@
     ],
     "first": "stats-median-01",
     "excluded": ["pandas-select-01", "numpy-shape-01"]
+  },
+  {
+    "name": "Python 기초 starts with values, strings and lists",
+    "track": "python-basics",
+    "day": "2026-10-28",
+    "records": [],
+    "first": "py-values-01",
+    "excluded": ["py-control-01", "py-values-03", "py-dict-01"]
+  },
+  {
+    "name": "Python 기초 values success opens conditions and loops",
+    "track": "python-basics",
+    "day": "2026-10-29",
+    "records": [
+      {
+        "id": "py-values-01",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "py-values-02",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "py-str-01",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "py-list-01",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "py-list-02",
+        "day": "2026-10-28",
+        "status": "revealed",
+        "hints": 1
+      }
+    ],
+    "first": "py-list-02",
+    "excluded": ["py-func-01", "py-dict-01"]
+  },
+  {
+    "name": "SQL row-condition success opens functions and data changes before windows",
+    "track": "sql",
+    "day": "2026-10-29",
+    "records": [
+      {
+        "id": "sql-where-01",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "sql-rows-foundation-01",
+        "day": "2026-10-28"
+      },
+      {
+        "id": "sql-rows-foundation-02",
+        "day": "2026-10-28"
+      }
+    ],
+    "first": "sql-null-01",
+    "excluded": ["sql-window-01", "sql-window-02"]
   }
 ]

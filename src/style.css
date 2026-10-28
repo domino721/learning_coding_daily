@@ -1739,9 +1739,10 @@ label.code-line {
 .home-main .section-heading {
   margin-bottom: 10px;
 }
+/* One row for the three tracks (CR-017) keeps the start button above the fixed navigation at 320px. */
 .home-main .track-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
   gap: 8px;
 }
 .home-main .track-card {

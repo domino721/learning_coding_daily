@@ -149,12 +149,15 @@ export function conceptStates(sessions: Session[]) {
     };
   });
 }
+// Python 기초 items (domain Python) form their own track and never enter data-analysis sessions.
 export function inTrack(ex: { domain?: string }, track: string) {
   return track === "sql"
     ? ex.domain === "SQL"
     : track === "python"
-      ? ex.domain !== "SQL"
-      : true;
+      ? ex.domain !== "SQL" && ex.domain !== "Python"
+      : track === "python-basics"
+        ? ex.domain === "Python"
+        : true;
 }
 export function selectExercises(
   sessions: Session[],

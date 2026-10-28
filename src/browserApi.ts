@@ -363,7 +363,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
   const mode = requestedMode as ResponseMode | undefined;
   const course = body.track_id === "pandas" ? "python" : body.track_id;
   if (path === "/sessions/today") {
-    if (!["python", "sql"].includes(course as string))
+    if (!["python-basics", "python", "sql"].includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const existing = data.sessions.find(
       (s) => s.track_id === course && s.local_day === today && !s.batch,
@@ -413,7 +413,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     return session;
   }
   if (path === "/sessions/extra") {
-    if (!["python", "sql"].includes(course as string))
+    if (!["python-basics", "python", "sql"].includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const daily = data.sessions.find(
       (s) => s.track_id === course && s.local_day === today && !s.batch,

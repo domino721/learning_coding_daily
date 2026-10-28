@@ -8,7 +8,7 @@ import pytest
 from sklearn.preprocessing import StandardScaler
 
 from backend.content import EXERCISES, LAYOUT_KINDS
-from scripts.validate_sql_content import sql_output
+from scripts.validate_sql_content import run_sql as run_statements, sql_output
 
 
 EXPECTED = {
@@ -60,7 +60,7 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
         if exercise.domain=='SQL':
             with sqlite3.connect(':memory:') as db:
                 db.executescript(exercise.reference_setup)
-                rows=db.execute(exercise.code).fetchall()
+                rows=run_statements(db, exercise.code)
                 actual=sql_output(rows, exercise.answer)
         else:
             output=StringIO()

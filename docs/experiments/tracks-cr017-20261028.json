@@ -1,0 +1,1402 @@
+{
+  "synthetic": true,
+  "days": [
+    21,
+    42,
+    90
+  ],
+  "first_start": "2026-11-02",
+  "profiles": {
+    "steady": "모든 문제를 첫 시도에 힌트 없이 맞힌다.",
+    "transfer-slip": "단계 3 문제는 처음 만날 때 도움을 받고, 이후 복습에서는 맞힌다.",
+    "uneven": "문제·날짜 해시의 1/4에서 도움을 받는다.",
+    "struggling": "문제·날짜 해시의 1/2에서 도움을 받는다."
+  },
+  "base": {
+    "revision": "93341e8",
+    "algorithm_version": "learning-paths-2.3"
+  },
+  "current": {
+    "algorithm_version": "learning-paths-2.3"
+  },
+  "catalog_size": 292,
+  "results": [
+    {
+      "profile": "steady",
+      "track": "python-basics",
+      "days": 21,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 45,
+        "repeat_share": 0.57,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 3.19,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "python-basics",
+      "days": 42,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 27,
+        "served": 135,
+        "distinct_items": 45,
+        "repeat_share": 0.67,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 3.26,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "python-basics",
+      "days": 90,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 27,
+        "served": 135,
+        "distinct_items": 45,
+        "repeat_share": 0.67,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 3.26,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "python",
+      "days": 21,
+      "runs": 1,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 77,
+        "repeat_share": 0.27,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.33,
+        "sessions_with_4plus_same_form": 12,
+        "line_order_multi_items_seen": 19,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "1": 2,
+          "2": 4,
+          "3": 9
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 77,
+        "repeat_share": 0.27,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.19,
+        "sessions_with_4plus_same_form": 15,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "2": 5,
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "python",
+      "days": 42,
+      "runs": 1,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 140,
+        "repeat_share": 0.33,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.38,
+        "sessions_with_4plus_same_form": 23,
+        "line_order_multi_items_seen": 34,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "2": 2,
+          "3": 13
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 140,
+        "repeat_share": 0.33,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.83,
+        "sessions_with_4plus_same_form": 34,
+        "line_order_multi_items_seen": 14,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 15
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "python",
+      "days": 90,
+      "runs": 1,
+      "base": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 216,
+        "repeat_share": 0.52,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.12,
+        "sessions_with_4plus_same_form": 60,
+        "line_order_multi_items_seen": 37,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 15
+        }
+      },
+      "current": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 171,
+        "repeat_share": 0.62,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.62,
+        "sessions_with_4plus_same_form": 77,
+        "line_order_multi_items_seen": 14,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 15
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "sql",
+      "days": 21,
+      "runs": 1,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 70,
+        "repeat_share": 0.33,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.29,
+        "sessions_with_4plus_same_form": 11,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 70,
+        "repeat_share": 0.33,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.29,
+        "sessions_with_4plus_same_form": 11,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "sql",
+      "days": 42,
+      "runs": 1,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 71,
+        "repeat_share": 0.66,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.02,
+        "sessions_with_4plus_same_form": 27,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 71,
+        "repeat_share": 0.66,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.02,
+        "sessions_with_4plus_same_form": 27,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      }
+    },
+    {
+      "profile": "steady",
+      "track": "sql",
+      "days": 90,
+      "runs": 1,
+      "base": {
+        "sessions": 43,
+        "served": 213,
+        "distinct_items": 71,
+        "repeat_share": 0.67,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 1,
+        "mean_forms_per_session": 2.0,
+        "sessions_with_4plus_same_form": 27,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      },
+      "current": {
+        "sessions": 43,
+        "served": 213,
+        "distinct_items": 71,
+        "repeat_share": 0.67,
+        "items_shown_4plus": 0,
+        "retry_days_late": 0,
+        "short_sessions": 1,
+        "mean_forms_per_session": 2.0,
+        "sessions_with_4plus_same_form": 27,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {},
+        "concepts_at_level": {
+          "3": 6
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python-basics",
+      "days": 21,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 45,
+        "repeat_share": 0.57,
+        "items_shown_4plus": 0,
+        "retry_days_late": 3.0,
+        "short_sessions": 0,
+        "mean_forms_per_session": 3.19,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {
+          "1": 15,
+          "2": 3
+        },
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python-basics",
+      "days": 42,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 31,
+        "served": 145,
+        "distinct_items": 45,
+        "repeat_share": 0.69,
+        "items_shown_4plus": 10,
+        "retry_days_late": 3.0,
+        "short_sessions": 3,
+        "mean_forms_per_session": 3.0,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {
+          "1": 15,
+          "2": 3
+        },
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python-basics",
+      "days": 90,
+      "runs": 1,
+      "base": null,
+      "current": {
+        "sessions": 31,
+        "served": 145,
+        "distinct_items": 45,
+        "repeat_share": 0.69,
+        "items_shown_4plus": 10,
+        "retry_days_late": 3.0,
+        "short_sessions": 3,
+        "mean_forms_per_session": 3.0,
+        "sessions_with_4plus_same_form": 3,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {
+          "1": 15,
+          "2": 3
+        },
+        "concepts_at_level": {
+          "3": 10
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python",
+      "days": 21,
+      "runs": 1,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 76,
+        "repeat_share": 0.28,
+        "items_shown_4plus": 0,
+        "retry_days_late": 1.7,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.48,
+        "sessions_with_4plus_same_form": 11,
+        "line_order_multi_items_seen": 19,
+        "support_items_by_level": {
+          "1": 11,
+          "2": 15
+        },
+        "concepts_at_level": {
+          "1": 5,
+          "2": 3,
+          "3": 7
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 75,
+        "repeat_share": 0.29,
+        "items_shown_4plus": 0,
+        "retry_days_late": 1.1,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.05,
+        "sessions_with_4plus_same_form": 13,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 9,
+          "2": 18
+        },
+        "concepts_at_level": {
+          "1": 1,
+          "2": 7,
+          "3": 7
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python",
+      "days": 42,
+      "runs": 1,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 138,
+        "repeat_share": 0.34,
+        "items_shown_4plus": 0,
+        "retry_days_late": 2.2,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.24,
+        "sessions_with_4plus_same_form": 26,
+        "line_order_multi_items_seen": 26,
+        "support_items_by_level": {
+          "1": 22,
+          "2": 36
+        },
+        "concepts_at_level": {
+          "1": 1,
+          "2": 5,
+          "3": 9
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 138,
+        "repeat_share": 0.34,
+        "items_shown_4plus": 0,
+        "retry_days_late": 1.6,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.76,
+        "sessions_with_4plus_same_form": 32,
+        "line_order_multi_items_seen": 14,
+        "support_items_by_level": {
+          "1": 21,
+          "2": 37
+        },
+        "concepts_at_level": {
+          "2": 8,
+          "3": 7
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "python",
+      "days": 90,
+      "runs": 1,
+      "base": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 215,
+        "repeat_share": 0.52,
+        "items_shown_4plus": 4,
+        "retry_days_late": 7.7,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.07,
+        "sessions_with_4plus_same_form": 63,
+        "line_order_multi_items_seen": 37,
+        "support_items_by_level": {
+          "1": 55,
+          "2": 67
+        },
+        "concepts_at_level": {
+          "2": 3,
+          "3": 12
+        }
+      },
+      "current": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 171,
+        "repeat_share": 0.62,
+        "items_shown_4plus": 11,
+        "retry_days_late": 5.7,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.58,
+        "sessions_with_4plus_same_form": 75,
+        "line_order_multi_items_seen": 14,
+        "support_items_by_level": {
+          "1": 46,
+          "2": 62
+        },
+        "concepts_at_level": {
+          "2": 1,
+          "3": 14
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "sql",
+      "days": 21,
+      "runs": 1,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 67,
+        "repeat_share": 0.36,
+        "items_shown_4plus": 0,
+        "retry_days_late": 1.5,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.33,
+        "sessions_with_4plus_same_form": 13,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 10,
+          "2": 19
+        },
+        "concepts_at_level": {
+          "2": 1,
+          "3": 5
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 67,
+        "repeat_share": 0.36,
+        "items_shown_4plus": 0,
+        "retry_days_late": 1.5,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.33,
+        "sessions_with_4plus_same_form": 13,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 10,
+          "2": 19
+        },
+        "concepts_at_level": {
+          "2": 1,
+          "3": 5
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "sql",
+      "days": 42,
+      "runs": 1,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 71,
+        "repeat_share": 0.66,
+        "items_shown_4plus": 8,
+        "retry_days_late": 2.2,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.17,
+        "sessions_with_4plus_same_form": 30,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 12,
+          "2": 29
+        },
+        "concepts_at_level": {
+          "3": 6
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 71,
+        "repeat_share": 0.66,
+        "items_shown_4plus": 8,
+        "retry_days_late": 2.2,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.17,
+        "sessions_with_4plus_same_form": 30,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 12,
+          "2": 29
+        },
+        "concepts_at_level": {
+          "3": 6
+        }
+      }
+    },
+    {
+      "profile": "transfer-slip",
+      "track": "sql",
+      "days": 90,
+      "runs": 1,
+      "base": {
+        "sessions": 49,
+        "served": 233,
+        "distinct_items": 71,
+        "repeat_share": 0.7,
+        "items_shown_4plus": 20,
+        "retry_days_late": 2.2,
+        "short_sessions": 3,
+        "mean_forms_per_session": 2.02,
+        "sessions_with_4plus_same_form": 34,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 12,
+          "2": 29
+        },
+        "concepts_at_level": {
+          "3": 6
+        }
+      },
+      "current": {
+        "sessions": 49,
+        "served": 233,
+        "distinct_items": 71,
+        "repeat_share": 0.7,
+        "items_shown_4plus": 20,
+        "retry_days_late": 2.2,
+        "short_sessions": 3,
+        "mean_forms_per_session": 2.02,
+        "sessions_with_4plus_same_form": 34,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 12,
+          "2": 29
+        },
+        "concepts_at_level": {
+          "3": 6
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python-basics",
+      "days": 21,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 42.38,
+        "repeat_share": 0.6,
+        "items_shown_4plus": 7,
+        "retry_days_late": 1.59,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.69,
+        "sessions_with_4plus_same_form": 8.25,
+        "line_order_multi_items_seen": 20.62,
+        "support_items_by_level": {
+          "1": 37.62,
+          "2": 2.38
+        },
+        "concepts_at_level": {
+          "2": 6.88,
+          "3": 3.12
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python-basics",
+      "days": 42,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 42,
+        "served": 198.38,
+        "distinct_items": 44.88,
+        "repeat_share": 0.77,
+        "items_shown_4plus": 26.62,
+        "retry_days_late": 2.9,
+        "short_sessions": 7,
+        "mean_forms_per_session": 2.66,
+        "sessions_with_4plus_same_form": 13.12,
+        "line_order_multi_items_seen": 22.88,
+        "support_items_by_level": {
+          "1": 78.12,
+          "2": 5.25
+        },
+        "concepts_at_level": {
+          "2": 4.12,
+          "3": 5.88
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python-basics",
+      "days": 90,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 81,
+        "served": 296.25,
+        "distinct_items": 45,
+        "repeat_share": 0.85,
+        "items_shown_4plus": 35.25,
+        "retry_days_late": 3.55,
+        "short_sessions": 41.38,
+        "mean_forms_per_session": 2.26,
+        "sessions_with_4plus_same_form": 14.62,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {
+          "1": 116.88,
+          "2": 11.12
+        },
+        "concepts_at_level": {
+          "2": 1,
+          "3": 9
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python",
+      "days": 21,
+      "runs": 8,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 70,
+        "repeat_share": 0.33,
+        "items_shown_4plus": 2,
+        "retry_days_late": 0.95,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.21,
+        "sessions_with_4plus_same_form": 12.88,
+        "line_order_multi_items_seen": 14.38,
+        "support_items_by_level": {
+          "1": 36.5,
+          "2": 3.88
+        },
+        "concepts_at_level": {
+          "1": 3.25,
+          "2": 9,
+          "3": 2.75
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 70.75,
+        "repeat_share": 0.32,
+        "items_shown_4plus": 1.75,
+        "retry_days_late": 0.9,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.0,
+        "sessions_with_4plus_same_form": 14.5,
+        "line_order_multi_items_seen": 9.38,
+        "support_items_by_level": {
+          "1": 35,
+          "2": 5.12
+        },
+        "concepts_at_level": {
+          "1": 1.12,
+          "2": 11.12,
+          "3": 2.75
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python",
+      "days": 42,
+      "runs": 8,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 131.25,
+        "repeat_share": 0.38,
+        "items_shown_4plus": 6.25,
+        "retry_days_late": 2.14,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.1,
+        "sessions_with_4plus_same_form": 29.25,
+        "line_order_multi_items_seen": 25.75,
+        "support_items_by_level": {
+          "1": 65.25,
+          "2": 12.25
+        },
+        "concepts_at_level": {
+          "1": 0.38,
+          "2": 10.5,
+          "3": 4.12
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 127.25,
+        "repeat_share": 0.4,
+        "items_shown_4plus": 5.12,
+        "retry_days_late": 3.33,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.79,
+        "sessions_with_4plus_same_form": 33,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 66.5,
+          "2": 12.88
+        },
+        "concepts_at_level": {
+          "1": 0.12,
+          "2": 11.38,
+          "3": 3.5
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "python",
+      "days": 90,
+      "runs": 8,
+      "base": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 203,
+        "repeat_share": 0.55,
+        "items_shown_4plus": 26.62,
+        "retry_days_late": 6.51,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.93,
+        "sessions_with_4plus_same_form": 67.62,
+        "line_order_multi_items_seen": 34.75,
+        "support_items_by_level": {
+          "1": 141.5,
+          "2": 21.25
+        },
+        "concepts_at_level": {
+          "2": 10.88,
+          "3": 4.12
+        }
+      },
+      "current": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 163.62,
+        "repeat_share": 0.64,
+        "items_shown_4plus": 36.75,
+        "retry_days_late": 6.75,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.65,
+        "sessions_with_4plus_same_form": 77.75,
+        "line_order_multi_items_seen": 14,
+        "support_items_by_level": {
+          "1": 136.88,
+          "2": 25.75
+        },
+        "concepts_at_level": {
+          "2": 9.88,
+          "3": 5.12
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "sql",
+      "days": 21,
+      "runs": 8,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 57.62,
+        "repeat_share": 0.45,
+        "items_shown_4plus": 3.12,
+        "retry_days_late": 1.95,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.25,
+        "sessions_with_4plus_same_form": 11.75,
+        "line_order_multi_items_seen": 12.75,
+        "support_items_by_level": {
+          "1": 29.38,
+          "2": 4.38
+        },
+        "concepts_at_level": {
+          "2": 3.75,
+          "3": 2.25
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 57.62,
+        "repeat_share": 0.45,
+        "items_shown_4plus": 3.12,
+        "retry_days_late": 1.95,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.25,
+        "sessions_with_4plus_same_form": 11.75,
+        "line_order_multi_items_seen": 12.75,
+        "support_items_by_level": {
+          "1": 29.38,
+          "2": 4.38
+        },
+        "concepts_at_level": {
+          "2": 3.75,
+          "3": 2.25
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "sql",
+      "days": 42,
+      "runs": 8,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 68.38,
+        "repeat_share": 0.68,
+        "items_shown_4plus": 20.62,
+        "retry_days_late": 2.69,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.15,
+        "sessions_with_4plus_same_form": 25.75,
+        "line_order_multi_items_seen": 12.88,
+        "support_items_by_level": {
+          "1": 59.38,
+          "2": 12.88
+        },
+        "concepts_at_level": {
+          "2": 3.25,
+          "3": 2.75
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 68.38,
+        "repeat_share": 0.68,
+        "items_shown_4plus": 20.62,
+        "retry_days_late": 2.69,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.15,
+        "sessions_with_4plus_same_form": 25.75,
+        "line_order_multi_items_seen": 12.88,
+        "support_items_by_level": {
+          "1": 59.38,
+          "2": 12.88
+        },
+        "concepts_at_level": {
+          "2": 3.25,
+          "3": 2.75
+        }
+      }
+    },
+    {
+      "profile": "uneven",
+      "track": "sql",
+      "days": 90,
+      "runs": 8,
+      "base": {
+        "sessions": 89.5,
+        "served": 413.38,
+        "distinct_items": 71,
+        "repeat_share": 0.83,
+        "items_shown_4plus": 47.62,
+        "retry_days_late": 2.98,
+        "short_sessions": 15.5,
+        "mean_forms_per_session": 1.98,
+        "sessions_with_4plus_same_form": 51.25,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 127.12,
+          "2": 24.25
+        },
+        "concepts_at_level": {
+          "2": 1.25,
+          "3": 4.75
+        }
+      },
+      "current": {
+        "sessions": 89.5,
+        "served": 413.38,
+        "distinct_items": 71,
+        "repeat_share": 0.83,
+        "items_shown_4plus": 47.62,
+        "retry_days_late": 2.98,
+        "short_sessions": 15.5,
+        "mean_forms_per_session": 1.98,
+        "sessions_with_4plus_same_form": 51.25,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 127.12,
+          "2": 24.25
+        },
+        "concepts_at_level": {
+          "2": 1.25,
+          "3": 4.75
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python-basics",
+      "days": 21,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 37.25,
+        "repeat_share": 0.65,
+        "items_shown_4plus": 10.75,
+        "retry_days_late": 0.75,
+        "short_sessions": 0,
+        "mean_forms_per_session": 2.02,
+        "sessions_with_4plus_same_form": 13.5,
+        "line_order_multi_items_seen": 16,
+        "support_items_by_level": {
+          "1": 63.5,
+          "2": 2.25
+        },
+        "concepts_at_level": {
+          "1": 0.12,
+          "2": 8.75,
+          "3": 1.12
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python-basics",
+      "days": 42,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 42,
+        "served": 209.62,
+        "distinct_items": 43.12,
+        "repeat_share": 0.8,
+        "items_shown_4plus": 22.88,
+        "retry_days_late": 1.88,
+        "short_sessions": 0.38,
+        "mean_forms_per_session": 2.16,
+        "sessions_with_4plus_same_form": 23.88,
+        "line_order_multi_items_seen": 21.25,
+        "support_items_by_level": {
+          "1": 129.88,
+          "2": 5.25
+        },
+        "concepts_at_level": {
+          "2": 8.88,
+          "3": 1.12
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python-basics",
+      "days": 90,
+      "runs": 8,
+      "base": null,
+      "current": {
+        "sessions": 90,
+        "served": 438.25,
+        "distinct_items": 45,
+        "repeat_share": 0.9,
+        "items_shown_4plus": 38,
+        "retry_days_late": 3.05,
+        "short_sessions": 7.62,
+        "mean_forms_per_session": 2.15,
+        "sessions_with_4plus_same_form": 47.88,
+        "line_order_multi_items_seen": 23,
+        "support_items_by_level": {
+          "1": 282.88,
+          "2": 13.5
+        },
+        "concepts_at_level": {
+          "2": 7.25,
+          "3": 2.75
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python",
+      "days": 21,
+      "runs": 8,
+      "base": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 57.38,
+        "repeat_share": 0.45,
+        "items_shown_4plus": 6.12,
+        "retry_days_late": 0.47,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.93,
+        "sessions_with_4plus_same_form": 14.75,
+        "line_order_multi_items_seen": 11,
+        "support_items_by_level": {
+          "1": 59.62,
+          "2": 7
+        },
+        "concepts_at_level": {
+          "1": 6.12,
+          "2": 8.5,
+          "3": 0.38
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 105,
+        "distinct_items": 58.62,
+        "repeat_share": 0.44,
+        "items_shown_4plus": 6.5,
+        "retry_days_late": 0.55,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.86,
+        "sessions_with_4plus_same_form": 16.75,
+        "line_order_multi_items_seen": 7.12,
+        "support_items_by_level": {
+          "1": 61.25,
+          "2": 5.38
+        },
+        "concepts_at_level": {
+          "1": 4.5,
+          "2": 9.88,
+          "3": 0.62
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python",
+      "days": 42,
+      "runs": 8,
+      "base": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 112.75,
+        "repeat_share": 0.46,
+        "items_shown_4plus": 13.25,
+        "retry_days_late": 0.53,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.75,
+        "sessions_with_4plus_same_form": 32.88,
+        "line_order_multi_items_seen": 18.62,
+        "support_items_by_level": {
+          "1": 116.25,
+          "2": 15.62
+        },
+        "concepts_at_level": {
+          "1": 0.25,
+          "2": 14.5,
+          "3": 0.25
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 210,
+        "distinct_items": 97.38,
+        "repeat_share": 0.54,
+        "items_shown_4plus": 17.12,
+        "retry_days_late": 1.6,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.74,
+        "sessions_with_4plus_same_form": 34.62,
+        "line_order_multi_items_seen": 11,
+        "support_items_by_level": {
+          "1": 121.25,
+          "2": 13.75
+        },
+        "concepts_at_level": {
+          "1": 0.62,
+          "2": 13.75,
+          "3": 0.62
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "python",
+      "days": 90,
+      "runs": 8,
+      "base": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 162.88,
+        "repeat_share": 0.64,
+        "items_shown_4plus": 43.12,
+        "retry_days_late": 4.4,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.72,
+        "sessions_with_4plus_same_form": 72.75,
+        "line_order_multi_items_seen": 30.12,
+        "support_items_by_level": {
+          "1": 260.5,
+          "2": 33.12
+        },
+        "concepts_at_level": {
+          "2": 14.62,
+          "3": 0.38
+        }
+      },
+      "current": {
+        "sessions": 90,
+        "served": 450,
+        "distinct_items": 136.62,
+        "repeat_share": 0.69,
+        "items_shown_4plus": 45.38,
+        "retry_days_late": 4.74,
+        "short_sessions": 0,
+        "mean_forms_per_session": 1.59,
+        "sessions_with_4plus_same_form": 78.62,
+        "line_order_multi_items_seen": 13.38,
+        "support_items_by_level": {
+          "1": 256.5,
+          "2": 35.12
+        },
+        "concepts_at_level": {
+          "2": 14,
+          "3": 1
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "sql",
+      "days": 21,
+      "runs": 8,
+      "base": {
+        "sessions": 21,
+        "served": 104.75,
+        "distinct_items": 41.38,
+        "repeat_share": 0.6,
+        "items_shown_4plus": 9.25,
+        "retry_days_late": 0.72,
+        "short_sessions": 0.12,
+        "mean_forms_per_session": 2.23,
+        "sessions_with_4plus_same_form": 12.12,
+        "line_order_multi_items_seen": 9.88,
+        "support_items_by_level": {
+          "1": 62.12,
+          "2": 7
+        },
+        "concepts_at_level": {
+          "2": 5.62,
+          "3": 0.38
+        }
+      },
+      "current": {
+        "sessions": 21,
+        "served": 104.75,
+        "distinct_items": 41.38,
+        "repeat_share": 0.6,
+        "items_shown_4plus": 9.25,
+        "retry_days_late": 0.72,
+        "short_sessions": 0.12,
+        "mean_forms_per_session": 2.23,
+        "sessions_with_4plus_same_form": 12.12,
+        "line_order_multi_items_seen": 9.88,
+        "support_items_by_level": {
+          "1": 62.12,
+          "2": 7
+        },
+        "concepts_at_level": {
+          "2": 5.62,
+          "3": 0.38
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "sql",
+      "days": 42,
+      "runs": 8,
+      "base": {
+        "sessions": 42,
+        "served": 209.62,
+        "distinct_items": 57.88,
+        "repeat_share": 0.72,
+        "items_shown_4plus": 21.12,
+        "retry_days_late": 1.9,
+        "short_sessions": 0.25,
+        "mean_forms_per_session": 2.16,
+        "sessions_with_4plus_same_form": 27.62,
+        "line_order_multi_items_seen": 11.88,
+        "support_items_by_level": {
+          "1": 121.75,
+          "2": 15.88
+        },
+        "concepts_at_level": {
+          "2": 5,
+          "3": 1
+        }
+      },
+      "current": {
+        "sessions": 42,
+        "served": 209.62,
+        "distinct_items": 57.88,
+        "repeat_share": 0.72,
+        "items_shown_4plus": 21.12,
+        "retry_days_late": 1.9,
+        "short_sessions": 0.25,
+        "mean_forms_per_session": 2.16,
+        "sessions_with_4plus_same_form": 27.62,
+        "line_order_multi_items_seen": 11.88,
+        "support_items_by_level": {
+          "1": 121.75,
+          "2": 15.88
+        },
+        "concepts_at_level": {
+          "2": 5,
+          "3": 1
+        }
+      }
+    },
+    {
+      "profile": "struggling",
+      "track": "sql",
+      "days": 90,
+      "runs": 8,
+      "base": {
+        "sessions": 90,
+        "served": 445.5,
+        "distinct_items": 70.12,
+        "repeat_share": 0.84,
+        "items_shown_4plus": 40.25,
+        "retry_days_late": 3.06,
+        "short_sessions": 3.25,
+        "mean_forms_per_session": 2.06,
+        "sessions_with_4plus_same_form": 61.62,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 250.62,
+          "2": 32.62
+        },
+        "concepts_at_level": {
+          "2": 5.62,
+          "3": 0.38
+        }
+      },
+      "current": {
+        "sessions": 90,
+        "served": 445.5,
+        "distinct_items": 70.12,
+        "repeat_share": 0.84,
+        "items_shown_4plus": 40.25,
+        "retry_days_late": 3.06,
+        "short_sessions": 3.25,
+        "mean_forms_per_session": 2.06,
+        "sessions_with_4plus_same_form": 61.62,
+        "line_order_multi_items_seen": 13,
+        "support_items_by_level": {
+          "1": 250.62,
+          "2": 32.62
+        },
+        "concepts_at_level": {
+          "2": 5.62,
+          "3": 0.38
+        }
+      }
+    }
+  ]
+}

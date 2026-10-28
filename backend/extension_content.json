@@ -1,0 +1,586 @@
+{
+  "schema_version": 1,
+  "status": "reviewed",
+  "change": "CR-017",
+  "review_record": "curriculum/reviews/2026-10-28-tracks.json",
+  "exercises": [
+    {
+      "id": "numpy-matmul-01",
+      "concept": "행렬곱 @와 원소별 곱 *",
+      "kind": "choice",
+      "title": "가중치 표 계산",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "import numpy as np\na = np.array([[1, 2], [3, 4]])\nb = np.array([[10, 0], [0, 1]])\nprint((a * b).tolist(), (a @ b).tolist())",
+      "answer": "[[10, 0], [0, 4]] [[10, 2], [30, 4]]",
+      "explanation": "NumPy 배열에서 *는 같은 위치의 원소끼리 곱해 [[1×10, 2×0], [3×0, 4×1]] = [[10, 0], [0, 4]]입니다. @는 행렬곱으로, 결과 [0][1]은 a의 0번 행 [1, 2]와 b의 1번 열 [0, 1]을 곱해 더한 2입니다. 같은 방식으로 [[10, 2], [30, 4]]가 됩니다. 선형 모델 예측 X @ w처럼 데이터 분석 코드의 @는 데코레이터가 아니라 행렬곱입니다. 수학 표기 습관 때문에 *를 행렬곱으로 읽는 실수가 흔합니다.",
+      "hints": [
+        "*는 같은 위치의 원소끼리 곱하는지, @는 행과 열을 짝지어 곱한 뒤 더하는지 각각 확인하세요.",
+        "@의 결과 [i][j]는 a의 i번째 행과 b의 j번째 열을 원소별로 곱해 더한 값입니다."
+      ],
+      "choices": [
+        "[[10, 2], [30, 4]] [[10, 0], [0, 4]]",
+        "[[10, 0], [0, 4]] [[10, 0], [0, 4]]",
+        "[[10, 0], [0, 4]] [[10, 2], [30, 4]]",
+        "[[10, 2], [30, 4]] [[10, 2], [30, 4]]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "[[10, 0], [0, 4]] [[10, 2], [30, 4]]"
+    },
+    {
+      "id": "numpy-matmul-02",
+      "concept": "행렬곱의 shape 규칙",
+      "kind": "multi",
+      "title": "예측 행렬 크기",
+      "prompt": "특성 행렬 x와 가중치로 행마다 예측값 하나씩, 크기 (2, 1)인 결과를 만들려고 합니다. 빈칸에 넣었을 때 (2, 1)이 출력되는 식을 모두 고르세요.",
+      "code": "import numpy as np\nx = np.ones((2, 3))\nw = np.ones((3, 1))\nv = np.ones(3)\nprint(____)",
+      "answer": "1,3",
+      "explanation": "행렬곱 (m, n) @ (n, p)는 안쪽 크기 n이 같아야 하고 결과는 (m, p)입니다. x @ w는 (2, 3) @ (3, 1)이라 (2, 1)이고, np.dot(x, w)도 2차원 배열에서는 같은 행렬곱입니다. x @ v는 1차원 v와 곱해 축 하나가 사라진 (2,)입니다. w @ x는 (3, 1) @ (2, 3)으로 안쪽 크기 1과 2가 달라 오류입니다. x * w는 원소별 곱이라 브로드캐스팅 규칙을 따르는데, (2, 3)과 (3, 1)은 앞쪽 축 2와 3이 맞지 않아 오류입니다. 모델 코드에서 결과가 (n,)인지 (n, 1)인지 달라지면 이후 브로드캐스팅이 전혀 다른 결과를 냅니다.",
+      "hints": [
+        "행렬곱 (m, n) @ (n, p)에서 안쪽 두 크기가 같아야 하고 결과가 (m, p)가 된다는 규칙을 각 식에 대입해 보세요.",
+        "1차원 배열과의 행렬곱은 축 하나가 사라지고, *는 행렬곱이 아니라 브로드캐스팅 규칙을 따릅니다."
+      ],
+      "choices": [
+        "np.dot(x, w).shape",
+        "(w @ x).shape",
+        "(x @ w).shape",
+        "(x * w).shape",
+        "(x @ v).shape"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "NumPy",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "(2, 1)"
+    },
+    {
+      "id": "pandas-query-at-01",
+      "concept": "query 문자열의 @변수",
+      "kind": "multi",
+      "title": "가격 기준 상품 조회",
+      "prompt": "가격이 limit 이상인 상품 이름을 고르려고 합니다. 빈칸에 넣었을 때 ['책', '컵']이 출력되는 식을 모두 고르세요.",
+      "code": "import pandas as pd\ndf = pd.DataFrame({\"item\": [\"펜\", \"책\", \"컵\"],\n                   \"price\": [1200, 15000, 4000]})\nlimit = 4000\nprint(____[\"item\"].tolist())",
+      "answer": "1,2,3",
+      "explanation": "query는 조건을 문자열로 받아 열 이름은 그대로, 바깥 파이썬 변수는 @를 붙여 가리킵니다. 그래서 2번은 1번·3번의 불리언 마스크 필터와 같은 ['책', '컵']입니다. 4번은 limit을 열 이름으로 찾다가 없어서 오류가 납니다. 5번은 경계값 4000인 \"컵\"을 빼서 ['책']입니다. 여기의 @는 데코레이터도 행렬곱도 아닌, query 문자열 전용 표기입니다.",
+      "hints": [
+        "query에 넘기는 조건은 파이썬 코드가 아니라 문자열이라는 점에서, 문자열 안의 limit이 무엇을 가리키는지 생각해 보세요.",
+        "query 문자열에서 열 이름이 아닌 바깥 파이썬 변수를 쓰려면 앞에 @를 붙입니다."
+      ],
+      "choices": [
+        "df.loc[df[\"price\"] >= limit]",
+        "df.query(\"price >= @limit\")",
+        "df[df[\"price\"] >= limit]",
+        "df.query(\"price >= limit\")",
+        "df.query(\"price > @limit\")"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "pandas",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "['책', '컵']"
+    },
+    {
+      "id": "sql-func-01",
+      "concept": "문자열 다듬기와 길이",
+      "kind": "choice",
+      "title": "이름 정리 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE users(id INTEGER, name TEXT);\n-- INSERT INTO users VALUES(1,' kim '),(2,'LEE'),(3,'park');\nSELECT LENGTH(name), UPPER(TRIM(name))\nFROM users\nWHERE id = 1;",
+      "answer": "(5, 'KIM')",
+      "explanation": "LENGTH(name)은 TRIM을 하지 않은 원래 값 \" kim \"의 길이라 앞뒤 공백을 포함해 5입니다. UPPER(TRIM(name))은 안쪽 TRIM이 먼저 공백을 지워 \"kim\"을 만들고 UPPER가 \"KIM\"으로 바꿉니다. 함수는 각 식마다 따로 적용되므로 한 식의 TRIM이 다른 식에 영향을 주지 않습니다. 입력값의 공백 때문에 같은 이름이 다르게 집계되는 일이 많아 비교 전에 TRIM·UPPER로 맞춥니다.",
+      "hints": [
+        "LENGTH가 TRIM 전의 값을 세는지 후의 값을 세는지 SELECT 식을 보고 확인하세요.",
+        "함수는 안쪽부터 계산되고, 각 식은 서로 따로 계산됩니다. 공백도 한 글자로 셉니다."
+      ],
+      "choices": [
+        "(3, 'KIM')",
+        "(5, ' KIM ')",
+        "(5, 'Kim')",
+        "(5, 'KIM')"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE users(id INTEGER, name TEXT); INSERT INTO users VALUES(1,' kim '),(2,'LEE'),(3,'park');",
+      "reference_output": "(5, 'KIM')"
+    },
+    {
+      "id": "sql-func-02",
+      "concept": "|| 연결과 NULL",
+      "kind": "choice",
+      "title": "전체 이름 만들기",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, last TEXT, first TEXT);\n-- INSERT INTO customers VALUES(1,'김','민수'),(2,NULL,'지은');\nSELECT last || first AS full_name\nFROM customers\nORDER BY id;",
+      "answer": "['김민수', NULL]",
+      "explanation": "||는 문자열을 이어 붙이는 연산자입니다. 1번 고객은 '김' || '민수'로 '김민수'입니다. 2번 고객은 last가 NULL인데, NULL과의 연결은 빈 문자열처럼 처리되지 않고 결과 전체가 NULL이 됩니다. 오류도 나지 않습니다. 이름이 사라지지 않게 하려면 COALESCE(last, '') || first처럼 NULL을 먼저 빈 문자열로 바꿉니다. 숫자 계산(NULL + 1)도 같은 규칙입니다.",
+      "hints": [
+        "2번 고객의 last 값이 NULL일 때 || 연결 결과가 어떻게 되는지 생각해 보세요.",
+        "NULL이 섞인 계산(+, || 등)은 대부분 결과도 NULL이 됩니다."
+      ],
+      "choices": [
+        "['김민수', '지은']",
+        "['김민수', 'NULL지은']",
+        "오류 발생",
+        "['김민수', NULL]"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE customers(id INTEGER, last TEXT, first TEXT); INSERT INTO customers VALUES(1,'김','민수'),(2,NULL,'지은');",
+      "reference_output": "['김민수', NULL]"
+    },
+    {
+      "id": "sql-func-03",
+      "concept": "날짜 차이와 날짜 더하기",
+      "kind": "multi",
+      "title": "대출 기간 계산",
+      "prompt": "대출 시작일과 종료일로 기간을 계산했습니다. 빈칸에 넣었을 때 결과가 1(참)인 식을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE loans(id INTEGER, start_day TEXT, end_day TEXT);\n-- INSERT INTO loans VALUES(1,'2026-10-01','2026-10-28');\nSELECT ____\nFROM loans;",
+      "answer": "2,4",
+      "explanation": "SQLite의 날짜는 'YYYY-MM-DD' 문자열(TEXT)입니다. julianday로 바꿔 빼면 28일 - 1일 = 27일(27.0)이라 2번은 참이고, 양 끝을 모두 세는 28과는 다릅니다. end_day - start_day는 글자를 숫자로 바꾸며 앞부분 2026만 읽어 2026 - 2026 = 0이 됩니다. date(end_day, '+5 days')는 달을 넘겨 '2026-11-02'를 돌려줍니다. 날짜 차이는 반드시 julianday(또는 쓰는 DB의 날짜 함수)로 계산하세요.",
+      "hints": [
+        "날짜가 TEXT로 저장되어 있다는 점에서, end_day - start_day가 날짜 계산인지 글자를 숫자로 바꾼 계산인지 생각해 보세요.",
+        "julianday는 날짜를 일 단위 숫자로 바꾸고, date(값, '+5 days')는 달이 바뀌는 것까지 계산한 날짜 문자열을 돌려줍니다."
+      ],
+      "choices": [
+        "julianday(end_day) - julianday(start_day) = 28",
+        "julianday(end_day) - julianday(start_day) = 27",
+        "end_day - start_day = 27",
+        "date(end_day, '+5 days') = '2026-11-02'",
+        "date(end_day, '+5 days') = '2026-10-33'"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE loans(id INTEGER, start_day TEXT, end_day TEXT); INSERT INTO loans VALUES(1,'2026-10-01','2026-10-28');",
+      "reference_output": "1"
+    },
+    {
+      "id": "sql-func-04",
+      "concept": "시각이 붙은 날짜와 BETWEEN",
+      "kind": "choice",
+      "title": "10월 매출 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, ordered_at TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'2026-10-01 09:00',1000);\n-- INSERT INTO orders VALUES(2,'2026-10-31',2000);\n-- INSERT INTO orders VALUES(3,'2026-10-31 18:20',3000);\n-- INSERT INTO orders VALUES(4,'2026-11-01',500);\nSELECT SUM(amount)\nFROM orders\nWHERE ordered_at BETWEEN '2026-10-01' AND '2026-10-31';",
+      "answer": "3000",
+      "explanation": "BETWEEN a AND b는 >= a AND <= b와 같고, TEXT 날짜는 글자 순서로 비교됩니다. '2026-10-01 09:00'은 '2026-10-01'로 시작하고 더 길어서 시작 값보다 크므로 포함됩니다. '2026-10-31'은 끝 값과 같아 포함됩니다. 그러나 '2026-10-31 18:20'은 끝 값보다 길어 더 크므로 빠집니다. 그래서 1000 + 2000 = 3000이고, 10월 마지막 날 저녁 주문 3000원이 누락됩니다. 날짜와 시각이 섞인 열은 >= '2026-10-01' AND < '2026-11-01'처럼 다음 달 첫날 미만으로 조건을 씁니다.",
+      "hints": [
+        "'2026-10-31 18:20'과 '2026-10-31'을 문자열로 비교하면 어느 쪽이 큰지 생각해 보세요.",
+        "BETWEEN은 양 끝 값을 포함하는 >= AND <= 비교이고, TEXT 날짜는 글자 순서로 비교됩니다."
+      ],
+      "choices": [
+        "6000",
+        "2000",
+        "3000",
+        "1000"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE orders(id INTEGER, ordered_at TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'2026-10-01 09:00',1000); INSERT INTO orders VALUES(2,'2026-10-31',2000); INSERT INTO orders VALUES(3,'2026-10-31 18:20',3000); INSERT INTO orders VALUES(4,'2026-11-01',500);",
+      "reference_output": "3000"
+    },
+    {
+      "id": "sql-func-05",
+      "concept": "문자로 저장된 숫자 비교",
+      "kind": "multi",
+      "title": "재고 수량 조건",
+      "prompt": "재고 수량이 TEXT로 저장된 표에서 수량이 50보다 많은 상품만 고르려고 합니다. 빈칸에 넣었을 때 [3]이 출력되는 조건을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE products(id INTEGER, name TEXT, stock TEXT);\n-- INSERT INTO products VALUES(1,'pen','9'),(2,'cup','10');\n-- INSERT INTO products VALUES(3,'book','100');\nSELECT id\nFROM products\nWHERE ____\nORDER BY id;",
+      "answer": "1,4",
+      "explanation": "stock은 TEXT 열이라 '9', '10', '100'은 글자 순서로 비교됩니다. 글자 비교는 첫 글자부터 보므로 '9' > '50'은 참이고, '10'과 '100'은 '1' < '5'라 거짓입니다. SQLite는 TEXT 열과 숫자 50·50.0을 비교할 때 숫자 쪽을 글자로 바꾸므로 2·3·5번 조건은 모두 [1]이 나옵니다. CAST(stock AS INTEGER)나 stock + 0처럼 계산을 거치면 숫자로 바뀌어 100만 남습니다. CSV를 불러오며 숫자가 TEXT로 저장되는 일이 흔하므로 숫자 열은 INTEGER로 저장하거나 비교 전에 CAST하세요. 다른 DB는 이 경우 오류를 내거나 다르게 변환하므로 형을 명시하는 습관이 안전합니다.",
+      "hints": [
+        "stock 값이 숫자 9·10·100인지, 글자 '9'·'10'·'100'인지에 따라 비교 결과가 어떻게 달라지는지 생각해 보세요.",
+        "TEXT 열을 숫자와 비교하면 SQLite는 숫자 쪽을 글자로 바꿔 글자 순서로 비교합니다. 계산이나 CAST를 거치면 숫자로 바뀝니다."
+      ],
+      "choices": [
+        "stock + 0 > 50",
+        "stock > 50.0",
+        "stock > 50",
+        "CAST(stock AS INTEGER) > 50",
+        "stock > '50'"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE products(id INTEGER, name TEXT, stock TEXT); INSERT INTO products VALUES(1,'pen','9'),(2,'cup','10'); INSERT INTO products VALUES(3,'book','100');",
+      "reference_output": "[3]"
+    },
+    {
+      "id": "sql-func-06",
+      "concept": "반열린 기간 조건",
+      "kind": "multi",
+      "title": "10월 주문 합계 조건",
+      "prompt": "시각이 붙은 주문도 빠짐없이 10월 주문 금액 합계를 구하려고 합니다. 빈칸에 넣었을 때 6000이 출력되는 조건을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, ordered_at TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'2026-10-01 09:00',1000);\n-- INSERT INTO orders VALUES(2,'2026-10-31',2000);\n-- INSERT INTO orders VALUES(3,'2026-10-31 18:20',3000);\n-- INSERT INTO orders VALUES(4,'2026-11-01',500);\nSELECT SUM(amount)\nFROM orders\nWHERE ____;",
+      "answer": "1,3,5",
+      "explanation": "1번은 10월 1일 이상, 11월 1일 미만의 반열린 구간이라 시각이 붙은 10월 31일 저녁 주문까지 포함하고 11월 1일은 뺍니다. 3번은 연월만 꺼내 비교하고, 5번은 date()로 시각을 떼어 낸 뒤 비교해 같은 6000입니다. 2번은 '2026-10-31 18:20'이 끝 값보다 커서 빠지고(3000), 4번은 끝을 11월 1일로 늘려 11월 1일 주문까지 들어갑니다(6500). 결과는 같아도 1번만 열 자체를 비교해 ordered_at의 인덱스를 쓸 수 있고, 3번·5번은 행마다 함수를 계산하므로 큰 표에서 느립니다.",
+      "hints": [
+        "각 조건이 10월 31일 저녁 주문과 11월 1일 주문을 포함하는지, 두 행만 먼저 확인해 보세요.",
+        "끝을 '다음 달 첫날 미만'으로 두면 시각이 붙어도 빠지지 않습니다. 함수로 날짜·연월만 꺼내 비교하는 방법도 있습니다."
+      ],
+      "choices": [
+        "ordered_at >= '2026-10-01' AND ordered_at < '2026-11-01'",
+        "ordered_at BETWEEN '2026-10-01' AND '2026-10-31'",
+        "strftime('%Y-%m', ordered_at) = '2026-10'",
+        "ordered_at BETWEEN '2026-10-01' AND '2026-11-01'",
+        "date(ordered_at) BETWEEN '2026-10-01' AND '2026-10-31'"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "reference_setup": "CREATE TABLE orders(id INTEGER, ordered_at TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'2026-10-01 09:00',1000); INSERT INTO orders VALUES(2,'2026-10-31',2000); INSERT INTO orders VALUES(3,'2026-10-31 18:20',3000); INSERT INTO orders VALUES(4,'2026-11-01',500);",
+      "reference_output": "6000"
+    },
+    {
+      "id": "sql-window-01",
+      "concept": "세 가지 순위 함수와 동점",
+      "kind": "choice",
+      "title": "동점자 순위 확인",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE scores(name TEXT, score INTEGER);\n-- INSERT INTO scores VALUES('kim',90),('lee',85);\n-- INSERT INTO scores VALUES('park',90),('choi',80);\nSELECT rn, rk, drk\nFROM (\n  SELECT name,\n    ROW_NUMBER() OVER (ORDER BY score DESC, name) AS rn,\n    RANK() OVER (ORDER BY score DESC) AS rk,\n    DENSE_RANK() OVER (ORDER BY score DESC) AS drk\n  FROM scores\n)\nWHERE name = 'choi';",
+      "answer": "(4, 4, 3)",
+      "explanation": "점수 내림차순은 kim·park(90), lee(85), choi(80)입니다. ROW_NUMBER는 동점에도 서로 다른 번호(이름순으로 kim 1, park 2)를 주어 choi는 4입니다. RANK는 동점자에게 같은 1을 주고 그 수만큼 다음 번호를 건너뛰어 lee 3, choi 4입니다. DENSE_RANK는 건너뛰지 않아 lee 2, choi 3입니다. \"상위 3명\"처럼 순위로 자를 때 어떤 함수를 쓰느냐에 따라 포함되는 사람이 달라집니다.",
+      "hints": [
+        "점수 90인 두 사람이 동점이라는 점에서, 세 함수가 동점자에게 같은 번호를 주는지 먼저 나누어 보세요.",
+        "동점자 두 명이 1등 자리를 함께 쓰면 그 다음 사람이 받는 번호가 함수마다 다를 수 있습니다. 85점 lee가 받는 번호부터 차례로 적어 보세요."
+      ],
+      "choices": [
+        "(4, 4, 3)",
+        "(4, 3, 3)",
+        "(4, 4, 4)",
+        "(3, 3, 3)"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE scores(name TEXT, score INTEGER); INSERT INTO scores VALUES('kim',90),('lee',85); INSERT INTO scores VALUES('park',90),('choi',80);",
+      "reference_output": "(4, 4, 3)"
+    },
+    {
+      "id": "sql-window-02",
+      "concept": "PARTITION BY 안에서 번호 매기기",
+      "kind": "choice",
+      "title": "고객별 주문 순번",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, customer TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'kim',3000),(2,'lee',1000);\n-- INSERT INTO orders VALUES(3,'kim',5000),(4,'lee',2000);\n-- INSERT INTO orders VALUES(5,'kim',1000);\nSELECT ROW_NUMBER() OVER (\n  PARTITION BY customer ORDER BY amount DESC\n) AS rn\nFROM orders\nORDER BY id;",
+      "answer": "[2, 2, 1, 1, 3]",
+      "explanation": "PARTITION BY customer는 고객마다 따로 번호를 매기고, 그 안에서 금액이 큰 순서로 1부터 셉니다. kim은 5000(id 3)=1, 3000(id 1)=2, 1000(id 5)=3이고, lee는 2000(id 4)=1, 1000(id 2)=2입니다. 마지막 ORDER BY id는 이미 계산된 번호를 id 순서로 보여 줄 뿐이라 [2, 2, 1, 1, 3]입니다. GROUP BY와 달리 행이 줄어들지 않는다는 점이 윈도 함수의 핵심입니다.",
+      "hints": [
+        "고객별로 주문을 나눈 뒤, 각 고객 안에서 금액이 큰 순서대로 번호를 붙여 보세요.",
+        "번호는 PARTITION BY 그룹마다 1부터 다시 시작하고, 마지막 ORDER BY id는 보여 주는 순서만 정합니다."
+      ],
+      "choices": [
+        "[2, 2, 1, 1, 3]",
+        "[1, 1, 2, 2, 3]",
+        "[2, 4, 1, 3, 5]",
+        "[1, 2, 3, 4, 5]"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE orders(id INTEGER, customer TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'kim',3000),(2,'lee',1000); INSERT INTO orders VALUES(3,'kim',5000),(4,'lee',2000); INSERT INTO orders VALUES(5,'kim',1000);",
+      "reference_output": "[2, 2, 1, 1, 3]"
+    },
+    {
+      "id": "sql-window-03",
+      "concept": "LAG로 이전 행과 비교",
+      "kind": "multi",
+      "title": "전일 대비 증감",
+      "prompt": "날짜별 매출의 전일 대비 증감을 [NULL, 30, -40]으로 구하려고 합니다(첫날은 비교할 전일이 없음). 빈칸에 넣었을 때 이 목록이 출력되는 식을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE daily(day TEXT, sales INTEGER);\n-- INSERT INTO daily VALUES('2026-10-01',100);\n-- INSERT INTO daily VALUES('2026-10-02',130);\n-- INSERT INTO daily VALUES('2026-10-03',90);\nSELECT ____ AS diff\nFROM daily\nORDER BY day;",
+      "answer": "2,3",
+      "explanation": "LAG(sales) OVER (ORDER BY day)는 날짜순으로 바로 앞 행의 값을 가져와 오늘 - 어제를 계산합니다. 첫날은 앞 행이 없어 NULL이고, NULL과의 뺄셈도 NULL이라 [NULL, 30, -40]입니다. 2번은 같은 식을 부호만 바꿔 쓴 것입니다. 4번 LEAD는 다음 날과의 차이를 오늘 행에 붙여 [30, -40, NULL]이 됩니다. 5번은 세 번째 인자로 기본값 0을 줘 첫날이 100이 됩니다. 1번은 윈도 정렬을 내림차순으로 바꿔 LAG가 다음 날 값을 가져옵니다.",
+      "hints": [
+        "각 식이 오늘 행에서 어느 날의 값을 가져오는지, 첫날에는 무엇이 들어가는지 확인하세요.",
+        "LAG는 정렬 기준에서 바로 앞 행, LEAD는 바로 뒤 행의 값을 가져오고, 없으면 기본값(지정하지 않으면 NULL)을 씁니다."
+      ],
+      "choices": [
+        "sales - LAG(sales) OVER (ORDER BY day DESC)",
+        "-(LAG(sales) OVER (ORDER BY day) - sales)",
+        "sales - LAG(sales) OVER (ORDER BY day)",
+        "LEAD(sales) OVER (ORDER BY day) - sales",
+        "sales - LAG(sales, 1, 0) OVER (ORDER BY day)"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE daily(day TEXT, sales INTEGER); INSERT INTO daily VALUES('2026-10-01',100); INSERT INTO daily VALUES('2026-10-02',130); INSERT INTO daily VALUES('2026-10-03',90);",
+      "reference_output": "[NULL, 30, -40]"
+    },
+    {
+      "id": "sql-window-04",
+      "concept": "그룹별 상위 1건 고르기",
+      "kind": "line",
+      "title": "고객별 최대 주문 점검",
+      "prompt": "고객마다 가장 큰 주문 한 건씩의 id를 [3, 4, 5]로 고르려 했는데 [3]만 나왔습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE orders(id INTEGER, customer TEXT, amount INTEGER);\n-- INSERT INTO orders VALUES(1,'kim',3000),(2,'lee',1000);\n-- INSERT INTO orders VALUES(3,'kim',5000),(4,'lee',2000);\n-- INSERT INTO orders VALUES(5,'park',700);\nWITH ranked AS (\n  SELECT id, customer, amount,\n    ROW_NUMBER() OVER (ORDER BY amount DESC) AS rn\n  FROM orders\n)\nSELECT id FROM ranked\nWHERE rn = 1\nORDER BY id;",
+      "answer": "8",
+      "explanation": "8번 줄의 OVER에는 PARTITION BY가 없어 전체 주문을 금액순으로 한 줄로 세우고, 1번은 가장 큰 5000원 주문(id 3) 하나뿐입니다. `OVER (PARTITION BY customer ORDER BY amount DESC)`로 고객마다 번호를 다시 시작하게 하면 kim의 3, lee의 4, park의 5가 각각 1번이 되어 [3, 4, 5]입니다. SELECT에 customer 열을 넣는 것만으로는 번호가 나뉘지 않고, rn = 1 조건과 마지막 정렬은 올바릅니다. 윈도 함수 결과는 같은 단계의 WHERE에서 바로 쓸 수 없어 이렇게 WITH(CTE)로 감싼 뒤 거릅니다.",
+      "hints": [
+        "ranked 안에서 rn이 1인 행이 몇 개 생기는지 먼저 세어 보세요.",
+        "번호를 고객마다 다시 1부터 시작하게 만드는 것은 SELECT 열 목록이 아니라 OVER 괄호 안의 설정입니다."
+      ],
+      "choices": [
+        "7",
+        "8",
+        "9",
+        "11",
+        "12",
+        "13"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE orders(id INTEGER, customer TEXT, amount INTEGER); INSERT INTO orders VALUES(1,'kim',3000),(2,'lee',1000); INSERT INTO orders VALUES(3,'kim',5000),(4,'lee',2000); INSERT INTO orders VALUES(5,'park',700);",
+      "reference_output": "[3]"
+    },
+    {
+      "id": "sql-window-05",
+      "concept": "누적 합계의 동점과 기본 프레임",
+      "kind": "multi",
+      "title": "누적 합계 기준 점검",
+      "prompt": "주문을 id 순서로 하나씩 더해 가는 누적 합계 [100, 300, 350, 380]을 만들려고 합니다. 빈칸에 넣었을 때 이 목록이 출력되는 식을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE sales(id INTEGER, day TEXT, amount INTEGER);\n-- INSERT INTO sales VALUES(1,'10-01',100),(2,'10-02',200);\n-- INSERT INTO sales VALUES(3,'10-02',50),(4,'10-03',30);\nSELECT SUM(amount) OVER (____) AS running\nFROM sales\nORDER BY id;",
+      "answer": "1,5",
+      "explanation": "OVER에 ORDER BY만 쓰면 기본 프레임은 RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW, 즉 '정렬 값이 지금 행과 같은 행까지 모두'입니다. 그래서 3번과 4번은 날짜가 같은 id 2·3이 둘 다 350을 받아 [100, 350, 350, 380]이 됩니다. 5번처럼 id를 정렬 기준에 더하거나 1번처럼 id로 정렬하면 동점이 없어 한 행씩 더해집니다. 2번은 날짜마다 따로 누적해 [100, 200, 250, 30]입니다. 일별 누적 매출 리포트에서 같은 날 주문이 여러 건이면 누적 합계가 계단처럼 뛰는 원인이 됩니다.",
+      "hints": [
+        "id 2와 3은 날짜가 같다는 점에서, 날짜로만 정렬했을 때 두 행의 누적 합계가 각각 얼마가 되는지 생각해 보세요.",
+        "OVER에 ORDER BY만 쓰면 기본 범위가 \"정렬 값이 같은 행까지 모두\"이므로 동점 행들이 같은 누적 합계를 받습니다."
+      ],
+      "choices": [
+        "ORDER BY id",
+        "PARTITION BY day ORDER BY id",
+        "ORDER BY day RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+        "ORDER BY day",
+        "ORDER BY day, id"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "reference_setup": "CREATE TABLE sales(id INTEGER, day TEXT, amount INTEGER); INSERT INTO sales VALUES(1,'10-01',100),(2,'10-02',200); INSERT INTO sales VALUES(3,'10-02',50),(4,'10-03',30);",
+      "reference_output": "[100, 300, 350, 380]"
+    },
+    {
+      "id": "sql-change-01",
+      "concept": "WHERE 없는 UPDATE",
+      "kind": "choice",
+      "title": "계좌 상태 변경",
+      "prompt": "휴면 계좌만 해지하려던 SQL입니다. 아래 SQL을 순서대로 실행한 뒤 마지막 조회 결과를 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE accounts(id INTEGER, owner TEXT, status TEXT);\n-- INSERT INTO accounts VALUES(1,'kim','active');\n-- INSERT INTO accounts VALUES(2,'lee','active');\n-- INSERT INTO accounts VALUES(3,'park','dormant');\nUPDATE accounts SET status = 'closed';\nSELECT COUNT(*) FROM accounts WHERE status = 'closed';",
+      "answer": "3",
+      "explanation": "UPDATE에 WHERE가 없으면 표의 모든 행이 바뀝니다. 휴면 계좌 하나만 닫으려던 의도와 달리 세 계좌가 모두 'closed'가 되어 3입니다. SQLite는 경고나 오류 없이 실행합니다(일부 도구의 안전 모드는 다른 DB의 설정입니다). 실무에서는 같은 WHERE로 먼저 SELECT해 대상 행을 확인하고, 트랜잭션 안에서 변경한 뒤 바뀐 행 수를 확인하고 COMMIT하세요.",
+      "hints": [
+        "UPDATE 문에 바꿀 행을 고르는 조건이 있는지 확인하세요.",
+        "SELECT의 WHERE가 행을 고르듯, UPDATE에서 바꿀 행을 고르는 것도 WHERE입니다. 그것이 없으면 대상이 어디까지인지 생각해 보세요."
+      ],
+      "choices": [
+        "1",
+        "0",
+        "3",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE accounts(id INTEGER, owner TEXT, status TEXT); INSERT INTO accounts VALUES(1,'kim','active'); INSERT INTO accounts VALUES(2,'lee','active'); INSERT INTO accounts VALUES(3,'park','dormant');",
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-change-02",
+      "concept": "UNIQUE 제약과 NULL",
+      "kind": "choice",
+      "title": "회원 등록 결과",
+      "prompt": "이메일에 UNIQUE 제약이 있는 표에 두 행을 더 넣었습니다. 아래 SQL을 순서대로 실행한 뒤 마지막 조회 결과를 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE members(id INTEGER PRIMARY KEY, email TEXT UNIQUE);\n-- INSERT INTO members VALUES(1,'a@example.com'),(2,NULL);\nINSERT OR IGNORE INTO members VALUES(3, 'a@example.com');\nINSERT OR IGNORE INTO members VALUES(4, NULL);\nSELECT COUNT(*) FROM members;",
+      "answer": "3",
+      "explanation": "id 3 행은 이미 있는 이메일 'a@example.com'과 겹쳐 UNIQUE를 어기므로 OR IGNORE로 건너뜁니다. id 4 행의 NULL은 '값 없음'이라 다른 NULL과 같다고 보지 않아 UNIQUE 위반이 아니므로 들어갑니다. 그래서 최종 표는 id 1·2·4의 3행입니다. UNIQUE만으로는 '이메일 필수'가 보장되지 않으니 NOT NULL을 함께 거세요. INSERT OR IGNORE는 SQLite 표기이며 다른 DB는 ON CONFLICT DO NOTHING 등을 씁니다.",
+      "hints": [
+        "두 INSERT가 각각 제약을 어기는지 먼저 판단하고, 최종 표에 남는 행을 모두 적어 보세요.",
+        "UNIQUE 열에서 NULL은 서로 같은 값으로 취급되지 않습니다. OR IGNORE는 제약을 어기는 행만 조용히 건너뜁니다."
+      ],
+      "choices": [
+        "3",
+        "4",
+        "2",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE members(id INTEGER PRIMARY KEY, email TEXT UNIQUE); INSERT INTO members VALUES(1,'a@example.com'),(2,NULL);",
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-change-03",
+      "concept": "0행 변경과 COMMIT",
+      "kind": "choice",
+      "title": "이체 실행 결과",
+      "prompt": "계좌 1에서 계좌 2로 3000원을 옮기려 했는데 받는 계좌 번호를 3으로 잘못 썼습니다. 아래 SQL을 순서대로 실행한 뒤 마지막 조회 결과를 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE accounts(id INTEGER, balance INTEGER);\n-- INSERT INTO accounts VALUES(1,10000),(2,5000);\nBEGIN;\nUPDATE accounts SET balance = balance - 3000 WHERE id = 1;\nUPDATE accounts SET balance = balance + 3000 WHERE id = 3;\nCOMMIT;\nSELECT balance FROM accounts ORDER BY id;",
+      "answer": "[7000, 5000]",
+      "explanation": "두 번째 UPDATE는 id 3인 행이 없어 0개 행을 바꾸고 정상 종료합니다. 오류가 아니므로 트랜잭션은 그대로 진행되고, COMMIT이 첫 번째 출금까지 확정해 [7000, 5000]이 됩니다. 3000원이 어디에도 들어가지 않고 사라진 것입니다. 트랜잭션은 \"오류가 나면 되돌릴 수 있게\" 묶어 줄 뿐, 대상이 없는 변경을 막아 주지 않습니다. 애플리케이션에서 바뀐 행 수(예: Python의 cursor.rowcount)를 확인해 1이 아니면 ROLLBACK해야 합니다.",
+      "hints": [
+        "WHERE id = 3에 맞는 행이 없을 때 그 UPDATE가 오류인지, 0개 행을 바꾸고 끝나는지 생각해 보세요.",
+        "COMMIT은 그때까지의 변경을 모두 확정합니다. 오류가 나지 않으면 트랜잭션이 스스로 되돌리지 않습니다."
+      ],
+      "choices": [
+        "[10000, 5000]",
+        "[7000, 5000]",
+        "[7000, 8000]",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE accounts(id INTEGER, balance INTEGER); INSERT INTO accounts VALUES(1,10000),(2,5000);",
+      "reference_output": "[7000, 5000]"
+    },
+    {
+      "id": "sql-change-04",
+      "concept": "충돌 시 갱신(UPSERT)",
+      "kind": "multi",
+      "title": "재고 입고 반영",
+      "prompt": "이미 있는 상품은 수량을 더하고, 없는 상품은 새로 넣으려고 합니다. 빈칸에 넣었을 때 [2, 3, 15]가 출력되는 절을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE stock(item TEXT PRIMARY KEY, qty INTEGER);\n-- INSERT INTO stock VALUES('pen',10),('cup',3);\nINSERT INTO stock VALUES('pen', 5), ('book', 2)\nON CONFLICT(item) ____;\nSELECT qty FROM stock ORDER BY item;",
+      "answer": "3,4",
+      "explanation": "ON CONFLICT(item)은 기본 키 item이 겹치는 행에서만 동작하고, 겹치지 않는 'book'은 그대로 들어갑니다. DO UPDATE 안에서 qty(= stock.qty)는 기존 값 10, excluded.qty는 넣으려던 값 5라서 3번과 4번은 15가 됩니다. 5번은 기존 값을 버리고 5로 덮어쓰고, 1번 DO NOTHING은 충돌 행을 건너뛰어 10, 2번은 기존 값을 두 번 더해 20입니다. 정렬은 이름순(book, cup, pen)이라 [2, 3, 15]입니다. 다른 DB에서는 MERGE나 ON DUPLICATE KEY UPDATE 같은 다른 문법을 씁니다.",
+      "hints": [
+        "'pen'은 이미 있어 충돌하고 'book'은 새 행입니다. 충돌한 행에서 qty와 excluded.qty가 각각 어떤 값을 가리키는지 적어 보세요.",
+        "excluded는 넣으려다 충돌한 새 행을, 이름만 쓴 qty(또는 stock.qty)는 표에 이미 있는 행의 값을 가리킵니다."
+      ],
+      "choices": [
+        "DO NOTHING",
+        "DO UPDATE SET qty = qty + qty",
+        "DO UPDATE SET qty = stock.qty + excluded.qty",
+        "DO UPDATE SET qty = qty + excluded.qty",
+        "DO UPDATE SET qty = excluded.qty"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE stock(item TEXT PRIMARY KEY, qty INTEGER); INSERT INTO stock VALUES('pen',10),('cup',3);",
+      "reference_output": "[2, 3, 15]"
+    },
+    {
+      "id": "sql-change-05",
+      "concept": "NULL이 섞인 NOT IN 삭제 조건",
+      "kind": "multi",
+      "title": "주문 없는 고객 정리",
+      "prompt": "주문이 한 번도 없는 고객(2, 3)을 지우고 고객 1만 남기려고 합니다. 빈칸에 넣었을 때 마지막 조회 결과가 1이 되는 조건을 모두 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, name TEXT);\n-- INSERT INTO customers VALUES(1,'kim'),(2,'lee');\n-- INSERT INTO customers VALUES(3,'park');\n-- CREATE TABLE orders(id INTEGER, customer_id INTEGER);\n-- INSERT INTO orders VALUES(10,1),(11,NULL);\nDELETE FROM customers\nWHERE ____;\nSELECT COUNT(*) FROM customers;",
+      "answer": "2,3,5",
+      "explanation": "1번의 NOT IN 목록은 (1, NULL)입니다. 고객 2에 대해 2 <> NULL이 '알 수 없음'이라 조건 전체가 참이 되지 못하고, DELETE는 조건이 참인 행만 지우므로 아무것도 지워지지 않아 3이 남습니다. DISTINCT(4번)도 NULL을 남겨 결과가 같습니다. 2번은 하위 조회에서 NULL을 빼고, 5번은 NULL을 0으로 바꿔 목록이 (1)·(1, 0)이 되므로 고객 2·3이 지워집니다. 3번 NOT EXISTS는 행마다 연결되는 주문이 있는지만 보므로 NULL의 영향을 받지 않습니다. 조회에서는 결과가 비어 보이기만 하지만, 삭제·변경에서는 이 차이가 데이터 사고로 이어지므로 실행 전에 같은 조건으로 SELECT해 대상 행을 확인하세요.",
+      "hints": [
+        "orders의 customer_id에 NULL이 하나 있다는 점에서, 고객 2에 대해 각 조건이 참·거짓·알 수 없음 중 무엇이 되는지 따져 보세요.",
+        "x NOT IN (목록)은 목록에 NULL이 하나라도 있으면 참이 될 수 없습니다. DELETE는 조건이 참인 행만 지웁니다."
+      ],
+      "choices": [
+        "id NOT IN (SELECT customer_id FROM orders)",
+        "id NOT IN (SELECT customer_id FROM orders WHERE customer_id IS NOT NULL)",
+        "NOT EXISTS (SELECT 1 FROM orders WHERE orders.customer_id = customers.id)",
+        "id NOT IN (SELECT DISTINCT customer_id FROM orders)",
+        "id NOT IN (SELECT COALESCE(customer_id, 0) FROM orders)"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "SQL",
+      "level": 3,
+      "reference_setup": "CREATE TABLE customers(id INTEGER, name TEXT); INSERT INTO customers VALUES(1,'kim'),(2,'lee'); INSERT INTO customers VALUES(3,'park'); CREATE TABLE orders(id INTEGER, customer_id INTEGER); INSERT INTO orders VALUES(10,1),(11,NULL);",
+      "reference_output": "1"
+    },
+    {
+      "id": "sql-minmax-01",
+      "concept": "MIN·MAX와 NULL·문자열",
+      "kind": "choice",
+      "title": "상품 가격 범위",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 고르세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE products(name TEXT, price INTEGER);\n-- INSERT INTO products VALUES('pen',1200),('cup',NULL);\n-- INSERT INTO products VALUES('book',15000),('note',800);\nSELECT MIN(price), MAX(price), MAX(name)\nFROM products;",
+      "answer": "(800, 15000, 'pen')",
+      "explanation": "MIN·MAX는 NULL을 빼고 계산해 가격 최솟값은 800, 최댓값은 15000입니다. 집계 함수는 열마다 따로 계산되므로 MAX(name)은 가장 비싼 상품의 이름이 아니라 이름 중 글자 순서로 가장 뒤인 'pen'입니다(book < cup < note < pen). 가장 비싼 상품의 이름이 필요하면 ORDER BY price DESC LIMIT 1이나 윈도 함수를 써야 합니다.",
+      "hints": [
+        "NULL인 cup의 가격이 MIN 계산에 들어가는지, 세 집계가 서로 같은 행을 보는지 확인하세요.",
+        "MIN·MAX도 COUNT(열)처럼 NULL을 빼고 계산하며, 문자열은 글자 순서로 비교합니다."
+      ],
+      "choices": [
+        "(NULL, 15000, 'pen')",
+        "(800, 15000, 'book')",
+        "(800, 15000, NULL)",
+        "(800, 15000, 'pen')"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "SQL",
+      "level": 1,
+      "reference_setup": "CREATE TABLE products(name TEXT, price INTEGER); INSERT INTO products VALUES('pen',1200),('cup',NULL); INSERT INTO products VALUES('book',15000),('note',800);",
+      "reference_output": "(800, 15000, 'pen')"
+    },
+    {
+      "id": "sql-cross-01",
+      "concept": "조인 조건 누락과 곱집합",
+      "kind": "choice",
+      "title": "쿠폰 발송 대상 수",
+      "prompt": "아래 코드는 독립적으로 새로 실행합니다. 출력값을 입력하세요.",
+      "code": "-- 입력 데이터 전체 (SQLite)\n-- CREATE TABLE customers(id INTEGER, name TEXT);\n-- INSERT INTO customers VALUES(1,'kim'),(2,'lee');\n-- INSERT INTO customers VALUES(3,'park');\n-- CREATE TABLE coupons(code TEXT);\n-- INSERT INTO coupons VALUES('A'),('B');\nSELECT COUNT(*)\nFROM customers, coupons;",
+      "answer": "6",
+      "explanation": "FROM에 테이블을 쉼표로 나열하고 연결 조건을 쓰지 않으면 CROSS JOIN, 즉 모든 행의 짝(곱집합)이 만들어져 3 × 2 = 6행입니다. \"고객마다 쿠폰을 하나씩 만든다\"처럼 의도한 경우도 있지만, JOIN … ON 조건을 빠뜨린 실수라면 행이 곱으로 늘어 합계가 부풀려집니다. 큰 테이블에서는 결과가 수백만 행이 되어 조회가 멈추기도 합니다.",
+      "hints": [
+        "쉼표로 나열한 두 테이블에 연결 조건이 있는지 확인하세요.",
+        "조건이 없으면 어떤 행끼리 짝이 되는지 거르는 기준이 없습니다. 고객 한 명이 쿠폰 몇 개와 짝지어지는지 세어 보세요."
+      ],
+      "choices": [
+        "3",
+        "5",
+        "6",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "SQL",
+      "level": 2,
+      "reference_setup": "CREATE TABLE customers(id INTEGER, name TEXT); INSERT INTO customers VALUES(1,'kim'),(2,'lee'); INSERT INTO customers VALUES(3,'park'); CREATE TABLE coupons(code TEXT); INSERT INTO coupons VALUES('A'),('B');",
+      "reference_output": "6"
+    }
+  ]
+}

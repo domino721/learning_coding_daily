@@ -12,7 +12,7 @@ import pandas as pd
 import pytest
 
 from backend.content import BY_ID, EXERCISES
-from tests.preserved import original, preserved, REVERSIONED, reversioned
+from tests.preserved import original, preserved, REVERSIONED, reversioned, concepts_before_additions
 from backend.curriculum import LEARNING_PATHS, select_exercises
 from scripts.validate_sql_content import sql_output, visible_setup
 
@@ -35,7 +35,7 @@ def test_all_187_existing_questions_paths_cards_drafts_concepts_and_rules_surviv
     cards = {card['id']: card for card in bank['exercises']}
     for key, expected in old['design_cards'].items():
         assert preserved('card', key, expected), key
-    assert digest(bank['concepts']) == old['concepts']
+    assert digest(concepts_before_additions(bank)) == old['concepts']
     assert LEARNING_PATHS['rules'] == old['rules']
     assert LEARNING_PATHS['version'] == 'learning-paths-2.3'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing, 2.3 review graduation
     added = {item['id'] for item in NEW}

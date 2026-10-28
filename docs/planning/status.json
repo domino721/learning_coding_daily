@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "design_version": "1.12.0",
-  "plan_version": "1.12.0",
+  "design_version": "1.13.0",
+  "plan_version": "1.13.0",
   "updated": "2026-10-28",
   "timezone": "Asia/Seoul",
   "focus": "WBS-370",
@@ -431,6 +431,16 @@
         "EV-063"
       ],
       "note": "LOG-090: line·order·multi 형식·새 문항15개·형식별 게이트/재실행 검사·learning-paths-2.2 웹/서버·가상 비교를 로컬 구현·검증 EV-062. 원격 저장/Pages 게시 전. LOG-091: main230d5c0 Pages40500100534/관리40500100573 success, 원격 pytest1059/Node24/모바일49 및 공개 자산 일치 EV-063으로 게시 완료."
+    },
+    "WBS-390": {
+      "status": "done",
+      "updated": "2026-10-28",
+      "actual_started": "2026-10-28",
+      "actual_finished": "2026-10-28",
+      "evidence": [
+        "EV-068"
+      ],
+      "note": "LOG-097: CR-017 Python 기초 트랙(python-basics) 개념10·45문항과 SQL 함수·윈도·데이터 변경 16문항, 기존 SQL 2문항, NumPy·pandas의 @ 3문항(새 ID 66개)을 웹/서버에 같게 구현했다. 정답을 모르는 별도 검수자 재풀이 66/66 일치와 지적 반영, 보기별 실제 실행, 공통 시나리오 18개 웹/서버 일치, SQL 이전 엔진과 가상 재생 동일, check.sh·모바일 E2E 로컬 검증 EV-068. 원격 게시 전."
     }
   }
 }

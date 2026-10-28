@@ -25,6 +25,20 @@ CONCEPTS = [
     {'id':'ml-preprocessing','name':'전처리 기준','domain':'scikit-learn','prerequisites':['ml-evaluation']},
     {'id':'ml-metrics','name':'모델 평가 지표','domain':'scikit-learn','prerequisites':['ml-evaluation']},
     {'id':'ml-neighbors','name':'이웃 기반 예측','domain':'scikit-learn','prerequisites':['ml-evaluation']},
+    # CR-017: the Python 기초 track (domain Python) and three more SQL concepts.
+    {'id':'py-values','name':'값과 연산자','domain':'Python','prerequisites':[]},
+    {'id':'py-str','name':'문자열','domain':'Python','prerequisites':[]},
+    {'id':'py-list','name':'리스트','domain':'Python','prerequisites':[]},
+    {'id':'py-control','name':'조건과 반복','domain':'Python','prerequisites':['py-values']},
+    {'id':'py-tuple','name':'튜플과 언패킹','domain':'Python','prerequisites':['py-list']},
+    {'id':'py-dict','name':'딕셔너리','domain':'Python','prerequisites':['py-tuple']},
+    {'id':'py-set','name':'집합','domain':'Python','prerequisites':['py-list']},
+    {'id':'py-func','name':'함수와 인자','domain':'Python','prerequisites':['py-control']},
+    {'id':'py-star','name':'*와 ** 펼치기','domain':'Python','prerequisites':['py-func','py-tuple']},
+    {'id':'py-decorator','name':'데코레이터 @','domain':'Python','prerequisites':['py-star']},
+    {'id':'sql-functions','name':'문자열·날짜 함수','domain':'SQL','prerequisites':['sql-rows']},
+    {'id':'sql-windows','name':'윈도 함수','domain':'SQL','prerequisites':['sql-aggregation']},
+    {'id':'sql-modify','name':'데이터 변경과 제약','domain':'SQL','prerequisites':['sql-rows']},
 ]
 LEVELS = {1:'기초 확인', 2:'적용', 3:'조건 변화·전이'}
 ESSAYS = {'numpy-view-03','sql-join-03','stats-conditional-03','ml-leakage-01','ml-leakage-02'}
@@ -48,6 +62,19 @@ RATIONALES = {
 'ml-preprocessing':'학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다.',
 'ml-metrics':'실제/예측 양성과 전체 사례 중 지표의 분모를 선택한다.',
 'ml-neighbors':'거리·이웃 수·레이블 결정을 순서대로 적용한다.',
+'py-values':'연산자가 돌려주는 값과 자료형, 참·거짓 판단을 구분한다.',
+'py-str':'인덱스·슬라이스 범위와 문자열 메서드가 새 값을 돌려준다는 점을 추적한다.',
+'py-list':'제자리 변경과 새 리스트 반환, 같은 리스트를 가리키는 이름을 구분한다.',
+'py-control':'분기가 실행되는 조건과 반복 중 변수 상태의 변화를 추적한다.',
+'py-tuple':'쉼표가 만드는 튜플과 값을 나누어 받는 대입 순서를 판단한다.',
+'py-dict':'키 조회·갱신 규칙과 키별 누적 결과를 추적한다.',
+'py-set':'중복 없는 원소와 순서 없는 결과, 집합 연산의 방향을 구분한다.',
+'py-func':'반환값·인자 전달·기본값이 만들어지는 시점과 지역 이름을 구분한다.',
+'py-star':'*·**가 값을 모으는지 펼치는지 위치에 따라 판단한다.',
+'py-decorator':'@가 정의 시점에 함수를 감싸 다시 대입하는 순서와 전달 과정을 추적한다.',
+'sql-functions':'함수가 돌려주는 값과 문자열로 저장된 날짜·숫자의 비교 규칙을 구분한다.',
+'sql-windows':'행을 줄이지 않고 구간·순서 안에서 계산되는 값과 동점 처리를 추적한다.',
+'sql-modify':'변경 대상 행·제약 위반·트랜잭션 결과를 실행 후 상태로 판단한다.',
 }
 
 def concept_id(exercise_id):
@@ -123,7 +150,14 @@ def concept_states(sessions, by_id):
     return result
 
 def in_track(ex, track):
-    return (ex.domain == 'SQL') if track == 'sql' else (ex.domain != 'SQL') if track == 'python' else True
+    # Python 기초 items (domain Python) form their own track and never enter data-analysis sessions.
+    if track == 'sql':
+        return ex.domain == 'SQL'
+    if track == 'python':
+        return ex.domain not in ('SQL', 'Python')
+    if track == 'python-basics':
+        return ex.domain == 'Python'
+    return True
 
 
 def select_exercises(exercises, sessions, progress, today, extra=False, track=None):

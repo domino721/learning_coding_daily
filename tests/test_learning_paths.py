@@ -5,12 +5,13 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+from types import SimpleNamespace
 
 import pytest
 
 from backend.content import BY_ID, EXERCISES
 from tests.preserved import preserved
-from backend.curriculum import (LEARNING_PATHS, concept_states, observations,
+from backend.curriculum import (LEARNING_PATHS, concept_states, in_track, observations,
                                 recommendation_trace, review_due, select_exercises,
                                 validate_learning_paths)
 
@@ -130,7 +131,7 @@ def test_day2_probes_unlocked_application_before_redundant_foundations_and_reach
     day2=select_exercises(EXERCISES,sessions,progress,'2026-10-19',track='python')
     assert sum(ex.level==2 for ex,_ in day2)>=4
     assert not ({ex.id for ex,_ in day2}&{'pandas-select-02','pandas-select-scaffold-01','stats-summary-foundation-02','ml-eval-foundation-02'})
-    for track in ('python','sql'):
+    for track in ('python-basics','python','sql'):
         track_sessions=[];track_progress={};start=date(2026,10,18)
         for offset in range(60):
             day=(start+timedelta(days=offset)).isoformat()
@@ -143,7 +144,7 @@ def test_day2_probes_unlocked_application_before_redundant_foundations_and_reach
             if items:
                 track_sessions.append({'id':f'{track}-{offset}','track_id':track,'local_day':day,'batch':0,'items':items})
         states=concept_states(track_sessions,BY_ID)
-        assert all(v['level']==3 for v in states.values() if (v['domain']=='SQL')==(track=='sql'))
+        assert all(v['level']==3 for v in states.values() if in_track(SimpleNamespace(domain=v['domain']),track)),track
 
 
 def test_recent_independent_review_varies_the_exercise_but_helped_items_are_retried():

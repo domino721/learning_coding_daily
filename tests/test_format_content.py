@@ -15,7 +15,7 @@ import pytest
 
 from backend.content import EXERCISES, LAYOUT_KINDS, valid_choice_answer
 from backend.curriculum import LEARNING_PATHS
-from scripts.validate_sql_content import sql_output
+from scripts.validate_sql_content import run_sql, sql_output
 
 CARDS = {c['id']: c for c in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
 ITEMS = [ex for ex in EXERCISES if ex.kind in LAYOUT_KINDS]
@@ -101,7 +101,7 @@ def test_every_variant_reproduces_its_reviewed_result(ex, results):
             with sqlite3.connect(':memory:') as db:
                 db.executescript(ex.reference_setup)
                 try:
-                    rows = db.execute(program).fetchall()
+                    rows = run_sql(db, program)
                 except (sqlite3.Error, sqlite3.Warning):
                     rows = None
             if expected == 'fix':

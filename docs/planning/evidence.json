@@ -934,6 +934,32 @@
         "backend/learning_paths.json"
       ],
       "code_reference": "93341e8fa83b3180af9559bcd2fcf9918a8c82a3"
+    },
+    {
+      "id": "EV-068",
+      "record": "docs/planning/evidence/EV-068.md",
+      "artifacts": [
+        "backend/basics_content.json",
+        "backend/extension_content.json",
+        "backend/curriculum.py",
+        "backend/content.py",
+        "backend/main.py",
+        "src/recommendation.ts",
+        "src/browserApi.ts",
+        "src/App.tsx",
+        "src/style.css",
+        "src/curriculum.json",
+        "scripts/validate_sql_content.py",
+        "scripts/sync-design-cards.py",
+        "scripts/compare-engines.py",
+        "curriculum/reviews/2026-10-28-tracks.json",
+        "docs/experiments/tracks-cr017-20261028.json",
+        "tests/fixtures/learning-paths.json",
+        "tests/e2e/basics.spec.ts",
+        "tests/test_api.py",
+        "tests/test_learning_paths.py"
+      ],
+      "code_reference": "849928608a4b326844348e869353cdf2b92fc947"
     }
   ]
 }

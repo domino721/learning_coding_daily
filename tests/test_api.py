@@ -115,12 +115,12 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
     seen=set()
     # A growing catalog needs a growing replay budget; daily/review limits stay fixed.
     for _ in range(max(60, len(active))):
-        for track in ('python','sql'):
+        for track in ('python-basics','python','sql'):
             response=client.post('/api/sessions/today',json={'track_id':track})
             if response.status_code==422: continue
             session=response.json()
             for item in session['items']:
-                assert (item['domain']=='SQL')==(track=='sql')
+                assert (item['domain']=='SQL')==(track=='sql') and (item['domain']=='Python')==(track=='python-basics')
                 assert item['response_mode']!='essay' and item['category'] in ('new','review','practice')
                 seen.add(item['id'])
                 if item['status']=='pending': assert answer(client,session,item).status_code==200
@@ -200,7 +200,7 @@ def test_original_pandas_answers_remain_valid():
     teams = pd.DataFrame({"team": ["A", "B", "A"], "amount": [3000, 4000, 5000]})
     assert str(teams.groupby('team')['amount'].sum()['A']) == BY_ID['pandas-group-02'].answer
     assert len(EXERCISES) == len(BY_ID) >= 60
-    assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn"}
+    assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn", "Python"}
 
 
 def test_same_server_serves_frontend_and_learning_api(tmp_path):
@@ -214,7 +214,9 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert '매일코딩' in client.get("/").text
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/api/health").json() == {"status": "ok"}
-        assert client.get("/api/tracks").json()[0]["exercise_count"] == sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)
+        counts = {track["id"]: track["exercise_count"] for track in client.get("/api/tracks").json()}
+        assert counts["python"] == sum(ex.domain not in ('SQL', 'Python') and ex.response_mode != 'essay' for ex in EXERCISES)
+        assert counts["python-basics"] == sum(ex.domain == 'Python' for ex in EXERCISES)
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 

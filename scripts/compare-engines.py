@@ -19,6 +19,7 @@ import statistics
 import subprocess
 import sys
 import tempfile
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -90,7 +91,7 @@ def summarize(served, final, track):
         batches.setdefault(row['day'], []).append(row)
     forms = [len({r['form'] for r in rows}) for rows in batches.values()]
     support = [r for r in served if r['support']]
-    concepts = [c for c in final.values() if (c['domain'] == 'SQL') == (track == 'sql')]
+    concepts = [c for c in final.values() if current.in_track(SimpleNamespace(domain=c['domain']), track)]
     shown = Counter(r['id'] for r in served)
     late = [r['retry_late'] for r in served if r['retry_late'] is not None]
     return {
@@ -108,6 +109,12 @@ def summarize(served, final, track):
         'support_items_by_level': dict(sorted(Counter(r['level'] for r in support).items())),
         'concepts_at_level': dict(sorted(Counter(c['level'] for c in concepts).items())),
     }
+
+
+def knows(engine, track):
+    """An engine from before CR-017 has no python-basics track: its in_track would admit every item."""
+    probe = next(ex for ex in EXERCISES if ex.domain == 'SQL')
+    return track in ('python', 'sql') or not engine.in_track(probe, track)
 
 
 def average(runs):
@@ -130,15 +137,17 @@ def main():
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     base = load_base(args.base)
+    # The concept map is catalog data like the paths: an engine from before a concept was added reads the current one.
+    base.CONCEPTS = current.CONCEPTS
     first = date(2026, 11, 2)
     results = []
     for profile in PROFILES:
         # steady and transfer-slip do not depend on the calendar; one start date is enough.
         starts = [first + timedelta(days=7 * k) for k in range(args.starts if profile in ('uneven', 'struggling') else 1)]
-        for track in ('python', 'sql'):
+        for track in ('python-basics', 'python', 'sql'):
             for days in args.days:
                 results.append({'profile': profile, 'track': track, 'days': days, 'runs': len(starts),
-                                'base': average([replay(base, profile, track, days, s) for s in starts]),
+                                'base': average([replay(base, profile, track, days, s) for s in starts]) if knows(base, track) else None,
                                 'current': average([replay(current, profile, track, days, s) for s in starts])})
     report = {'synthetic': True, 'days': args.days, 'first_start': first.isoformat(), 'profiles': PROFILES,
               'base': {'revision': subprocess.run(['git', 'rev-parse', '--short', args.base], cwd=ROOT,
@@ -156,7 +165,7 @@ def main():
     for row in results:
         print(row['profile'], row['track'], f"day {row['days']}", f"({row['runs']} runs)")
         for key in row['current']:
-            print(f"  {key}: {row['base'][key]} -> {row['current'][key]}")
+            print(f"  {key}: {row['base'][key] if row['base'] else '-'} -> {row['current'][key]}")
 
 
 if __name__ == '__main__':

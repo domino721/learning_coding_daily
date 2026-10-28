@@ -352,14 +352,19 @@ from backend.scaffold_content import authored_scaffolds
 EXERCISES += authored_scaffolds(Exercise)
 from backend.format_content import authored_formats
 EXERCISES += authored_formats(Exercise)
-from backend.curriculum import attach_metadata
+from backend.basics_content import authored_basics
+EXERCISES += authored_basics(Exercise)
+from backend.extension_content import authored_extensions
+EXERCISES += authored_extensions(Exercise)
+from backend.curriculum import attach_metadata, in_track
 EXERCISES = attach_metadata(EXERCISES)
 BY_ID = {exercise.id: exercise for exercise in EXERCISES}
 # Stable catalog IDs and unique authored question bodies. Historical snapshots stay untouched.
 assert len(BY_ID) == len(EXERCISES), "Duplicate exercise ID"
 assert len({(ex.domain, ex.prompt.strip(), ex.code.strip()) for ex in EXERCISES}) == len(EXERCISES), "Duplicate question body"
 TRACKS = [
-    {"id": "python", "name": "Python 데이터 분석", "description": "pandas · NumPy · 통계 · 머신러닝", "available": True, "exercise_count": sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)},
-    {"id": "sql", "name": "SQL", "description": "행 조건 · 집계 · 테이블 연결", "available": True, "exercise_count": sum(ex.domain == 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)},
+    {"id": "python-basics", "name": "Python 기초", "description": "자료형 · 조건과 반복 · 함수 · *와 @", "available": True, "exercise_count": sum(in_track(ex, 'python-basics') and ex.response_mode != 'essay' for ex in EXERCISES)},
+    {"id": "python", "name": "Python 데이터 분석", "description": "pandas · NumPy · 통계 · 머신러닝", "available": True, "exercise_count": sum(in_track(ex, 'python') and ex.response_mode != 'essay' for ex in EXERCISES)},
+    {"id": "sql", "name": "SQL", "description": "행 조건 · 집계 · 조인 · 윈도 · 데이터 변경", "available": True, "exercise_count": sum(in_track(ex, 'sql') and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "algorithms", "name": "코딩테스트", "description": "문자열부터 탐색까지, 한 단계씩", "available": False, "exercise_count": 0},
 ]

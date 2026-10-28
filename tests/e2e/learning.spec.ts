@@ -178,7 +178,9 @@ test("independent courses use unique pools, capped choices and preserved history
   await expect(lifetime).toContainText(`${count}문제 풀이`);
   await expect(page.locator(".history-session")).toContainText(["SQL"]);
   await page.getByText("개념별 학습 경로", { exact: true }).click();
-  await expect(page.locator(".concept-grid article")).toHaveCount(18);
+  await expect(page.locator(".concept-grid article")).toHaveCount(
+    curriculum.concepts.length,
+  );
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

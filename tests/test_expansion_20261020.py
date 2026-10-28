@@ -16,7 +16,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 
 from backend.content import BY_ID, EXERCISES
-from tests.preserved import original, preserved, REVERSIONED, reversioned
+from tests.preserved import original, preserved, REVERSIONED, reversioned, concepts_before_additions
 from backend.curriculum import LEARNING_PATHS, select_exercises
 from scripts.validate_sql_content import sql_output, visible_setup
 
@@ -62,7 +62,7 @@ def test_142_existing_exercises_paths_rules_and_concepts_are_preserved():
         assert preserved('path', identifier, saved['path_items'][identifier]), identifier
     assert LEARNING_PATHS['rules'] == saved['rules']
     bank = json.loads(Path('curriculum/problem_bank.json').read_text())
-    assert digest(bank['concepts']) == saved['concepts']
+    assert digest(concepts_before_additions(bank)) == saved['concepts']
     assert LEARNING_PATHS['version'] == 'learning-paths-2.3'  # 2.0 rules preserved; 2.1 review variation, 2.2 support step-down and task-form mixing, 2.3 review graduation
     new_ids = {item['id'] for item in NEW}
     assert len(new_ids) == len(NEW) == 12

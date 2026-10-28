@@ -390,6 +390,18 @@
    "path_item": "a5519d26ff1f8be8caf51b993d4323dc43e5768f4c25099410403a28fd6cf422",
    "version": 1
   },
+  "numpy-matmul-01": {
+   "design_card": "f06ae160f6f65bf6c97016a7aaec80981ffb7154e10ec70ffc5d2b9f94e40157",
+   "exercise": "67f6872ac89dfa1df9120b3a6ac079f2c42bd8b6549b70bd0244a4361be5182b",
+   "path_item": "cb30feca58ae4ed1d6bc3730437ecdc54eea4aa9fc1ee488301870269797b0e9",
+   "version": 1
+  },
+  "numpy-matmul-02": {
+   "design_card": "5e21ddd71f83cfd64072e223e27c98c418708a6b4d4a93549a8791d5c978458a",
+   "exercise": "ffef4c9ba41103e0cbff2e67c5c1de8ef0271b8cccb7ca1a85c5fdedc44cbb04",
+   "path_item": "31f4045fca0f03cd1ae4e03641c8f0bd39fe6911a1240266469f2511e1826dd0",
+   "version": 1
+  },
   "numpy-memory-foundation-01": {
    "design_card": "563498a62259f5b543639019b4836c08da9a9b024a0f7312a9ca6eef70aaafd7",
    "exercise": "26065d18402d3a55e8fce13dcd3503dc1e4f055278798799558caf114f7f7e9a",
@@ -744,6 +756,12 @@
    "path_item": "280962a6a57a7ffc178d00377f4479664aafcb885d8350fd4d456e7a92d9203c",
    "version": 1
   },
+  "pandas-query-at-01": {
+   "design_card": "4277db0d01e26eedf53d07fd5a8aaab16523b8455a42b65a745ca5328972c82c",
+   "exercise": "e562db496ac6c0eb0bf3e208ec78298271c6e0338e8500ab377f8564d003e106",
+   "path_item": "8c20ac48a51a55f11bcfd88fdbcf73022ffd45b63f03e8ad9d90d6ee6152745d",
+   "version": 1
+  },
   "pandas-reindex-fill-scope-20261025": {
    "design_card": "9045fb5adbe14347a9ff56a480b5769b48dc5b6e9b5da66bc5263d45d2dfa23b",
    "exercise": "4db431022378d78a81acd7668aa6377860b08e79896287c59fc864e03ce2a6eb",
@@ -864,6 +882,276 @@
    "path_item": "d29a09baa8bea799951ec793479c00a2e6ce2da1e108ec719c6fe72af07b2e62",
    "version": 1
   },
+  "py-control-01": {
+   "design_card": "36d2dad60a9c00e39128356f85533ba23668c6008acc7a4318e03a5044ba7c8c",
+   "exercise": "07c4031ae274dedf2ca35e0a52d9a2b6712138914ad2e96a3537a0aa5c861422",
+   "path_item": "346806a539399500c661a933ab221927ecaccb4f5ccfb21094849d4ddce0e772",
+   "version": 1
+  },
+  "py-control-02": {
+   "design_card": "a5ac933dd8f5171f2dfe204f28c9469209fe232bca8cbf9a5e69b7f08b9dff40",
+   "exercise": "af5208acb159d9018f347e87dab954821b1ee0b90fdd66b0f94c50dd50c547ce",
+   "path_item": "6a2852c8457b205dcd307576afb4447842f5a6abd6aa2665eaf2e1ff49f8bc32",
+   "version": 1
+  },
+  "py-control-03": {
+   "design_card": "ef8789c4822a01e4ab0e6fcb56a728a54e6dc91a8eb2e54c64d6bca9bbbf5c68",
+   "exercise": "a0f88c9e82aa1929e591cdd8b17ffde4bdbd4f84801c8d3317cc21449b37b7a5",
+   "path_item": "95a8c83f28f1a35560c72291334be3b86097d9dcc51280220e929f097e29da91",
+   "version": 1
+  },
+  "py-control-04": {
+   "design_card": "0471931706ec6ad7875beff25101418f75dfa32718f97ab134df8b433e7180fc",
+   "exercise": "41e553ca11578ccb05be18f5e2e8cf831140dc4f9c999a388cf0944d632bdf26",
+   "path_item": "19dd0e7c3cf4582ff6dead77f1c80779e3f14a1eca4cc4c9d438d92def2917e4",
+   "version": 1
+  },
+  "py-control-05": {
+   "design_card": "295949c340d95e55b4d3882c7449ff321becaf3f54228dbbd7950098712ce5c1",
+   "exercise": "9497e2819f5acff6ebe70799e25060fb81ccf8dacf75f8e6fba22e4be851d9ee",
+   "path_item": "03514597fe087a7c879a43294e5f5f90382bfaa4b7cff7440703ca134d8e6155",
+   "version": 1
+  },
+  "py-decorator-01": {
+   "design_card": "480a944beb971d938affd041afe49cd4aad8f44a8800d45d2b46167753e7942d",
+   "exercise": "fa8b17b0abfab0290009a29397de8220b08ef32fc7cfcbf1dcc59a540ee77d5d",
+   "path_item": "5037aa080632322f56e11567b11e083abc63b89a7ad9ed571f1403eebeb9b944",
+   "version": 1
+  },
+  "py-decorator-02": {
+   "design_card": "589e7295b932a78d6550770aedd84e8498efc3abf392731d16a773658a8cfe01",
+   "exercise": "e72872515ee462220d745db7f767fb880498300660fcedd1ef1b69a8c0d92047",
+   "path_item": "9614a8a440323534f5ca0b11d16c93a8ec56d0bb0ba49862afb2bdc26bfcbff8",
+   "version": 1
+  },
+  "py-decorator-03": {
+   "design_card": "9d5be6745202d3b95634054a9c482004c4ed48e5b4f45d9722fec6a9eca73a86",
+   "exercise": "eace1b7fce939ec53abe8292052601fb1a26836bf60afecd4ece938ae03d0c2a",
+   "path_item": "e1e8ac343f5c8c82e4e252a1a74acaaae7a339fd9a067e5ed2114e093c3e4f1c",
+   "version": 1
+  },
+  "py-decorator-04": {
+   "design_card": "169fa6d08e53a129fcda6abd881490dae5e37a1b31ee98fba96b592fa7553595",
+   "exercise": "5c5a0c5b896958ecfbf69616754f07864b8d13e9feeee4849ac4813e408a54ef",
+   "path_item": "d1bf99a0d69cf531c14c6c3e973d195aab744e1f05eb86b33726ff4fc6afddd8",
+   "version": 1
+  },
+  "py-decorator-05": {
+   "design_card": "55f37b6e053e7cbd805b8f10a4d88aa28dcbece689776cd29d81305d3d398eda",
+   "exercise": "14f022d70ed219feddc8708a59589fc272f504823c8e738dc4013a01697d1940",
+   "path_item": "30e0a5ca1b3233a5934dc008a1bd7edd8c17c20ebf0e6a9ed86183ef24355c56",
+   "version": 1
+  },
+  "py-dict-01": {
+   "design_card": "631005708e9c340b84ea100a57c053f6e0c096493c0e9248b3678253c8aa4394",
+   "exercise": "1097552f55b239918962a35ac0cf7314c55cce4e3c8844aea476f6a5e8ba37bd",
+   "path_item": "114a7f13792d33898dd88ece2ebca2ec9b1da389f40dc94e4740ace840d55d8f",
+   "version": 1
+  },
+  "py-dict-02": {
+   "design_card": "1c68cba788e722a1b6125690d12702e7ffdda2eb8253a92f664bbdc4d5661888",
+   "exercise": "ac738db2ace2993630b40cbabf6e85054ca133f2bf570687918b6a09351de31b",
+   "path_item": "e4190873425eca6df9984f2f5d2bfa9dae285f5df7f5559067d1a027ab5a1d1e",
+   "version": 1
+  },
+  "py-dict-03": {
+   "design_card": "2ff963fbf190dedeb2b2c2641cd917de0424f3cd15f3a7ec158d2346eb90064a",
+   "exercise": "46c8624db63b30ffc5e9a1ed509da4e7364f975879a43dac81c8362331ba8c0e",
+   "path_item": "21afec95946672fe3db19e8544682e6e3f4ae241ccf253a8251a232ee95ea84d",
+   "version": 1
+  },
+  "py-dict-04": {
+   "design_card": "d93826d1b20c4d5db884beed2f9ac6023c6ada998267582d26444e32297567e6",
+   "exercise": "f533850365711762b7c83b155f574f753f5ef5a479068ae3a9f067cb0c5b3c5e",
+   "path_item": "c19560f88e1649d723aa79ab28a01e68cd49778ae12d874391759d7504960c5f",
+   "version": 1
+  },
+  "py-func-01": {
+   "design_card": "31ab195aad833fdbb955659ee51dcdfa04115030ae285a20c0b439f9d16a3b1e",
+   "exercise": "b5bd91d2ef0616ae48fddfa5d9af36a0c75dd81cf25d11d64ecb436d4d903e11",
+   "path_item": "af5db02b3719220cbda331b1d748d3a0061dea3fd435c9b3eea8dcc4f8491292",
+   "version": 1
+  },
+  "py-func-02": {
+   "design_card": "022754ffdd38726a1dd551b88b6c35d424f94d64ecc75f931f1849572658a1aa",
+   "exercise": "a5a1b99467a61e241779d9d40167446ca8491a7785207bd27138a83fccc9c534",
+   "path_item": "b51356fc2b5a53d03f147624fe80b91b76494b7687c8971f85a33872710a28b7",
+   "version": 1
+  },
+  "py-func-03": {
+   "design_card": "69a334f07d369cf975359bd51949a9d1125fe6a029d2f7ede348bc3bd32d08a9",
+   "exercise": "64d7f838ecde1cbe9b3a93fd95592f605d527b6c7cdef5104b630bd6c84d7c96",
+   "path_item": "926f0a9206affd2348fa58b9db7741409ba9ff8a4ab275d1181ef90542eaf4bb",
+   "version": 1
+  },
+  "py-func-04": {
+   "design_card": "d1ebe1188d69f34adbd54068ef1a4b4c937b050d6a66374d3c3aebbf14b0f815",
+   "exercise": "f3471b6747bcb10816ab0fc918c630ab9953e15071e9ae75191835e81527c4bb",
+   "path_item": "35776aa179ebb149f9b2d0181aad739f97870904752cf18930b822cbcde41f04",
+   "version": 1
+  },
+  "py-list-01": {
+   "design_card": "4f9ca991c618b437cd57361c9836f0e8cd9907872c9d9c2d1208ede204255684",
+   "exercise": "5ff269d4bfbf9c5c30ddeec67fe081980ae68a8155020a544cd95b5208f7d566",
+   "path_item": "3d59d2ab50f658d25a6966c4d1f282b1dec13a3b0bc5ab32db8288255c6d87cc",
+   "version": 1
+  },
+  "py-list-02": {
+   "design_card": "16207efd328122041f78f0ec55007fe9aefea23482fc84dccd3c088fc3f16a66",
+   "exercise": "c53d1cfc8f976ce9c1190904c66a2408528e805c18d71c510e05b875b20aa358",
+   "path_item": "73ed582ed18c9d51f0919f31558a4990b6963ad0902333f0a8c3f13b9c4fb6b3",
+   "version": 1
+  },
+  "py-list-03": {
+   "design_card": "ea20acbf8f7ceafc3a5f74e01d26cb818329b8f383789c164d50695db2d173e3",
+   "exercise": "a3bc751d74966c5bed706f44f42477e9d6133a8c078b3c0937a0025fa57ffba6",
+   "path_item": "44ca825628211124630de120b362499e36e7a83baabfeb11b041d7036ed427c5",
+   "version": 1
+  },
+  "py-list-04": {
+   "design_card": "71db50aefd0f6a45837907f27542812281ec8ac87826e1a4b2ce091f679fbab5",
+   "exercise": "f926cb55ca9652a3902e403a024cedb6aabca81359032d7f2e356ce73e105066",
+   "path_item": "01a11d6c104f141468e5069e32695b2523f66707190e411da7506692d6343dab",
+   "version": 1
+  },
+  "py-set-01": {
+   "design_card": "3d2f073d4b4b476f24fe2c636f035482a57a8c339e7c0a9401debddd804dde50",
+   "exercise": "62c7a14a67acb1ff8139a0039714f25fe8b391a38b19db7c6c9775906f5fd445",
+   "path_item": "fa0d3f9e19457dedec9c56fe486b39202fed3ca215a80284abdb031a0969e977",
+   "version": 1
+  },
+  "py-set-02": {
+   "design_card": "a84ad89517900a5736c9ada4f1d84a58856ec693a1a54d4a7bd163b22b66a023",
+   "exercise": "144819afcd29b261c3d662e1722e1c05694f1e3952d21d9e17323ce7972a4184",
+   "path_item": "f2b98d37614d8102556d56c4d44655832fc6fb7ea38a085273ac9111cdbdb80b",
+   "version": 1
+  },
+  "py-set-03": {
+   "design_card": "6808fab7b55a71bc74ce98bdbdb74d5604fe45634262f6554b6d5480b865a905",
+   "exercise": "de9aac7ff707c9299a80946d469af43e9e4199e336c72a0b8445772324dd4d04",
+   "path_item": "81a7b91a68cdd7350769896f17f3c0a05ce5960dc73767291617221337f4d8cb",
+   "version": 1
+  },
+  "py-set-04": {
+   "design_card": "2015fde52a8c47d73e764be8aa2cc7ea83562f4cf96c9963c8bcb8113a7a904d",
+   "exercise": "72be01c761f306471880ba2086a26846b70e29687cc7800ec45811c2f0fa92d6",
+   "path_item": "615d0940d62914d213b32846fc049f0949f6853dcac66c44768df113042f2bbe",
+   "version": 1
+  },
+  "py-star-01": {
+   "design_card": "11fbdf5d4bde4a6d3ed6ead2db1f5b9c95b0842a30126615981475779c4f0ec0",
+   "exercise": "1c1b52530f92fbfac1ca4d594f4e00988b89d3e20b77025fbd212da3eb826c0a",
+   "path_item": "a10796a0bcd130f8c3081f007f2d2317681003a4670f5570662ce126668c8b77",
+   "version": 1
+  },
+  "py-star-02": {
+   "design_card": "cbf01d248bd9179e87074b40850c655bdbc69ccaf044565e4824081f89358626",
+   "exercise": "2f2d02f9f83fe655ad2e71ad26111b81569c05db61a429cc771659feb98ba1c4",
+   "path_item": "23bb8a5deb3d448828cc830a6f34ae67191eec832570c33736893378862c8f51",
+   "version": 1
+  },
+  "py-star-03": {
+   "design_card": "ba941377305d0fab4bbc567e4d1f85b079197857ed55210e4bc6c8ae09cf5fb9",
+   "exercise": "31dc7fcc2db329ac37c99a6d9c6fe5ac87eaaa0f24c2adf2f8962690bc358ebd",
+   "path_item": "ccea4ddc285b255c9705128ed27a59da203fcfdb8fcb3eb7b018cba5ccd095d8",
+   "version": 1
+  },
+  "py-star-04": {
+   "design_card": "c8eb96a62a1a8e875b39d55c15e6a76d50079a7defe4b87fd09acdcbe7564af7",
+   "exercise": "766b819baf6abab13eb7b8121bd3578b1c5b92347df7f912713b225cafba1138",
+   "path_item": "1830973843e6dd59a4fb1ebb374c345b65c32fce035ad67159ef0e021ca3b900",
+   "version": 1
+  },
+  "py-star-05": {
+   "design_card": "925927881cc0f8c863e6005edea7735dcb437efd9d0d78ca97949f26bf486695",
+   "exercise": "bd7b3bdf7ff032ae90146379c6e341b00416dffa4f2cad68a4c035ce92dd1336",
+   "path_item": "47d4e50bc7adb5bd286051a21f0a57066983bc41cb73c658ce31fc721c45d7a8",
+   "version": 1
+  },
+  "py-star-06": {
+   "design_card": "53b2673f024ac02742b5b181cbfa921d9cc86b8d400f996cd4dbed234693a7c1",
+   "exercise": "52dc9d82a57b60bf168a733fc5daebf96199bd6d5502af3bae0112e4cd4445e1",
+   "path_item": "260cafefa6b014348c9f52d107ed37439e011a5e4d13fc14e0b97e4760d2981c",
+   "version": 1
+  },
+  "py-str-01": {
+   "design_card": "4161a7d916d3c9731cfe8adfa69b2184a6f12e44b522f6e959a105c9f7a88da3",
+   "exercise": "4ed83ed878bc12e39248dd093774e5462b570143536a40c211eefec2bbb904ba",
+   "path_item": "d7a65c8679c5ce3ae10f9e1aca884d5cef2688eabce35a8a76466164d56ed84f",
+   "version": 1
+  },
+  "py-str-02": {
+   "design_card": "8b8408a6faa1c3d3b364e12d591bf72825f6974951ab5b553d6d700935e3f077",
+   "exercise": "5bd8c593344ae039659f35fec66a6e6c7e44ba79c798971e39bb885ce332c3cc",
+   "path_item": "ce78222e3fbd5b11c7d50d6d0f464790fa7f92ea5becc8b3bb8ea163f4a3b946",
+   "version": 1
+  },
+  "py-str-03": {
+   "design_card": "c22e5e10881d8896db5001bf6d4922632ad736d54af86039f5c26b0277216886",
+   "exercise": "ba41f9b16f72421da2b1b700faf5166bf02c1f51ec0dbee782d92402876930d9",
+   "path_item": "f0c27dfc628fa6e86e7be6a8c4077461d8db5369d4c72c282208f635fd092d92",
+   "version": 1
+  },
+  "py-str-04": {
+   "design_card": "4b13c009c5b7f96d00b5d16d44274698568221647bbab0b335e597dab40f8cbf",
+   "exercise": "153da67eca7066736085f0ed9a77e383333a56d4605df5993ada19eab90b4ffc",
+   "path_item": "ee286d9a62279bcfa28cdfafe79a48c16137bfacefcf804b632f9e0afe9c41cc",
+   "version": 1
+  },
+  "py-str-05": {
+   "design_card": "8523253666f74641765c0f8923cebbefe0b537fa4f4180378baaad9c21c6cf25",
+   "exercise": "63241c744187a8d64eb099e78944fef062d922a89688932d3aff1d871d6c1c69",
+   "path_item": "ab0f89111bd1f8e5a8c96cd58ea7fcea13e527c472f177e1d8a4f49746477d62",
+   "version": 1
+  },
+  "py-tuple-01": {
+   "design_card": "dcf3e871958902477b6af6197edf5b3e27c6399b0993ee6cd35ad9462d34af7d",
+   "exercise": "f9aa96347b17779184ad54f737b9ffee1867a9a41ba163e0a347d73d8fe4e200",
+   "path_item": "b3a3ecc972d9bca4b12f66e291d56c90a2267f9922e916df6198bde7f3e48494",
+   "version": 1
+  },
+  "py-tuple-02": {
+   "design_card": "bc8455e7644ab2a30a26cd085576a57599e5ee35be189e68852a08a1fb7dee4d",
+   "exercise": "754284e92478f9e1f1305b2537e3ed07084de064a0e6c2e4bfbf313f326bfd3e",
+   "path_item": "0febe8403a69738c5a804a192c2c29dd3344ebdf6993e50080a685e807c0191a",
+   "version": 1
+  },
+  "py-tuple-03": {
+   "design_card": "fede78d67553068e9efd614d8b0e54749891bf4de9bd1d6c693092ce3c89bfae",
+   "exercise": "7b1f724737acee866299f1d88479cb16e8145fe9ff9af75237992c697e172d4a",
+   "path_item": "362f96f6ed2f0f17c817f6f4cde4b5fe7f566be8e7cbc1ba2967d8fed7d94386",
+   "version": 1
+  },
+  "py-tuple-04": {
+   "design_card": "c5e1411bc7a6761fe658ebb181fb5217ab2fe37320d1dcb4056834b3ab06c662",
+   "exercise": "97d4d681efe80cbc223a4c7f189366c8141c454db104c588b9073283e8cb33de",
+   "path_item": "b662f50b43807ba4f9d73363841fc45b4263dd6f616bd04f6e8170b1fcc0f8d8",
+   "version": 1
+  },
+  "py-values-01": {
+   "design_card": "de06a46bede711bdf33aed8835e7d980430cdc12a8a4ba9b1c7ab33e5c39f095",
+   "exercise": "a919de2ac725a973d5b888732c8f093726e9d8d94322cf0338a55c3289493800",
+   "path_item": "0b6c0418705ed46b4e1cf4c255d82c45fbbeb2132545c8caed7cf9eb1305f993",
+   "version": 1
+  },
+  "py-values-02": {
+   "design_card": "a6e97f8563149aedd9a3bcdd4003646da8049715d01a33c36b912698ce62aea5",
+   "exercise": "b56e3c9b54f676fd2f4d1f4afa7d619ccc220c5d99b56ddfbfed27d5b2b77329",
+   "path_item": "540ce8823bdf8126eeb7e21e033e6e7248a7df655d2fe1c59eb6743bab8b1dbb",
+   "version": 1
+  },
+  "py-values-03": {
+   "design_card": "ce772f425def8da49b3a76ba19e899812ded0a418027ff8710d90c722b75e9fe",
+   "exercise": "0260f943f598e9d79e841a52ccb9b5a5ea1abba5e4fcccd9799236efd4f49877",
+   "path_item": "c277cc1a74fa790f37e429cdd5f9c538f558fafc0840da6df67d04973d97c4c6",
+   "version": 1
+  },
+  "py-values-04": {
+   "design_card": "766d2dbf42e9807363397ec8bec2850e041203d49722119886ce3b0fdf1c2345",
+   "exercise": "e1b436f00715cfe41f509a35b52b94a9a784e2c579653e3b2a3fdea524ef6836",
+   "path_item": "6fce34d196504c80b857069be4996f77c2170282309b4dd7d7e184b76c054487",
+   "version": 1
+  },
   "python-bool-type-20261021": {
    "design_card": "dcc3d62334e4d2a345420f9375aba59a15d2a0afc02fac6b53b69b2c70c7505f",
    "exercise": "a76775b683dc1c54d67ff4bd58de2fc6946842a42de36da3910064b39921bef9",
@@ -906,6 +1194,36 @@
    "path_item": "677a97a20288ba2ab89ca9ba3678fd1fc816b774fc6b20cbe0f2689491725171",
    "version": 1
   },
+  "sql-change-01": {
+   "design_card": "e02ec8ee59859084099dc271b882fa1275d7998603f26df703d999375079815d",
+   "exercise": "180a3e83bf87a6340405503b19c34f311656c1ddfbfd78a8170a83416f1e3599",
+   "path_item": "7fa7eea61e6aedff0f30c3dfa66f9f27c4749979fab5a6c12a7874052378628b",
+   "version": 1
+  },
+  "sql-change-02": {
+   "design_card": "6305f90507d71baccdfbc9bf86b29e0ecaa5d3775dc71f1a1dc9ceec285f42cc",
+   "exercise": "7af849b0be5275a595176c4a5792d70ee2ce55599b44f548d1eef37a8ad46af2",
+   "path_item": "db2afb2e4ee0d69b5ec96b943bd60ec8a8d30b221b489c28556e28df92e9f45d",
+   "version": 1
+  },
+  "sql-change-03": {
+   "design_card": "83178e74ea59329b749bdc8d0ec64e1d4908dabbc1748e04b1d2634530c04374",
+   "exercise": "d5975fa4765e77e880ba90d3d209a9792c346b5b075abff2556eeb23cd22576e",
+   "path_item": "56b7e2808918d43c4d232eee0f257c73620acdbbbb8ae3d5cf61d229c690e580",
+   "version": 1
+  },
+  "sql-change-04": {
+   "design_card": "76740c3803f8e6bfbeb5445ddc650fdeb2989df8ab51632fe9646a7ede43264c",
+   "exercise": "2d2ee5c5bfb05e92428efd1ddedfe9108ff34bc04cfb315e1fc282ea1c71b899",
+   "path_item": "66732f145a1963819544cb771eaae1292996064ccf1471cee91627dff612f517",
+   "version": 1
+  },
+  "sql-change-05": {
+   "design_card": "8f7c4de3e6a68bce665d65c19f3e8bb23a3f1be37d1047b0bfa1946a6bdf6992",
+   "exercise": "0b9c143691efa42e086991495fa1fc57e61cf88bc4492b1d258e00754dd58b2b",
+   "path_item": "6472a4a882b1f594088f0aa1fb832453fe095b4373b826f904947897ae80ed2a",
+   "version": 1
+  },
   "sql-clause-order-form-01": {
    "design_card": "726c653d90600d6f80233599d771a160fa5e2186b0b20881645dda3b05301d0e",
    "exercise": "e3599b021ab5d4febd7b1eeb65b350d7e52a8276be77f1dc3ea9c120cc4e96a3",
@@ -941,6 +1259,12 @@
    "exercise": "559161de1023b350a3f72922bd07b0556543a442c3bd15ea9723c78c334239b1",
    "path_item": "648738d190fae6001156738f3a310c4b6f5346e22c12ecaa99e5618c19da7125",
    "version": 2
+  },
+  "sql-cross-01": {
+   "design_card": "7c096c4a68fabfb634a33d4a3a38c7c6b090dd0e7ef85e4ce2b10cc77bbe8536",
+   "exercise": "8e22bac65b6e80cf293b861d622d735c5a61fade23d24b81d60cc223da27ef95",
+   "path_item": "be80ed69728a17aabce434290c5d1ae8f3291729a516d5ecd98d47f67e4104e3",
+   "version": 1
   },
   "sql-customer-totals-20261019": {
    "design_card": "42b54ac394799fd0c3fabf894b001d3712bc50713feabd3979dbbe769a2bed3c",
@@ -1000,6 +1324,42 @@
    "design_card": "470354e6c9c37dded3842a3ffd0d5108d8b04ff9f5f45671b9475702182298d1",
    "exercise": "d1b5f564a8c9a3d1dea499b438e98169e05776e6de4a88b6ddae374188b3c5a6",
    "path_item": "a506291b701b48353f339c469d359ebc273022de7fffa65325747fbbd0681c15",
+   "version": 1
+  },
+  "sql-func-01": {
+   "design_card": "69a714ce5f6edc60919f0ac5522b31fa13a510ce2e9f40e050477fc31b3c09c1",
+   "exercise": "60c2ccd6eda3dd1ef6e7bb389dbe3d14b041e72c3a5c91378a929fe3463847ba",
+   "path_item": "89d89d762ea831990f37bd43fc34667c3336d611f0b41136cf916010deb39b26",
+   "version": 1
+  },
+  "sql-func-02": {
+   "design_card": "4d61a24ec783dd404c8d6ea26f8c6cb7c0df39d79273ed3194bf2a9507523324",
+   "exercise": "e856ae66e1f9e92319fa4c0ac5d6ad5740b166529fd4f1589548383d68395a0c",
+   "path_item": "00d104feccdd4ef4a5a2975e96b03407d5fe0faae1e2b577df0cae8781c3b410",
+   "version": 1
+  },
+  "sql-func-03": {
+   "design_card": "8fa20d6f297794f573a00673dd4bc04b7962fe00b4b27f2add76ab42ca3a5a10",
+   "exercise": "cf69c88fa4be7e9714b6f3bcc948b97d55e1642db59b071d9e74446c9bbf1369",
+   "path_item": "144879a8b92e8d878a6158b6b82cb117f97148fdcedc4c6e5bff02f354d64247",
+   "version": 1
+  },
+  "sql-func-04": {
+   "design_card": "ac756c4145b965428b27d31bb2b5eaf7621fc21e39152339af484e43fb2221c1",
+   "exercise": "f8594c8d91e593ff1438f7d73c45aa3758069133b5335005702d76bbc77faf87",
+   "path_item": "9ec5dd522a0e015139a8ed73a203bf26b3da9359536b008d34a7edaf644bfd33",
+   "version": 1
+  },
+  "sql-func-05": {
+   "design_card": "127e4f336d85f9e1a8a702fa692d9390203488b043ef0766ac21eb5e0daa0788",
+   "exercise": "153cd4b354c7aa6a21084ef6ec7e170cf41fc7a3ca295597c845fe750c764519",
+   "path_item": "8bded931365fdfcd107bc90c75b526ed63bd1cc8108e53820007a15dbd5df76f",
+   "version": 1
+  },
+  "sql-func-06": {
+   "design_card": "6c8af54d92c5142fd94b41d0f0569e2ffba388f3ea7ae92cc6554c78a73cc614",
+   "exercise": "5864463585a97624d93e527e9e36bb0cf4f846a89c9ebd7d9bd4525e3875180e",
+   "path_item": "7547d418b67255d567095d2716fad71f608977055102f72e7e90df58a10b9de5",
    "version": 1
   },
   "sql-group-clauses-form-01": {
@@ -1072,6 +1432,12 @@
    "design_card": "3d838f7a64473772acfef8b6b1284693a04fd844c9925a90954301cfea3bee64",
    "exercise": "f7895f900b8546e5320ff830bc44725faa3f6bdf976ad721321afde4595d6554",
    "path_item": "cd58649127280c54686c87fc647b01a292c26590cf2c183ddec64def6eb7824e",
+   "version": 1
+  },
+  "sql-minmax-01": {
+   "design_card": "7a4c0292f92fe56be94b462e2a51995d35c9655abf47dc5e16ff147be090c6a2",
+   "exercise": "69790a0edacef4fd8bbe2519ee379ac7c1c6ed2f6e25be39632197bb7851709c",
+   "path_item": "dce9d32be51037dc177960878c74804bc9014a3b0e95669243cbdf9409355c5c",
    "version": 1
   },
   "sql-null-01": {
@@ -1211,6 +1577,36 @@
    "exercise": "6dfeceed8c4f55ed802cca196ad314d039d5299d841802ef39c100f0f750c545",
    "path_item": "34b968f4f39926e263781663467ad0b95b6af8118594fa115427e529a5a99f8e",
    "version": 2
+  },
+  "sql-window-01": {
+   "design_card": "ea1e51026302503b507a997370962466eb8c8e062decf6d55dfc83b03a728157",
+   "exercise": "06220b8b4b4cb85473491d4d329182a16754574e7f4aa54168c86da7b658c083",
+   "path_item": "6821c04cf71ea727cfc6f57c61cec00d4c560c4793a8978e2be3c1cfd02ec492",
+   "version": 1
+  },
+  "sql-window-02": {
+   "design_card": "b391b5e813ca629d8020702c2407fd00c3c144cbc2b3114d6757b0f12dcc4cfc",
+   "exercise": "dc485956fd4f708c5b153f82c9cfeb8e322c9044dcd0613818fbac75fbfbe7ac",
+   "path_item": "b8895c0040c1f7643e044289193599024d826b200699117ff648d1c52b912130",
+   "version": 1
+  },
+  "sql-window-03": {
+   "design_card": "a345e446ba29db87253c00d1d4bd88b3817eb9d9867769b553030c55859b19fa",
+   "exercise": "7d1d62a949b237a139f84670a977c3e25d456e9cbee4392c332f25132f8edf7f",
+   "path_item": "ac3884671823597f8c491fdee53a439cf52d43d3ca376e031cfdb9531a60c6e9",
+   "version": 1
+  },
+  "sql-window-04": {
+   "design_card": "03911fec683a1587e7a668c0ad6bb2af988d30d0ff2a7cb91f16a11f757e61d1",
+   "exercise": "6c5349f3840ecab67fa83e016bc545950ca341dcd37a2791e3eab69aa8cee3b3",
+   "path_item": "599e79410c786772952b729a7c790caef5070a9b2c9a4895a58c16fd254faaca",
+   "version": 1
+  },
+  "sql-window-05": {
+   "design_card": "da465c07a71a23d3258dd900a8c1eb117244e75e5d8fdac91d25071f1569af6b",
+   "exercise": "1fae32ff5870cee4b5dce0e11e08317c650668061d340d16b6a921b18ae9441b",
+   "path_item": "99d8d06ff5a2b1f0bfee0758ca9934c24891bbca0c134828cccd871da68a7e03",
+   "version": 1
   },
   "stats-ab-01": {
    "design_card": "d6df930199711494432773d121e6aeb696244e2978317b2548802255b9bf09d9",

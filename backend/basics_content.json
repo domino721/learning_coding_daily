@@ -1,0 +1,1244 @@
+{
+  "schema_version": 1,
+  "status": "reviewed",
+  "change": "CR-017",
+  "review_record": "curriculum/reviews/2026-10-28-tracks.json",
+  "exercises": [
+    {
+      "id": "py-values-01",
+      "concept": "나눗셈 연산자 세 가지",
+      "kind": "choice",
+      "title": "상자 포장 계산",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "items = 17\nper_box = 5\nprint(items / per_box, items // per_box, items % per_box)",
+      "answer": "3.4 3 2",
+      "explanation": "/는 정수끼리 나눠도 항상 실수(float)를 돌려줘 3.4입니다. //는 몫에서 소수점 아래를 버린 3, %는 나머지 2입니다(17 = 5 × 3 + 2). 상자 수처럼 정수 몫이 필요하면 //, 남는 개수는 %를 씁니다. 다른 언어나 Python 2의 정수 나눗셈에 익숙하면 /를 3으로 읽기 쉽습니다. 음수에서는 //가 더 작은 쪽으로 내림한다는 점(-17 // 5는 -4)도 함께 기억하세요.",
+      "hints": [
+        "세 연산자가 각각 실수 결과·몫·나머지 중 무엇을 돌려주는지 나누어 보세요.",
+        "17을 5 × 몫 + 나머지 꼴로 써 본 뒤, /의 결과 자료형만 따로 확인하세요."
+      ],
+      "choices": [
+        "3.4 3 2",
+        "3 3 2",
+        "3.4 3.4 2",
+        "3.4 3 0.4"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "3.4 3 2"
+    },
+    {
+      "id": "py-values-02",
+      "concept": "and·or가 돌려주는 값",
+      "kind": "choice",
+      "title": "표시 이름 정하기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "nickname = \"\"\nname = nickname or \"손님\"\ncount = 0\nshown = count and 10\nprint(name, shown)",
+      "answer": "손님 0",
+      "explanation": "or는 앞 값이 참이면 앞 값을, 거짓이면 뒤 값을 그대로 돌려줍니다. 빈 문자열은 거짓이라 name은 \"손님\"입니다. and는 앞 값이 거짓이면 뒤를 보지 않고 앞 값을 돌려주므로 shown은 0입니다. 결과가 True/False로 바뀌지 않는다는 점이 핵심입니다. 실무 코드의 `값 or 기본값`은 0이나 빈 목록처럼 유효하지만 거짓인 값까지 기본값으로 바꿔 버리므로 주의하세요.",
+      "hints": [
+        "빈 문자열 \"\"과 0이 조건으로 쓰일 때 참인지 거짓인지 먼저 정하세요.",
+        "or와 and는 결과를 True/False로 바꾸지 않고 두 값 중 하나를 그대로 돌려줍니다. 어느 쪽에서 판단이 끝나는지 보세요."
+      ],
+      "choices": [
+        "True False",
+        "손님 0",
+        "손님 10",
+        "손님 False"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "손님 0"
+    },
+    {
+      "id": "py-values-03",
+      "concept": "실수 오차와 반올림",
+      "kind": "multi",
+      "title": "합계 비교 검토",
+      "prompt": "빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "total = 0.1 + 0.2\nprint(____)",
+      "answer": "1,2,4",
+      "explanation": "0.1과 0.2는 2진수로 정확히 표현되지 않아 합이 0.30000000000000004가 되므로 total == 0.3은 False입니다. 둘째 자리로 반올림하면 0.3이 되어 1번은 True이고, 차이가 아주 작은지(1e-9 = 0.000000001보다 작은지) 보는 2번도 True입니다. Python의 round는 정확히 가운데(.5)인 값을 가장 가까운 짝수로 보내므로(은행가 반올림) round(2.5)는 2, round(3.5)는 4입니다. 금액처럼 사사오입이 필요하면 decimal 모듈의 ROUND_HALF_UP을, 실수 비교에는 math.isclose나 반올림 뒤 비교를 쓰세요.",
+      "hints": [
+        "0.1과 0.2가 컴퓨터 안에 정확히 저장되는지, round가 정확히 .5인 값을 어느 쪽으로 보내는지 따로 생각해 보세요.",
+        "실수는 2진수 근삿값으로 저장되어 0.1 + 0.2가 0.3과 아주 조금 다릅니다. round는 사사오입이 아니라 가운데 값을 처리하는 별도 규칙을 따릅니다."
+      ],
+      "choices": [
+        "round(total, 2) == 0.3",
+        "abs(total - 0.3) < 1e-9",
+        "round(2.5) == 3",
+        "round(3.5) == 4",
+        "total == 0.3"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-values-04",
+      "concept": "거짓 값과 기본값 대체",
+      "kind": "line",
+      "title": "할인 적용 점검",
+      "prompt": "할인액이 정해지지 않은 주문(None)에만 기본 할인 500원을 적용하려고 합니다. 할인 없음(0원)으로 확정된 주문인데 2500이 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# None이면 기본 할인 500원, 숫자면 그 값을 쓴다\nprice = 3000\ndiscount = 0  # 할인 없음으로 확정\ndefault_discount = 500\napplied = discount or default_discount\nfinal = price - applied\nprint(final)",
+      "answer": "5",
+      "explanation": "5번 줄의 or는 앞 값이 거짓이면 뒤 값을 돌려줍니다. 0도 거짓이라 할인 없음(0원)으로 확정된 주문까지 기본 할인 500원이 적용되어 2500이 됩니다. \"정해지지 않음\"만 골라내려면 `applied = default_discount if discount is None else discount`처럼 None인지 직접 확인해야 하고, 그러면 3000이 출력됩니다. 수량 0, 빈 목록, 빈 문자열처럼 유효하지만 거짓인 값이 있는 데이터에서 `값 or 기본값`은 흔한 버그입니다.",
+      "hints": [
+        "할인 없음(0)과 정해지지 않음(None)을 코드가 어떻게 구분하는지, discount가 0일 때 값을 한 줄씩 따라가 보세요.",
+        "or는 앞 값이 거짓이면 뒤 값을 돌려줍니다. 0과 None이 조건에서 각각 참인지 거짓인지 떠올려 보세요."
+      ],
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "2500"
+    },
+    {
+      "id": "py-str-01",
+      "concept": "문자열 인덱스와 슬라이스",
+      "kind": "choice",
+      "title": "주문번호 나누기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "order_id = \"ORD-2026-0042\"\nyear = order_id[4:8]\nserial = order_id[-4:]\nprint(year, serial, len(order_id))",
+      "answer": "2026 0042 13",
+      "explanation": "문자열 번호는 0부터 시작합니다. \"ORD-\"가 0~3번이므로 [4:8]은 4·5·6·7번 문자 \"2026\"이고 끝 번호 8의 \"-\"는 포함하지 않습니다. [-4:]는 끝에서 네 번째 문자부터 끝까지라 \"0042\"입니다. len은 문자 수 13을 돌려주며 마지막 번호(12)와 다릅니다. 코드·날짜 문자열을 자를 때 한 칸 어긋나는 실수가 가장 흔합니다.",
+      "hints": [
+        "문자마다 0부터 번호를 붙여 4번과 8번 자리에 있는 문자를 확인해 보세요.",
+        "슬라이스 [시작:끝]은 끝 번호의 문자를 포함하지 않습니다. 음수 번호는 끝에서부터 -1, -2…로 셉니다."
+      ],
+      "choices": [
+        "2026- 0042 13",
+        "2026 0042 13",
+        "2026 042 13",
+        "2026 0042 12"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "2026 0042 13"
+    },
+    {
+      "id": "py-str-02",
+      "concept": "문자열의 +·*와 형변환",
+      "kind": "choice",
+      "title": "수량 입력 처리",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "qty = \"3\"\nprint(qty + \"2\", qty * 2, int(qty) * 2)",
+      "answer": "32 33 6",
+      "explanation": "qty는 문자열 \"3\"입니다. 문자열끼리 +는 이어 붙여 \"32\", 문자열 * 정수는 반복해 \"33\"이 됩니다. int(qty)로 숫자 3으로 바꾼 뒤에야 * 2가 곱셈이 되어 6입니다. 엑셀·CSV·화면 입력에서 읽은 값은 숫자처럼 보여도 문자열인 경우가 많아, 합계가 이어 붙여지거나 반복되는 버그가 생깁니다. *는 리스트에서도 반복([0] * 3)으로 쓰입니다.",
+      "hints": [
+        "qty가 숫자 3인지 문자 \"3\"인지 먼저 확인하세요.",
+        "같은 +와 * 기호라도 양쪽 값의 자료형에 따라 하는 일이 달라집니다. int()가 어디에 쓰였는지 보세요."
+      ],
+      "choices": [
+        "5 6 6",
+        "32 6 6",
+        "5 33 6",
+        "32 33 6"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "32 33 6"
+    },
+    {
+      "id": "py-str-03",
+      "concept": "split·strip·replace·join 조합",
+      "kind": "multi",
+      "title": "이름 목록 정리",
+      "prompt": "쉼표로 구분된 이름 입력에서 공백과 빈 항목을 없앤 이름 목록을 만들려고 합니다. 빈칸에 넣었을 때 ['kim', 'lee', 'park']가 출력되는 식을 모두 고르세요.",
+      "code": "raw = \" kim, lee,,park \"\nprint(____)",
+      "answer": "2,5",
+      "explanation": "3번은 앞뒤 공백이 남고 빈 문자열(\"\")도 원소가 됩니다. 4번은 공백은 지웠지만 \",,\" 사이의 빈 문자열이 남습니다. 5번은 공백을 지운 뒤 \",,\"를 \",\"로 바꿔 세 이름만 남깁니다. 1번은 \", \"(쉼표+공백)로 나눠 \"lee,,park\"가 한 덩어리로 남습니다. 2번은 쉼표 대신 공백으로 이은 뒤 인자 없는 split()으로 나누므로, 공백이 여러 개여도 빈 원소 없이 세 이름이 됩니다. 실무 입력은 공백·빈 항목이 섞이므로 중간 결과를 찍어 확인하는 습관이 중요합니다.",
+      "hints": [
+        "각 식을 한 단계씩 실행했을 때 중간 문자열이 어떻게 바뀌는지 적어 보세요.",
+        "split(\",\")은 연속된 쉼표 사이의 빈 문자열도 원소로 남기고, 인자 없는 split()은 공백 덩어리를 기준으로 나누며 빈 원소를 만들지 않습니다."
+      ],
+      "choices": [
+        "raw.strip().split(\", \")",
+        "\" \".join(raw.split(\",\")).split()",
+        "raw.split(\",\")",
+        "raw.replace(\" \", \"\").split(\",\")",
+        "raw.replace(\" \", \"\").replace(\",,\", \",\").split(\",\")"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "['kim', 'lee', 'park']"
+    },
+    {
+      "id": "py-str-04",
+      "concept": "f-string 서식 지정",
+      "kind": "multi",
+      "title": "금액 문구 만들기",
+      "prompt": "리포트 문구를 \"1,234,568원 (4.6%)\" 형태로 출력하려고 합니다. 빈칸에 넣었을 때 정확히 이 문구가 출력되는 식을 모두 고르세요.",
+      "code": "amount = 1234567.891\nrate = 0.0456\nprint(____)",
+      "answer": "1,2,4",
+      "explanation": "f-string의 콜론 뒤에는 서식을 씁니다. ,는 천 단위 쉼표, .0f는 소수점 없이 반올림, .1%는 100을 곱해 소수 첫째 자리까지 %를 붙입니다. 2번은 정확히 \"1,234,568원 (4.6%)\"입니다. 3번은 소수점 아래가 그대로 남고, 5번은 쉼표가 빠집니다. 4번은 round로 먼저 정수로 만든 뒤 쉼표를 넣고, 비율에 직접 100을 곱해 .1f와 %를 붙여 같은 문구가 됩니다. 1번 str.format도 같은 서식 문법을 씁니다. 리포트 숫자는 계산값과 표시값을 분리해, 반올림을 표시 단계에서만 하는 것이 안전합니다.",
+      "hints": [
+        "콜론(:) 뒤의 서식이 쉼표 구분·소수 자릿수·퍼센트 변환 중 무엇을 하는지 하나씩 나누어 보세요.",
+        ",는 천 단위 쉼표, .0f는 소수점 없이 반올림한 실수, %는 100을 곱해 % 기호를 붙이는 서식입니다."
+      ],
+      "choices": [
+        "\"{:,.0f}원 ({:.1%})\".format(amount, rate)",
+        "f\"{amount:,.0f}원 ({rate:.1%})\"",
+        "f\"{amount:,}원 ({rate:.1%})\"",
+        "f\"{round(amount):,}원 ({rate * 100:.1f}%)\"",
+        "f\"{amount:.0f}원 ({rate:.1%})\""
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "1,234,568원 (4.6%)"
+    },
+    {
+      "id": "py-str-05",
+      "concept": "문자열 불변성과 메서드 반환값",
+      "kind": "line",
+      "title": "고객 코드 비교 점검",
+      "prompt": "앞뒤 공백을 지우고 대문자로 맞춘 고객 코드가 \"VIP01\"인지 확인하려 했는데 False가 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 공백을 지우고 대문자로 맞춘 뒤 VIP인지 본다\nraw = \"  vip01 \"\ncode = raw\ncode.strip().upper()\nis_vip = code == \"VIP01\"\nprint(is_vip)",
+      "answer": "4",
+      "explanation": "문자열은 바꿀 수 없는(immutable) 값입니다. strip()과 upper()는 원래 문자열을 고치지 않고 새 문자열 \"VIP01\"을 돌려주는데, 4번 줄은 그 결과를 어디에도 저장하지 않아 code는 여전히 \"  vip01 \"입니다. `code = code.strip().upper()`로 결과를 다시 대입하면 True가 됩니다. 3번 줄의 대입은 문제가 아니고, 문자열 내용 비교는 is가 아니라 ==가 맞습니다. 리스트의 sort()처럼 제자리에서 바꾸는 메서드와 헷갈리기 쉬운 지점입니다.",
+      "hints": [
+        "비교하기 직전 code에 실제로 들어 있는 값을 위에서부터 한 줄씩 따라가 적어 보세요.",
+        "문자열은 바꿀 수 없는 값이라 strip()·upper()는 원래 문자열을 고치지 않고 새 문자열을 돌려줍니다."
+      ],
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "False"
+    },
+    {
+      "id": "py-list-01",
+      "concept": "append와 extend",
+      "kind": "choice",
+      "title": "장바구니 담기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "a = [\"펜\"]\na.append([\"공책\", \"자\"])\nb = [\"펜\"]\nb.extend([\"공책\", \"자\"])\nprint(len(a), len(b))",
+      "answer": "2 3",
+      "explanation": "append는 받은 값을 통째로 원소 하나로 넣어 a는 [\"펜\", [\"공책\", \"자\"]]로 길이 2입니다. extend는 받은 목록의 원소를 하나씩 꺼내 붙여 b는 [\"펜\", \"공책\", \"자\"]로 길이 3입니다. append를 잘못 쓰면 결과 목록에 리스트가 중첩되어 반복문에서 원소가 하나로 처리되는 버그가 생깁니다. b + [\"지우개\"]처럼 +는 새 리스트를 만들고 원래 리스트를 바꾸지 않습니다.",
+      "hints": [
+        "두 리스트에 각각 몇 개의 원소가 새로 생기는지 세어 보세요.",
+        "append와 extend가 받은 목록을 \"원소 하나\"로 넣는지, \"원소 여러 개\"로 펼쳐 넣는지 구분해 보세요."
+      ],
+      "choices": [
+        "2 3",
+        "3 3",
+        "2 2",
+        "3 2"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "2 3"
+    },
+    {
+      "id": "py-list-02",
+      "concept": "sort()와 sorted()의 반환값",
+      "kind": "choice",
+      "title": "점수 정렬 결과",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "scores = [70, 95, 80]\nresult = scores.sort()\nranked = sorted(scores, reverse=True)\nprint(result, scores, ranked)",
+      "answer": "None [70, 80, 95] [95, 80, 70]",
+      "explanation": "scores.sort()는 리스트를 제자리에서 정렬하고 None을 돌려줍니다. 그래서 result는 None, scores는 [70, 80, 95]로 바뀝니다. sorted()는 원래 리스트를 그대로 두고 정렬된 새 리스트를 돌려주므로 ranked는 [95, 80, 70]입니다. `data = data.sort()`처럼 쓰면 데이터가 None으로 사라지는 버그가 됩니다.",
+      "hints": [
+        "sort()와 sorted()가 각각 무엇을 돌려주는지, 원래 리스트를 바꾸는지 따로 확인하세요.",
+        "제자리에서 바꾸는 메서드는 보통 새 값을 돌려주지 않습니다."
+      ],
+      "choices": [
+        "[70, 80, 95] [70, 80, 95] [95, 80, 70]",
+        "None [70, 95, 80] [95, 80, 70]",
+        "[70, 80, 95] [70, 95, 80] [95, 80, 70]",
+        "None [70, 80, 95] [95, 80, 70]"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "None [70, 80, 95] [95, 80, 70]"
+    },
+    {
+      "id": "py-list-03",
+      "concept": "같은 리스트를 가리키는 이름과 복사",
+      "kind": "multi",
+      "title": "복사본 수정 확인",
+      "prompt": "두 이름으로 리스트를 수정했습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "base = [1, 2, 3]\nalias = base\ncopied = base[:]\nalias.append(4)\ncopied.append(5)\nprint(____)",
+      "answer": "1,2,3",
+      "explanation": "alias = base는 복사가 아니라 같은 리스트에 이름을 하나 더 붙입니다. 그래서 alias.append(4)는 base도 바꿔 base는 [1, 2, 3, 4]이고 alias is base는 True입니다. base[:]는 새 리스트를 만들어 copied는 [1, 2, 3, 5]가 되고 길이는 4입니다. copied is base는 False입니다. 함수에 리스트를 넘기거나 변수에 대입해도 같은 리스트를 공유하므로, 원본을 지켜야 하면 [:]·list()·copy()로 복사하세요.",
+      "hints": [
+        "= 대입과 [:] 슬라이스가 각각 같은 리스트를 가리키는지, 새 리스트를 만드는지 그림으로 그려 보세요.",
+        "is는 두 이름이 같은 객체인지, ==는 내용이 같은지 비교합니다."
+      ],
+      "choices": [
+        "copied == [1, 2, 3, 5]",
+        "base == [1, 2, 3, 4]",
+        "alias is base",
+        "copied is base",
+        "len(copied) == 5"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-list-04",
+      "concept": "* 반복과 공유된 내부 리스트",
+      "kind": "line",
+      "title": "판매 수량표 점검",
+      "prompt": "3일 × 3개 매장의 판매 수량표(번호는 0부터)를 0으로 만든 뒤 0번 날의 1번 매장에만 5개를 기록하려 했는데, 세 날 모두 5가 기록됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 3일 × 3개 매장 판매표 (번호는 0부터)\n# 0번 날의 1번 매장에만 5개를 기록한다\nrow = [0] * 3\ntable = [row] * 3\ntable[0][1] = 5\nprint(table)",
+      "answer": "4",
+      "explanation": "4번 줄의 [row] * 3은 row를 복사하지 않고 같은 리스트를 세 번 넣습니다. 그래서 table[0][1] = 5는 세 행이 함께 쓰는 하나의 리스트를 바꾸고, 모든 행에 5가 보입니다. 3번 줄의 [0] * 3도 같은 0을 반복하지만, 숫자는 바꿀 수 없는 값이라 공유해도 문제가 없습니다. 행마다 새 리스트가 필요하면 `[row.copy() for _ in range(3)]`이나 `[[0] * 3 for _ in range(3)]`을 씁니다. 표·격자를 초기화하는 코드에서 자주 보이는 함정입니다.",
+      "hints": [
+        "table의 세 행이 서로 다른 리스트인지, 같은 리스트를 세 번 가리키는지 확인하세요.",
+        "리스트에 *를 쓰면 안에 든 객체를 복사하지 않고 같은 객체를 반복해서 넣습니다."
+      ],
+      "choices": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "[[0, 5, 0], [0, 5, 0], [0, 5, 0]]"
+    },
+    {
+      "id": "py-control-01",
+      "concept": "if·elif의 첫 참 분기",
+      "kind": "choice",
+      "title": "등급 판정",
+      "prompt": "아래 코드의 출력값을 입력하세요.",
+      "code": "score = 95\ngrade = \"F\"\nif score >= 60:\n    grade = \"C\"\nelif score >= 90:\n    grade = \"A\"\nif score >= 80:\n    grade = grade + \"+\"\nprint(grade)",
+      "answer": "C+",
+      "explanation": "if·elif 묶음은 위에서부터 처음 참인 분기 하나만 실행합니다. 95 >= 60이 먼저 참이라 grade는 \"C\"가 되고, 더 맞아 보이는 elif score >= 90은 검사조차 하지 않습니다. 마지막 if는 새 묶음이라 따로 판단되어 95 >= 80이 참이므로 \"+\"가 붙어 \"C+\"입니다. 범위 조건은 좁은 조건(>= 90)부터 써야 합니다.",
+      "hints": [
+        "if와 elif가 하나의 묶음인지, 마지막 if가 따로 판단되는지 키워드로 구분하세요.",
+        "if·elif·else 묶음은 위에서부터 처음으로 참인 분기 하나만 실행합니다."
+      ],
+      "choices": [
+        "A+",
+        "C",
+        "C+",
+        "A"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "C+"
+    },
+    {
+      "id": "py-control-02",
+      "concept": "range의 끝과 간격",
+      "kind": "choice",
+      "title": "주기 합계",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "total = 0\nfor day in range(1, 10, 3):\n    total += day\nprint(total, day)",
+      "answer": "12 7",
+      "explanation": "range(1, 10, 3)은 1에서 시작해 3씩 늘며 10 전까지인 1, 4, 7을 만듭니다. 합계는 12이고, 반복이 끝난 뒤 day에는 마지막으로 받은 7이 남습니다. 끝 값 10은 포함되지 않으며 반복 변수가 끝 값으로 바뀌지도 않습니다. 날짜·페이지를 일정 간격으로 돌 때 끝 값 포함 여부가 한 칸 어긋나는 원인이 됩니다.",
+      "hints": [
+        "range(1, 10, 3)이 만드는 수를 차례로 모두 적어 보세요.",
+        "range의 끝 값은 포함되지 않고, 세 번째 인자는 간격입니다. 반복이 끝난 뒤 반복 변수에는 마지막으로 받은 값이 남습니다."
+      ],
+      "choices": [
+        "12 7",
+        "22 10",
+        "12 10",
+        "45 9"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "12 7"
+    },
+    {
+      "id": "py-control-03",
+      "concept": "break와 continue",
+      "kind": "choice",
+      "title": "두 반복의 합계",
+      "prompt": "같은 목록을 두 가지 방식으로 반복해 더했습니다. 출력값을 고르세요.",
+      "code": "values = [3, 8, 0, 5, 12]\na = 0\nfor n in values:\n    if n == 0:\n        break\n    a += n\nb = 0\nfor n in values:\n    if n == 0:\n        continue\n    b += n\nprint(a, b)",
+      "answer": "11 28",
+      "explanation": "첫 반복은 0을 만나면 break로 반복 전체를 끝내므로 3 + 8 = 11입니다. 두 번째 반복은 continue로 0만 건너뛰고 계속 돌아 3 + 8 + 5 + 12 = 28입니다. 두 키워드 모두 그 차례의 남은 줄(a += n, b += n)을 실행하지 않지만, break는 이후 원소도 보지 않고 continue는 다음 원소부터 다시 시작한다는 점이 다릅니다. \"취소 표시가 나오면 멈춘다\"인지 \"그 건만 뺀다\"인지에 따라 결과가 크게 달라집니다.",
+      "hints": [
+        "두 반복이 0을 만났을 때 각각 반복을 끝내는지, 그 원소만 넘기는지 구분하세요.",
+        "break는 반복문 전체를 빠져나가고, continue는 이번 차례의 나머지를 건너뛰고 다음 원소로 갑니다."
+      ],
+      "choices": [
+        "11 28",
+        "28 11",
+        "11 11",
+        "28 28"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "11 28"
+    },
+    {
+      "id": "py-control-04",
+      "concept": "컴프리헨션의 조건식과 필터",
+      "kind": "multi",
+      "title": "통과 여부 목록",
+      "prompt": "학생 순서를 유지한 채 60점 이상은 \"통과\", 미만은 \"재시험\"으로 표시하려고 합니다. 빈칸에 넣었을 때 ['통과', '재시험', '통과']가 출력되는 식을 모두 고르세요.",
+      "code": "scores = [72, 55, 90]\ncutoff = 60\nlabels = ____\nprint(labels)",
+      "answer": "1,2,4",
+      "explanation": "2번처럼 for 앞의 `A if 조건 else B`는 원소마다 값을 골라 개수를 유지합니다. 3번처럼 for 뒤의 if는 조건에 맞는 원소만 남기는 필터라 ['통과', '통과']가 됩니다. 4번은 and·or가 피연산자를 그대로 돌려주는 성질을 이용해 같은 결과를 냅니다(단, \"통과\" 자리에 거짓인 값이 오면 깨지는 옛 관용구입니다). 5번은 else가 for 뒤에 와서 문법 오류입니다. 1번은 조건을 뒤집고 두 값의 자리도 바꿔 같은 결과입니다.",
+      "hints": [
+        "각 식에서 if가 for 앞에 있는지 뒤에 있는지 보고, 원소 개수가 그대로인지 먼저 확인하세요.",
+        "for 앞의 `A if 조건 else B`는 값을 고르는 조건식이고, for 뒤의 if는 원소를 걸러내는 필터입니다."
+      ],
+      "choices": [
+        "[\"재시험\" if s < cutoff else \"통과\" for s in scores]",
+        "[\"통과\" if s >= cutoff else \"재시험\" for s in scores]",
+        "[\"통과\" for s in scores if s >= cutoff]",
+        "[s >= cutoff and \"통과\" or \"재시험\" for s in scores]",
+        "[\"통과\" if s >= cutoff for s in scores else \"재시험\"]"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "['통과', '재시험', '통과']"
+    },
+    {
+      "id": "py-control-05",
+      "concept": "반복 중단 조건의 선택",
+      "kind": "line",
+      "title": "취소 전 합계 점검",
+      "prompt": "첫 취소 표시(음수 금액)가 나오면 그 뒤 금액은 더하지 않아야 하는데 250이 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 첫 취소(음수 금액)부터는 더하지 않는다\namounts = [120, 80, -30, 50]\ntotal = 0\nfor a in amounts:\n    if a < 0:\n        continue\n    total += a\nprint(total)",
+      "answer": "6",
+      "explanation": "6번 줄의 continue는 -30만 건너뛰고 다음 원소 50을 계속 더해 120 + 80 + 50 = 250이 됩니다. 요구사항은 첫 취소 표시 뒤를 모두 버리는 것이므로 반복 전체를 끝내는 break가 맞고, 그러면 120 + 80 = 200입니다. 5번 줄 조건은 -30을 이미 잡고 있고, 7번 줄은 음수를 더하지 않았습니다. \"건너뛰기\"와 \"멈추기\"를 요구사항 문장과 대조해 고르는 연습입니다.",
+      "hints": [
+        "-30을 만난 뒤 50이 더해지는지 한 줄씩 따라가 보세요.",
+        "그 원소만 건너뛰는 키워드와 반복 전체를 끝내는 키워드 중 요구사항에 맞는 것은 무엇인지 비교하세요."
+      ],
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "250"
+    },
+    {
+      "id": "py-tuple-01",
+      "concept": "쉼표가 만드는 튜플",
+      "kind": "choice",
+      "title": "값 묶음 판정",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "a = (5)\nb = (5,)\nc = 5,\nprint(isinstance(a, tuple), isinstance(b, tuple),\n      isinstance(c, tuple))",
+      "answer": "False True True",
+      "explanation": "튜플을 만드는 것은 괄호가 아니라 쉼표입니다. (5)는 계산 괄호라 정수 5이고, (5,)와 5,는 원소 하나짜리 튜플입니다. 그래서 False True True입니다. 함수 인자나 SQL 매개변수에 원소 하나짜리 튜플을 넘길 때 쉼표를 빠뜨리는 실수가 흔합니다(예: cursor.execute(sql, (x,))).",
+      "hints": [
+        "괄호와 쉼표 중 무엇이 튜플을 만드는지 세 줄을 비교해 보세요.",
+        "(5)의 괄호는 (1 + 2) * 3의 괄호처럼 계산을 묶는 괄호와 같습니다."
+      ],
+      "choices": [
+        "False True True",
+        "True True True",
+        "False True False",
+        "True True False"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "False True True"
+    },
+    {
+      "id": "py-tuple-02",
+      "concept": "동시 대입과 값 교환",
+      "kind": "choice",
+      "title": "요일 순서 돌리기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "a, b, c = \"월\", \"화\", \"수\"\na, b, c = b, c, a\nprint(a, b, c)",
+      "answer": "화 수 월",
+      "explanation": "오른쪽 b, c, a는 대입 전에 먼저 (\"화\", \"수\", \"월\")이라는 튜플로 만들어지고, 그다음 a, b, c에 차례로 나누어 들어갑니다. 그래서 \"화 수 월\"입니다. 왼쪽부터 하나씩 대입하며 이미 바뀐 a를 c에 넣는다고 보면 \"화 수 화\"가 됩니다. 이 규칙 덕분에 a, b = b, a처럼 임시 변수 없이 값을 맞바꿀 수 있습니다.",
+      "hints": [
+        "오른쪽 b, c, a가 대입 전에 모두 계산되는지, 왼쪽부터 하나씩 대입되며 바뀐 값을 쓰는지 생각해 보세요.",
+        "오른쪽 전체가 먼저 하나의 튜플로 만들어진 뒤 왼쪽 이름들에 나누어 대입됩니다."
+      ],
+      "choices": [
+        "화 수 화",
+        "수 월 화",
+        "화 월 수",
+        "화 수 월"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "화 수 월"
+    },
+    {
+      "id": "py-tuple-03",
+      "concept": "별표 언패킹",
+      "kind": "multi",
+      "title": "최저·최고 점수 나누기",
+      "prompt": "정렬한 점수를 처음·중간·마지막으로 나눠 받았습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "scores = [90, 72, 85, 64, 78]\nfirst, *middle, last = sorted(scores)\nprint(____)",
+      "answer": "3,4,5",
+      "explanation": "sorted(scores)는 [64, 72, 78, 85, 90]입니다. first는 64, last는 90을 받고 *middle은 나머지 [72, 78, 85]를 받습니다. 별표 이름이 받는 값은 튜플이 아니라 리스트라서 middle == (72, 78, 85)는 False입니다(리스트와 튜플은 내용이 같아도 ==가 False). last는 정렬 뒤 마지막 값 90이므로 78이 아닙니다. `first, *rest = values`처럼 앞부분만 떼어 쓰는 코드가 많습니다.",
+      "hints": [
+        "sorted(scores)의 결과를 먼저 적은 뒤 앞·뒤 하나씩을 떼어 보세요.",
+        "*가 붙은 이름은 남은 원소를 모두 받으며, 받은 값은 리스트입니다."
+      ],
+      "choices": [
+        "middle == (72, 78, 85)",
+        "last == 78",
+        "len(middle) == 3",
+        "first == 64",
+        "middle == [72, 78, 85]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-tuple-04",
+      "concept": "바꿀 수 없는 튜플에서 새 튜플 만들기",
+      "kind": "multi",
+      "title": "좌표 옮기기",
+      "prompt": "원래 좌표는 그대로 두고 x만 10으로 바꾼 새 좌표를 만들려고 합니다. 빈칸에 넣었을 때 (10, 4) (3, 4)가 출력되는 식을 모두 고르세요.",
+      "code": "# 원래 좌표는 두고 x만 바꾼 새 좌표를 만든다\npoint = (3, 4)\nnew_x = 10\nmoved = ____\nprint(moved, point)",
+      "answer": "2,4,5",
+      "explanation": "튜플은 point[0] = 10처럼 원소를 바꿀 수 없어 새 튜플을 만들어야 합니다. 2번은 원소 하나짜리 튜플 (10,)과 point[1:]인 (4,)를 이어 붙입니다. 3번은 (new_x)가 정수 10이라 정수 + 튜플로 TypeError가 납니다. 4번은 *로 point[1:]을 펼쳐 (10, 4)를 만듭니다. 5번은 리스트로 바꿔 이어 붙인 뒤 다시 튜플로 만듭니다. 1번은 (4,)를 펼치지 않고 원소 하나로 넣어 (10, (4,))가 됩니다. 원래 point는 어느 경우에도 (3, 4)로 남습니다.",
+      "hints": [
+        "튜플은 원소를 바꿀 수 없으니 각 식이 새 튜플을 어떻게 만드는지, 결과가 몇 겹인지 보세요.",
+        "(new_x)와 (new_x,)의 차이, *가 튜플을 펼치는지 원소 하나로 넣는지를 떠올려 보세요."
+      ],
+      "choices": [
+        "(new_x, point[1:])",
+        "(new_x,) + point[1:]",
+        "(new_x) + point[1:]",
+        "(new_x, *point[1:])",
+        "tuple([new_x] + list(point[1:]))"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "(10, 4) (3, 4)"
+    },
+    {
+      "id": "py-dict-01",
+      "concept": "키 조회와 get 기본값",
+      "kind": "choice",
+      "title": "재고 조회",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "stock = {\"apple\": 3, \"pear\": 0}\nprint(stock.get(\"pear\", 5),\n      stock.get(\"plum\", 5),\n      stock.get(\"plum\"))",
+      "answer": "0 5 None",
+      "explanation": "get은 키가 있으면 그 값을 돌려주므로 값이 0인 \"pear\"는 0입니다. \"plum\"은 키가 없어 두 번째 인자 5를, 기본값을 주지 않으면 None을 돌려줍니다. 대괄호 조회 stock[\"plum\"]은 KeyError를 내지만 get은 오류를 내지 않습니다. `stock.get(k) or 5`처럼 쓰면 값 0까지 5로 바뀌므로 get의 기본값 인자를 쓰세요.",
+      "hints": [
+        "세 호출 각각에서 찾는 키가 딕셔너리에 있는지 먼저 확인하세요.",
+        "get의 두 번째 인자는 \"키가 없을 때\" 쓰입니다. 값이 0인 것과 키가 없는 것은 다른 상황입니다."
+      ],
+      "choices": [
+        "5 5 None",
+        "0 5 KeyError",
+        "0 5 0",
+        "0 5 None"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "0 5 None"
+    },
+    {
+      "id": "py-dict-02",
+      "concept": "같은 키 덮어쓰기와 키 순서",
+      "kind": "choice",
+      "title": "가격표 갱신",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "prices = {\"A\": 100, \"B\": 200, \"A\": 300}\nprices[\"C\"] = 50\nprint(len(prices), prices[\"A\"], list(prices))",
+      "answer": "3 300 ['A', 'B', 'C']",
+      "explanation": "딕셔너리의 키는 중복될 수 없어 \"A\"는 하나만 남고, 나중에 쓴 300이 앞의 100을 덮어씁니다. 키 순서는 처음 들어간 자리를 유지하므로 \"A\"가 맨 뒤로 가지 않습니다. 새 키 \"C\"는 끝에 추가되어 길이 3, 키 목록 ['A', 'B', 'C']입니다. list(딕셔너리)는 키 목록을 돌려줍니다. Python 3.7부터 딕셔너리는 넣은 순서를 지킵니다.",
+      "hints": [
+        "딕셔너리에서 같은 키가 두 번 나오면 값이 두 개 저장되는지, 하나만 남는지 생각해 보세요.",
+        "키는 중복될 수 없습니다. 같은 키에 다시 넣을 때 바뀌는 것이 값인지, 순서인지 구분해 보세요."
+      ],
+      "choices": [
+        "4 100 ['A', 'B', 'A', 'C']",
+        "3 100 ['A', 'B', 'C']",
+        "3 300 ['B', 'A', 'C']",
+        "3 300 ['A', 'B', 'C']"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "3 300 ['A', 'B', 'C']"
+    },
+    {
+      "id": "py-dict-03",
+      "concept": "키별 개수 세기",
+      "kind": "multi",
+      "title": "이벤트 개수 세기",
+      "prompt": "이벤트 이름별 발생 횟수를 세려고 합니다. 빈칸에 넣었을 때 {'login': 3, 'view': 2, 'buy': 1}이 출력되는 줄을 모두 고르세요.",
+      "code": "logs = [\"login\", \"view\", \"login\", \"buy\", \"view\", \"login\"]\ncounts = {}\nfor event in logs:\n    ____\nprint(counts)",
+      "answer": "1,2",
+      "explanation": "2번은 처음 보는 키는 0에서, 이미 있는 키는 기존 값에서 1을 더해 저장합니다. 1번은 같은 계산 결과를 update로 넣어 결과가 같습니다. 3번은 매번 1로 덮어써 모두 1이 됩니다. 4번은 처음 보는 \"login\"을 읽는 순간 KeyError가 납니다. 5번은 처음 보는 키에서 get이 None을 돌려줘 None + 1로 TypeError가 납니다. 같은 일을 collections.Counter(logs)로도 할 수 있습니다.",
+      "hints": [
+        "처음 보는 이벤트일 때와 이미 센 이벤트일 때 각 줄이 무엇을 하는지 나누어 따라가 보세요.",
+        "없는 키를 대괄호로 읽으면 KeyError가 나고, 기본값 없는 get(키)는 None을 돌려줍니다."
+      ],
+      "choices": [
+        "counts.update({event: counts.get(event, 0) + 1})",
+        "counts[event] = counts.get(event, 0) + 1",
+        "counts[event] = 1",
+        "counts[event] += 1",
+        "counts[event] = counts.get(event) + 1"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "{'login': 3, 'view': 2, 'buy': 1}"
+    },
+    {
+      "id": "py-dict-04",
+      "concept": "키별 누적 갱신",
+      "kind": "line",
+      "title": "고객별 합계 점검",
+      "prompt": "고객별 주문 금액 합계를 만들려고 했는데 kim의 합계가 5000이 아니라 2000으로 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 고객별 주문 금액 합계를 만든다\norders = [(\"kim\", 3000), (\"lee\", 1500), (\"kim\", 2000)]\ntotals = {}\nfor name, amount in orders:\n    if name not in totals:\n        totals[name] = 0\n    totals[name] = amount\nprint(totals)",
+      "answer": "7",
+      "explanation": "두 번째 kim 주문에서 5번 조건은 거짓이라 6번 초기화는 실행되지 않습니다. 그런데 7번의 =는 이전 합계 3000을 지우고 2000으로 덮어씁니다. `totals[name] += amount`로 더하면 kim은 5000이 됩니다. in은 딕셔너리의 키를 검사하므로 5번은 올바르고, 4번의 튜플 언패킹도 (이름, 금액) 순서에 맞습니다. 같은 일을 `totals[name] = totals.get(name, 0) + amount` 한 줄로도 쓸 수 있습니다.",
+      "hints": [
+        "kim의 두 번째 주문을 처리할 때 if 안쪽 줄과 바깥쪽 줄이 각각 실행되는지 따라가 보세요.",
+        "같은 키에 =로 대입하면 이전 값은 사라집니다. 누적하려면 이전 값에 더해야 합니다."
+      ],
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "{'kim': 2000, 'lee': 1500}"
+    },
+    {
+      "id": "py-set-01",
+      "concept": "중복 제거와 포함 검사",
+      "kind": "choice",
+      "title": "방문자 집계",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "visits = [\"kim\", \"lee\", \"kim\", \"park\", \"lee\"]\nunique = set(visits)\nprint(len(visits), len(unique), \"kim\" in unique)",
+      "answer": "5 3 True",
+      "explanation": "set은 중복 없이 서로 다른 원소만 담아 {\"kim\", \"lee\", \"park\"} 세 개가 됩니다. set(visits)는 새 집합을 만들 뿐 visits는 그대로 5개입니다. in은 개수가 아니라 포함 여부 True/False를 돌려줍니다. 집합의 in 검사는 원소가 많아도 빨라서, 큰 목록에서 \"이미 처리했는가\"를 확인할 때 리스트 대신 집합을 씁니다.",
+      "hints": [
+        "set으로 바꾼 뒤 남는 서로 다른 이름이 몇 개인지 세어 보세요.",
+        "in은 포함 여부를 알려 주며, set()은 원래 리스트를 바꾸지 않고 새 집합을 만듭니다."
+      ],
+      "choices": [
+        "5 5 True",
+        "5 3 2",
+        "5 3 True",
+        "3 3 True"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "5 3 True"
+    },
+    {
+      "id": "py-set-02",
+      "concept": "빈 집합과 중괄호",
+      "kind": "choice",
+      "title": "빈 묶음 만들기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "a = {}\nb = set()\nc = {1, 2, 2}\nprint(type(a).__name__, type(b).__name__, len(c))",
+      "answer": "dict set 2",
+      "explanation": "빈 중괄호 {}는 빈 딕셔너리입니다. 빈 집합은 set()으로만 만들 수 있습니다. {1, 2, 2}처럼 원소가 있는 중괄호는 집합이며 중복된 2는 하나로 합쳐져 길이는 2입니다. type(x).__name__은 자료형 이름을 문자열로 돌려줍니다. 빈 집합을 {}로 만들고 add()를 부르면 딕셔너리에는 add가 없어 AttributeError가 납니다.",
+      "hints": [
+        "빈 중괄호 {}가 딕셔너리와 집합 중 무엇으로 쓰이는지 떠올려 보세요.",
+        "중괄호는 딕셔너리와 집합이 함께 쓰는 기호라 빈 중괄호는 한쪽으로 정해져 있습니다. 집합 안의 중복 원소가 어떻게 처리되는지도 보세요."
+      ],
+      "choices": [
+        "set set 2",
+        "dict set 2",
+        "dict set 3",
+        "set dict 3"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "dict set 2"
+    },
+    {
+      "id": "py-set-03",
+      "concept": "집합 연산의 방향",
+      "kind": "multi",
+      "title": "이틀 방문자 비교",
+      "prompt": "어제와 오늘 방문자 집합을 비교했습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "yesterday = {\"kim\", \"lee\", \"park\"}\ntoday = {\"lee\", \"choi\", \"park\"}\nprint(____)",
+      "answer": "1,3,4",
+      "explanation": "today - yesterday는 오늘만 온 {\"choi\"}이고, yesterday - today는 어제만 온 {\"kim\"}이라 5번은 False입니다. &(교집합)는 양쪽 모두에 있는 {\"lee\", \"park\"}이며 집합은 순서가 없어 {\"park\", \"lee\"}와 같습니다. |(합집합)은 중복 없이 4명이라 6이 아닙니다. ^(대칭 차집합)는 한쪽에만 있는 {\"kim\", \"choi\"}입니다. 신규·이탈·재방문 고객을 나눌 때 그대로 쓰이는 연산입니다.",
+      "hints": [
+        "-는 방향이 있는 연산입니다. 왼쪽 집합에만 있는 원소가 무엇인지 각각 적어 보세요.",
+        "&는 양쪽 모두, |는 어느 한쪽, ^는 한쪽에만 있는 원소입니다. 집합 비교는 원소 순서와 상관없습니다."
+      ],
+      "choices": [
+        "today & yesterday == {\"park\", \"lee\"}",
+        "len(today | yesterday) == 6",
+        "today ^ yesterday == {\"kim\", \"choi\"}",
+        "today - yesterday == {\"choi\"}",
+        "yesterday - today == {\"choi\"}"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-set-04",
+      "concept": "순서를 지키는 차집합",
+      "kind": "multi",
+      "title": "남은 주문 번호",
+      "prompt": "처리할 주문 번호에서 이미 처리한 번호를 빼되, 들어온 순서는 그대로 두려고 합니다. 빈칸에 넣었을 때 [108, 105, 103]이 출력되는 식을 모두 고르세요.",
+      "code": "# 처리한 번호는 빼고, 들어온 순서는 지킨다\nincoming = [108, 101, 105, 101, 103]\ndone = {101}\nremaining = ____\nprint(remaining)",
+      "answer": "1,2",
+      "explanation": "1번과 2번은 incoming을 순서대로 돌며 done에 없는 번호만 남겨 [108, 105, 103]입니다(not n in done은 n not in done과 같습니다). 3번은 집합으로 바꾸는 순간 순서가 사라져, 이번 실행에서는 [105, 108, 103]처럼 다른 순서가 나옵니다. 4번은 크기순으로 정렬해 들어온 순서가 아닙니다. 5번은 숫자를 집합 자체와 비교해 항상 다르다고 판단하므로 아무것도 빼지 않습니다. 순서가 중요하면 \"빼기 판단\"만 집합으로 빠르게 하고, 순회는 원래 리스트로 하세요.",
+      "hints": [
+        "결과가 들어온 순서를 지키는지, 이미 처리한 번호를 모두 빼는지 두 기준으로 각 식을 보세요.",
+        "집합은 원소의 순서를 보장하지 않습니다. 숫자와 집합 자체를 !=로 비교하면 항상 다르다고 나옵니다."
+      ],
+      "choices": [
+        "[n for n in incoming if not n in done]",
+        "[n for n in incoming if n not in done]",
+        "list(set(incoming) - done)",
+        "sorted(set(incoming) - done)",
+        "[n for n in incoming if n != done]"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "[108, 105, 103]"
+    },
+    {
+      "id": "py-func-01",
+      "concept": "return이 없는 함수의 결과",
+      "kind": "choice",
+      "title": "세금 계산 함수",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "def with_return(price):\n    return round(price * 1.1)\n\ndef without_return(price):\n    total = round(price * 1.1)\n\nprint(with_return(1000), without_return(1000))",
+      "answer": "1100 None",
+      "explanation": "return이 있는 함수는 계산한 1100을 돌려줍니다. return이 없는 함수는 안에서 total을 계산하지만 함수가 끝나면 그 값은 사라지고, 호출 결과는 None입니다. 오류는 나지 않습니다. print로 화면에 찍는 것과 return으로 돌려주는 것은 다르며, 결과를 다른 계산에 쓰려면 return이 필요합니다.",
+      "hints": [
+        "두 함수가 계산한 값을 호출한 쪽에 돌려주는지 각각 확인하세요.",
+        "함수 안에서 계산만 하고 return으로 돌려주지 않으면 호출 결과는 정해진 특별한 값이 됩니다."
+      ],
+      "choices": [
+        "1100 1100",
+        "1100 None",
+        "1100 0",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "1100 None"
+    },
+    {
+      "id": "py-func-02",
+      "concept": "기본값과 키워드 인자",
+      "kind": "choice",
+      "title": "수수료 포함 가격",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "def price(amount, rate=0.1, fee=500):\n    return round(amount * (1 + rate)) + fee\n\nprint(price(1000), price(1000, 0.2), price(1000, fee=0))",
+      "answer": "1600 1700 1100",
+      "explanation": "첫 호출은 rate=0.1, fee=500 기본값을 써서 1100 + 500 = 1600입니다. 두 번째 호출의 0.2는 위치상 두 번째 매개변수 rate에 들어가 1200 + 500 = 1700입니다. 세 번째는 fee=0으로 이름을 지정해 rate는 기본값 그대로, 수수료만 0이 되어 1100입니다. 키워드 인자를 쓰면 중간 매개변수를 건너뛰고 원하는 값만 바꿀 수 있습니다.",
+      "hints": [
+        "각 호출에서 rate와 fee가 기본값을 쓰는지, 넘긴 값을 쓰는지 표로 정리해 보세요.",
+        "위치로 넘긴 값은 매개변수 순서대로 들어가고, 이름=값으로 넘기면 그 이름의 매개변수에 들어갑니다."
+      ],
+      "choices": [
+        "1600 1700 1600",
+        "1600 1700 1100",
+        "1100 1200 1100",
+        "1600 1100.2 1100"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "1600 1700 1100"
+    },
+    {
+      "id": "py-func-03",
+      "concept": "가변 기본값",
+      "kind": "multi",
+      "title": "장바구니 함수 검토",
+      "prompt": "장바구니를 따로 넘기지 않고 함수를 두 번 호출했습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "def add_item(item, cart=[]):\n    cart.append(item)\n    return cart\n\nfirst = add_item(\"펜\")\nsecond = add_item(\"공책\")\nprint(____)",
+      "answer": "1,2,4",
+      "explanation": "기본값 []는 함수를 정의할 때 한 번만 만들어지고, cart를 넘기지 않은 모든 호출이 그 하나의 리스트를 함께 씁니다. 그래서 first와 second는 같은 리스트(is가 True)이고, 두 번 append해 [\"펜\", \"공책\"](길이 2)이 되며, 세 번째 호출 결과는 [\"펜\", \"공책\", \"자\"]입니다. first가 [\"펜\"]으로 남는다고 보면 틀립니다. 안전한 형태는 `def add_item(item, cart=None):` 다음에 `if cart is None: cart = []`를 두는 것입니다.",
+      "hints": [
+        "기본값 []가 함수를 정의할 때 한 번 만들어지는지, 호출할 때마다 새로 만들어지는지 생각해 보세요.",
+        "기본값 객체는 def 문이 실행될 때 한 번만 만들어져 이후 호출이 같은 객체를 함께 씁니다."
+      ],
+      "choices": [
+        "add_item(\"자\") == [\"펜\", \"공책\", \"자\"]",
+        "first is second",
+        "first == [\"펜\"]",
+        "len(second) == 2",
+        "second == [\"공책\"]"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-func-04",
+      "concept": "지역 이름과 반환값 사용",
+      "kind": "line",
+      "title": "할인 합계 점검",
+      "prompt": "할인된 금액을 돌려주는 함수로 두 주문의 합계를 내려고 했는데 2700.0이 아니라 0이 출력됐습니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# discounted()가 돌려준 할인 금액을 total에 더한다\ntotal = 0\n\ndef discounted(amount):\n    total = amount * 0.9\n    return total\n\nfor a in [1000, 2000]:\n    discounted(a)\nprint(total)",
+      "answer": "9",
+      "explanation": "함수 안에서 대입한 total은 함수가 끝나면 사라지는 지역 이름이라 바깥 total과 관계가 없습니다. discounted()는 900.0과 1800.0을 올바르게 돌려주지만, 9번 줄이 그 반환값을 버려 바깥 total은 0으로 남습니다. `total += discounted(a)`로 반환값을 더하면 2700.0입니다. 5번 줄이 바깥 total을 덮어쓴다고 보거나, 6번 줄의 지역 이름 반환을 의심하는 것은 지역 이름 규칙을 놓친 해석입니다. 함수가 바깥 변수를 몰래 바꾸게(global) 하기보다 값을 돌려받아 쓰는 구조가 안전합니다.",
+      "hints": [
+        "함수 안의 total과 바깥의 total이 같은 이름표인지, 함수가 돌려준 값이 어디에 쓰이는지 확인하세요.",
+        "함수 안에서 대입한 이름은 그 함수 안에서만 쓰이는 지역 이름입니다."
+      ],
+      "choices": [
+        "2",
+        "5",
+        "6",
+        "8",
+        "9"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "0"
+    },
+    {
+      "id": "py-star-01",
+      "concept": "*args로 인자 모으기",
+      "kind": "choice",
+      "title": "이름 모으기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "def collect(*names):\n    return names\n\nprint(collect(), collect(\"kim\"), collect(\"kim\", \"lee\"))",
+      "answer": "() ('kim',) ('kim', 'lee')",
+      "explanation": "정의의 *names는 넘긴 위치 인자를 개수와 상관없이 모두 모아 튜플로 받습니다. 인자가 없으면 빈 튜플 (), 하나면 원소 하나짜리 튜플 (\"kim\",), 둘이면 (\"kim\", \"lee\")입니다. 리스트가 아니라 튜플이고, 인자가 없어도 오류가 나지 않습니다. print()나 max(a, b, c)처럼 인자 개수가 정해지지 않은 함수가 이 방식으로 만들어져 있습니다.",
+      "hints": [
+        "*가 붙은 매개변수가 인자 0개·1개·2개를 각각 어떤 모양으로 받는지 생각해 보세요.",
+        "정의에서 *이름은 남는 위치 인자를 모두 모아 하나의 묶음으로 받습니다. 그 묶음의 자료형을 떠올려 보세요."
+      ],
+      "choices": [
+        "[] ['kim'] ['kim', 'lee']",
+        "None kim ('kim', 'lee')",
+        "() ('kim',) ('kim', 'lee')",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "() ('kim',) ('kim', 'lee')"
+    },
+    {
+      "id": "py-star-02",
+      "concept": "호출과 리스트 안에서 * 펼치기",
+      "kind": "choice",
+      "title": "상자 부피 계산",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "def box(width, height, depth):\n    return width * height * depth\n\nsize = [2, 3, 4]\nprint(box(*size), [*size, 5], [size, 5])",
+      "answer": "24 [2, 3, 4, 5] [[2, 3, 4], 5]",
+      "explanation": "함수 안의 *는 곱셈이지만, box(*size)의 *는 리스트 [2, 3, 4]를 세 개의 인자로 펼쳐 box(2, 3, 4)와 같게 만들어 24입니다. [*size, 5]도 리스트를 펼쳐 [2, 3, 4, 5]가 되고, *가 없는 [size, 5]는 리스트를 원소 하나로 넣어 [[2, 3, 4], 5]입니다. 같은 기호라도 두 값 사이에 있으면 곱셈, 값 앞에 붙으면 펼치기입니다.",
+      "hints": [
+        "같은 * 기호가 두 값 사이에 쓰인 곳과 값 앞에 붙은 곳을 나누어 보세요.",
+        "값 앞에 붙은 *는 그 리스트를 원소들로 펼쳐 놓습니다."
+      ],
+      "choices": [
+        "24 [2, 3, 4, 5] [[2, 3, 4], 5]",
+        "오류 발생",
+        "24 [[2, 3, 4], 5] [2, 3, 4, 5]",
+        "24 [2, 3, 4, 5] [2, 3, 4, 5]"
+      ],
+      "accepted": [],
+      "seconds": 75,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "24 [2, 3, 4, 5] [[2, 3, 4], 5]"
+    },
+    {
+      "id": "py-star-03",
+      "concept": "**로 키워드 인자 펼치기와 모으기",
+      "kind": "multi",
+      "title": "접속 설정 전달",
+      "prompt": "설정 딕셔너리를 펼쳐 함수에 넘겼습니다. 빈칸에 넣었을 때 True가 출력되는 식을 모두 고르세요.",
+      "code": "def connect(host, port=5432, **options):\n    return host, port, options\n\nconfig = {\"host\": \"db.local\", \"timeout\": 5}\nh, p, opts = connect(**config)\nprint(____)",
+      "answer": "3,4,5",
+      "explanation": "connect(**config)는 connect(host=\"db.local\", timeout=5)와 같습니다. host 키는 host 매개변수로 들어가고, config에 port가 없으니 기본값 5432가 쓰입니다. 이름이 맞는 매개변수가 없는 timeout만 **options에 {\"timeout\": 5}로 모입니다. host는 이미 매개변수가 받았으므로 options에 들어가지 않습니다. 설정 파일(JSON)을 읽어 함수나 모델에 Model(**params)처럼 넘기는 코드가 이 방식입니다.",
+      "hints": [
+        "connect(**config)가 어떤 호출과 같은지, 즉 host=..., timeout=... 꼴로 풀어서 써 보세요.",
+        "이름이 맞는 키는 그 매개변수로 들어가고, 남는 키만 **options에 딕셔너리로 모입니다."
+      ],
+      "choices": [
+        "\"host\" in opts",
+        "opts == {\"host\": \"db.local\", \"timeout\": 5}",
+        "h == \"db.local\"",
+        "p == 5432",
+        "opts == {\"timeout\": 5}"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "True"
+    },
+    {
+      "id": "py-star-04",
+      "concept": "zip(*행들)로 행과 열 바꾸기",
+      "kind": "choice",
+      "title": "점수표 열로 나누기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "rows = [(\"kim\", 80), (\"lee\", 95), (\"park\", 70)]\nnames, scores = zip(*rows)\nprint(names, max(scores))",
+      "answer": "('kim', 'lee', 'park') 95",
+      "explanation": "*rows는 세 행을 zip에 따로 넘겨 zip((\"kim\", 80), (\"lee\", 95), (\"park\", 70))이 됩니다. zip은 각 행의 첫 번째끼리 (\"kim\", \"lee\", \"park\"), 두 번째끼리 (80, 95, 70)를 튜플로 묶어 두 개의 묶음을 만들고, 이것이 names, scores에 나누어 들어갑니다. 결과는 리스트가 아니라 튜플이며, 행이 세 개여도 열이 두 개라 두 이름에 나눌 수 있습니다. 표 데이터를 열 단위로 바꿀 때 자주 쓰는 관용구입니다.",
+      "hints": [
+        "*rows가 세 개의 행을 zip에 각각 따로 넘긴다는 점에서 출발해 보세요.",
+        "zip은 넘겨받은 묶음들의 첫 번째 원소끼리, 두 번째 원소끼리를 각각 튜플로 묶습니다."
+      ],
+      "choices": [
+        "['kim', 'lee', 'park'] 95",
+        "('kim', 'lee', 'park') 95",
+        "('kim', 80) 95",
+        "오류 발생"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "('kim', 'lee', 'park') 95"
+    },
+    {
+      "id": "py-star-05",
+      "concept": "딕셔너리 펼쳐 합치기와 우선순위",
+      "kind": "multi",
+      "title": "설정 합치기",
+      "prompt": "기본 설정 위에 사용자 설정을 덮어쓰려고 합니다(같은 키는 사용자 값이 이김). 빈칸에 넣었을 때 {'theme': 'dark', 'size': 14, 'lang': 'ko'}가 출력되는 식을 모두 고르세요.",
+      "code": "default = {\"theme\": \"light\", \"size\": 12, \"lang\": \"ko\"}\nuser = {\"size\": 14, \"theme\": \"dark\"}\nmerged = ____\nprint(merged)",
+      "answer": "1,3,4",
+      "explanation": "{**default, **user}는 default를 먼저 펼친 뒤 user를 펼쳐, 같은 키는 나중의 user 값이 이깁니다. 키 순서는 처음 들어간 default 순서(theme, size, lang)를 따릅니다. default | user(Python 3.9+)와 dict(default, **user)도 같은 결과입니다. 5번은 순서를 바꿔 기본값이 사용자 값을 덮어씁니다. 2번 update()는 default를 제자리에서 바꾸고 None을 돌려줘 None이 출력됩니다(리스트 sort()와 같은 성질).",
+      "hints": [
+        "같은 키가 두 번 들어갈 때 어느 쪽 값이 남는지, 키 순서는 어디서 정해지는지 보세요.",
+        "딕셔너리를 합칠 때는 나중에(오른쪽에) 들어간 값이 이깁니다. update()는 제자리에서 바꾸는 메서드입니다."
+      ],
+      "choices": [
+        "default | user",
+        "default.update(user)",
+        "dict(default, **user)",
+        "{**default, **user}",
+        "{**user, **default}"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "{'theme': 'dark', 'size': 14, 'lang': 'ko'}"
+    },
+    {
+      "id": "py-star-06",
+      "concept": "출력할 때 * 펼치기",
+      "kind": "multi",
+      "title": "주문 번호 한 줄 출력",
+      "prompt": "주문 번호를 하이픈으로 이어 3-15-42 한 줄로 출력하려고 합니다. 빈칸에 넣었을 때 정확히 3-15-42가 출력되는 줄을 모두 고르세요.",
+      "code": "# 번호를 하이픈으로 이어 한 줄로 출력한다\nids = [3, 15, 42]\nsep = \"-\"\nfirst, *rest = ids\n____",
+      "answer": "1,3,4",
+      "explanation": "4번은 *ids가 리스트를 세 인자로 펼쳐 print(3, 15, 42, sep=\"-\")가 되므로 3-15-42입니다. 3번도 first와 펼친 rest로 같은 세 인자가 됩니다. 1번은 숫자를 문자열로 바꾼 뒤 join으로 이어 같은 문자열을 만듭니다. 5번은 join에 숫자가 들어가 TypeError가 납니다. 2번은 리스트 하나만 넘겨 sep가 끼워질 자리가 없고 [3, 15, 42]가 출력됩니다. 같은 *라도 정의(def f(*args))에서는 모으고, 호출(f(*xs))에서는 펼친다는 점을 함께 정리해 두세요.",
+      "hints": [
+        "print에 인자가 몇 개 넘어가는지, sep가 어디에 끼워지는지 각 줄마다 세어 보세요.",
+        "join은 문자열 목록만 이을 수 있고, print의 sep는 여러 인자 사이에 들어갑니다."
+      ],
+      "choices": [
+        "print(sep.join(str(n) for n in ids))",
+        "print(ids, sep=sep)",
+        "print(first, *rest, sep=sep)",
+        "print(*ids, sep=sep)",
+        "print(sep.join(ids))"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "3-15-42"
+    },
+    {
+      "id": "py-decorator-01",
+      "concept": "@는 감싼 함수로 바꿔 대입",
+      "kind": "choice",
+      "title": "알림 문구 만들기",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "def shout(func):\n    def wrapper():\n        return func().upper() + \"!\"\n    return wrapper\n\ndef hello():\n    return \"hi\"\n\n@shout\ndef bye():\n    return \"bye\"\n\nloud = shout(hello)\nprint(loud(), bye(), hello())",
+      "answer": "HI! BYE! hi",
+      "explanation": "shout는 함수를 받아 새 함수 wrapper를 돌려줍니다. loud = shout(hello)는 hello를 감싼 새 함수라 loud()는 \"HI!\"이고, 원래 hello는 그대로라 hello()는 \"hi\"입니다. @shout를 def bye 위에 쓰면 정의 직후 bye = shout(bye)가 실행되어, 이후 bye라는 이름은 감싼 함수를 가리킵니다. 그래서 bye()는 \"BYE!\"입니다. 데코레이터는 특별한 마법이 아니라 \"함수를 받아 함수를 돌려주는 함수\"를 대입하는 줄임 표기입니다.",
+      "hints": [
+        "shout(hello)가 돌려주는 것이 값인지 함수인지, 그리고 @shout가 bye에 무엇을 하는지 비교해 보세요.",
+        "@shout를 def bye 위에 쓰는 것은 정의 직후 bye = shout(bye)를 실행하는 것과 같습니다."
+      ],
+      "choices": [
+        "HI! bye hi",
+        "HI! BYE! hi",
+        "HI! BYE! HI!",
+        "hi bye hi"
+      ],
+      "accepted": [],
+      "seconds": 120,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "HI! BYE! hi"
+    },
+    {
+      "id": "py-decorator-02",
+      "concept": "데코레이터가 실행되는 시점",
+      "kind": "choice",
+      "title": "보고서 등록 목록",
+      "prompt": "아래 코드의 출력값을 고르세요.",
+      "code": "registry = []\n\ndef register(func):\n    registry.append(func.__name__)\n    return func\n\n@register\ndef daily_report():\n    return \"일간\"\n\n@register\ndef monthly_report():\n    return \"월간\"\n\nprint(registry)",
+      "answer": "['daily_report', 'monthly_report']",
+      "explanation": "데코레이터는 함수를 호출할 때가 아니라 def 문이 실행되어 함수가 만들어지는 순간 실행됩니다. 그래서 두 보고서 함수를 한 번도 호출하지 않았어도 register가 두 번 실행되어 함수 이름이 등록됩니다. func.__name__은 반환값이 아니라 함수 이름입니다. FastAPI의 @app.get(\"/items\")이나 pytest의 @pytest.fixture도 이렇게 정의 시점에 함수를 목록에 등록하는 방식입니다.",
+      "hints": [
+        "두 보고서 함수가 한 번도 호출되지 않았다는 점에 주목하고, register가 언제 실행되는지 생각해 보세요.",
+        "@register는 def 문 바로 다음에 실행되는 대입 daily_report = register(daily_report)와 같습니다. 그 대입이 언제 일어나는지 보세요."
+      ],
+      "choices": [
+        "[]",
+        "['일간', '월간']",
+        "['daily_report', 'monthly_report']",
+        "['register', 'register']"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "Python",
+      "level": 1,
+      "reference_setup": "",
+      "reference_output": "['daily_report', 'monthly_report']"
+    },
+    {
+      "id": "py-decorator-03",
+      "concept": "래퍼의 *args·**kwargs 전달",
+      "kind": "multi",
+      "title": "호출 기록 데코레이터",
+      "prompt": "래퍼를 붙여도 원래 함수를 직접 부른 것과 같은 결과가 나와야 합니다. 빈칸에 넣었을 때 1300 500이 출력되는 식을 모두 고르세요.",
+      "code": "def log_call(func):\n    def wrapper(*args, **kwargs):\n        return ____\n    return wrapper\n\n@log_call\ndef pay(amount, fee=0):\n    return amount + fee\n\nprint(pay(1000, fee=300), pay(amount=500))",
+      "answer": "3",
+      "explanation": "pay(1000, fee=300)을 부르면 실제로는 wrapper가 실행되어 args에 (1000,), kwargs에 {\"fee\": 300}이 모이고, pay(amount=500)에서는 args가 빈 튜플, kwargs가 {\"amount\": 500}입니다. 3번은 받은 것을 다시 펼쳐 원래 호출과 똑같이 넘기므로 1300 500입니다. 2번은 첫 호출은 1300이지만, 두 번째 호출에서 amount를 버리고 fee만 넘겨 TypeError가 납니다. 4번은 튜플과 딕셔너리를 펼치지 않고 그대로 넘겨 amount가 튜플이 되고, 1번은 딕셔너리를 fee 자리에 넘겨 둘 다 TypeError입니다. 5번은 키워드 인자를 버려 첫 호출이 1000이 되고 두 번째 호출은 amount가 없어 오류입니다. 어떤 호출에도 쓰는 범용 데코레이터는 3번 형태를 씁니다.",
+      "hints": [
+        "두 호출에서 wrapper가 받은 args와 kwargs에 각각 무엇이 들어 있는지 먼저 적어 보세요.",
+        "받을 때 모은 튜플·딕셔너리는 넘길 때 다시 *·**로 펼쳐야 원래 호출과 같아집니다."
+      ],
+      "choices": [
+        "func(*args, kwargs)",
+        "func(*args, fee=kwargs.get(\"fee\", 0))",
+        "func(*args, **kwargs)",
+        "func(args, kwargs)",
+        "func(*args)"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "1300 500"
+    },
+    {
+      "id": "py-decorator-04",
+      "concept": "여러 데코레이터의 적용 순서",
+      "kind": "order",
+      "title": "제목 꾸미기 순서",
+      "prompt": "제목이 <b><i>보고서</i></b>로 출력되도록 아래 조각을 모두 사용해 위에서부터 배치하세요.",
+      "code": "def bold(func):\n    def wrapper():\n        return \"<b>\" + func() + \"</b>\"\n    return wrapper\n\ndef italic(func):\n    def wrapper():\n        return \"<i>\" + func() + \"</i>\"\n    return wrapper",
+      "answer": "4,1,2,3,5",
+      "explanation": "데코레이터를 쌓으면 def에 가까운 것부터 차례로 감쌉니다. @bold, @italic, def title 순서는 title = bold(italic(title))과 같아, 먼저 italic이 <i>를 두르고 bold가 바깥에 <b>를 둘러 <b><i>보고서</i></b>가 됩니다. @italic을 위에 두면 <i><b>보고서</b></i>가 됩니다. 데코레이터 줄 다음에는 반드시 def(또는 class)가 와야 하므로 데코레이터를 함수 뒤나 print 앞에 두면 문법 오류입니다. 인증·로깅·캐시 데코레이터를 함께 쓸 때 순서가 동작을 바꿉니다.",
+      "hints": [
+        "결과에서 가장 바깥에 있는 태그가 <b>라는 점에서, 어느 데코레이터가 마지막에(가장 바깥에서) 감싸야 하는지 생각해 보세요.",
+        "@a 다음 줄에 @b, 그 다음에 def f가 오면 f = a(b(f))와 같습니다."
+      ],
+      "choices": [
+        "@italic",
+        "def title():",
+        "    return \"보고서\"",
+        "@bold",
+        "print(title())"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "Python",
+      "level": 2,
+      "reference_setup": "",
+      "reference_output": "<b><i>보고서</i></b>"
+    },
+    {
+      "id": "py-decorator-05",
+      "concept": "래퍼의 반환값 전달",
+      "kind": "line",
+      "title": "호출 횟수 데코레이터 점검",
+      "prompt": "호출 횟수를 세는 데코레이터를 붙인 뒤 합계 함수가 3500 대신 None을 돌려줍니다. 결과가 틀린 원인 줄을 고르세요.",
+      "code": "# 횟수를 세도 함수 결과는 그대로여야 한다\ncounts = {}\n\ndef counted(func):\n    def wrapper(*args, **kwargs):\n        name = func.__name__\n        counts[name] = counts.get(name, 0) + 1\n        func(*args, **kwargs)\n    return wrapper\n\n@counted\ndef total(prices):\n    return sum(prices)\n\nprint(total([1000, 2500]), counts)",
+      "answer": "8",
+      "explanation": "@counted 뒤의 total은 wrapper입니다. wrapper는 8번 줄에서 원래 함수를 호출해 3500을 계산하지만 그 값을 돌려주지 않아, return이 없는 함수처럼 None을 돌려줍니다. `return func(*args, **kwargs)`로 고치면 3500 {'total': 1}이 됩니다. 9번 줄은 함수를 실행하지 않고 함수 자체를 돌려줘야 맞고, 5번 줄의 *args는 [1000, 2500]을 원소 하나로 받아 다시 펼쳐 넘기므로 문제가 없습니다. 실무에서는 functools.wraps(func)도 함께 붙여 함수 이름·설명을 보존합니다.",
+      "hints": [
+        "total([1000, 2500])을 부르면 실제로 어떤 함수가 실행되고, 그 함수가 무엇을 돌려주는지 따라가 보세요.",
+        "원래 함수를 호출만 하고 그 값을 돌려주지 않으면 래퍼의 결과는 None입니다."
+      ],
+      "choices": [
+        "5",
+        "7",
+        "8",
+        "9",
+        "13"
+      ],
+      "accepted": [],
+      "seconds": 180,
+      "version": 1,
+      "domain": "Python",
+      "level": 3,
+      "reference_setup": "",
+      "reference_output": "None {'total': 1}"
+    }
+  ]
+}

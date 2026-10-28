@@ -20,7 +20,14 @@ const trackName = (id: string) =>
     ? "SQL"
     : id === "python"
       ? "Python 데이터 분석"
-      : "이전 통합 학습";
+      : id === "python-basics"
+        ? "Python 기초"
+        : "이전 통합 학습";
+const trackSummary: Record<string, string> = {
+  "python-basics": "값·자료형·조건과 반복·함수부터 *와 @까지 연습해요.",
+  python: "pandas·NumPy와 통계·머신러닝을 연습해요.",
+  sql: "SQL 기초부터 조건·집계·조인·윈도 함수까지 연습해요.",
+};
 const playable = (item: Exercise) =>
   item.status === "pending" && item.response_mode !== "essay";
 const outcome = (item: Exercise) =>
@@ -39,9 +46,8 @@ export default function App() {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [trackId, setTrackId] = useState(() => {
     try {
-      return localStorage.getItem("learning-coding-daily:track") === "sql"
-        ? "sql"
-        : "python";
+      const saved = localStorage.getItem("learning-coding-daily:track");
+      return saved === "sql" || saved === "python-basics" ? saved : "python";
     } catch {
       return "python";
     }
@@ -408,11 +414,7 @@ export default function App() {
                       <div className="daily-card-content">
                         <div>
                           <h2 id="daily-title">{trackName(trackId)}</h2>
-                          <p>
-                            {trackId === "sql"
-                              ? "SQL 기초부터 조건·집계·조인을 연습해요."
-                              : "pandas·NumPy와 통계·머신러닝을 연습해요."}
-                          </p>
+                          <p>{trackSummary[trackId] ?? trackSummary.python}</p>
                         </div>
                       </div>
                       <div className="daily-details">

@@ -50,6 +50,14 @@
 - 검수 기록(`curriculum/reviews/…json`)의 `items`에 문항마다 `id`·`version`·`kind`·`task_form`·`level`·`reference_output`(·`fix`)을 남긴다. `tests/test_format_content.py`가 정답·허용 순서·오답 순서·보기별 결과·고친 코드를 실제 pandas/NumPy/scikit-learn/SQLite로 다시 실행하고, SQL은 `scripts/validate_sql_content.py`가 화면 입력만으로 같은 검사를 한다.
 - 한 줄이 휴대폰(320px)에서 지나치게 길지 않게 쓴다. 긴 표 데이터는 행을 줄이거나 값을 짧게 한다.
 
+### Python 기초 트랙과 SQL 변경 문항 (CR-017)
+
+- Python 기초 문항은 `domain`을 `Python`으로 두고 `backend/basics_content.json`에 쓴다. 라이브러리 없이 표준 Python만 쓰며, 개념마다 서로 다른 기초 유형 2개·적용·전이를 둔다. 기초 문항이 아직 배우지 않은 문법(반복·함수 등)에 기대면 그 개념의 문항을 `requires`에 건다.
+- SQL 변경 문항(UPDATE·INSERT·DELETE·트랜잭션)은 표시 입력 주석 뒤에 변경 문장을 쓰고 마지막 SELECT의 결과를 답으로 한다. `scripts/validate_sql_content.py`의 `run_sql`이 모든 문장을 실행해 마지막 결과를 돌려주며, 보기·순서·고친 줄마다 표시 입력의 새 복사본에서 실행하므로 앞 보기의 변경이 다음 보기에 남지 않는다.
+- 표시 입력의 INSERT 주석 줄은 60자 안팎에서 여러 INSERT 줄로 나눈다(각 줄이 한 문장이어야 화면 입력 검사가 읽는다).
+- 한 검수 기록 안에서 단일 정답의 위치(1~4번)를 고르게 나누고, 모두 고르기의 정답 조합도 한 모양(예: 1·3·5)에 몰리지 않게 한다. 해설이 보기 번호를 말하면 순서를 바꾼 뒤 번호를 함께 고친다.
+- 줄 고르기의 힌트 1은 원인 줄 번호를 말하지 않고 확인할 값이나 관점을 묻는다.
+
 ## 검수
 
 - 지문만 보고 코드를 읽지 않아도 답을 고를 수 있는지 검토한다.

@@ -32,7 +32,7 @@ ResponseMode = Literal["choice", "short", "essay"]
 
 class StartSession(RequestModel):
     response_mode: ResponseMode | None = None
-    track_id: Literal["python", "sql", "pandas", "algorithms", "statistics"] = "python"
+    track_id: Literal["python-basics", "python", "sql", "pandas", "algorithms", "statistics"] = "python"
 
 
 class ExerciseAction(RequestModel):
@@ -250,7 +250,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
         return TRACKS
 
     @app.get("/api/dashboard")
-    def dashboard(track_id: Literal["python", "sql"] = "python"):
+    def dashboard(track_id: Literal["python-basics", "python", "sql"] = "python"):
         with connect(storage_path()) as db:
             day = today().isoformat()
             history = all_sessions(db)
@@ -277,7 +277,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
     def start(body: StartSession):
         if body.track_id == "pandas": body.track_id = "python"
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
-        if body.track_id not in ("python", "sql"):
+        if body.track_id not in ("python-basics", "python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
         with connect(storage_path()) as db:
             day = today().isoformat()
@@ -300,7 +300,7 @@ def create_app(db_path: Path | None = None, now: Callable[[], datetime] | None =
     def start_extra(body: StartSession):
         if body.track_id == "pandas": body.track_id = "python"
         if body.response_mode == "essay": raise HTTPException(422, "서술형은 안정화할 때까지 보류 중이에요.")
-        if body.track_id not in ("python", "sql"):
+        if body.track_id not in ("python-basics", "python", "sql"):
             raise HTTPException(409, "아직 준비 중인 트랙입니다.")
         with connect(storage_path()) as db:
             day = today().isoformat()

@@ -1,0 +1,602 @@
+{
+  "schema_version": 1,
+  "review_id": "tracks-2026-10-28",
+  "date": "2026-10-28",
+  "change": "CR-017",
+  "tasks": ["WBS-390"],
+  "status": "reviewed",
+  "method": "Claude가 앱 밖에서 직접 작성했다. 생성 스크립트가 모든 문항의 정답·보기별 결과·고친 코드·순서를 격리된 Python(.venv, -I)과 표시 입력으로 만든 새 SQLite에서 실행해 대조한 뒤 원본·난이도·경로·카드·검수 기록으로 나눠 썼다. 정답을 모르는 별도 검수 에이전트가 코드를 실행하지 않고 66개를 다시 풀어 정답표와 대조하고 지문·힌트·난이도·휴대폰 폭을 지적했다. tests/test_format_content.py와 tests/test_curriculum.py, scripts/validate_sql_content.py가 같은 결과를 실제 Python/NumPy/pandas/SQLite로 다시 실행한다. 모델 API 호출 없음.",
+  "independent_review": {
+    "blind_answers_matching_key": 66,
+    "items": 66,
+    "checks": "정답을 모르는 상태로 66개를 읽기만 해서 풀어 기록한 뒤 정답표와 대조했다(신뢰도 높음 65·보통 1). 지문이 코드와 어긋나는 문항은 없었고, 25개에 지문·힌트·난이도·휴대폰 폭 지적이 있었다.",
+    "fixes_applied": [
+      "정답 위치: 단일 정답 32개가 모두 1번이었다. sql-change-02 전환 뒤의 33개를 고정 시드로 네 자리에 9·8·8·8개씩 나누고, 모두 고르기는 보기 순서를 돌려 1번을 포함한 정답이 25개 중 20개에서 24개 중 15개로 줄었다. 해설의 보기 번호를 새 순서로 바꿨다.",
+      "힌트 1이 원인 줄 번호를 알려 주던 줄 고르기 4개(py-values-04·py-str-05·py-list-04·py-func-04)와 원인 줄을 포함한 줄 범위를 가리키던 py-dict-04의 힌트를 관점 질문으로 바꿨다.",
+      "py-control-03: 지문이 어느 반복이 멈추고 어느 반복이 건너뛰는지 알려 주던 문장을 지웠다.",
+      "py-decorator-03: ‘어떤 인자로 호출해도’라는 조건과 1300 출력 기준이 어긋나 5번 보기가 모호했다. 키워드만 쓰는 두 번째 호출을 더해 출력 기준만으로 일반성이 드러나게 했다(정답 1개).",
+      "sql-change-02: 단계 1에 비해 개념 네 개를 한꺼번에 묻던 모두 고르기를 UNIQUE·NULL·OR IGNORE만 보는 행 수 문항으로 줄였다.",
+      "py-list-04: ‘첫날’과 ‘1번 매장’의 번호 기준이 달라 다른 줄을 의심하게 만들던 주석과 지문을 ‘번호는 0부터, 0번 날의 1번 매장’으로 고쳤다.",
+      "py-str-03: 코드 빈칸(____)과 겹치던 ‘빈 칸’을 ‘빈 항목’으로, sql-func-02 힌트 1의 ‘비어 있을 때’를 ‘NULL일 때’로 고쳤다.",
+      "휴대폰 폭: 60자를 넘던 SQL INSERT 주석 줄을 여러 INSERT 줄로 나누고(줄 고르기 sql-window-04는 줄 번호를 함께 옮김), 긴 Python 줄(py-tuple-01·py-dict-01·py-decorator-05·pandas-query-at-01)과 긴 한국어 주석을 줄였다. CREATE TABLE 주석 줄(61~68자)은 기존 문항과 같은 형식이라 유지했다."
+    ]
+  },
+  "items": [
+    {
+      "id": "py-values-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "3.4 3 2"
+    },
+    {
+      "id": "py-values-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "손님 0"
+    },
+    {
+      "id": "py-values-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-values-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "2500",
+      "fix": {
+        "lines": {
+          "5": "applied = default_discount if discount is None else discount"
+        },
+        "output": "3000"
+      }
+    },
+    {
+      "id": "py-str-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "2026 0042 13"
+    },
+    {
+      "id": "py-str-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "32 33 6"
+    },
+    {
+      "id": "py-str-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "['kim', 'lee', 'park']"
+    },
+    {
+      "id": "py-str-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "1,234,568원 (4.6%)"
+    },
+    {
+      "id": "py-str-05",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "False",
+      "fix": {
+        "lines": {
+          "4": "code = code.strip().upper()"
+        },
+        "output": "True"
+      }
+    },
+    {
+      "id": "py-list-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "2 3"
+    },
+    {
+      "id": "py-list-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "None [70, 80, 95] [95, 80, 70]"
+    },
+    {
+      "id": "py-list-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-list-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "[[0, 5, 0], [0, 5, 0], [0, 5, 0]]",
+      "fix": {
+        "lines": {
+          "4": "table = [row.copy(), row.copy(), row.copy()]"
+        },
+        "output": "[[0, 5, 0], [0, 0, 0], [0, 0, 0]]"
+      }
+    },
+    {
+      "id": "py-control-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "C+"
+    },
+    {
+      "id": "py-control-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "12 7"
+    },
+    {
+      "id": "py-control-03",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "condition-change",
+      "level": 2,
+      "reference_output": "11 28"
+    },
+    {
+      "id": "py-control-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "['통과', '재시험', '통과']"
+    },
+    {
+      "id": "py-control-05",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "250",
+      "fix": {
+        "lines": {
+          "6": "        break"
+        },
+        "output": "200"
+      }
+    },
+    {
+      "id": "py-tuple-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "False True True"
+    },
+    {
+      "id": "py-tuple-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "화 수 월"
+    },
+    {
+      "id": "py-tuple-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-tuple-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "(10, 4) (3, 4)"
+    },
+    {
+      "id": "py-dict-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "0 5 None"
+    },
+    {
+      "id": "py-dict-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "3 300 ['A', 'B', 'C']"
+    },
+    {
+      "id": "py-dict-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "{'login': 3, 'view': 2, 'buy': 1}"
+    },
+    {
+      "id": "py-dict-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "{'kim': 2000, 'lee': 1500}",
+      "fix": {
+        "lines": {
+          "7": "    totals[name] += amount"
+        },
+        "output": "{'kim': 5000, 'lee': 1500}"
+      }
+    },
+    {
+      "id": "py-set-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "5 3 True"
+    },
+    {
+      "id": "py-set-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "dict set 2"
+    },
+    {
+      "id": "py-set-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-set-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "purpose-choice",
+      "level": 3,
+      "reference_output": "[108, 105, 103]"
+    },
+    {
+      "id": "py-func-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "1100 None"
+    },
+    {
+      "id": "py-func-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "1600 1700 1100"
+    },
+    {
+      "id": "py-func-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-func-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "0",
+      "fix": {
+        "lines": {
+          "9": "    total += discounted(a)"
+        },
+        "output": "2700.0"
+      }
+    },
+    {
+      "id": "py-star-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "() ('kim',) ('kim', 'lee')"
+    },
+    {
+      "id": "py-star-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "24 [2, 3, 4, 5] [[2, 3, 4], 5]"
+    },
+    {
+      "id": "py-star-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "True"
+    },
+    {
+      "id": "py-star-04",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "reference_output": "('kim', 'lee', 'park') 95"
+    },
+    {
+      "id": "py-star-05",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "reference_output": "{'theme': 'dark', 'size': 14, 'lang': 'ko'}"
+    },
+    {
+      "id": "py-star-06",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "3-15-42"
+    },
+    {
+      "id": "py-decorator-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "HI! BYE! hi"
+    },
+    {
+      "id": "py-decorator-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "['daily_report', 'monthly_report']"
+    },
+    {
+      "id": "py-decorator-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "1300 500"
+    },
+    {
+      "id": "py-decorator-04",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 2,
+      "reference_output": "<b><i>보고서</i></b>"
+    },
+    {
+      "id": "py-decorator-05",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "reference_output": "None {'total': 1}",
+      "fix": {
+        "lines": {
+          "8": "        return func(*args, **kwargs)"
+        },
+        "output": "3500 {'total': 1}"
+      }
+    },
+    {
+      "id": "numpy-matmul-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "reference_output": "[[10, 0], [0, 4]] [[10, 2], [30, 4]]"
+    },
+    {
+      "id": "numpy-matmul-02",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "(2, 1)"
+    },
+    {
+      "id": "pandas-query-at-01",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "reference_output": "['책', '컵']"
+    },
+    {
+      "id": "sql-func-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "(5, 'KIM')"
+    },
+    {
+      "id": "sql-func-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "['김민수', NULL]"
+    },
+    {
+      "id": "sql-func-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 1,
+      "reference_output": "1"
+    },
+    {
+      "id": "sql-func-04",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "reference_output": "3000"
+    },
+    {
+      "id": "sql-func-05",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "[3]"
+    },
+    {
+      "id": "sql-func-06",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "6000"
+    },
+    {
+      "id": "sql-window-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "(4, 4, 3)"
+    },
+    {
+      "id": "sql-window-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "[2, 2, 1, 1, 3]"
+    },
+    {
+      "id": "sql-window-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "[NULL, 30, -40]"
+    },
+    {
+      "id": "sql-window-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "reference_output": "[3]",
+      "fix": {
+        "lines": {
+          "8": "    ROW_NUMBER() OVER (PARTITION BY customer ORDER BY amount DESC) AS rn"
+        },
+        "rows": [[3], [4], [5]]
+      }
+    },
+    {
+      "id": "sql-window-05",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "reference_output": "[100, 300, 350, 380]"
+    },
+    {
+      "id": "sql-change-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-change-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "3"
+    },
+    {
+      "id": "sql-change-03",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "reference_output": "[7000, 5000]"
+    },
+    {
+      "id": "sql-change-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "fill-blank",
+      "level": 2,
+      "reference_output": "[2, 3, 15]"
+    },
+    {
+      "id": "sql-change-05",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "purpose-choice",
+      "level": 3,
+      "reference_output": "1"
+    },
+    {
+      "id": "sql-minmax-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "(800, 15000, 'pen')"
+    },
+    {
+      "id": "sql-cross-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "reference_output": "6"
+    }
+  ]
+}

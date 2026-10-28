@@ -44,6 +44,25 @@ def visible_setup(code):
     return '\n'.join(tables)
 
 
+def run_sql(db, sql):
+    """Run every statement and return the rows of the last one.
+
+    Change items show UPDATE/INSERT/DELETE (or a transaction) before a final SELECT; one-statement queries are unchanged.
+    """
+    statements, buffer = [], ''
+    for line in sql.splitlines(keepends=True):
+        buffer += line
+        if sqlite3.complete_statement(buffer):
+            statements.append(buffer)
+            buffer = ''
+    if buffer.strip():
+        statements.append(buffer)
+    *head, last = statements
+    if head:
+        db.executescript(''.join(head))
+    return db.execute(last).fetchall()
+
+
 def sql_output(rows, answer):
     def literal(value):
         if value is None:
@@ -70,29 +89,33 @@ def table_data(db):
 
 
 def validate(exercise):
+    setup = visible_setup(exercise.code)
     with sqlite3.connect(':memory:') as shown:
-        shown.executescript(visible_setup(exercise.code))
+        shown.executescript(setup)
         if exercise.reference_setup:
             with sqlite3.connect(':memory:') as reference:
                 reference.executescript(exercise.reference_setup)
                 if table_data(shown) != table_data(reference):
                     raise ValueError(f'{exercise.id}: displayed inputs differ from reference_setup')
         if exercise.kind in ('line', 'order', 'multi'):
-            validate_layout(shown, exercise)
+            validate_layout(setup, exercise)
             return
-        rows = shown.execute(exercise.code.replace('____', exercise.answer)).fetchall()
+        rows = run_sql(shown, exercise.code.replace('____', exercise.answer))
         if exercise.kind != 'blank' and sql_output(rows, exercise.answer) != exercise.answer:
             raise ValueError(f'{exercise.id}: displayed inputs do not reproduce the answer')
 
 
-def validate_layout(db, exercise):
+def validate_layout(setup, exercise):
     """Line: the shown query gives reference_output. Order: every correct order gives it.
-    Multi: exactly the answer options give it when placed in ____."""
+    Multi: exactly the answer options give it when placed in ____.
+    Every variant runs on its own copy of the displayed input, so a change item cannot leak into the next one."""
     expected = exercise.reference_output
     if not expected:
         raise ValueError(f'{exercise.id}: {exercise.kind} SQL needs reference_output')
     def output(sql):
-        return sql_output(db.execute(sql).fetchall(), expected)
+        with sqlite3.connect(':memory:') as db:
+            db.executescript(setup)
+            return sql_output(run_sql(db, sql), expected)
     if exercise.kind == 'line':
         if output(exercise.code) != expected:
             raise ValueError(f'{exercise.id}: displayed query does not reproduce reference_output')

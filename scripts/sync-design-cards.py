@@ -7,7 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from backend.content import EXERCISES
-from backend.curriculum import CONCEPTS, LEARNING_PATHS
+from backend.curriculum import CONCEPTS, LEARNING_PATHS, in_track
 
 path = ROOT / 'curriculum/problem_bank.json'
 bank = json.loads(path.read_text())
@@ -19,8 +19,10 @@ for exercise in EXERCISES:
     card.update(asdict(exercise))
     node = LEARNING_PATHS['items'][exercise.id]
     card.update(concept=exercise.concept_id, app_difficulty=exercise.difficulty,
-                difficulty=exercise.level, track_id='sql' if exercise.domain == 'SQL' else 'python',
-                family=node['family'], requires=node['requires'], release_path_version=LEARNING_PATHS['version'],
+                difficulty=exercise.level, track_id=next(t for t in ('python-basics', 'sql', 'python') if in_track(exercise, t)),
+                family=node['family'], requires=node['requires'],
+                # The paths version an item was released under is part of its frozen card; only new cards take the current one.
+                release_path_version=card.get('release_path_version') or LEARNING_PATHS['version'],
                 prerequisite_concepts=next(c['prerequisites'] for c in CONCEPTS if c['id'] == exercise.concept_id))
 bank['version'] = '0.3'
 bank['exercises'] = list(cards.values())
