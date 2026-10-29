@@ -19,9 +19,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "센서 배열 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "중첩 배열의 각 축 길이와 축 순서·평탄화·불필요한 축 추가를 구분하는 기초 확인.",
+    "calibration": "editorial-codex-2026-10-29; 난이도·시간은 편집 추정, 실제 독립 해결·힌트·지연 전이 자료로 재보정 필요"
   },
   "sql-where-01": {
     "concept_id": "sql-rows",
@@ -307,9 +307,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "출력 크기 확인: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "열 두 개를 고른 결과의 열 수와 행 수·원본 열 수·Series 차원 가정을 구분하는 기초 확인.",
+    "calibration": "editorial-codex-2026-10-29; 난이도·시간은 편집 추정, 실제 독립 해결·힌트·지연 전이 자료로 재보정 필요"
   },
   "pandas-filter-02": {
     "concept_id": "pandas-filter",
@@ -355,9 +355,9 @@
     "reasoning_steps": 2,
     "code_load": 2,
     "transfer": 2,
-    "distractor_strength": 0,
-    "rationale": "팀 리포트 검토: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "그룹 분리 후 합계와 마지막 그룹 선택을 연결하고 첫 값·평균·전체 합계를 구분하는 적용.",
+    "calibration": "editorial-codex-2026-10-29; 난이도·시간은 편집 추정, 실제 독립 해결·힌트·지연 전이 자료로 재보정 필요"
   },
   "pandas-select-03": {
     "concept_id": "pandas-select",
@@ -385,27 +385,27 @@
   },
   "pandas-null-03": {
     "concept_id": "pandas-null",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "평균 계산 절차: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "5건 주문의 관측 여부·0원·합계의 대상과 분모를 구분하고 잘못된 계산 단계의 원인을 진단하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-29; 난이도·시간은 편집 추정, 실제 독립 해결·힌트·지연 전이 자료로 재보정 필요"
   },
   "pandas-sort-03": {
     "concept_id": "pandas-sort",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "동점 순위 정리: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "5행에서 두 정렬 열의 우선순위·방향·동점 순서와 행 라벨 재설정의 영향을 구별하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-29; 난이도·시간은 편집 추정, 실제 독립 해결·힌트·지연 전이 자료로 재보정 필요"
   },
   "pandas-group-03": {
     "concept_id": "pandas-group",

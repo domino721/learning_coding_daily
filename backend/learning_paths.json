@@ -35,7 +35,8 @@
       "requires": [],
       "remediation": ["numpy-axis-01"],
       "objective": "센서 배열 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "sql-where-01": {
       "concept_id": "sql-rows",
@@ -286,7 +287,8 @@
       "requires": [],
       "remediation": ["pandas-select-01"],
       "objective": "출력 크기 확인: 반환 자료형과 행/열 선택을 구분하고 후속 연산까지 추적한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "pandas-filter-02": {
       "concept_id": "pandas-filter",
@@ -326,7 +328,8 @@
       "requires": ["pandas-filter-01", "pandas-group-01"],
       "remediation": ["pandas-filter-01", "pandas-group-01"],
       "objective": "팀 리포트 검토: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 여러 조건/연산을 연결하는 적용이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "pandas-select-03": {
       "concept_id": "pandas-select",
@@ -361,8 +364,9 @@
       "family": "pandas-null:결측치와 분모",
       "requires": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
       "remediation": ["pandas-select-01", "pandas-null-01", "pandas-null-02"],
-      "objective": "평균 계산 절차: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "결측 주문을 평균 분모에서 제외하고 실제 0원은 포함하도록 잘못된 분모를 만든 줄을 진단한다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
     },
     "pandas-sort-03": {
       "concept_id": "pandas-sort",
@@ -371,8 +375,9 @@
       "family": "pandas-sort:다중 정렬",
       "requires": ["pandas-select-01", "pandas-sort-01", "pandas-sort-02"],
       "remediation": ["pandas-select-01", "pandas-sort-01", "pandas-sort-02"],
-      "objective": "동점 순위 정리: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "두 정렬 열의 우선순위와 방향, 행 라벨 재설정이 보고서의 이름 순서에 미치는 영향을 판단한다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
     },
     "pandas-group-03": {
       "concept_id": "pandas-group",

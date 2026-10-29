@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "review_id": "maintenance-2026-10-29",
+  "date": "2026-10-29",
+  "timezone": "Asia/Seoul",
+  "tasks": ["WBS-370"],
+  "status": "reviewed",
+  "base_commit": "ce0dae709db1dc9b461829e767fd11ff9905632d",
+  "method": "Codex가 작성 후 별도 단계에서 다시 풀고 격리된 개발용 Python 프로세스의 실제 pandas/NumPy 연산으로 검증한다. 같은 Codex 실행 내 자체 검수이며 Gemini/Argon 또는 독립 모델 교차 검수가 아니다. 모델 API 호출 없음.",
+  "selection": "docs/CONTENT_QUALITY_REVIEW.md 목록 순서의 단계3 출력 예측 첫2개, 나머지는 distractor_strength 0인 kind=choice 첫3개. 후자의 기본 short 응답과 기존 보기/버전은 유지하며 각 오답의 구체적인 오개념을 검수한다.",
+  "new_ids": 0,
+  "items": [
+    {
+      "id": "pandas-null-03",
+      "previous_version": 1,
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "action": "format-conversion",
+      "answer": "8",
+      "reference_output": "6.0",
+      "distractor_targets": {
+        "6": "열 선택이 결측 행을 자동으로 없애야 한다고 오해해 입력 보존 단계와 분모 계산을 혼동한다.",
+        "9": "잘못된 분모가 전달된 원인 줄과 실제 나눗셈이 수행되는 줄을 혼동한다."
+      },
+      "distractor_strength": 2,
+      "difficulty_rationale": "5건 주문의 관측 여부·0원·합계의 대상과 분모를 구분하고 잘못된 계산 단계의 원인을 진단하는 전이 과제.",
+      "estimated_seconds": 180,
+      "time_rationale": "기존 예상 시간 유지. 입력과 중간 연산·보기 비교를 위한 편집 추정이며 실측값이 아니다.",
+      "review_status": "reviewed",
+      "synthetic_business_rows": 5,
+      "code_lines": 10,
+      "previous_published_exercise": {
+        "id": "pandas-null-03",
+        "concept": "결측치와 분모",
+        "kind": "choice",
+        "title": "평균 계산 절차",
+        "prompt": "아래 코드의 출력값을 구하세요.",
+        "code": "import pandas as pd\ns = pd.Series([2.0, None, 4.0])\nprint((float(s.mean()), float(s.fillna(0).mean())))",
+        "answer": "(3.0, 2.0)",
+        "explanation": "원래 평균은 결측값을 빼고 6/2, 0 대체 후에는 6/3을 계산합니다.",
+        "hints": [
+          "두 평균에서 사용하는 분모가 같은지 확인해 보세요.",
+          "첫 평균은 결측값을 제외하고, 두 번째 평균은 0 대체 후 모든 위치를 셉니다."
+        ],
+        "choices": ["(3.0, 2.0)", "(2.0, 2.0)", "(3.0, 3.0)", "(2.0, 3.0)"],
+        "accepted": [],
+        "seconds": 180,
+        "version": 1,
+        "domain": "pandas",
+        "level": 3,
+        "concept_id": "pandas-null",
+        "response_mode": "short",
+        "difficulty": {
+          "level": 3,
+          "label": "조건 변화·전이",
+          "reasoning_steps": 3,
+          "code_load": 1,
+          "transfer": 3,
+          "distractor_strength": 0,
+          "rationale": "평균 계산 절차: 결측 마스크/대체 후 집계 대상과 분모의 변화를 판단한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+          "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        },
+        "reference_setup": "",
+        "reference_output": "(3.0, 2.0)"
+      },
+      "fix": {
+        "lines": {
+          "8": "denominator = amount.count()"
+        },
+        "output": "10.0"
+      },
+      "shown_output": "6.0",
+      "fixed_output": "10.0",
+      "reference_solution": "관측 금액은12·0·18, 합30·건수3이다. len이 미관측 주문2건도 세어 분모5가 된 8번 줄이 원인이다. count로 교정하면10.0이며, 실제0원을 제외하면15.0이 되어 틀리다.",
+      "editorial_checks": {
+        "unique_answer_or_set": true,
+        "prompt_code_choices_key_explanation_hints_consistent": true,
+        "progressive_two_hints": true,
+        "neutral_title_and_no_early_concept_or_hint": true
+      },
+      "boundary_checks": [
+        {
+          "case": "0원은 관측이며 결측은 제외",
+          "reference_code": "import pandas as pd\ns=pd.Series([None,0,None,10,None])\nprint((int(s.count()),float(s.sum()/s.count())))",
+          "expected": "(2, 5.0)",
+          "actual": "(2, 5.0)",
+          "status": "passed"
+        },
+        {
+          "case": "모든 금액이 관측된 경우 len과 count 동일",
+          "reference_code": "import pandas as pd\ns=pd.Series([12,3,0,18,2])\nprint((len(s),int(s.count()),float(s.sum()/s.count())))",
+          "expected": "(5, 5, 7.0)",
+          "actual": "(5, 5, 7.0)",
+          "status": "passed"
+        },
+        {
+          "case": "모두 결측이면 분모0, 일반화에는 평균 미정의 처리 필요",
+          "reference_code": "import pandas as pd\ns=pd.Series([None]*5,dtype=float)\nprint((int(s.count()),bool(pd.isna(s.mean()))))",
+          "expected": "(0, True)",
+          "actual": "(0, True)",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "pandas-sort-03",
+      "previous_version": 1,
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "action": "format-conversion",
+      "answer": "1,4",
+      "reference_output": "['A', 'B', 'C', 'E', 'D']",
+      "distractor_targets": {
+        "df.sort_values([\"score\", \"name\"], ascending=[False, True])": "두 열의 정렬 방향을 한 방향으로만 지정할 수 있다고 오해해 이 정답 식을 빠뜨린다.",
+        "df.sort_values([\"name\", \"score\"], ascending=[True, False])": "정렬 열 목록의 순서가 우선순위를 정한다는 점을 놓쳐 이름을 먼저 정렬한다.",
+        "df.sort_values([\"score\", \"name\"], ascending=[True, True])": "ascending=True를 큰 점수가 먼저 온다는 뜻으로 오해한다.",
+        "df.sort_values([\"score\", \"name\"], ascending=[False, True], ignore_index=True)": "행 라벨을 다시 붙이면 정렬된 실제 행 순서도 원래대로 돌아간다고 오해해 이 정답을 빠뜨린다.",
+        "df.sort_values([\"score\", \"name\"], ascending=[False, False])": "첫 정렬 열의 내림차순을 동점 이름에도 적용해야 한다고 오해한다."
+      },
+      "distractor_strength": 2,
+      "difficulty_rationale": "5행에서 두 정렬 열의 우선순위·방향·동점 순서와 행 라벨 재설정의 영향을 구별하는 전이 과제.",
+      "estimated_seconds": 180,
+      "time_rationale": "기존 예상 시간 유지. 입력과 중간 연산·보기 비교를 위한 편집 추정이며 실측값이 아니다.",
+      "review_status": "reviewed",
+      "synthetic_business_rows": 5,
+      "code_lines": 8,
+      "previous_published_exercise": {
+        "id": "pandas-sort-03",
+        "concept": "다중 정렬",
+        "kind": "choice",
+        "title": "동점 순위 정리",
+        "prompt": "아래 코드의 출력값을 구하세요.",
+        "code": "import pandas as pd\ndf = pd.DataFrame({\"name\": [\"C\", \"A\", \"B\"], \"score\": [80, 90, 90]})\nprint(df.sort_values([\"score\", \"name\"], ascending=[False, True])[\"name\"].tolist())",
+        "answer": "['A', 'B', 'C']",
+        "explanation": "점수는 내림차순, 동점이면 이름 오름차순으로 정렬합니다.",
+        "hints": [
+          "정렬 기준 두 개의 우선순위를 나누어 읽어 보세요.",
+          "첫 번째 값으로 먼저 정렬하고 동점인 행끼리 두 번째 기준을 적용합니다."
+        ],
+        "choices": [
+          "['A', 'B', 'C']",
+          "['B', 'A', 'C']",
+          "['C', 'A', 'B']",
+          "['C', 'B', 'A']"
+        ],
+        "accepted": [],
+        "seconds": 180,
+        "version": 1,
+        "domain": "pandas",
+        "level": 3,
+        "concept_id": "pandas-sort",
+        "response_mode": "short",
+        "difficulty": {
+          "level": 3,
+          "label": "조건 변화·전이",
+          "reasoning_steps": 3,
+          "code_load": 1,
+          "transfer": 3,
+          "distractor_strength": 0,
+          "rationale": "동점 순위 정리: 정렬 기준과 정렬 후 위치 선택의 순서를 추적한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
+          "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        },
+        "reference_setup": "",
+        "reference_output": "['A', 'B', 'C']"
+      },
+      "option_outputs": {
+        "df.sort_values([\"score\", \"name\"], ascending=[False, True])": "['A', 'B', 'C', 'E', 'D']",
+        "df.sort_values([\"name\", \"score\"], ascending=[True, False])": "['A', 'B', 'C', 'D', 'E']",
+        "df.sort_values([\"score\", \"name\"], ascending=[True, True])": "['D', 'C', 'E', 'A', 'B']",
+        "df.sort_values([\"score\", \"name\"], ascending=[False, True], ignore_index=True)": "['A', 'B', 'C', 'E', 'D']",
+        "df.sort_values([\"score\", \"name\"], ascending=[False, False])": "['B', 'A', 'E', 'C', 'D']"
+      },
+      "reference_solution": "점수 90 안에서 A·B, 80 안에서 C·E, 70의 D를 연결한다. 실제5개 보기 결과 중 1·4번만 이 목록과 같으며 행 라벨 재설정은 names.tolist()에 영향을 주지 않는다.",
+      "editorial_checks": {
+        "unique_answer_or_set": true,
+        "prompt_code_choices_key_explanation_hints_consistent": true,
+        "progressive_two_hints": true,
+        "neutral_title_and_no_early_concept_or_hint": true
+      },
+      "boundary_checks": [
+        {
+          "case": "원본 라벨과 데이터 순서를 바꿔도 동일 보고순서",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame({\"name\":[\"D\",\"A\",\"E\",\"B\",\"C\"],\"score\":[70,90,80,90,80]},index=[100,4,2,8,1])\na=df.sort_values([\"score\",\"name\"],ascending=[False,True])\nb=df.sort_values([\"score\",\"name\"],ascending=[False,True],ignore_index=True)\nprint((a[\"name\"].tolist(),a[\"name\"].tolist()==b[\"name\"].tolist(),a.index.tolist()!=b.index.tolist()))",
+          "expected": "(['A', 'B', 'C', 'E', 'D'], True, True)",
+          "actual": "(['A', 'B', 'C', 'E', 'D'], True, True)",
+          "status": "passed"
+        },
+        {
+          "case": "음수 점수와 동점도 점수 우선·이름 오름차순",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame({\"name\":[\"C\",\"B\",\"E\",\"A\",\"D\"],\"score\":[-2,-1,-2,-1,-3]})\nprint(df.sort_values([\"score\",\"name\"],ascending=[False,True])[\"name\"].tolist())",
+          "expected": "['A', 'B', 'C', 'E', 'D']",
+          "actual": "['A', 'B', 'C', 'E', 'D']",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "pandas-select-02",
+      "previous_version": 2,
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "action": "distractor-review",
+      "answer": "2",
+      "reference_output": "2",
+      "distractor_targets": {
+        "1": "shape[1]을 두 번째 축의 길이가 아니라 선택 결과의 행 수로 읽는다.",
+        "3": "선택 뒤에도 원본 DataFrame의 세 열이 모두 남는다고 생각한다.",
+        "오류가 발생한다": "열 이름 목록으로 선택한 결과를 Series로 오해해 shape[1] 접근이 범위를 벗어난다고 생각한다."
+      },
+      "distractor_strength": 2,
+      "difficulty_rationale": "열 두 개를 고른 결과의 열 수와 행 수·원본 열 수·Series 차원 가정을 구분하는 기초 확인.",
+      "estimated_seconds": 120,
+      "time_rationale": "기존 예상 시간 유지. 입력과 중간 연산·보기 비교를 위한 편집 추정이며 실측값이 아니다.",
+      "review_status": "reviewed",
+      "actual_output": "2",
+      "reference_solution": "선택한 열 item·qty의 shape는(1,2), shape[1]은2. 원본열3개·선택행1개와 다르다.",
+      "editorial_checks": {
+        "unique_answer_or_set": true,
+        "prompt_code_choices_key_explanation_hints_consistent": true,
+        "progressive_two_hints": true,
+        "neutral_title_and_no_early_concept_or_hint": true
+      },
+      "boundary_checks": [
+        {
+          "case": "행 수가 증가해도 선택 열 수는2",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame({\"item\":[\"A\",\"B\",\"C\",\"D\"],\"amount\":[1,2,3,4],\"qty\":[1,1,2,2]})\nprint(df[[\"item\",\"qty\"]].shape)",
+          "expected": "(4, 2)",
+          "actual": "(4, 2)",
+          "status": "passed"
+        },
+        {
+          "case": "행0개라도 두 열의 축은 남음",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame(columns=[\"item\",\"amount\",\"qty\"])\nprint(df[[\"item\",\"qty\"]].shape)",
+          "expected": "(0, 2)",
+          "actual": "(0, 2)",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "pandas-group-02",
+      "previous_version": 2,
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 2,
+      "action": "distractor-review",
+      "answer": "8000",
+      "reference_output": "8000",
+      "distractor_targets": {
+        "3000": "그룹 합계 대신 A팀에서 처음 나타난 한 건만 읽는다.",
+        "4000": "sum을 mean처럼 해석해 A팀 평균 (3000+5000)/2를 답한다.",
+        "12000": "팀 구분을 무시하고 전체 금액을 더한다."
+      },
+      "distractor_strength": 2,
+      "difficulty_rationale": "그룹 분리 후 합계와 마지막 그룹 선택을 연결하고 첫 값·평균·전체 합계를 구분하는 적용.",
+      "estimated_seconds": 120,
+      "time_rationale": "기존 예상 시간 유지. 입력과 중간 연산·보기 비교를 위한 편집 추정이며 실측값이 아니다.",
+      "review_status": "reviewed",
+      "actual_output": "8000",
+      "reference_solution": "A팀의 두 금액3000+5000=8000. 첫 값3000·평균4000·전체합12000과 구분한다.",
+      "editorial_checks": {
+        "unique_answer_or_set": true,
+        "prompt_code_choices_key_explanation_hints_consistent": true,
+        "progressive_two_hints": true,
+        "neutral_title_and_no_early_concept_or_hint": true
+      },
+      "boundary_checks": [
+        {
+          "case": "A팀이 비연속이어도 모두 합산",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame({\"team\":[\"A\",\"B\",\"A\",\"B\",\"A\"],\"amount\":[3,100,5,200,7]})\nprint(df.groupby(\"team\")[\"amount\"].sum()[\"A\"])",
+          "expected": "15",
+          "actual": "15",
+          "status": "passed"
+        },
+        {
+          "case": "B팀 금액만 바꿔도 A팀 합계 유지",
+          "reference_code": "import pandas as pd\ndf=pd.DataFrame({\"team\":[\"A\",\"B\",\"A\"],\"amount\":[3000,99999,5000]})\nprint(df.groupby(\"team\")[\"amount\"].sum()[\"A\"])",
+          "expected": "8000",
+          "actual": "8000",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "numpy-shape-01",
+      "previous_version": 2,
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "action": "distractor-review",
+      "answer": "(2, 3)",
+      "reference_output": "(2, 3)",
+      "distractor_targets": {
+        "(3, 2)": "행과 열의 축 순서를 바꾸어 읽는다.",
+        "(6,)": "shape를 평탄화한 전체 원소 개수 하나로 오해한다.",
+        "(2, 1, 3)": "각 행의 대괄호가 별도 길이1 축을 하나 더 만든다고 오해한다."
+      },
+      "distractor_strength": 2,
+      "difficulty_rationale": "중첩 배열의 각 축 길이와 축 순서·평탄화·불필요한 축 추가를 구분하는 기초 확인.",
+      "estimated_seconds": 120,
+      "time_rationale": "기존 예상 시간 유지. 입력과 중간 연산·보기 비교를 위한 편집 추정이며 실측값이 아니다.",
+      "review_status": "reviewed",
+      "actual_output": "(2, 3)",
+      "reference_solution": "바깥 길이2와 각 행 길이3이므로(2,3). 실제 축은2개이며 평탄화6개나 추가축(2,1,3)은 다른 배열의 모양이다.",
+      "editorial_checks": {
+        "unique_answer_or_set": true,
+        "prompt_code_choices_key_explanation_hints_consistent": true,
+        "progressive_two_hints": true,
+        "neutral_title_and_no_early_concept_or_hint": true
+      },
+      "boundary_checks": [
+        {
+          "case": "전체 원소수가 같아도 shape가 다름",
+          "reference_code": "import numpy as np\nx=np.arange(6)\nprint((x.reshape(3,2).shape,x.reshape(2,3).shape,x.shape))",
+          "expected": "((3, 2), (2, 3), (6,))",
+          "actual": "((3, 2), (2, 3), (6,))",
+          "status": "passed"
+        },
+        {
+          "case": "실제로 축을 추가한 경우에만 길이1이 추가",
+          "reference_code": "import numpy as np\nx=np.array([[1,2,3],[4,5,6]])\nprint((x.shape,x[:,None,:].shape))",
+          "expected": "((2, 3), (2, 1, 3))",
+          "actual": "((2, 3), (2, 1, 3))",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "reference_validation": {
+    "engine": "isolated development Python; never API process",
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "resolved_answers": {
+      "pandas-null-03": "8",
+      "pandas-sort-03": "1,4",
+      "pandas-select-02": "2",
+      "pandas-group-02": "8000",
+      "numpy-shape-01": "(2, 3)"
+    },
+    "option_variants": "all passed",
+    "boundary_checks_passed": 11,
+    "quality_gate": "passed",
+    "post_baseline_items_in_this_review": 2,
+    "post_baseline_output_share": "0/2",
+    "same_version_editorial_reviews": 3
+  },
+  "preservation_validation": {
+    "catalog_size": 313,
+    "new_ids": 0,
+    "changed_published_exercises": ["pandas-null-03", "pandas-sort-03"],
+    "other_published_exercises_unchanged": 311,
+    "other_cards_unchanged": 325,
+    "learning_paths_version_rules_review_tracks": "unchanged",
+    "previous_versions": "Git base_commit 및 previous_published_exercise"
+  },
+  "verification": {
+    "check_sh": {
+      "status": "passed",
+      "python_tests": 1245,
+      "node_tests": 26,
+      "format_typecheck_build": "passed",
+      "warning": "Starlette httpx 사용 중단 예정 경고1개"
+    },
+    "mobile_e2e": {
+      "status": "passed",
+      "command": "npm run test:e2e",
+      "passed": 50,
+      "skipped": 11,
+      "elapsed": "4.5m",
+      "skip_reason": "기기 저장 전용 시나리오의 서버 모드 제외, 실패0"
+    },
+    "targeted_mobile_solve_and_old_snapshot": {
+      "status": "passed",
+      "viewport": "320x740",
+      "solved": [
+        {
+          "id": "pandas-null-03",
+          "kind": "line",
+          "version": 2,
+          "answer": "8",
+          "status": "correct"
+        },
+        {
+          "id": "pandas-sort-03",
+          "kind": "multi",
+          "version": 2,
+          "answer": "1,4",
+          "status": "correct"
+        },
+        {
+          "id": "numpy-shape-01",
+          "kind": "choice",
+          "version": 2,
+          "answer": "(2, 3)",
+          "status": "correct"
+        },
+        {
+          "id": "pandas-group-02",
+          "kind": "choice",
+          "version": 2,
+          "answer": "8000",
+          "status": "correct"
+        },
+        {
+          "id": "pandas-select-02",
+          "kind": "choice",
+          "version": 2,
+          "answer": "2",
+          "status": "correct"
+        }
+      ],
+      "archived_snapshots_preserved": 310,
+      "previous_versions_preserved": [
+        {
+          "id": "pandas-null-03",
+          "version": 1
+        },
+        {
+          "id": "pandas-sort-03",
+          "version": 1
+        }
+      ],
+      "reload_today_count": 5,
+      "page_errors": []
+    },
+    "deployment": {
+      "status": "pending_at_commit",
+      "workflow": ".github/workflows/pages.yml",
+      "required_evidence": "이 commit의 Pages quality/publish success 및 Verify the public site serves this build 로그. 실행 뒤 최종 보고로 확인하며 commit만으로 배포 성공을 주장하지 않음."
+    },
+    "web_build": "npm run test:e2e의 build:web 통과"
+  }
+}

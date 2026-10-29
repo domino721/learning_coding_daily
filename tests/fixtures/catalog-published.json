@@ -721,10 +721,10 @@
    "version": 2
   },
   "pandas-null-03": {
-   "design_card": "42182b961d389c8da86a070b529c960c20fbc4ad7990e89709af89de3f2414cc",
-   "exercise": "900f4c6212c774abe0eeeead3d5257de2504370bfb71899b2647af377cf5272e",
-   "path_item": "f4626f6aadbf8fc83d07b242fbbc14773694facd481b4f406feeef81e255bc26",
-   "version": 1
+   "design_card": "a0bbed0ebee8b2bf4dc5b1dda5f4c7669fe5a3be2cc114d7f6f777f01f0199e7",
+   "exercise": "529307ddad8768d504e372f6abc8f6ea9519edc94476d10d591f68cd2231d4d5",
+   "path_item": "19100138906ad6f0810d6d6fa90354ed24af43a3f8986676739107b35a8a8fec",
+   "version": 2
   },
   "pandas-null-groups-20261019": {
    "design_card": "77f427ce53f54d76b974b843fac1c17f6b55ef750a6ea0ade982af7c1ded1164",
@@ -817,10 +817,10 @@
    "version": 2
   },
   "pandas-sort-03": {
-   "design_card": "73fb29e090e0c17e88161bf1c41164df1081fa9b5a5982f7fa4263a562e18ae4",
-   "exercise": "278203397e4180d1622eab01776b0a7bc956d20c1dad919aab3705cbbe6baa98",
-   "path_item": "d205eb6f42ee179fe8023db2211134138c0161aa9d37136377517acc04262fb7",
-   "version": 1
+   "design_card": "082c9951e167dc9b904bd0f82c5d4927ea74beb96f9106fc4eb482c1621b3db2",
+   "exercise": "c9f9118a9bbb9759f7c181d9df8765e4c1f57a5b040c087e67a56656abf9276b",
+   "path_item": "768a1662abaee06e37f17bcba257946ab82d0a0a1cdfccb19384ee763f9cce56",
+   "version": 2
   },
   "pandas-sort-missing-20261019": {
    "design_card": "672599bcdc680073a18f58ee62492d48a9bde2058195e2636ca18910c90642a7",
