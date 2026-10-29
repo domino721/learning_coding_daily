@@ -1008,6 +1008,16 @@
         "tests/e2e/terminal.spec.ts"
       ],
       "code_reference": "16664d348450758b5a8389383080d530ed237395"
+    },
+    {
+      "id": "EV-073",
+      "record": "docs/planning/evidence/EV-073.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "backend/terminal_content.json"
+      ],
+      "code_reference": "1dfabf887b1f27ecc554dbb049670c6c2896cdf1"
     }
   ]
 }

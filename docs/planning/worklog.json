@@ -1222,6 +1222,18 @@
       ],
       "summary": "사용자 요청(“터미널·Git 적절하게 섹터 분할해서 완전 기초부터 학습할 수 있게 만들어 줘”)으로 네 번째 독립 트랙 터미널·Git(terminal-git, domain 터미널·Git)을 만들었다. 개념 15개(터미널 9·Git 6)와 61문항(기초 31·적용 15·전이 15)을 backend/terminal_content.json에 쓰고, 코드 맨 위 주석의 시작 상태만으로 bash·Git을 실행해 정답·보기·순서·고친 줄을 검증하는 scripts/validate_shell_content.py를 웹 내보내기·테스트에 연결했다. Windows PowerShell 고유 동작 3문항은 공식 문서 근거로 검수했다. 두 domain의 답은 보기 그대로 채점하고(띄어쓰기만 다른 git status 보기), 보기·정답의 줄바꿈을 유지하며, 홈 트랙 카드 4장을 320px 한 줄에 두었다. 정답을 모르는 별도 검수자가 61/61 일치했고 지적 21건 중 지문 소거·git restore 기준·기본 브랜치·Ubuntu PATH·Windows 보기·순서 조각을 고쳤다. 트랙을 정하지 않은 전체 풀의 fixture 선택을 갱신했다. 기준선 1.15.0(CR-019, WBS-392). 검증 EV-072. 원격 저장/게시 전.",
       "commit": null
+    },
+    {
+      "id": "LOG-103",
+      "date": "2026-10-29",
+      "tasks": [
+        "WBS-392"
+      ],
+      "changes": [
+        "CR-019"
+      ],
+      "summary": "CR-019(1dfabf8)을 확인용 브랜치 ci/cr-019-check의 Ubuntu 품질 검사로 먼저 확인했다(40828764982 Prettier 실패→수정, 40830130658 리눅스 글꼴에서 설명 문장이 두 줄로 접혀 E2E 1건 실패→문장 단축, 40831504166 성공: pytest1367·모바일51). 같은 커밋을 main 16664d3..1dfabf8로 비강제 push하고 태그 design/plan-v1.15.0을 원격에 저장한 뒤 확인용 브랜치를 지웠다. 관리 40832193732·Pages 40832193725 success, 원격 pytest1367/Node26/모바일51 통과, 공개 HTML·JS·CSS 5개가 같은 commit 빌드와 일치하고 공개 번들에 배포본 식별자 1dfabf8과 terminal-git 트랙·새 문항(sh-path-01·git-remote-04)이 포함됨을 확인했다 EV-073.",
+      "commit": "1dfabf887b1f27ecc554dbb049670c6c2896cdf1"
     }
   ]
 }
