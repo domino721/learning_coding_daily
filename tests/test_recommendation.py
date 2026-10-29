@@ -51,7 +51,9 @@ def test_curriculum_has_explicit_metadata_and_acyclic_prerequisites():
 def test_initial_mix_and_same_day_repetition_never_unlocks_advanced():
     first=select_exercises(EXERCISES,[],{},'2026-10-20')
     # learning-paths-2.2 breaks the last tie by task form, so the SQL slot takes the ordering foundation.
-    assert [e.id for e,_ in first]==['pandas-select-01','numpy-shape-01','sql-clause-order-form-01','stats-median-01','ml-split-01']
+    # CR-019: this all-track pool (no track; the app always passes one) also holds the 터미널·Git roots,
+    # and their multi foundation sh-path-03 wins the same tie-break ahead of stats-median-01.
+    assert [e.id for e,_ in first]==['pandas-select-01','numpy-shape-01','sql-clause-order-form-01','sh-path-03','stats-median-01']
     assert len({e.domain for e,_ in first})==5
     sessions=sessions_from([{'id':'pandas-select-01','day':'2026-10-20'}]*20)
     assert concept_states(sessions,BY_ID)['pandas-select']['level']==1

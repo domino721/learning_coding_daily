@@ -5,6 +5,7 @@ Line: the shown code prints reference_output (the reported wrong result), or sto
 in the review entry's `raises`; the review fix gives the target.
 Multi: exactly the answer options print reference_output when placed in ____.
 Only repository-owned snippets run, in a separate isolated interpreter (never the API process).
+터미널·Git items run with bash from the starting state their header shows (scripts/validate_shell_content.py).
 """
 import json
 import sqlite3
@@ -16,6 +17,8 @@ import pytest
 
 from backend.content import EXERCISES, LAYOUT_KINDS, valid_choice_answer
 from backend.curriculum import LEARNING_PATHS
+from scripts.validate_shell_content import capture_of, is_shell, outputs, same
+from scripts.validate_shell_content import variants as shell_variants
 from scripts.validate_sql_content import run_sql, sql_output
 
 CARDS = {c['id']: c for c in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
@@ -65,10 +68,30 @@ def variants(ex):
 
 @pytest.fixture(scope='module')
 def results():
-    jobs = [(ex, label, program) for ex in ITEMS if ex.domain != 'SQL' for label, program, _ in variants(ex)]
+    jobs = [(ex, label, program) for ex in ITEMS if ex.domain != 'SQL' and not is_shell(ex)
+            for label, program, _ in variants(ex)]
     out = subprocess.run([sys.executable, '-I', '-c', HARNESS], input=json.dumps([j[2] for j in jobs]),
                          capture_output=True, text=True, check=True, timeout=300).stdout
     return {(ex.id, label): result for (ex, label, _), result in zip(jobs, json.loads(out))}
+
+
+def shell_jobs(ex):
+    entry = ENTRIES[ex.id]
+    traps = CARDS[ex.id]['distractor_targets'] if ex.kind == 'order' else ()
+    return [(label, program, expected, (program, capture_of(ex, entry), entry.get('check')))
+            for label, program, expected in shell_variants(ex, entry, traps)]
+
+
+@pytest.fixture(scope='module')
+def shell_results():
+    """Every variant of every executable 터미널·Git layout item, each in its own temporary home."""
+    keys, jobs = [], []
+    for ex in ITEMS:
+        if is_shell(ex) and ENTRIES[ex.id].get('verify') != 'documented':
+            for label, _, _, job in shell_jobs(ex):
+                keys.append((ex.id, label))
+                jobs.append(job)
+    return dict(zip(keys, outputs(jobs)))
 
 
 
@@ -95,8 +118,21 @@ def test_answers_are_gradable_and_traps_are_wrong(ex):
 
 
 @pytest.mark.parametrize('ex', ITEMS, ids=lambda ex: ex.id)
-def test_every_variant_reproduces_its_reviewed_result(ex, results):
+def test_every_variant_reproduces_its_reviewed_result(ex, results, shell_results):
     fix = ENTRIES[ex.id].get('fix', {})
+    if is_shell(ex):
+        entry = ENTRIES[ex.id]
+        if entry.get('verify') == 'documented':
+            # A Windows-only fact cannot run here; the review entry cites the official documentation.
+            assert entry['sources'] and entry['basis'] and fix
+            return
+        for label, _, expected, _ in shell_jobs(ex):
+            shown = shell_results[(ex.id, label)]
+            if expected == 'fix':
+                assert same(shown, fix['output'], entry), (label, shown)
+            else:
+                assert same(shown, ex.reference_output, entry) == (expected == 'same'), (label, shown)
+        return
     for label, program, expected in variants(ex):
         if ex.domain == 'SQL':
             with sqlite3.connect(':memory:') as db:

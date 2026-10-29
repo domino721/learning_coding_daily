@@ -994,6 +994,20 @@
         "backend/basics_content.json"
       ],
       "code_reference": "a1e2f79d3160a5982ca858c07498826d04532496"
+    },
+    {
+      "id": "EV-072",
+      "record": "docs/planning/evidence/EV-072.md",
+      "artifacts": [
+        "backend/terminal_content.json",
+        "scripts/validate_shell_content.py",
+        "backend/curriculum.py",
+        "src/curriculum.json",
+        "curriculum/reviews/2026-10-29-terminal-git.json",
+        "tests/test_format_content.py",
+        "tests/e2e/terminal.spec.ts"
+      ],
+      "code_reference": "16664d348450758b5a8389383080d530ed237395"
     }
   ]
 }

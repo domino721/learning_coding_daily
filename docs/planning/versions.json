@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "current": {
-    "design": "1.14.0",
-    "plan": "1.14.0"
+    "design": "1.15.0",
+    "plan": "1.15.0"
   },
   "versions": [
     {
@@ -244,6 +244,22 @@
       "sha256": "3a4d55cfb55ee72d2be5c50056448149f27306008574f7e7c6df46a6587bb682",
       "change": "CR-018",
       "git_tag": "plan-v1.14.0"
+    },
+    {
+      "kind": "design",
+      "version": "1.15.0",
+      "path": "docs/planning/baselines/design-v1.15.0.md",
+      "sha256": "c2bd264a6bf59f91c2c903d42b2f245db3e3163d28d7c96127fc3afc7692b7be",
+      "change": "CR-019",
+      "git_tag": "design-v1.15.0"
+    },
+    {
+      "kind": "plan",
+      "version": "1.15.0",
+      "path": "docs/planning/baselines/plan-v1.15.0.json",
+      "sha256": "ba89ad7dd2de78c1b8620c3d774b5b91286155f5c93b6751dd52f667db8df984",
+      "change": "CR-019",
+      "git_tag": "plan-v1.15.0"
     }
   ],
   "legacy": {

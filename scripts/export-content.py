@@ -9,8 +9,10 @@ sys.path.insert(0, str(ROOT))
 from backend.content import EXERCISES, TRACKS
 from backend.curriculum import CONCEPTS, LEARNING_PATHS, validate_learning_paths
 from validate_sql_content import validate_all
+from validate_shell_content import validate_all as validate_shell
 
 validate_all(EXERCISES)
+validate_shell(EXERCISES)
 validate_learning_paths(EXERCISES)
 
 path = ROOT / "src/curriculum.json"

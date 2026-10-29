@@ -33,7 +33,7 @@ export function LinePicker({
               <span className="line-no" aria-hidden="true">
                 {no}
               </span>
-              <code>{highlight(line, sql)}</code>
+              <code>{highlight(line, item.domain)}</code>
             </>
           );
           if (!candidates.has(no) || readOnly)
@@ -66,7 +66,6 @@ export function LinePicker({
 
 // Tap a remaining line to append it; tap a placed line to send it back.
 export function OrderBuilder({ item, value, onChange, disabled }: Props) {
-  const sql = item.domain === "SQL";
   const placed = optionNumbers(value);
   const remaining = item.choices
     .map((_, i) => i + 1)
@@ -94,7 +93,7 @@ export function OrderBuilder({ item, value, onChange, disabled }: Props) {
               <span className="order-position" aria-hidden="true">
                 {position + 1}
               </span>
-              <code>{highlight(item.choices[n - 1] ?? "", sql)}</code>
+              <code>{highlight(item.choices[n - 1] ?? "", item.domain)}</code>
               <span className="order-remove" aria-hidden="true">
                 ✕
               </span>
@@ -116,7 +115,7 @@ export function OrderBuilder({ item, value, onChange, disabled }: Props) {
                   onClick={() => set([...placed, n])}
                   aria-label={`추가: ${item.choices[n - 1]}`}
                 >
-                  <code>{highlight(item.choices[n - 1], sql)}</code>
+                  <code>{highlight(item.choices[n - 1], item.domain)}</code>
                 </button>
               </li>
             ))}

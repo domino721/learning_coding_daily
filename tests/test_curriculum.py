@@ -8,6 +8,7 @@ import pytest
 from sklearn.preprocessing import StandardScaler
 
 from backend.content import EXERCISES, LAYOUT_KINDS
+from scripts.validate_shell_content import capture_of, is_shell, review_entries, run_shell, same
 from scripts.validate_sql_content import run_sql as run_statements, sql_output
 
 
@@ -48,6 +49,7 @@ def run_sql(exercise):
 
 # Line/order/multi answers are option numbers; tests/test_format_content.py re-runs them.
 CLASSIC = [ex for ex in EXERCISES if ex.kind not in LAYOUT_KINDS]
+SHELL_ENTRIES = review_entries([ex for ex in EXERCISES if is_shell(ex)])
 
 
 @pytest.mark.parametrize('exercise', CLASSIC, ids=lambda ex: ex.id)
@@ -56,6 +58,16 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
     if exercise.choices:
         assert exercise.answer in exercise.choices
         assert len(set(exercise.choices)) == len(exercise.choices) == 4
+    if exercise.reference_output and is_shell(exercise):
+        # 터미널·Git: bash runs the code from the starting state its header shows (scripts/validate_shell_content.py).
+        entry = SHELL_ENTRIES[exercise.id]
+        assert exercise.reference_output == exercise.answer
+        if entry.get('verify') == 'documented':
+            # A Windows-only fact cannot run here; the review entry cites the official documentation.
+            assert entry['sources'] and entry['basis']
+            return
+        assert same(run_shell(exercise.code, capture_of(exercise, entry), entry.get('check')), exercise.answer, entry)
+        return
     if exercise.reference_output:
         if exercise.domain=='SQL':
             with sqlite3.connect(':memory:') as db:

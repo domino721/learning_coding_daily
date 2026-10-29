@@ -149,15 +149,20 @@ export function conceptStates(sessions: Session[]) {
     };
   });
 }
-// Python 기초 items (domain Python) form their own track and never enter data-analysis sessions.
+// Python 기초 (domain Python) and 터미널·Git items form their own tracks and never enter data-analysis sessions.
+export const TERMINAL_DOMAINS = ["터미널", "Git"];
 export function inTrack(ex: { domain?: string }, track: string) {
   return track === "sql"
     ? ex.domain === "SQL"
     : track === "python"
-      ? ex.domain !== "SQL" && ex.domain !== "Python"
+      ? ex.domain !== "SQL" &&
+        ex.domain !== "Python" &&
+        !TERMINAL_DOMAINS.includes(ex.domain ?? "")
       : track === "python-basics"
         ? ex.domain === "Python"
-        : true;
+        : track === "terminal-git"
+          ? TERMINAL_DOMAINS.includes(ex.domain ?? "")
+          : true;
 }
 export function selectExercises(
   sessions: Session[],

@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "review_id": "terminal-git-2026-10-29",
+  "date": "2026-10-29",
+  "change": "CR-019",
+  "tasks": ["WBS-392"],
+  "status": "reviewed",
+  "method": "Claude가 앱 밖에서 직접 작성했다. 개념 지도와 작성 규격을 정한 뒤 위치와 경로 섹터를 기준 문항으로 쓰고, 나머지 14개 섹터는 같은 규격을 받은 작성 에이전트 네 갈래가 나눠 썼다. 생성 스크립트가 61문항의 정답·보기별 결과·순서·고친 코드를 scripts/validate_shell_content.py로 실행해 대조했다. 이 도구는 코드 맨 위 주석에 보인 시작 상태(폴더 트리·파일 내용·저장소)만으로 새 임시 홈을 만들고 bash와 Git으로 실행한다. 이어서 정답 위치를 고르게 섞고 원본·난이도·경로·카드·검수 기록으로 나눠 썼다. Windows PowerShell 고유 동작 3문항(sh-windows-01~03)은 실행할 수 없어 공식 문서(sources)와 근거 문장(basis)으로 검수했다. 정답을 모르는 별도 검수 에이전트가 코드를 실행하지 않고 61개를 다시 풀어 정답표와 대조하고 지문·힌트·보기·이식성을 지적했다. tests/test_curriculum.py와 tests/test_format_content.py, 웹 내보내기가 같은 결과를 다시 실행한다. 모델 API 호출 없음.",
+  "independent_review": {
+    "blind_answers_matching_key": 61,
+    "items": 61,
+    "checks": "정답을 모르는 별도 검수 에이전트가 실행 없이 61개를 읽기만 해서 풀어 정답표와 대조했다. 61개 모두 정답 또는 허용 순서와 일치했고(신뢰도 높음 59·보통 2), 순서 맞추기 git-branch-02·git-remote-04의 다른 올바른 순서는 이미 accepted에 있었다. 21개에 지문·힌트·사실·이식성·휴대폰 폭 지적이 있었다.",
+    "fixes_applied": [
+      "sh-words-03: 지문이 앞의 두 명령이 성공했다고 알려 줘 소거만으로 풀렸다. 따옴표로 묶은 cp·mv 사이에 따옴표 없는 cat을 둔 네 줄로 바꾸고, 지문은 오류가 두 줄 났다는 사실만 알린다. 정답 줄이 마지막이 아니게 되었다.",
+      "sh-files-04: ‘명령 하나에 오타가 있었습니다’가 오타 찾기로 바꿔 버렸다. 오타 언급을 지우고 ‘rm 줄은 그대로 둘 때’로 바꿔, rm이 왜 project에서 실행됐는지 거꾸로 따라가게 했다.",
+      "sh-redirect-04: ‘사본은 그대로’라는 지문과 -o를 알려 주던 힌트 2를 지워 cp 줄도 그럴듯한 후보가 되게 했다.",
+      "sh-env-03: Ubuntu는 로그인 때 ~/bin을 PATH에 넣고 hello는 설치 안내를 띄우므로 scripts/backup으로 바꿨다. 이미 실행 권한이 있는 파일에 다시 쓰던 chmod 줄 대신 ‘그 폴더에 들어가면 실행된다’는 오개념을 겨냥한 cd 줄을 두었다.",
+      "sh-windows-01: 지문의 macOS 줄을 그대로 둔 보기는 공짜로 지워졌다. 지금 창에는 적용되지 않는 setx로 바꾸고(공식 문서 근거 추가), 정답 문법을 그대로 알려 주던 힌트 2를 고쳤다.",
+      "sh-windows-02·sh-python-03·git-remote-03: 힌트 2가 고칠 명령을 그대로 알려 주던 문장을 개념 단서로 바꿨다.",
+      "sh-windows-03: chmod·source 보기는 앞 문항에서 이미 배제돼 실제로는 둘 중 하나였다. Restricted 정책과 Unblock-File로 바꾸고 근거 문서를 더했다.",
+      "git-undo-01·git-undo-03: git restore가 마지막 커밋에서 되돌린다고 적은 힌트와 해설이 틀렸다(스테이지에서 되돌린다). 스테이지 기준으로 고치고 git reset --hard와 구분했다.",
+      "git-branch-01~04·git-remote-04: Git 설정에 따라 기본 브랜치가 master일 수 있어 지문에 ‘기본 브랜치 이름은 main’을 밝히고, git-branch-01 해설에 git branch로 확인하는 방법을 더했다.",
+      "git-status: 처음 커밋하기(init → add → commit)를 git-status-01로, 짧은 상태 표시를 git-status-02로 바꿔 Git 섹터를 첫 커밋부터 시작한다. 첫 커밋 해설에 user.name·user.email 설정을 더했다.",
+      "git-diff-03·sh-script-03: ‘빈칸과 똑같은 줄’(빈 줄로 읽힘)과 ‘매출 두 줄’(세 줄 출력)을 분명한 표현으로 고쳤다.",
+      "sh-path-02: GNU ls는 UTF-8 로캘에서 점 파일 순서가 다르므로 지문에 정렬 순서가 시스템마다 다를 수 있다고 적었다.",
+      "sh-chain-01·sh-script-02: macOS 기본 셸 zsh의 다른 오류 문구를 해설에 더했다.",
+      "섹터 순서: sh-python-02가 source를 쓰므로 Python 실행 환경의 선수 개념을 환경 변수와 PATH에서 스크립트 실행으로 바꿨다.",
+      "정답 위치: 순서 맞추기의 조각이 정답 순서(1,2,3)로 놓이지 않게 하고, 모두 고르기 보기 위치는 그 위치가 있는 문항 수로 나눠 고르게 섞었다. 줄 고르기 정답이 마지막 줄인 문항은 3개에서 2개로 줄었다."
+    ],
+    "not_changed": "줄 고르기 지문이 어떤 단계가 됐는지 알려 주는 점은 문항 형식상 일부 남는다. 모두 고르기 정답이 모두 2~3개라는 점, 휴대폰에서 긴 코드 줄이 가로로 스크롤되는 점, 실제 macOS(zsh·/Users/mina)와 리눅스의 메시지 차이는 해설에서 알리되 문항 구조는 유지했다."
+  },
+  "items": [
+    {
+      "id": "sh-path-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "/home/mina/shop/reports"
+    },
+    {
+      "id": "sh-path-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "data  main.py\n.  ..  .env  .gitignore  data  main.py"
+    },
+    {
+      "id": "sh-path-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "reference_output": "notes.txt\nreports"
+    },
+    {
+      "id": "sh-path-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "9": "cd .."
+        },
+        "output": "2025.csv\nnotes.txt\nreports"
+      },
+      "reference_output": "2025.csv\nshop"
+    },
+    {
+      "id": "sh-path-05",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "reference_output": "/home/mina/shop/reports\n/home/mina/shop/reports"
+    },
+    {
+      "id": "sh-words-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "compare": "exact",
+      "reference_output": "매출 보고서\n매출    보고서"
+    },
+    {
+      "id": "sh-words-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "feb.csv jan.csv\n*.csv"
+    },
+    {
+      "id": "sh-words-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "10": "cat \"meeting notes.txt\""
+        },
+        "output": "회의 3시"
+      },
+      "reference_output": "cat: meeting: No such file or directory\ncat: notes.txt: No such file or directory"
+    },
+    {
+      "id": "sh-words-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "check": "ls\necho ---\nls data",
+      "reference_output": "ab.csv\ndata\nnotes.txt\n---\na.csv\nb.csv"
+    },
+    {
+      "id": "sh-files-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "backup  notes.txt\nnotes.txt"
+    },
+    {
+      "id": "sh-files-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "docs\nfinal.txt"
+    },
+    {
+      "id": "sh-files-03",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 2,
+      "check": "cat config.txt\ncat backup/config.txt\nls",
+      "reference_output": "mode=new\nmode=old\nbackup\nconfig.txt"
+    },
+    {
+      "id": "sh-files-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "7": "cd build"
+        },
+        "output": "README.md\nbuild\nmain.py"
+      },
+      "reference_output": "bash: cd: buld: No such file or directory"
+    },
+    {
+      "id": "sh-redirect-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "로딩\n완료"
+    },
+    {
+      "id": "sh-redirect-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "ERROR 연결 실패"
+    },
+    {
+      "id": "sh-redirect-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "check": "cat out.txt\necho ---\ncat err.txt",
+      "reference_output": "첫 번째 결과\n---\ncat: missing.txt: No such file or directory"
+    },
+    {
+      "id": "sh-redirect-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "8": "sort -o names.txt names.txt"
+        },
+        "output": "park\nkim\nlee\nkim\nlee\npark"
+      },
+      "reference_output": "park\nkim\nlee"
+    },
+    {
+      "id": "sh-chain-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "bash: cd: reports: No such file or directory\nbash: cd: reports: No such file or directory\n계속함"
+    },
+    {
+      "id": "sh-chain-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "bash: cd: market: No such file or directory\n1\n0"
+    },
+    {
+      "id": "sh-chain-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "10": "cat sales.txt >> out/r.txt && echo \"3단계\""
+        },
+        "output": "1단계\n2단계\n3단계\n3분기 보고\nkim 3000\n4단계"
+      },
+      "reference_output": "1단계\n2단계\ncat: sale.txt: No such file or directory\n3분기 보고\n4단계"
+    },
+    {
+      "id": "sh-chain-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "check": "ls",
+      "reference_output": "draft.tmp\nmain.py\nnotes.txt"
+    },
+    {
+      "id": "sh-env-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "hi mina\nhi $name\nhi"
+    },
+    {
+      "id": "sh-env-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "터미널: http://localhost:8000\n없음\nhttp://localhost:8000"
+    },
+    {
+      "id": "sh-env-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "12": "export PATH=\"$HOME/scripts:$HOME/tools:$PATH\""
+        },
+        "output": "반갑습니다\n백업 완료"
+      },
+      "reference_output": "반갑습니다\nbash: backup: command not found"
+    },
+    {
+      "id": "sh-env-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "test-123"
+    },
+    {
+      "id": "sh-script-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "안녕하세요, mina님\n안녕하세요, 님"
+    },
+    {
+      "id": "sh-script-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "bash: ./run.sh: Permission denied\nbash: run.sh: command not found\n실행됨"
+    },
+    {
+      "id": "sh-script-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "reference_output": "== 매출 ==\nkim 3000\nlee 1500"
+    },
+    {
+      "id": "sh-script-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "reference_output": "/home/mina/project\nMODE=dev"
+    },
+    {
+      "id": "sh-python-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "/home/mina False\n/home/mina/app True"
+    },
+    {
+      "id": "sh-python-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "/home/mina/app/.venv/bin/python\n/home/mina/app/.venv/bin/pip"
+    },
+    {
+      "id": "sh-python-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "compare": "last-line",
+      "fix": {
+        "lines": {
+          "14": "python3 -m app.main"
+        },
+        "output": "4500"
+      },
+      "reference_output": "Traceback (most recent call last):\n  File \"/home/mina/shop/app/main.py\", line 1, in <module>\n    from app import utils\nModuleNotFoundError: No module named 'app'"
+    },
+    {
+      "id": "sh-python-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "['Kim Mina']"
+    },
+    {
+      "id": "sh-windows-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/setx"
+      ],
+      "basis": "PowerShell 공식 문서(about_Environment_Variables)에 따르면 환경 변수는 $Env:<이름> = \"<값>\"으로 만들고 바꾸며, 그 변경은 현재 세션에만 적용되고 자식 프로세스에 상속된다. Set-Variable 문서에 따르면 set은 Set-Variable의 별칭이다. setx 문서에 따르면 setx로 정한 변수는 이후에 여는 명령 창에서만 쓸 수 있고 지금 창에서는 쓸 수 없다.",
+      "reference_output": "$env:API_URL = \"http://localhost:8000\""
+    },
+    {
+      "id": "sh-windows-02",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 1,
+      "fix": {
+        "lines": {
+          "4": ".venv\\Scripts\\Activate.ps1"
+        },
+        "output": "(문서 근거, 실행하지 않음)"
+      },
+      "verify": "documented",
+      "sources": [
+        "https://docs.python.org/3/library/venv.html",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-location"
+      ],
+      "basis": "Python 공식 문서(venv)의 활성화 표에 따르면 bash/zsh는 source <venv>/bin/activate, Windows PowerShell은 <venv>\\Scripts\\Activate.ps1, cmd.exe는 <venv>\\Scripts\\activate.bat을 쓰며 Windows의 실행 파일 폴더는 Scripts다. Set-Location 문서에 따르면 cd는 모든 플랫폼에서 Set-Location의 별칭이다.",
+      "reference_output": "source : The term 'source' is not recognized as the name of a cmdlet, function, script file, or operable program."
+    },
+    {
+      "id": "sh-windows-03",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/unblock-file",
+        "https://docs.python.org/3/library/venv.html"
+      ],
+      "basis": "PowerShell 공식 문서(about_Execution_Policies)에 따르면 실행 정책은 PowerShell이 스크립트를 실행하는 조건을 정하고, Restricted는 스크립트를 실행하지 않으며, 어느 범위에도 정책이 없으면 Windows 클라이언트에는 Restricted가 적용되고, 그룹 정책 설정이 모든 범위의 정책보다 우선한다. Unblock-File 문서에 따르면 Unblock-File은 인터넷에서 받은 스크립트 파일의 차단을 풀어 RemoteSigned 정책에서도 실행할 수 있게 하며 실행 정책 자체는 바꾸지 않는다. Python venv 문서는 Activate.ps1을 쓰려면 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser가 필요할 수 있다고 안내한다.",
+      "reference_output": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+    },
+    {
+      "id": "sh-windows-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "C:\\Users\\mina\\reports"
+    },
+    {
+      "id": "git-status-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "compare": "exact",
+      "reference_output": " M main.py\n?? notes.txt"
+    },
+    {
+      "id": "git-status-01",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "check": "git log --format=%s",
+      "reference_output": "메모 추가"
+    },
+    {
+      "id": "git-status-03",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 2,
+      "check": "git log --format=%s\ngit status --short",
+      "reference_output": "인사말 추가\n첫 기록\n?? notes.txt"
+    },
+    {
+      "id": "git-status-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "10": "git add main.py utils.py"
+        },
+        "output": ""
+      },
+      "reference_output": "?? utils.py"
+    },
+    {
+      "id": "git-commit-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "장보기 추가\n회의 메모\n첫 기록"
+    },
+    {
+      "id": "git-commit-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "print(1)\nprint(2)"
+    },
+    {
+      "id": "git-commit-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "9": "git add .\ngit commit -m \"설정 추가\""
+        },
+        "output": ""
+      },
+      "reference_output": "?? config.py"
+    },
+    {
+      "id": "git-commit-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "purpose-choice",
+      "level": 3,
+      "reference_output": "점심 메모\n회의 메모"
+    },
+    {
+      "id": "git-diff-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "name=shop\nport=9000\ndebug=true"
+    },
+    {
+      "id": "git-diff-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "capture": "all",
+      "reference_output": "b.txt\na.txt"
+    },
+    {
+      "id": "git-diff-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "1"
+    },
+    {
+      "id": "git-diff-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "12": " port=9000"
+        },
+        "output": "name=shop\nport=9000\ndebug=false"
+      },
+      "reference_output": "name=shop\nport=9000\ndebug=true"
+    },
+    {
+      "id": "git-undo-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-undo-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "compare": "exact",
+      "reference_output": "M  notes.txt\n?? todo.txt"
+    },
+    {
+      "id": "git-undo-03",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "check": "cat notes.txt plan.txt draft.txt",
+      "reference_output": "우유 사기\n월: 보고서\n화: 회의\n아이디어"
+    },
+    {
+      "id": "git-undo-04",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "check": "git log --format=%s\ncat notes.txt plan.txt",
+      "fix": {
+        "lines": {
+          "13": "git revert --no-edit HEAD"
+        },
+        "output": "Revert \"금액 수정\"\n금액 수정\n첫 기록\n금액: 1000\n월: 보고서\n화: 회의"
+      },
+      "reference_output": "첫 기록\n금액: 1000\n월: 보고서"
+    },
+    {
+      "id": "git-branch-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-branch-02",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "check": "git log --format=%s main\ngit reflog show --format=%gs idea",
+      "reference_output": "할 일 추가\n첫 기록\ncommit: 할 일 추가\nbranch: Created from HEAD"
+    },
+    {
+      "id": "git-branch-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "11": "git merge idea"
+        },
+        "output": "우유 사기\n은행 가기"
+      },
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-branch-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "사과: 800"
+    },
+    {
+      "id": "git-remote-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "?? .gitignore\n?? util.py"
+    },
+    {
+      "id": "git-remote-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "할 일 추가\n첫 기록"
+    },
+    {
+      "id": "git-remote-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "compare": "exact",
+      "fix": {
+        "lines": {
+          "9": "git rm --cached .env"
+        },
+        "output": ""
+      },
+      "reference_output": " M .env"
+    },
+    {
+      "id": "git-remote-04",
+      "version": 1,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 3,
+      "check": "git -C ~/server.git log --format=%s",
+      "reference_output": "내 작업\n동료 작업\n첫 기록"
+    }
+  ]
+}

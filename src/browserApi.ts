@@ -23,9 +23,12 @@ import {
   conceptStates,
   reviewDue,
   recommendationTrace,
+  TERMINAL_DOMAINS,
 } from "./recommendation";
 import { isLayoutKind, validChoiceAnswer } from "./answerFormat";
 const TIMEZONE = "Asia/Seoul";
+// Tracks with a learning path; others (코딩테스트) are announced but cannot start.
+const TRACK_IDS = ["python-basics", "python", "sql", "terminal-git"];
 const sources = new Map<string, Source>(
   curriculum.exercises.map((ex) => [ex.id, ex]),
 );
@@ -363,7 +366,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
   const mode = requestedMode as ResponseMode | undefined;
   const course = body.track_id === "pandas" ? "python" : body.track_id;
   if (path === "/sessions/today") {
-    if (!["python-basics", "python", "sql"].includes(course as string))
+    if (!TRACK_IDS.includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const existing = data.sessions.find(
       (s) => s.track_id === course && s.local_day === today && !s.batch,
@@ -413,7 +416,7 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
     return session;
   }
   if (path === "/sessions/extra") {
-    if (!["python-basics", "python", "sql"].includes(course as string))
+    if (!TRACK_IDS.includes(course as string))
       throw new ApiError("아직 준비 중인 트랙입니다.", 409);
     const daily = data.sessions.find(
       (s) => s.track_id === course && s.local_day === today && !s.batch,
@@ -588,9 +591,12 @@ async function handle(path: string, payload?: unknown): Promise<unknown> {
   const correct =
     source.domain === "SQL" && source.kind === "blank"
       ? proposed.toUpperCase() === source.answer.toUpperCase()
-      : [source.answer, ...source.accepted].some(
-          (value) => normalizeAnswer(value) === normalizeAnswer(proposed),
-        );
+      : TERMINAL_DOMAINS.includes(source.domain)
+        ? // Terminal output options may differ only in spacing: compare as shown, like the server.
+          [source.answer, ...source.accepted].includes(body.answer)
+        : [source.answer, ...source.accepted].some(
+            (value) => normalizeAnswer(value) === normalizeAnswer(proposed),
+          );
   const assisted = item.hints_used > 0 || item.attempts_count > 0;
   item.attempts_count++;
   item.last_answer = body.answer;

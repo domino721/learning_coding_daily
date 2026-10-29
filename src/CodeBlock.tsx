@@ -29,16 +29,21 @@ export default function CodeBlock({
   }
   return (
     <pre className={sql ? "sql-code" : undefined}>
-      <code>{highlight(code, sql)}</code>
+      <code>{highlight(code, language)}</code>
     </pre>
   );
 }
 
 // Render tokens as text spans; shared by the line picker for per-line highlighting.
-export function highlight(code: string, sql: boolean) {
+// language is the item domain: SQL, 터미널/Git (shell commands) or Python (the default).
+export function highlight(code: string, language?: string) {
+  const sql = language === "SQL";
+  const shell = language === "터미널" || language === "Git";
   const pattern = sql
     ? /--[^\n]*|'(?:''|[^'])*'|"(?:""|[^"])*"|\b(?:SELECT|FROM|WHERE|GROUP|BY|ORDER|HAVING|AS|JOIN|LEFT|RIGHT|INNER|ON|AND|OR|NOT|NULL|IS|IN|DISTINCT|WITH|OVER|PARTITION|ASC|DESC|CASE|WHEN|THEN|ELSE|END|LIMIT|COUNT|SUM|AVG|MIN|MAX|COALESCE|ROW_NUMBER)\b|\b\d+(?:\.\d+)?\b/gi
-    : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
+    : shell
+      ? /#[^\n]*|"(?:\\.|[^"\\])*"|'[^'\n]*'|\$\{?\w+\}?|\$[?#@*0-9]|\b(?:if|then|elif|else|fi|for|while|do|done|in|export|source)\b|\b\d+(?:\.\d+)?\b/g
+      : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
   const parts = [];
   let offset = 0;
   for (const match of code.matchAll(pattern)) {
@@ -52,6 +57,7 @@ export function highlight(code: string, sql: boolean) {
           : /^\d/.test(token)
             ? "number"
             : token.startsWith(".") ||
+                token.startsWith("$") ||
                 /^(print|len)$/i.test(token) ||
                 (sql &&
                   /^(COUNT|SUM|AVG|MIN|MAX|COALESCE|ROW_NUMBER)$/i.test(token))

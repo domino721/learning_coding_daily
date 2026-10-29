@@ -22,11 +22,14 @@ const trackName = (id: string) =>
       ? "Python 데이터 분석"
       : id === "python-basics"
         ? "Python 기초"
-        : "이전 통합 학습";
+        : id === "terminal-git"
+          ? "터미널·Git"
+          : "이전 통합 학습";
 const trackSummary: Record<string, string> = {
   "python-basics": "값·자료형·조건과 반복·함수부터 *와 @까지 연습해요.",
   python: "pandas·NumPy와 통계·머신러닝을 연습해요.",
   sql: "SQL 기초부터 조건·집계·조인·윈도 함수까지 연습해요.",
+  "terminal-git": "터미널 기초부터 Git까지 연습해요.",
 };
 const playable = (item: Exercise) =>
   item.status === "pending" && item.response_mode !== "essay";
@@ -47,7 +50,11 @@ export default function App() {
   const [trackId, setTrackId] = useState(() => {
     try {
       const saved = localStorage.getItem("learning-coding-daily:track");
-      return saved === "sql" || saved === "python-basics" ? saved : "python";
+      return saved === "sql" ||
+        saved === "python-basics" ||
+        saved === "terminal-git"
+        ? saved
+        : "python";
     } catch {
       return "python";
     }
@@ -393,7 +400,14 @@ export default function App() {
                               className={`track-card ${track.available ? "available" : ""}`}
                             >
                               <span className="track-copy">
-                                <strong>{track.name}</strong>
+                                {/* A break after · lets 터미널·Git wrap in a narrow card. */}
+                                <strong>
+                                  {track.name
+                                    .split("·")
+                                    .flatMap((part, i) =>
+                                      i ? ["·", <wbr key={i} />, part] : [part],
+                                    )}
+                                </strong>
                                 <span>{track.description}</span>
                               </span>
                               <span

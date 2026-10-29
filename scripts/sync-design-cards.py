@@ -19,7 +19,7 @@ for exercise in EXERCISES:
     card.update(asdict(exercise))
     node = LEARNING_PATHS['items'][exercise.id]
     card.update(concept=exercise.concept_id, app_difficulty=exercise.difficulty,
-                difficulty=exercise.level, track_id=next(t for t in ('python-basics', 'sql', 'python') if in_track(exercise, t)),
+                difficulty=exercise.level, track_id=next(t for t in ('python-basics', 'terminal-git', 'sql', 'python') if in_track(exercise, t)),
                 family=node['family'], requires=node['requires'],
                 # The paths version an item was released under is part of its frozen card; only new cards take the current one.
                 release_path_version=card.get('release_path_version') or LEARNING_PATHS['version'],

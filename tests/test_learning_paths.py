@@ -131,7 +131,7 @@ def test_day2_probes_unlocked_application_before_redundant_foundations_and_reach
     day2=select_exercises(EXERCISES,sessions,progress,'2026-10-19',track='python')
     assert sum(ex.level==2 for ex,_ in day2)>=4
     assert not ({ex.id for ex,_ in day2}&{'pandas-select-02','pandas-select-scaffold-01','stats-summary-foundation-02','ml-eval-foundation-02'})
-    for track in ('python-basics','python','sql'):
+    for track in ('python-basics','python','sql','terminal-git'):
         track_sessions=[];track_progress={};start=date(2026,10,18)
         for offset in range(60):
             day=(start+timedelta(days=offset)).isoformat()

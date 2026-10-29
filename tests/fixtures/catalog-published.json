@@ -1,5 +1,149 @@
 {
  "items": {
+  "git-branch-01": {
+   "design_card": "69ff968635d648dc687f97e452d96e2a5ddc91ec71d81b64c0d66ffef2f0de86",
+   "exercise": "6e72a826c6e463bc0508b71ff8f80812ab4931e83242ec7c84959a99df1c9b0a",
+   "path_item": "904e24ac4aa495f86a0e2b2bf2c2deddf599f59adadf13c7ebde06cbdebae7c9",
+   "version": 1
+  },
+  "git-branch-02": {
+   "design_card": "d42c50c439aea7e9e44edcb9bbcfbab8ea7c25512cd7bfc96b1f27b7eb718b9b",
+   "exercise": "3782f16bcf5200a3ee2d898ad9350deeaa24be5726731f4b642b707d2c269fd4",
+   "path_item": "a53b972367be9de049655c0becf0a095e3041ef7a4169cd49e448b23b0b36481",
+   "version": 1
+  },
+  "git-branch-03": {
+   "design_card": "d11088ace44f7f4050c6ac534aac49336d414c7256968fcbd64b28c4c0230457",
+   "exercise": "a182a68ebbe8217e7e8d3b45518d2dae4f8dc572f59aedf310553e0f6eb16324",
+   "path_item": "ec8e650b924261bf93c5dfa251d5785d890f81856f63ff91cf9ccf6bb981fdc7",
+   "version": 1
+  },
+  "git-branch-04": {
+   "design_card": "3ae98b36c9185a813caeb20aaef6b2456b2e3ad5ed7f4a8b213de529595a38bf",
+   "exercise": "23e4c244a2b990fd212fe381b6a538aa765b22c0b706e56cf14ce152641dbb2b",
+   "path_item": "51b4fe10d6eebb3e2ae63a24351d1021bc76f53a48d5e6f5cef1e207b99fdc0a",
+   "version": 1
+  },
+  "git-commit-01": {
+   "design_card": "f96225532d85e8b6138334b09ec2173f0e473ca5b97a8570324e90abbdc4565a",
+   "exercise": "a29916730aa616eb765b4bd6bdc5be21932a0f9282799b84867617dc84fd2276",
+   "path_item": "782053b8cc03f44329fb36b657eec3c5cba087adf92c60a94e1a318ede6bc3b2",
+   "version": 1
+  },
+  "git-commit-02": {
+   "design_card": "6f9d752dda1b9db14612da89c0d2ee0322764cd8b966746ac74b6836e3e3cd6c",
+   "exercise": "6928e574d4d61e0403ea7628a6f6d0bec91de0c215b3f3e0cdd67d81522cf063",
+   "path_item": "dab668b3b6294ebd67b71d96b315cfd7d4a4bb63a7c7bbd6e7fcf75ec17a29b3",
+   "version": 1
+  },
+  "git-commit-03": {
+   "design_card": "ff7cad1eec0348ce3ceb0919cfbbf2c2a20e6247ff545ca419c3ea4c50831830",
+   "exercise": "8d77daf383e5821e66b21881a486357ca1556d9f96e43deff531abe02c73b1ce",
+   "path_item": "c9cedf1bec454ba7ce5edb767d74b4fca305b31a65313dcd5b7e5564dd2e0c49",
+   "version": 1
+  },
+  "git-commit-04": {
+   "design_card": "4f2a1ce9e5da0a8774124b6f14b67c1c46f72eaa90e21847ecf2d83096c3ded2",
+   "exercise": "712e0f0637dfffe4ae3475155a6559fad8b4af4bef11e1af44770f9de3754ed2",
+   "path_item": "72b6a93c1546d91c3545bf731f482d96ed624abb32926098a771a8dccfd8b97a",
+   "version": 1
+  },
+  "git-diff-01": {
+   "design_card": "b51c99e163acfb97f2c0d71707135545bffd75da60634cfcd7ac05d7edc72e33",
+   "exercise": "6e0b53e8cbaa4fc3a927d3aa6634146dc7006805f51856733e3c06c8215422a9",
+   "path_item": "ac2bcb9c82c050caf91a5dd32a7dfdd522994f835e7066cf3024dd14286f44e8",
+   "version": 1
+  },
+  "git-diff-02": {
+   "design_card": "9bf25e3755d7ad1577effa45003d791595083a00a7913a2ce75cc725f7097173",
+   "exercise": "8b7ad052dbfe4303aa69295595958557094dffa9a9e2f3946d258fe5569f34ae",
+   "path_item": "a906fcd192f4dc503a0c6279ddd8ea30515bcecb00d2dda9324d5cd1f9a32fe2",
+   "version": 1
+  },
+  "git-diff-03": {
+   "design_card": "e17fc3b524cf3120e95ebc4eadde5cc5c5b3be53e3f40f6fe7aab1a6913b7444",
+   "exercise": "64b491b3343097f9fc061ee0e89a127651dd5f1b42ac963700d38695fa19d61f",
+   "path_item": "810568845f06cd27ec32f942061139b042c6776673b4adfeaf94e380106b1141",
+   "version": 1
+  },
+  "git-diff-04": {
+   "design_card": "b9f9606602c84ab6e861f3da6e1e11b976b6cc6bd1830c5a46d8a691fd482adc",
+   "exercise": "80e2be94c0d64e93ae5774bac1fdb81625d4731d0bd4155c31c53d83e2627c75",
+   "path_item": "687a078978d18e8687af3af8a6633472b1b7af21c434bb708f44b28fea13a9d3",
+   "version": 1
+  },
+  "git-remote-01": {
+   "design_card": "37038d5c778d0b2df0ce8a8e7a6e3b9c0432a54ddc619de1a01f8a8504d070c6",
+   "exercise": "840932b05ba8516a24908a86fb01f03d5aa1f057747934842e686be2c289ac3b",
+   "path_item": "47f0c76b6b493a7c0813f683bf0b9dfff7d6d2d0f80a3aa79d3090415e3075c2",
+   "version": 1
+  },
+  "git-remote-02": {
+   "design_card": "791031087783e94fd9187a0ab97698727c77c483d981a842f3000ff561669177",
+   "exercise": "139f10d8175ae8cee7c60e815dad5d4894265d206924f84cd7f1c84a65a2204c",
+   "path_item": "f3623b8a294e775f4cfa15103cd56de3cebbb63fe8e08a259efb4e304ccb3e3b",
+   "version": 1
+  },
+  "git-remote-03": {
+   "design_card": "ac9984f2824650be4387746fdf3479419ba329f603a6a173e001cef85fc880f1",
+   "exercise": "7e34bba16a14e408d54bf107c53f6e2bbf96788a678d6cef679f6791da389378",
+   "path_item": "d73c6b33cb642bd3e9e51e4df6a93ccb75dcddccc80260fed89e4ec509bb13ed",
+   "version": 1
+  },
+  "git-remote-04": {
+   "design_card": "62fc1b31ea0417be7f15448c1fa909a61486c7529ec71633ecfe796ec18d059b",
+   "exercise": "28109b59a88efa29daf1354cb7a9206ac6f2d6c34591b05521b0f60fd91c07fe",
+   "path_item": "323c4c5595833b16767b752ff0bcec143cefd81f83d0b402a258c1b419e7a8ea",
+   "version": 1
+  },
+  "git-status-01": {
+   "design_card": "9d691e9f70fdadcee20982cda425ac6ac13ab2991d409ea20463b861bd85298b",
+   "exercise": "56ea95a371e4ac4e0dfb6be59800ab42ce48d9a51d378db74f8e1966c0c1a7b8",
+   "path_item": "9b9b079498a9bafb0c475a3d67691e83f1173d50867bbc79c0fd5e99a6b819f3",
+   "version": 1
+  },
+  "git-status-02": {
+   "design_card": "56cf65c3119eb1bc9b18b84e406d652d24a42011e0880e11bb70a368afc036e4",
+   "exercise": "9e8826d2a11310b6c65cd3ca308f298d526ac460938eae12726b2467b6a79c4a",
+   "path_item": "4ad68af72424b39f04198bbe34999007fc5975987f5d0033faf4fa82c085ce37",
+   "version": 1
+  },
+  "git-status-03": {
+   "design_card": "60e88629fe7130059e7676ba5b81ea27159db3902550cb5d94385a04293dd70d",
+   "exercise": "588e5ca0002ddb0542e8625653407abe4720d68d431d91cb1ab6cf8e637e03fb",
+   "path_item": "a80518aa238933a86363a535f345ea94ebb9453293ff8bb790b672a6fd3ba44f",
+   "version": 1
+  },
+  "git-status-04": {
+   "design_card": "1b85e51b7fed35057377538b3eeb6436e927fe1f4ce34452bcd044e5de34f6bb",
+   "exercise": "64da16fde74e0c551d1ea84b6eb8e4435eb8427fa18e07e9121be3094b3b22a0",
+   "path_item": "c1673b3fc30c3d32139b319196ac88496ac7ab3712b859664b94c12719a70f81",
+   "version": 1
+  },
+  "git-undo-01": {
+   "design_card": "9a2960ed67168637da70e9905ec650736d46b005920a31b19e3e6cce4f0e4589",
+   "exercise": "b79692c90d778b435d2df2eb8af32a7bf58d579acc55744451182389d220aa3c",
+   "path_item": "282f1a631c922b11e59a181eac9ecafe89ea71c1398c4f62209f95bb9c849608",
+   "version": 1
+  },
+  "git-undo-02": {
+   "design_card": "722d14b3a54028cfd8d0b7ec824bf129fb87952cf8b0f780ed68620df4aebc5c",
+   "exercise": "fea50b5623b334b26bc9431c464e58e879d59bdba9088af5724d09889bb7c2f8",
+   "path_item": "a42e3d19b58f837b8b0b106e37868761ed134d480411f3a5fbcbb6365361603e",
+   "version": 1
+  },
+  "git-undo-03": {
+   "design_card": "8fa23060e0cb728174fe2ea284014df54ba001a06ca707ff036585273625aa2d",
+   "exercise": "36ae0f201e40f54c88f899829219431baede3611aa03931e02683687b1e77a87",
+   "path_item": "bdb48a8a99a7f980790c7038224a05b80ae975c0508a222f457ad6bd6d9bb677",
+   "version": 1
+  },
+  "git-undo-04": {
+   "design_card": "c422eb4114e278cbdc5061ecdf291cbf5c083782f95372600962dfb8e053d1bd",
+   "exercise": "a338c4bbca8a865b660daff4fecadff2bd666ed612d93661aeb3ee722d592533",
+   "path_item": "82af8a55cbb3421fe41097bbe9769d4155062a8367286081caa0e5f1d2885337",
+   "version": 1
+  },
   "ml-balanced-recall-20261024": {
    "design_card": "d8523c3bd4ca9ffd17b5760648ea639e79d46bd69868a1a0de9f07c39f75f936",
    "exercise": "3e35aad5717bc86a8a84f9098b749a005873d890c0fdd3fd287dad7ffadb4085",
@@ -1300,6 +1444,228 @@
    "design_card": "0cb199f94478fa3e14bf345254c01280393eb7742f30fad596cfd0a13008055c",
    "exercise": "1c06da9b859c24d612c5cd32fba2cad09839e2bb119d719270b61fef9272618c",
    "path_item": "2424a3489d67ec43f11ac066ed4c6bd6a8a0f272fd259ae9d813be3e5610c4a8",
+   "version": 1
+  },
+  "sh-chain-01": {
+   "design_card": "8cb6b9460aa90360ac7bd182eb535efb67093ef515f03027dfefcae8c430b7f7",
+   "exercise": "b9f888a6e86c031d6ec561dcdf2c10a8d4a4796496808d06898f793c8d7035a0",
+   "path_item": "dc5be29ad56276c93257134447658090344445feb2c73d2193cc1d135fcd0020",
+   "version": 1
+  },
+  "sh-chain-02": {
+   "design_card": "71fc012429b670f6c2cc82bf8952bb897479102b821b1e5524432f33611169c1",
+   "exercise": "75eb81b60bfae615ecc0eb2856e9f76232fe3c1beec17be00a39d25a8b3d239d",
+   "path_item": "aaace4c05a55282d77238e42e1849c6a365a6327014f751a3da85e03f45bfe52",
+   "version": 1
+  },
+  "sh-chain-03": {
+   "design_card": "17661c162baee756840dc438e6f69716a58b194ba6ad6d75059e9cf89f1e2ee8",
+   "exercise": "d62cf3ed39ff5ebede158f388ef635b1cce7883c7de309a5b731d61b80f0c7c5",
+   "path_item": "576aec357fd014f76df0b5fc2b0260668ee9efd6bacd9d2c80f17bc7d942d8da",
+   "version": 1
+  },
+  "sh-chain-04": {
+   "design_card": "7f70099613b698114d04f1e36843834cb561adae16ae4cc424b2563d7ba9a010",
+   "exercise": "af44d4e3a1b103e14d2bdd0c218106c3e66cc2462e82a00dfb7c179c6d424a8c",
+   "path_item": "abf517b9763a096dcdb1378e55b85d17a8b67470b2c1eeb9b80e568bdecb867a",
+   "version": 1
+  },
+  "sh-env-01": {
+   "design_card": "bf7327dbf9ede6aaed582b3a8f487afc312b5847a084c45715209309f6a26ccc",
+   "exercise": "a4237e7dede475733159f9af3f652b15b74475c984f2eca9418e46fd51ac161f",
+   "path_item": "a6b717501002c6fe04abb9e5c8da0cb0ab7242aba8178ae00f1b647f0d05a0c6",
+   "version": 1
+  },
+  "sh-env-02": {
+   "design_card": "36b7f904dca238874bba070bf44119108abac292aa9c3cd8bfbcd22f1a5e674e",
+   "exercise": "f93aadcad79a3a2dc826b9e45cb34a7717bcc1402f8e27fc773d96561327f57c",
+   "path_item": "58600a09c04b8b9e1ed12c6f932bbaeff2b478270105832b338b1b8d433c189a",
+   "version": 1
+  },
+  "sh-env-03": {
+   "design_card": "695b45c3a7ea2863e1dc6e7f438efa098008f9a98c25ad0746085cfd19524ec1",
+   "exercise": "67d5001562ecfa3748a50dcf859048791c5e45b300b66bcc4d14ada5c672f220",
+   "path_item": "61b9d39bca25eac5bdbbc9d3617a66df877a5209757d800d4adfc77df4d5fe96",
+   "version": 1
+  },
+  "sh-env-04": {
+   "design_card": "3c8caadefdc41962aa8363c345997f545f05d990ee8b157d89a72ebf11deca8d",
+   "exercise": "3064faa12165b7584d56ae8ca29d22969cfc5d89fa53f1c5d4c938b862cec63e",
+   "path_item": "cf519ad6112a89cf1f110268d185152bc41851eb2fd64031b4459923f7ee5d28",
+   "version": 1
+  },
+  "sh-files-01": {
+   "design_card": "06d29dff3f5931b899803c1eb6582f6a98dd5edd75d2896150628593239d34bd",
+   "exercise": "f668fb299d1dce7c24b69c503486ec0d76868ffdf868bf2717f9cad70675d5bb",
+   "path_item": "4dadd4f81554c7b1d8c43335723a05803fa2605b2ba33ddf98a4df8227963134",
+   "version": 1
+  },
+  "sh-files-02": {
+   "design_card": "65cee6f92a97eb25aaeac9c5518135d12886d8f21e5e80a43e47d47d3c9b59d8",
+   "exercise": "c0064c6305b5a0c568e9280e6088ede47af794df81390df2d49d2aba49556ef3",
+   "path_item": "26145f222ed9bc64dade9019c543e259885180ccf3a00f03e5f1130abe3a067d",
+   "version": 1
+  },
+  "sh-files-03": {
+   "design_card": "f4855e6010e8ce20ddb4eab337f5c3ee4c6f98e37b47f980159b8495e9e27ea2",
+   "exercise": "aca575732892af003ba56fb7764993f4e293acebf579be9e6b71696193d200f9",
+   "path_item": "391ec11570299f9053fbfe08da739c06c0eb749dd1207ef69f95a5119678dec9",
+   "version": 1
+  },
+  "sh-files-04": {
+   "design_card": "bc7fcc5b35eb98ba84e765410fa93fb4c42918b25aece742d68d226175026401",
+   "exercise": "31f50479aca2496c0fc8e80719cff213a49b37c2bdee2631c0b432a8364653b7",
+   "path_item": "2027d30115c97781bd4555ae9772cc8aee4bb26e75d793a95e04404b7e1a4217",
+   "version": 1
+  },
+  "sh-path-01": {
+   "design_card": "f86da9fcf92c91588551ba3c068490d98c36d10da36b062a2525f5b95da3be1d",
+   "exercise": "e22cf02765c952fa3bc52b5565337b3eed70e09b0536b65dc2c761dfceb5ee76",
+   "path_item": "e62d04f70b4c813297ecf766008dad970b3c5747b75d59a1c6fbd16fda43fe77",
+   "version": 1
+  },
+  "sh-path-02": {
+   "design_card": "120f21052e44e74e87c6052c93a9a64479d421c3f9a073034fbece3e51354ae9",
+   "exercise": "792210d74821a1e95c004e54b12bbee18bbf0e931263855abdb6ca2310e17d0b",
+   "path_item": "e44c37527c7a1f025605d3b9941890bd81dc2dc1daef63a7d4f1210dfd32064b",
+   "version": 1
+  },
+  "sh-path-03": {
+   "design_card": "59a78d494d9d32cc91cad821822a57f5d5c7f81ad34a91c83b2e24e7edce2e9a",
+   "exercise": "132af52195349c1d0251849a9ff7d3b522dd1aa4fa89c2a5b0035553301c3813",
+   "path_item": "bd0e6b97a05a404294f2f143e09eeccdff50574b9550f0306e1e25d5148f74e4",
+   "version": 1
+  },
+  "sh-path-04": {
+   "design_card": "b373b4b004bf0281cb15400c71ae7abfba9abe611d0b133d93ddb108375cefeb",
+   "exercise": "3ea74244bcd2fae5e96eb0d51e2da547a96ef1000b205a9904632b8b0d85755d",
+   "path_item": "65581d6dc121a3e393469a7db332a5c89d6726121270ba3dcdc54727071bc698",
+   "version": 1
+  },
+  "sh-path-05": {
+   "design_card": "62dbe038e86fb8ebd406968a4a1df5cddb29bbf81bedd3daafca41d4edd0d3a9",
+   "exercise": "a72562a5fac7c3acfb517929840b889576520bb22f775bb4e9410fe614b56ff7",
+   "path_item": "790ae492e6c0bb4dfa242a38473fa4e2e33058eee2860d15ba14944c081c215b",
+   "version": 1
+  },
+  "sh-python-01": {
+   "design_card": "9ca8d4b2e6a6f5a3f19d586f82eeb62613c7a6aacd43e6aa235b686c591c400a",
+   "exercise": "4a862cbc7d265451c6299d482370bf7a95edbd53bb919a319572a29f367fdcdd",
+   "path_item": "2a4a151c11b097672766ab816f6f7ea1dcd56b6592bf02e578fa4eb62b1f582c",
+   "version": 1
+  },
+  "sh-python-02": {
+   "design_card": "31662df089e21e9fe49b3da9cfa5eb165c5114d0e5369f905884f73c9bb8ac1c",
+   "exercise": "bfc2711d10de429395773fe72ce7c6d01e61d98e2cd44247b06670ec80c83900",
+   "path_item": "191fb20d3a41532602975d46d28763a724c1c7ceee8c2714f11228444c93b377",
+   "version": 1
+  },
+  "sh-python-03": {
+   "design_card": "54a0c9918294d1be8d22a78db555cb414bed6baa6013ea918e386b4df431b180",
+   "exercise": "8bce9962426818c349087f8ae70a7f6c264fa8c56b4985cf0cd84e986d70b955",
+   "path_item": "540da36e6a1b866e327783973b4bdab345ba11c3a5bbab4368678313232be056",
+   "version": 1
+  },
+  "sh-python-04": {
+   "design_card": "0517c0af91d815c3a11a5bea3dcfe4712d3836524be5b6ea66e45137b54ac346",
+   "exercise": "31fea41ed3dada713c20ddb62f66cf47510f61f3613330ae361038a11d88eeb0",
+   "path_item": "1115afac076b2fb7e1b8be908ba7991c2920baf1f33dfcf81bbbb1ff290f21ee",
+   "version": 1
+  },
+  "sh-redirect-01": {
+   "design_card": "5a25fb8bf698b37255ddef502726ddd7589fe20e157f23e1195eaba02457c8a2",
+   "exercise": "a39d41bc313596abb617329644d98278bda04cb602f6b2574e8e3bb7769e3780",
+   "path_item": "bf2fac3a683bf0007af4a8afa6e016087f10290ca0a92f4c69e56eefb226bdfd",
+   "version": 1
+  },
+  "sh-redirect-02": {
+   "design_card": "8dce804e17211ed363ba26abd4ffac53f106bb61da8705aa40096e506de3639a",
+   "exercise": "a30996ada7cca9c23482b1c92c7fe11dbfdc80581bef7f81e2a41d0d78a16669",
+   "path_item": "4826b2744154d184d318417eb364ebe3fa371177ac9dfad6394a89e2750cd791",
+   "version": 1
+  },
+  "sh-redirect-03": {
+   "design_card": "6ee81524ddb066b96969ce5e069353ea2fbb77f424f4af7278f512de3455aa72",
+   "exercise": "23c0d40aef7487ae787fbe6d6de2bef4c4caf03fd0d2fcf0feafa71845a8de44",
+   "path_item": "59ba45cfd845e8215bdef1d2760668d43af6d7c42ef47e31811101d0dd4c0c2f",
+   "version": 1
+  },
+  "sh-redirect-04": {
+   "design_card": "cfb3d9d3e06f8888e5c2c38ab525737fe104696c9e930f1bab57acbf4a3f3f16",
+   "exercise": "9bd3b3096c06558dfdd16612622f6aab0ac4ca8c335c1be7a24a53be95e0b9f8",
+   "path_item": "e1730751a80ba09835d47f7ea3da000297a184b27297d28399a2f77a77198137",
+   "version": 1
+  },
+  "sh-script-01": {
+   "design_card": "109f26da7b1281be0649be69c5bda590099e11a6c0696c31e6f8368da28e0c6c",
+   "exercise": "9ecd9119ef261c92f256492f05bd06b8424beb74d7a32c8648f123e7fc8b8f9d",
+   "path_item": "8c51822713b6fc1221f849ccc85fe5b61caf4d193977c1eed8adba626cd634d1",
+   "version": 1
+  },
+  "sh-script-02": {
+   "design_card": "bae06fde041023ffb6f9566174db0d7853a6e6b63eaf7dc7cecc4d2f2cd76195",
+   "exercise": "9b2e37478444146b67950ff68f130b9f3d96cecd199960d1145da65828184494",
+   "path_item": "ef3b93fe62d0a6ea0cada29124c895741e256f2ecadb6862a80106d3ce8cba18",
+   "version": 1
+  },
+  "sh-script-03": {
+   "design_card": "639a94f9645941fbe13bbe4a4fb43bf1af630cc7e6998f592037bdad00a8406f",
+   "exercise": "b1f2c73f68befa102402f19cc777f52ba2aa4bc2228ff4333b03c44a42c74bf9",
+   "path_item": "fa040927ebe0cc9423372cfc10c549aec532dfffbbe6780e8e59e99bb135b4cd",
+   "version": 1
+  },
+  "sh-script-04": {
+   "design_card": "059c7e84fc69fc60e01d458fe69c25eefbf59d432a698917d395ac362c9f6a39",
+   "exercise": "00d4a028b924f9a6fa0b8794abc2571f6bdbcd1c01edc915efc874c76fb98493",
+   "path_item": "5cae0c16e39c153b60c6fc09bcff82cf8a927281794b1bba8caecec38b05ef44",
+   "version": 1
+  },
+  "sh-windows-01": {
+   "design_card": "e81af1bb2eeaec5ae12d2576392d1522187a5bcd516ee1173f088a9baaf3e4e0",
+   "exercise": "5cad5e1178470277f62c28008bf96ebee6ba39e629a6e25b3e598afff1ab7013",
+   "path_item": "e0778193fab9c5818819f8cd7213de3c7bb4777d446fe50d5c58c0913cab68cb",
+   "version": 1
+  },
+  "sh-windows-02": {
+   "design_card": "7a7a5bd357ab4a2c10277649375b49702149e328f4c6314674f6153c4fa6e8f5",
+   "exercise": "0f15bdf25ed5e7212ce7b7f9d5af9bfeeda0b6e522f3ed983fe9950fbc751277",
+   "path_item": "a1c1bd342423433bbddb915aba24da7e756a766838a08b6480a6bc7ce895aeeb",
+   "version": 1
+  },
+  "sh-windows-03": {
+   "design_card": "311e5f5424ff7df0c1847b59c0188acc5fb0254f22d1a10b9c91f60ecde0f17f",
+   "exercise": "019701518604af2c6bf57883f30bc8c011852e5d5d140252d2d51e7a187e16b5",
+   "path_item": "ac366c01773de22429b2f8f2f6ccb8b2abd7d035cddf75901d68c0cc95d07478",
+   "version": 1
+  },
+  "sh-windows-04": {
+   "design_card": "8c142e3ca2354b81447f0f0569504bc3dfa485911e1ab48aea339e0f2b862ee4",
+   "exercise": "b204f7f0ec180f321f20cc6df100b35618857b34d5d4dee1a461f3edfacaba5b",
+   "path_item": "191a02bb10748982e6b6ad2ad1a6d7e5a5f45a6e1c56f2eaca2328826855b744",
+   "version": 1
+  },
+  "sh-words-01": {
+   "design_card": "7f80dc0254cea8022105a3354833cb1941a77de9ad637025d7997a794ff8c76f",
+   "exercise": "51c9864c5eab977779546802f3f87160271806dd0dfdf41f8b6194b97ffcc218",
+   "path_item": "6be1077e4dbd0074b19df66a562756495ee2abadf64be354c7664e908ff4120a",
+   "version": 1
+  },
+  "sh-words-02": {
+   "design_card": "169824899bc8ca35344cc8c61d092cc11d457def1f3642ca5968634be2c2fd36",
+   "exercise": "74237a26135f83b3c9588797538b51d6f23de3f7333386b31dff4b8182af11b0",
+   "path_item": "1a5c7bd9a7cd3660d0ac2941abe193dd0a6610d37f2b043a17abe12f81e61963",
+   "version": 1
+  },
+  "sh-words-03": {
+   "design_card": "0c413f5e502eec93b66b3edeca52464f39f7166f551c3763ec19523c42bd1c5b",
+   "exercise": "69d112c23d11e2c521cd1891f752014c52e41ae0f544c5ebaf31540f07e741b4",
+   "path_item": "44b075335dd51aafebe4c772e09cb39b8377fbc5e518b5d09fabf31859ccfadb",
+   "version": 1
+  },
+  "sh-words-04": {
+   "design_card": "8e149aae165b32c567bd9d75d6b9bad765b82065527d19d8142c5e9e465809aa",
+   "exercise": "f0f305846180b54fab358a46237adea71f15db4155d8f584e9f2a871a8545e52",
+   "path_item": "8bbcf32ddac798d3b6067e44c51fb037c4eac460294b9a88f448e39c58bb8bb4",
    "version": 1
   },
   "sql-agg-transfer-02": {

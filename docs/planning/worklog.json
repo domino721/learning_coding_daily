@@ -1210,6 +1210,18 @@
       ],
       "summary": "최신 main ce0dae7에서 일일 정비5건. pandas-null-03 v1→2 bug-line/line(관측 금액 평균 분모), pandas-sort-03 v1→2 equivalent-code/multi(정렬 우선순위·방향·행 라벨): 각각 합성 업무5행·코드5줄 이상. pandas-select-02·pandas-group-02·numpy-shape-01 v2는 기존 보기의 오개념이 구체적으로 대응해 편집 필드만 검수했다. 대상 전부 distractor_strength2. Codex 별도 재풀이·pandas/NumPy 실제 보기별 계산·경계11건·품질 게이트 통과. 원본 curriculum/reviews/2026-10-29.json 한 파일. 새 ID0, 기존313개 및 Python 기초/데이터분석/SQL·learning-paths-2.3/기록 보존. 전체 scripts/check.sh(Python1245/Node26·타입·포맷·빌드)·모바일50(서버 비해당11 제외) 통과. 별도320px 실풀이5개·과거snapshot310개/이전버전2개·새로고침 보존 통과. freeze/export·planning 검사 통과. 비강제 단일커밋으로 게시하며 원격Pages/공개자산 일치는 해당 실행과 최종보고에서 확인한다. 새 EV와 기준선 없음.",
       "commit": "ce0dae709db1dc9b461829e767fd11ff9905632d"
+    },
+    {
+      "id": "LOG-102",
+      "date": "2026-10-29",
+      "tasks": [
+        "WBS-392"
+      ],
+      "changes": [
+        "CR-019"
+      ],
+      "summary": "사용자 요청(“터미널·Git 적절하게 섹터 분할해서 완전 기초부터 학습할 수 있게 만들어 줘”)으로 네 번째 독립 트랙 터미널·Git(terminal-git, domain 터미널·Git)을 만들었다. 개념 15개(터미널 9·Git 6)와 61문항(기초 31·적용 15·전이 15)을 backend/terminal_content.json에 쓰고, 코드 맨 위 주석의 시작 상태만으로 bash·Git을 실행해 정답·보기·순서·고친 줄을 검증하는 scripts/validate_shell_content.py를 웹 내보내기·테스트에 연결했다. Windows PowerShell 고유 동작 3문항은 공식 문서 근거로 검수했다. 두 domain의 답은 보기 그대로 채점하고(띄어쓰기만 다른 git status 보기), 보기·정답의 줄바꿈을 유지하며, 홈 트랙 카드 4장을 320px 한 줄에 두었다. 정답을 모르는 별도 검수자가 61/61 일치했고 지적 21건 중 지문 소거·git restore 기준·기본 브랜치·Ubuntu PATH·Windows 보기·순서 조각을 고쳤다. 트랙을 정하지 않은 전체 풀의 fixture 선택을 갱신했다. 기준선 1.15.0(CR-019, WBS-392). 검증 EV-072. 원격 저장/게시 전.",
+      "commit": null
     }
   ]
 }

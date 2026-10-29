@@ -470,6 +470,33 @@
       "alternatives": "기존 기초 개념 10개에 문항을 더 넣는 안은 개념별 반복만 늘리고 클래스·예외처럼 AI가 쓴 코드에서 자주 만나는 문법을 계속 비워 두므로 제외했다. pandas merge·apply·.str·.dt 같은 데이터 분석 빈칸은 다른 트랙이라 별도 묶음으로 남긴다. 트레이스백 읽기를 객관식(오류 이름 고르기)만으로 내는 안은 ‘오류 줄과 고칠 줄이 다르다’는 핵심을 다루지 못해, 줄 고르기에 예외 결과를 허용했다.",
       "baseline": "설계/계획 1.14.0",
       "implementation_commit": null
+    },
+    {
+      "id": "CR-019",
+      "date": "2026-10-29",
+      "title": "터미널·Git 트랙 신설: 위치와 경로부터 원격 저장소까지 15개 섹터·61문항",
+      "status": "applied",
+      "authorization": "사용자가 2026-10-29 ‘AI가 내주는 결과값을 잘 읽는 데’ git·터미널(macOS·Windows·Linux) 기초가 필요한지 물었다. macOS·Linux 공통을 본체로 하고 Windows 차이와 diff 읽기를 포함해 기초부터 쌓자는 제안에 사용자가 ‘터미널·Git 적절하게 섹터 분할해서 완전 기초부터 학습할 수 있게 만들어 줘’라고 지시했다. AGENTS.md에 따라 명시적 요청을 승인 근거로 구현·검증·기록·게시까지 진행한다.",
+      "impact": {
+        "scope": "새 트랙 terminal-git(이름 ‘터미널·Git’, 문항 domain ‘터미널’·‘Git’)과 개념 15개, 61문항(기초 31·적용 15·전이 15)을 더한다. 터미널 9개(위치와 경로, 띄어쓰기·따옴표·*, 파일과 폴더 다루기, 출력 저장과 파이프, 종료 코드와 명령 연결, 환경 변수와 PATH, 스크립트 실행, Python 실행 환경, Windows에서 같은 일 하기)와 Git 6개(저장소와 상태, 커밋과 기록, 바뀐 내용(diff) 읽기, 되돌리기, 브랜치와 병합, 원격 저장소와 .gitignore)다. 시작 상태를 코드 맨 위 주석으로 보이고 bash·Git으로 실행해 검증하는 도구(scripts/validate_shell_content.py)를 웹 내보내기와 테스트에 연결한다. 두 domain의 답은 정규화하지 않고 보기 그대로 채점한다. 홈 트랙 카드는 4장을 한 줄에 둔다. 트랙 판정 외의 rules·review·learning-paths-2.3 선택 규칙은 바꾸지 않는다.",
+        "data": "기존 origin/learning-coding-daily:v1 키·스키마·문항 snapshot·진도·완료/미완료·임시답안 보존. 새 track_id 값 terminal-git은 기존 기록 검증(문자열 track_id)과 호환된다. 기존 313개 (id, version)·경로·카드·개념 35개와 순서를 보존하고 개념 15개를 더한다. 트랙을 정하지 않은 전체 풀의 선택 기록(테스트 fixture의 selected_current)은 새 뿌리 문항 하나가 들어와 갱신한다.",
+        "cost": "기존 무료 GitHub Pages 유지, 신규 비용·서비스·외부 전송 없음. 모델 API 호출 없음. 검증은 로컬과 CI의 bash·Git·Python 3.12만 쓴다.",
+        "schedule": "이번 작업 트리에서 구현·검증 뒤 Ubuntu CI에서 셸 출력 일치를 확인하고 원격 main에 게시해 Pages 실행과 공개 자산 대조로 확인한다. 실제 학습 효과는 WBS-520/530에서 확인한다.",
+        "requirements": [
+          "REQ-005",
+          "REQ-007",
+          "REQ-011",
+          "REQ-012",
+          "REQ-019",
+          "REQ-022"
+        ],
+        "tasks": [
+          "WBS-392"
+        ]
+      },
+      "alternatives": "AI 활용 아키텍처 이론 트랙은 정답을 실행으로 확인할 수 없고 용어 암기 문항이 되기 쉬워 제외했다. 운영체제별 트랙 셋은 macOS(zsh)와 Linux(bash)의 기본 명령이 거의 같아 중복이 많으므로, 본체는 bash로 두고 Windows PowerShell 차이는 섹터 하나로 모았다. Python 기초나 데이터 분석 트랙 안에 섞는 안은 실행 환경과 검증 방식이 달라 별도 트랙으로 했다. 시작 상태를 숨은 준비 코드로 만드는 안은 학습자가 볼 수 없는 상태가 정답을 좌우하므로, 주석의 트리·내용·저장소 표시가 유일한 준비가 되게 했다.",
+      "baseline": "설계/계획 1.15.0",
+      "implementation_commit": null
     }
   ]
 }

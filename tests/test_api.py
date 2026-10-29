@@ -7,6 +7,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from backend.content import BY_ID, EXERCISES
+from backend.curriculum import TERMINAL_DOMAINS, in_track
 from backend.main import create_app
 from backend.storage import connect
 
@@ -115,12 +116,13 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
     seen=set()
     # A growing catalog needs a growing replay budget; daily/review limits stay fixed.
     for _ in range(max(60, len(active))):
-        for track in ('python-basics','python','sql'):
+        for track in ('python-basics','python','sql','terminal-git'):
             response=client.post('/api/sessions/today',json={'track_id':track})
             if response.status_code==422: continue
             session=response.json()
             for item in session['items']:
                 assert (item['domain']=='SQL')==(track=='sql') and (item['domain']=='Python')==(track=='python-basics')
+                assert (item['domain'] in TERMINAL_DOMAINS)==(track=='terminal-git')
                 assert item['response_mode']!='essay' and item['category'] in ('new','review','practice')
                 seen.add(item['id'])
                 if item['status']=='pending': assert answer(client,session,item).status_code==200
@@ -200,7 +202,7 @@ def test_original_pandas_answers_remain_valid():
     teams = pd.DataFrame({"team": ["A", "B", "A"], "amount": [3000, 4000, 5000]})
     assert str(teams.groupby('team')['amount'].sum()['A']) == BY_ID['pandas-group-02'].answer
     assert len(EXERCISES) == len(BY_ID) >= 60
-    assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn", "Python"}
+    assert {e.domain for e in EXERCISES} == {"pandas", "NumPy", "SQL", "통계", "scikit-learn", "Python", "터미널", "Git"}
 
 
 def test_same_server_serves_frontend_and_learning_api(tmp_path):
@@ -215,8 +217,9 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/api/health").json() == {"status": "ok"}
         counts = {track["id"]: track["exercise_count"] for track in client.get("/api/tracks").json()}
-        assert counts["python"] == sum(ex.domain not in ('SQL', 'Python') and ex.response_mode != 'essay' for ex in EXERCISES)
+        assert counts["python"] == sum(ex.domain not in ('SQL', 'Python', *TERMINAL_DOMAINS) and ex.response_mode != 'essay' for ex in EXERCISES)
         assert counts["python-basics"] == sum(ex.domain == 'Python' for ex in EXERCISES)
+        assert counts["terminal-git"] == sum(ex.domain in TERMINAL_DOMAINS for ex in EXERCISES) > 0
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 
@@ -258,7 +261,7 @@ def test_extras_never_repeat_today_and_exhaustion_creates_no_empty_session(learn
         with TestClient(create_app(path,now=lambda:clock[0])) as restarted:
             assert restarted.post(endpoint,json=body).json()['id']==current['id']
         # Each nonempty extra session must consume at least one unseen active ID.
-        assert batch < sum(ex.domain != 'SQL' and ex.response_mode != 'essay' for ex in EXERCISES)
+        assert batch < sum(in_track(ex, 'python') and ex.response_mode != 'essay' for ex in EXERCISES)
     dashboard=client.get('/api/dashboard').json()
     assert dashboard['today_completed_count']==dashboard['all_time_completed_count']==len(seen)
     assert dashboard['available_count']==0

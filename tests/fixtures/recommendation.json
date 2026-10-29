@@ -20,8 +20,8 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-clause-order-form-01",
-      "stats-median-01",
-      "ml-split-01"
+      "sh-path-03",
+      "stats-median-01"
     ]
   },
   {
@@ -64,8 +64,8 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-clause-order-form-01",
-      "stats-median-01",
-      "ml-split-01"
+      "sh-path-03",
+      "stats-median-01"
     ]
   },
   {
@@ -98,8 +98,8 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-clause-order-form-01",
-      "stats-median-01",
-      "ml-split-01"
+      "sh-path-03",
+      "stats-median-01"
     ]
   },
   {
@@ -132,8 +132,8 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-clause-order-form-01",
-      "stats-median-01",
-      "ml-split-01"
+      "sh-path-03",
+      "stats-median-01"
     ]
   },
   {
@@ -175,8 +175,8 @@
       "pandas-select-01",
       "pandas-select-02",
       "sql-clause-order-form-01",
-      "numpy-shape-01",
-      "stats-median-01"
+      "sh-path-03",
+      "numpy-shape-01"
     ],
     "selected_v21": [
       "pandas-select-01",
@@ -218,8 +218,8 @@
       "pandas-select-01",
       "numpy-shape-01",
       "sql-clause-order-form-01",
-      "stats-median-01",
-      "ml-split-01"
+      "sh-path-03",
+      "stats-median-01"
     ]
   }
 ]
