@@ -62,3 +62,11 @@ print('단계3 출력 예측:',[c['id'] for c in app if c.get('level')==3 and c.
 print('오답 보기 미검수:',[c['id'] for c in app if c['kind']=='choice' and c.get('app_difficulty',{}).get('distractor_strength',0)<2])
 PY
 ```
+
+## 우선 정비 (2026-10-30, WBS-370)
+
+일일 정비 다섯 건과 별도로 먼저 고친다. 모두 학습자가 보지 않는 편집 필드라 version은 유지한다. 고친 뒤 `scripts/maintenance_diff.py`의 ‘한글 바로 뒤 숫자’ 표시가 사라졌는지 확인하고 이 목록에서 지운다. 지난 검수 기록(`curriculum/reviews/2026-10-30.json`)은 고치지 않는다.
+
+- `stats-median-01`: 설계 카드의 오개념 가설(`misconception`, 보기별 진단, `distractor_targets` 가설)에 숫자 앞 띄어쓰기가 빠진 ‘합110을5로’가 있다.
+- `pandas-group-03`: 같은 필드들에 ‘기준을1건’이 있다.
+- `numpy-shape-02`: `backend/difficulty.json` 프로필의 `rationale`(웹 내보내기 포함)에 ‘있는3축’이 있다.
