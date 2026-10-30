@@ -56,7 +56,8 @@
       "requires": [],
       "remediation": ["stats-median-01"],
       "objective": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "ml-split-01": {
       "concept_id": "ml-evaluation",
@@ -66,7 +67,8 @@
       "requires": [],
       "remediation": ["ml-split-01"],
       "objective": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "pandas-filter-01": {
       "concept_id": "pandas-filter",
@@ -87,7 +89,8 @@
       "requires": [],
       "remediation": ["numpy-shape-01"],
       "objective": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "sql-count-01": {
       "concept_id": "sql-aggregation",
@@ -386,8 +389,9 @@
       "family": "pandas-group:그룹 집계와 필터",
       "requires": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
       "remediation": ["pandas-filter-01", "pandas-group-01", "pandas-group-02"],
-      "objective": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "금액 결측과 무관한 팀별 주문 행 수를 집계하도록 잘못된 건수의 원인 줄을 진단한다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
     },
     "pandas-group-04": {
       "concept_id": "pandas-group",
@@ -406,8 +410,9 @@
       "family": "numpy-structure:배열 변형",
       "requires": ["numpy-shape-01", "numpy-shape-application-01"],
       "remediation": ["numpy-shape-01"],
-      "objective": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "매장·날짜·지표 순서의 축 의미와 전체 원소 수를 보존하는 재구성 식들을 판단한다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
     },
     "numpy-axis-02": {
       "concept_id": "numpy-structure",

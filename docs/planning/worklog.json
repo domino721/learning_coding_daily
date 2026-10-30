@@ -1234,6 +1234,18 @@
       ],
       "summary": "CR-019(1dfabf8)을 확인용 브랜치 ci/cr-019-check의 Ubuntu 품질 검사로 먼저 확인했다(40828764982 Prettier 실패→수정, 40830130658 리눅스 글꼴에서 설명 문장이 두 줄로 접혀 E2E 1건 실패→문장 단축, 40831504166 성공: pytest1367·모바일51). 같은 커밋을 main 16664d3..1dfabf8로 비강제 push하고 태그 design/plan-v1.15.0을 원격에 저장한 뒤 확인용 브랜치를 지웠다. 관리 40832193732·Pages 40832193725 success, 원격 pytest1367/Node26/모바일51 통과, 공개 HTML·JS·CSS 5개가 같은 commit 빌드와 일치하고 공개 번들에 배포본 식별자 1dfabf8과 terminal-git 트랙·새 문항(sh-path-01·git-remote-04)이 포함됨을 확인했다 EV-073.",
       "commit": "1dfabf887b1f27ecc554dbb049670c6c2896cdf1"
+    },
+    {
+      "id": "LOG-104",
+      "date": "2026-10-30",
+      "tasks": [
+        "WBS-370"
+      ],
+      "changes": [
+        "CR-014"
+      ],
+      "summary": "최신 main f226b71에서 일일 정비5건. pandas-group-03 v1→2 bug-line/line(결측 금액과 주문 행 수), numpy-shape-02 v1→2 equivalent-code/multi(매장·날짜·지표 축): 합성 업무7/6행·코드5줄 이상. stats-median-01·ml-split-01·numpy-axis-01 v2는 각 오답의 구체적인 오개념을 검수해 보기/버전을 유지했다. 대상 전부 distractor_strength2. Codex 별도 재풀이·실제 pandas/NumPy/scikit-learn 보기별 연산·경계12건·품질 게이트 통과. 근거 curriculum/reviews/2026-10-30.json 한 파일. 새 ID0, 기존374개와 네 트랙·learning-paths-2.3·기록 보존. 전체 scripts/check.sh(Python1367/Node26·타입·포맷·빌드)·모바일51(서버 비해당12 제외) 통과. 웹 빌드 산출물의 별도320px 실풀이5개·과거snapshot371개/이전버전2개·새로고침 보존 통과. freeze/export·planning 검사 통과. 비강제 단일커밋으로 게시하며 원격Pages/공개자산 일치는 해당 실행과 최종보고에서 확인한다. 새 EV와 기준선 없음.",
+      "commit": "f226b7146106d96a0de883f5612b0971fe9833c4"
     }
   ]
 }

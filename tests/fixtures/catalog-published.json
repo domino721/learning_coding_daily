@@ -601,10 +601,10 @@
    "version": 2
   },
   "numpy-shape-02": {
-   "design_card": "d0a171f7dd3dd2f9e3637195f93efa04750fac2ebbc74e8a2ba39e1284388b1c",
-   "exercise": "150edf118c411691c949454b4871f3eebc80993443b6be43131c814cc3e0abc3",
-   "path_item": "93d46f55950a769a5b20808d9a71fb01e74cb7fa4404b286fbdd598abaf927ca",
-   "version": 1
+   "design_card": "15ce6df9c56a57733ab0f5af61d502b91fe9fd47d37be05eacf29d231c6e2c3d",
+   "exercise": "659217bab9210bae202b94e34d2b200e979460c35b884e5093e439b5509dad51",
+   "path_item": "4add61e3fc302b2612f8c5a37b48b60f87560125decb66a650445613c6149be5",
+   "version": 2
   },
   "numpy-shape-application-01": {
    "design_card": "0fb2b85f7c32644f024c2a894325a9e31f61e1459eb1f23edb8c54084ea928ea",
@@ -763,10 +763,10 @@
    "version": 2
   },
   "pandas-group-03": {
-   "design_card": "eddfaace54322c2975eed29a11004029156c0e41d775b853ee5a8805629822e7",
-   "exercise": "66bc353f0b5066a818d2c88e06a6331f7231ba2cf3f1611b991e56bd0367876c",
-   "path_item": "88b13d2a3f38080dabdd5e985586b06509fe72e40d593fa6ff297e7eeff37127",
-   "version": 1
+   "design_card": "94dc8cbda5c5d00085170ff5460a254973a156c933b23487a2c524c82b4d6046",
+   "exercise": "b2b77217a3419eedbca3db41f140066e0d295a29d5e9c502b4c1ee3063b656f9",
+   "path_item": "88f91d7181f1851e5d5e3878ea41908189772a0180e05f2009c1e4766442cfe6",
+   "version": 2
   },
   "pandas-group-04": {
    "design_card": "6d0c4b7cdf6ed81626b5074c4d551d385314f0b1885c0bfe302244851dcf0b7c",

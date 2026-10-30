@@ -43,9 +43,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "정렬한 중앙 위치와 평균·위치번호 혼동·최댓값을 구분하는 기초 확인. 오답별 가설은 편집 판단이며 실제 선택의 원인을 확정하지 않는다.",
+    "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "ml-split-01": {
     "concept_id": "ml-evaluation",
@@ -55,9 +55,9 @@
     "reasoning_steps": 1,
     "code_load": 2,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "학습/평가 비율의 기준과 배타적 분할을 구분한다. 두 반환 묶음의 순서 반전 또는 한 묶음에 원본을 그대로 둔다는 혼동을 겨냥한 기초 확인.",
+    "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "pandas-filter-01": {
     "concept_id": "pandas-filter",
@@ -79,9 +79,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "사라지는 축과 남는 축을 읽어 열별 합계를 구분한다. 행별 합계, 전체 합계와 그 결과의 배열/스칼라 모양을 구분하는 기초 확인.",
+    "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "sql-count-01": {
     "concept_id": "sql-aggregation",
@@ -409,15 +409,15 @@
   },
   "pandas-group-03": {
     "concept_id": "pandas-group",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "금액 결측이 있는7건 주문에서 그룹별 행 수와 유효값 개수를 구분하고, 누락된 팀의 원인을 집계·필터·표시 단계 중에서 진단하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "pandas-group-04": {
     "concept_id": "pandas-group",
@@ -433,15 +433,15 @@
   },
   "numpy-shape-02": {
     "concept_id": "numpy-structure",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "6행의 두 매장·세 날짜·두 지표를 의미 있는3축으로 재구성하며 -1의 위치마다 추론한 길이와 원소 순서를 비교하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
   },
   "numpy-axis-02": {
     "concept_id": "numpy-structure",

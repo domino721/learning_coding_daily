@@ -134,9 +134,9 @@
         "reasoning_steps": 1,
         "code_load": 1,
         "transfer": 1,
-        "distractor_strength": 0,
-        "rationale": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
-        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        "distractor_strength": 2,
+        "rationale": "정렬한 중앙 위치와 평균·위치번호 혼동·최댓값을 구분하는 기초 확인. 오답별 가설은 편집 판단이며 실제 선택의 원인을 확정하지 않는다.",
+        "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
       },
       "reference_setup": "",
       "reference_output": ""
@@ -168,9 +168,9 @@
         "reasoning_steps": 1,
         "code_load": 2,
         "transfer": 1,
-        "distractor_strength": 0,
-        "rationale": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
-        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        "distractor_strength": 2,
+        "rationale": "학습/평가 비율의 기준과 배타적 분할을 구분한다. 두 반환 묶음의 순서 반전 또는 한 묶음에 원본을 그대로 둔다는 혼동을 겨냥한 기초 확인.",
+        "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
       },
       "reference_setup": "",
       "reference_output": ""
@@ -236,9 +236,9 @@
         "reasoning_steps": 1,
         "code_load": 1,
         "transfer": 1,
-        "distractor_strength": 0,
-        "rationale": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        "distractor_strength": 2,
+        "rationale": "사라지는 축과 남는 축을 읽어 열별 합계를 구분한다. 행별 합계, 전체 합계와 그 결과의 배열/스칼라 모양을 구분하는 기초 확인.",
+        "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
       },
       "reference_setup": "",
       "reference_output": ""
@@ -1185,33 +1185,33 @@
     {
       "id": "pandas-group-03",
       "concept": "그룹 집계와 필터",
-      "kind": "choice",
-      "title": "최소 주문 수 집계",
-      "prompt": "아래 코드의 출력값을 구하세요.",
-      "code": "import pandas as pd\ndf = pd.DataFrame({\"team\": [\"A\", \"B\", \"A\"], \"amount\": [2, 9, 4]})\ncounts = df.groupby(\"team\")[\"amount\"].count()\nprint(counts[counts >= 2].index.tolist())",
-      "answer": "['A']",
-      "explanation": "A는 두 건, B는 한 건입니다. 거래 금액 크기와 건수는 별개입니다.",
+      "kind": "line",
+      "title": "팀별 주문 리포트 점검",
+      "prompt": "가상 주문 7건입니다. 한 행은 주문 한 건이며, 금액이 미기입이어도 주문 건수에 포함합니다. 주문이 2건 이상인 팀을 모두 보고하려는데 현재 A만 나옵니다. 의도한 팀은 A·B·C입니다. 입력과 나머지 줄을 유지하고 잘못된 건수를 만든 한 줄을 고르세요.",
+      "code": "import pandas as pd\norders = pd.DataFrame({\n    \"team\": [\"A\", \"B\", \"A\", \"C\", \"B\", \"C\", \"D\"],\n    \"amount\": [2, None, 4, 3, 9, None, 50]\n})\ncounts = orders.groupby(\"team\")[\"amount\"].count()\neligible = counts[counts >= 2]\nprint(eligible.index.tolist())",
+      "answer": "6",
+      "explanation": "6번 줄의 count()는 amount가 결측이 아닌 값만 세어 A=2·B=1·C=1·D=1이 됩니다. 이 줄을 counts = orders.groupby(\"team\")[\"amount\"].size()로 고치면 주문 행을 세므로 A=2·B=2·C=2·D=1입니다. 따라서 7번 줄의 2건 이상 조건으로 A·B·C가 남습니다. 조건을 1건 이상으로 낮추면 D까지 포함되어 요구와 다릅니다. 8번 줄의 index.tolist()는 이미 남은 팀 이름을 리스트로 바꿀 뿐, 팀을 추가로 제외하지 않습니다.",
       "hints": [
-        "금액 합계를 구하는 코드인지 건수를 세는 코드인지 보세요.",
-        "각 그룹의 행 수로 만든 Series에 마지막 조건을 적용합니다."
+        "B와 C에서 실제 주문 행 수와 집계된 건수가 왜 다른지 비교해 보세요.",
+        "그룹의 행 수와 특정 열의 결측이 아닌 값 개수는 다릅니다. 조건을 낮추면 한 건뿐인 D도 포함되는지 확인하세요."
       ],
-      "choices": ["['A']", "['B']", "['A', 'B']", "[]"],
+      "choices": ["6", "7", "8"],
       "accepted": [],
       "seconds": 180,
-      "version": 1,
+      "version": 2,
       "domain": "pandas",
       "level": 3,
       "concept_id": "pandas-group",
-      "response_mode": "short",
+      "response_mode": "choice",
       "difficulty": {
         "level": 3,
         "label": "조건 변화·전이",
         "reasoning_steps": 3,
-        "code_load": 1,
+        "code_load": 2,
         "transfer": 3,
-        "distractor_strength": 0,
-        "rationale": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        "distractor_strength": 2,
+        "rationale": "금액 결측이 있는7건 주문에서 그룹별 행 수와 유효값 개수를 구분하고, 누락된 팀의 원인을 집계·필터·표시 단계 중에서 진단하는 전이 과제.",
+        "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
       },
       "reference_setup": "",
       "reference_output": "['A']"
@@ -1253,36 +1253,42 @@
     {
       "id": "numpy-shape-02",
       "concept": "배열 변형",
-      "kind": "choice",
-      "title": "이미지 배치 재구성",
-      "prompt": "아래 코드의 출력값을 구하세요.",
-      "code": "import numpy as np\nx = np.arange(12).reshape(2, 2, 3)\nprint(x.reshape(4, -1).shape)",
-      "answer": "(4, 3)",
-      "explanation": "원소 12개를 네 행으로 나누므로 남은 축의 길이는 3입니다.",
+      "kind": "multi",
+      "title": "매장별 일일 자료 구성",
+      "prompt": "가상 매출 자료 6행입니다. 앞 3행은 A점의 1~3일, 뒤 3행은 B점의 1~3일이며 각 행은 [판매 수, 매출] 순서입니다. 값의 순서와 지표의 짝을 유지하고 매장→날짜→지표 순서의 shape (2, 3, 2)로 만들려고 합니다. 빈칸에 들어갈 식을 모두 고르세요.",
+      "code": "import numpy as np\ndaily = np.array([\n    [2, 20],\n    [3, 30],\n    [5, 50],\n    [7, 70],\n    [11, 110],\n    [13, 130]\n])\ntarget = ____\nprint(target.tolist())",
+      "answer": "1,2,5",
+      "explanation": "전체 원소는 6×2=12개입니다. 1번은 마지막 축을 12/(2×3)=2, 2번은 가운데 축을 12/(2×2)=3, 5번은 첫 축을 12/(3×2)=2로 추론하므로 모두 (2, 3, 2)가 됩니다. 기본 reshape는 원소 순서를 유지해 각 매장의 세 날짜와 [판매 수, 매출] 짝을 보존합니다. 3번의 (3, 2, 2)는 매장과 날짜 축 길이가 바뀌고, 4번의 (2, 2, 3)는 마지막 축이 3이 되어 두 지표의 짝이 깨집니다. 원소 수가 같다는 사실만으로 축의 의미까지 같지는 않습니다.",
       "hints": [
-        "변형 전후 전체 원소 수가 같은지 먼저 확인해 보세요.",
-        "지정된 축 길이로 전체 원소 수를 나누면 -1로 둔 축의 길이를 구할 수 있습니다."
+        "전체 원소 수를 먼저 확인한 뒤, 각 식에서 -1이 대신하는 축의 길이를 계산해 보세요.",
+        "추론한 축까지 포함해 세 축을 요구한 순서와 비교하세요. 첫 매장의 세 행과 각 행의 두 값이 어디에 놓이는지도 확인하세요."
       ],
-      "choices": ["(4, 3)", "(4, 6)", "(2, 6)", "(12,)"],
+      "choices": [
+        "daily.reshape(2, 3, -1)",
+        "daily.reshape(2, -1, 2)",
+        "daily.reshape(3, 2, 2)",
+        "daily.reshape(2, 2, -1)",
+        "daily.reshape(-1, 3, 2)"
+      ],
       "accepted": [],
       "seconds": 180,
-      "version": 1,
+      "version": 2,
       "domain": "NumPy",
       "level": 3,
       "concept_id": "numpy-structure",
-      "response_mode": "short",
+      "response_mode": "choice",
       "difficulty": {
         "level": 3,
         "label": "조건 변화·전이",
         "reasoning_steps": 3,
-        "code_load": 1,
+        "code_load": 2,
         "transfer": 3,
-        "distractor_strength": 0,
-        "rationale": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-        "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+        "distractor_strength": 2,
+        "rationale": "6행의 두 매장·세 날짜·두 지표를 의미 있는3축으로 재구성하며 -1의 위치마다 추론한 길이와 원소 순서를 비교하는 전이 과제.",
+        "calibration": "editorial-codex-2026-10-30; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이 자료로 재보정 필요"
       },
       "reference_setup": "",
-      "reference_output": "(4, 3)"
+      "reference_output": "[[[2, 20], [3, 30], [5, 50]], [[7, 70], [11, 110], [13, 130]]]"
     },
     {
       "id": "numpy-axis-02",
@@ -13932,7 +13938,8 @@
         "requires": [],
         "remediation": ["stats-median-01"],
         "objective": "대표값 계산 검토: 대푯값의 계산 대상과 변동성의 분모를 구분한다. 핵심 연산 한 단계의 확인이다.",
-        "review_status": "reviewed"
+        "review_status": "reviewed",
+        "task_form": "output"
       },
       "ml-split-01": {
         "concept_id": "ml-evaluation",
@@ -13942,7 +13949,8 @@
         "requires": [],
         "remediation": ["ml-split-01"],
         "objective": "평가 코드 점검: 평가 데이터 분리와 학습 기준 생성 순서의 영향을 판단한다. 핵심 연산 한 단계의 확인이다.",
-        "review_status": "reviewed"
+        "review_status": "reviewed",
+        "task_form": "output"
       },
       "pandas-filter-01": {
         "concept_id": "pandas-filter",
@@ -13963,7 +13971,8 @@
         "requires": [],
         "remediation": ["numpy-shape-01"],
         "objective": "집계 결과 점검: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 핵심 연산 한 단계의 확인이다.",
-        "review_status": "reviewed"
+        "review_status": "reviewed",
+        "task_form": "output"
       },
       "sql-count-01": {
         "concept_id": "sql-aggregation",
@@ -14270,8 +14279,9 @@
           "pandas-group-01",
           "pandas-group-02"
         ],
-        "objective": "최소 주문 수 집계: 그룹 구성·집계 방법·집계 이후 조건을 연결한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-        "review_status": "reviewed"
+        "objective": "금액 결측과 무관한 팀별 주문 행 수를 집계하도록 잘못된 건수의 원인 줄을 진단한다.",
+        "review_status": "reviewed",
+        "task_form": "bug-line"
       },
       "pandas-group-04": {
         "concept_id": "pandas-group",
@@ -14290,8 +14300,9 @@
         "family": "numpy-structure:배열 변형",
         "requires": ["numpy-shape-01", "numpy-shape-application-01"],
         "remediation": ["numpy-shape-01"],
-        "objective": "이미지 배치 재구성: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-        "review_status": "reviewed"
+        "objective": "매장·날짜·지표 순서의 축 의미와 전체 원소 수를 보존하는 재구성 식들을 판단한다.",
+        "review_status": "reviewed",
+        "task_form": "equivalent-code"
       },
       "numpy-axis-02": {
         "concept_id": "numpy-structure",
