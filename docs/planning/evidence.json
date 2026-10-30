@@ -1041,6 +1041,16 @@
         "backend/terminal_content.json"
       ],
       "code_reference": "2f26fc11c51e224afe3e1562e894de05d37dd382"
+    },
+    {
+      "id": "EV-076",
+      "record": "docs/planning/evidence/EV-076.md",
+      "artifacts": [
+        "scripts/maintenance_diff.py",
+        "tests/test_maintenance_diff.py",
+        "docs/CONTENT_AUTOMATION.md"
+      ],
+      "code_reference": "004f21aecc03f36b826dc67c5be61ddab48b71a3"
     }
   ]
 }
