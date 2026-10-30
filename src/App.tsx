@@ -23,13 +23,16 @@ const trackName = (id: string) =>
       : id === "python-basics"
         ? "Python 기초"
         : id === "terminal-git"
-          ? "터미널·Git"
-          : "이전 통합 학습";
+          ? "터미널"
+          : id === "git"
+            ? "Git"
+            : "이전 통합 학습";
 const trackSummary: Record<string, string> = {
   "python-basics": "값·자료형·조건과 반복·함수부터 *와 @까지 연습해요.",
   python: "pandas·NumPy와 통계·머신러닝을 연습해요.",
   sql: "SQL 기초부터 조건·집계·조인·윈도 함수까지 연습해요.",
-  "terminal-git": "터미널 기초부터 Git까지 연습해요.",
+  "terminal-git": "경로·파일부터 Windows 명령까지 연습해요.",
+  git: "상태·커밋부터 diff·되돌리기까지 연습해요.",
 };
 const playable = (item: Exercise) =>
   item.status === "pending" && item.response_mode !== "essay";
@@ -52,7 +55,8 @@ export default function App() {
       const saved = localStorage.getItem("learning-coding-daily:track");
       return saved === "sql" ||
         saved === "python-basics" ||
-        saved === "terminal-git"
+        saved === "terminal-git" ||
+        saved === "git"
         ? saved
         : "python";
     } catch {

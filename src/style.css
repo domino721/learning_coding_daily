@@ -1746,23 +1746,23 @@ label.code-line {
 .home-main .section-heading {
   margin-bottom: 10px;
 }
-/* One row for the four tracks (CR-017, CR-019) keeps the start button above the fixed navigation at 320px. */
+/* One row for the five tracks (CR-017, CR-019, CR-020) keeps the start button above the fixed navigation at 320px. */
 .home-main .track-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 5px;
 }
 .home-main .track-card {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: 4px;
-  padding: 7px;
+  padding: 7px 5px;
   min-height: 64px;
   border-width: 2px;
 }
 .home-main .track-copy strong {
-  font-size: 11.5px;
+  font-size: 11px;
   line-height: 1.25;
   word-break: keep-all;
 }
@@ -1776,6 +1776,7 @@ label.code-line {
 .home-main .track-tag {
   display: block;
   margin-left: 0;
+  padding: 3px 5px;
 }
 .home-main .upcoming-note {
   font-size: 11px;

@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "review_id": "windows-git-2026-10-30",
+  "date": "2026-10-30",
+  "change": "CR-020",
+  "tasks": ["WBS-393"],
+  "status": "reviewed",
+  "method": "Claude가 앱 밖에서 직접 작성했다. 터미널·Git을 두 트랙으로 나누면서 Git 24문항은 카드의 트랙과 뿌리 개념의 선수가 바뀌어 내용은 그대로 version 2로 올렸고, 첫 Git 편집 문항에는 echo 설명 한 문장만 더했다. 터미널 37문항은 바뀌지 않아 2026-10-29 기록에 그대로 남는다. 새 문항은 Windows 섹터 3개의 12문항, 기존 Windows 섹터의 1문항, Git 기초 2문항이다. Git 2문항은 scripts/validate_shell_content.py로 bash·Git에서 실행해 대조했다. Windows 13문항은 Windows PowerShell 5.1·cmd·Windows Python 동작이라 macOS·Linux 검사에서 실행할 수 없다. 그래서 Microsoft Learn·Python 문서·PEP·git-scm 공식 문서를 직접 열어 사실을 확인하고 항목마다 sources와 basis를 남겼다(verify: documented). 생성 스크립트는 이미 게시된 문항의 보기 순서·정답·오답 근거를 그대로 두고 새 문항만 섞는다. 정답을 모르는 별도 검수 에이전트가 새 15문항을 실행 없이 풀고, 풀이를 모두 적은 뒤 해설의 사실을 공식 문서로 다시 확인했다. 모델 API 호출 없음.",
+  "independent_review": {
+    "blind_answers_matching_key": 15,
+    "items": 15,
+    "checks": "정답을 모르는 검수자가 새 15문항을 지문·코드·보기·힌트만 보고 풀어 정답표와 15/15 일치했다(줄 고르기 4개는 보기 순서로 답해 줄 번호로 대조, 신뢰도 낮음 0). 풀이 뒤 해설의 Windows PowerShell 5.1·7, cmd, Windows Python, Git 주장을 Microsoft Learn·docs.python.org·git-scm 문서로 확인했고 12개 문항에 지적이 있었다.",
+    "fixes_applied": [
+      "win-path-03: 오류 메시지가 인자 이름 'Reports'를 보여 줘 그 단어가 있는 줄만 고르면 됐다. 메시지에서 인자 이름을 빼고, 따옴표로 묶어 띄어쓰기와 -가 든 OneDrive 경로 줄을 그럴듯한 오답 줄로 두었다. 한국어 Windows의 한국어 메시지를 함께 적었다.",
+      "win-env-03: 오류 메시지가 &&를 보여 주고 &&가 한 줄에만 있어 바로 풀렸다. 메시지의 기호를 지우고 ;·&&·| 세 기호가 든 줄을 비교하게 했다. 고친 줄을 Activate.ps1(실행 정책에 막힐 수 있음) 대신 python make.py; if ($?) { python send.py }로 바꾸고, ;만 쓰면 뜻이 달라진다는 점과 cmd·PowerShell 7에서는 &&가 된다는 점으로 해설을 바로잡았다(이 순서가 cmd에서 그대로 된다는 문장은 틀렸다).",
+      "win-env-02: PowerShell과의 비교 문장이 PowerShell의 set으로 환경 변수가 생기는 것처럼 읽혔다. PowerShell의 set은 Set-Variable의 별칭이라 환경 변수를 만들지 않는다는 점을 적고 근거 문서를 더했다.",
+      "sh-windows-05: csv.reader·print는 이미 읽은 글자를 다룰 뿐이라는 해설이 틀렸다. open()은 디코딩하지 않고 csv.reader가 줄을 꺼낼 때 디코딩하므로 트레이스백은 5번 줄을 가리킨다. 지문에 트레이스백 줄을 밝혀 오류 줄과 고칠 줄(4번)을 구분하는 문항으로 바꾸고, utf-8-sig와 csv 문서의 newline=\"\"를 해설에 더했다.",
+      "win-env-01: 목표 주석만 보면 PATH를 tools 하나로 덮어쓰는 보기도 report를 실행해 맞는 것처럼 보였다. 목표에 '기존 명령도 계속 쓴다'를 더했다.",
+      "win-files-04: 힌트의 'cmd는 자기 명령만 안다'가 부정확했다(cmd도 PATH의 프로그램은 실행한다). 'cmd에는 cat·ls가 기본으로 없다'로 고치고, Anaconda PowerShell Prompt의 (base) PS 프롬프트를 해설에 반영했다.",
+      "win-path-01: 힌트가 경로 규칙만 말해 bash식 한 줄 출력 보기로 이끌었다. 힌트 2에 PowerShell의 pwd 결과 모양이 다르다는 단서를 더했다.",
+      "win-files-03: 덧붙이기(>>)는 BOM 없이 이어 쓴다는 점을 해설에 바로잡고, 기본값을 바꿀 수 있으므로 정답 보기에 '기본으로'를 넣었다. 쉽게 지워지던 보기를 '0xff는 프로그램이 출력한 글자'라는 오개념으로 바꿨다.",
+      "win-files-02: 힌트 2가 PowerShell식 옵션이 붙은 두 보기를 바로 가리켜 개념 단서로 줄이고, rmdir /s /q가 실패하는 까닭(/s는 경로, /q는 남는 인자)을 정확히 적었다.",
+      "win-files-01: 영어로만 적은 오류 메시지에 한국어 메시지를 함께 적고, 고친 줄을 Microsoft 예시와 같은 New-Item done.txt -ItemType File로 바꿨다.",
+      "win-path-02·git-diff-05: ls -a가 Attributes 매개변수와 여러 매개변수 별칭(ad·af·ah·ar·as)에 함께 걸린다는 점, @@ 범위의 뜻(바꾸기 전 2줄이 바꾼 뒤 3줄)을 정확한 표현으로 고쳤다."
+    ]
+  },
+  "not_changed": "기존 Windows 문항 sh-windows-03의 영어 오류 메시지는 게시된 version이라 그대로 두고 해설로 안내한다. 한국어 Windows의 오류 문구는 검수자의 일반 지식이라 문서로 확인하지 못해, 지문에는 영어 원문과 뜻을 함께 적었다.",
+  "items": [
+    {
+      "id": "git-status-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "compare": "exact",
+      "reference_output": " M main.py\n?? notes.txt"
+    },
+    {
+      "id": "git-status-01",
+      "version": 2,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "check": "git log --format=%s",
+      "reference_output": "메모 추가"
+    },
+    {
+      "id": "git-status-03",
+      "version": 2,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 2,
+      "check": "git log --format=%s\ngit status --short",
+      "reference_output": "인사말 추가\n첫 기록\n?? notes.txt"
+    },
+    {
+      "id": "git-status-04",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "10": "git add main.py utils.py"
+        },
+        "output": ""
+      },
+      "reference_output": "?? utils.py"
+    },
+    {
+      "id": "git-commit-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "장보기 추가\n회의 메모\n첫 기록"
+    },
+    {
+      "id": "git-commit-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "print(1)\nprint(2)"
+    },
+    {
+      "id": "git-commit-03",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "9": "git add .\ngit commit -m \"설정 추가\""
+        },
+        "output": ""
+      },
+      "reference_output": "?? config.py"
+    },
+    {
+      "id": "git-commit-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "purpose-choice",
+      "level": 3,
+      "reference_output": "점심 메모\n회의 메모"
+    },
+    {
+      "id": "git-diff-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "name=shop\nport=9000\ndebug=true"
+    },
+    {
+      "id": "git-diff-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "capture": "all",
+      "reference_output": "b.txt\na.txt"
+    },
+    {
+      "id": "git-diff-03",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "reference_output": "1"
+    },
+    {
+      "id": "git-diff-04",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "fix": {
+        "lines": {
+          "12": " port=9000"
+        },
+        "output": "name=shop\nport=9000\ndebug=false"
+      },
+      "reference_output": "name=shop\nport=9000\ndebug=true"
+    },
+    {
+      "id": "git-undo-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-undo-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "compare": "exact",
+      "reference_output": "M  notes.txt\n?? todo.txt"
+    },
+    {
+      "id": "git-undo-03",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 2,
+      "check": "cat notes.txt plan.txt draft.txt",
+      "reference_output": "우유 사기\n월: 보고서\n화: 회의\n아이디어"
+    },
+    {
+      "id": "git-undo-04",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 3,
+      "check": "git log --format=%s\ncat notes.txt plan.txt",
+      "fix": {
+        "lines": {
+          "13": "git revert --no-edit HEAD"
+        },
+        "output": "Revert \"금액 수정\"\n금액 수정\n첫 기록\n금액: 1000\n월: 보고서\n화: 회의"
+      },
+      "reference_output": "첫 기록\n금액: 1000\n월: 보고서"
+    },
+    {
+      "id": "git-branch-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-branch-02",
+      "version": 2,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 1,
+      "check": "git log --format=%s main\ngit reflog show --format=%gs idea",
+      "reference_output": "할 일 추가\n첫 기록\ncommit: 할 일 추가\nbranch: Created from HEAD"
+    },
+    {
+      "id": "git-branch-03",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "11": "git merge idea"
+        },
+        "output": "우유 사기\n은행 가기"
+      },
+      "reference_output": "우유 사기"
+    },
+    {
+      "id": "git-branch-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "reference_output": "사과: 800"
+    },
+    {
+      "id": "git-remote-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "?? .gitignore\n?? util.py"
+    },
+    {
+      "id": "git-remote-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "할 일 추가\n첫 기록"
+    },
+    {
+      "id": "git-remote-03",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "compare": "exact",
+      "fix": {
+        "lines": {
+          "9": "git rm --cached .env"
+        },
+        "output": ""
+      },
+      "reference_output": " M .env"
+    },
+    {
+      "id": "git-remote-04",
+      "version": 2,
+      "kind": "order",
+      "task_form": "step-order",
+      "level": 3,
+      "check": "git -C ~/server.git log --format=%s",
+      "reference_output": "내 작업\n동료 작업\n첫 기록"
+    },
+    {
+      "id": "win-path-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-location?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_path_syntax?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-5.1"
+      ],
+      "basis": "Get-Location 문서에 따르면 pwd는 Windows PowerShell에서 Get-Location의 별칭이고 결과는 Path 제목 아래에 경로로 표시된다(예: Path / ---- / C:\\Windows). about_Path_Syntax 문서에 따르면 ..은 현재 위치의 상위 폴더이고(현재 위치가 C:\\Windows일 때 ..\\Program Files는 C:\\Program Files), PowerShell 명령은 \\와 / 모두 경로 구분자로 받는다. about_Parsing 문서에 따르면 PowerShell 명령에서 경로 맨 앞의 ~는 홈 폴더로 바뀐다.",
+      "reference_output": "Path\n----\nC:\\Users\\mina\\docs"
+    },
+    {
+      "id": "win-path-02",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem?view=powershell-5.1"
+      ],
+      "basis": "Get-ChildItem 문서에 따르면 Windows PowerShell의 ls·dir·gci는 Get-ChildItem의 별칭이고, 기본으로 숨김 항목을 표시하지 않으며 -Force를 쓰면 숨김·시스템 항목을 가져온다. 첫 위치 매개변수는 -Path라 /a는 경로로 읽히고, a로 시작하는 매개변수와 별칭(-Attributes, -ad, -af, -ah, -ar, -as)이 여럿이다. 숨김 여부는 파일의 숨김 속성(Mode의 h)으로 정해진다.",
+      "reference_output": ".git(숨김)·.env·main.py가 모두 보이는 목록"
+    },
+    {
+      "id": "win-path-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "3": "cd \"Reports 2025\""
+        },
+        "output": "(문서 근거, 실행하지 않음)"
+      },
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cd"
+      ],
+      "basis": "about_Parsing 문서에 따르면 인자 모드에서 띄어쓰기가 든 경로 같은 인자는 따옴표로 묶어야 한다. cmd의 cd 문서에 따르면 명령 확장이 켜진 cmd의 cd는 띄어쓰기를 구분자로 보지 않아 따옴표 없이도 경로를 받는다.",
+      "reference_output": "A positional parameter cannot be found that accepts argument '2025'."
+    },
+    {
+      "id": "win-path-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cd",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/pushd",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-location?view=powershell-5.1"
+      ],
+      "basis": "Microsoft의 cd 문서에 따르면 /d는 현재 드라이브와 그 드라이브의 현재 폴더를 함께 바꾸고, 다른 드라이브를 지정한 cd는 그 드라이브의 기본 폴더를 바꾼다. pushd 문서에 따르면 pushd는 현재 폴더를 저장한 뒤 지정한 폴더로 바꾸며, 명령 확장이 켜지면 드라이브 문자가 든 로컬 경로를 받는다. Get-Location 문서의 예에서 PowerShell의 Set-Location은 다른 드라이브의 경로로 바로 이동한다.",
+      "reference_output": "D:\\reports에서 make.py 실행"
+    },
+    {
+      "id": "win-files-01",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 1,
+      "fix": {
+        "lines": {
+          "4": "New-Item done.txt -ItemType File"
+        },
+        "output": "(문서 근거, 실행하지 않음)"
+      },
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item?view=powershell-5.1"
+      ],
+      "basis": "Windows PowerShell 문서에 따르면 ls·dir·gci는 Get-ChildItem, cp·copy·cpi는 Copy-Item, cat·gc·type은 Get-Content의 별칭이고, New-Item은 파일을 만든다(별칭 ni). 각 cmdlet 문서의 기본 별칭 목록에 touch는 없다.",
+      "reference_output": "touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program."
+    },
+    {
+      "id": "win-files-02",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item?view=powershell-5.1"
+      ],
+      "basis": "Remove-Item 문서에 따르면 Windows PowerShell의 del·erase·rd·ri·rm·rmdir은 Remove-Item의 별칭이고, -Recurse는 지정한 위치와 모든 하위 항목을 지우며 -Force는 숨김·읽기 전용 파일처럼 바꿀 수 없는 항목도 지운다. 항목이 든 폴더를 -Recurse 없이 지우면 확인을 묻는다. 첫 위치 매개변수는 -Path다.",
+      "reference_output": "build 폴더와 안의 파일이 확인 없이 지워짐"
+    },
+    {
+      "id": "win-files-03",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-5.1"
+      ],
+      "basis": "about_Character_Encoding 문서에 따르면 Windows PowerShell에서 Out-File과 리다이렉트 연산자 >·>>는 UTF-16LE 파일을 만들고, UTF7을 뺀 유니코드 인코딩은 언제나 BOM을 붙인다. PowerShell 6 이상은 모든 출력의 기본이 utf8NoBOM이다.",
+      "reference_output": "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다"
+    },
+    {
+      "id": "win-files-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_parsing?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/type",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/copy"
+      ],
+      "basis": "Windows PowerShell 문서에 따르면 type·cat은 Get-Content, copy는 Copy-Item, ls는 Get-ChildItem의 별칭이다. about_Parsing 문서에 따르면 인자 모드에서 변수는 $로 시작하고, %이름% 형식의 환경 변수는 중지 구문(--%) 뒤에서만 바뀐다. type·copy는 Windows 명령 프롬프트의 기본 명령이다.",
+      "reference_output": "type·copy는 두 창에서 같은 결과"
+    },
+    {
+      "id": "win-env-01",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-5.1"
+      ],
+      "basis": "about_Environment_Variables 문서에 따르면 PowerShell에서 환경 변수는 $Env:<이름>으로 읽고 바꾸며 변경은 현재 세션에만 적용된다. Windows의 PATH는 폴더 목록을 세미콜론(;)으로 구분하고 Linux·macOS는 콜론(:)을 쓰며, 예로 $Env:PATH += ';C:\\Tools'를 든다.",
+      "reference_output": "$env:PATH = \"$HOME\\tools;\" + $env:PATH"
+    },
+    {
+      "id": "win-env-02",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-5.1",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-5.1"
+      ],
+      "basis": "Microsoft의 set 문서에 따르면 cmd에서 set <변수>=<문자열>은 환경 변수를 정하고, 그 값은 %변수%로 쓴다(예: set include=c:\\directory 뒤 dir %include%). PowerShell 문서에 따르면 PowerShell은 $Env:<이름>으로 환경 변수를 읽고 바꾸며 이 동작은 cmd의 set처럼 현재 세션에만 적용되고, Windows PowerShell의 set은 Set-Variable의 별칭이다.",
+      "reference_output": "dev $env:MODE"
+    },
+    {
+      "id": "win-env-03",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "4": "python make.py; if ($?) { python send.py }"
+        },
+        "output": "(문서 근거, 실행하지 않음)"
+      },
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipeline_chain_operators"
+      ],
+      "basis": "about_Pipeline_Chain_Operators 문서에 따르면 PowerShell 7부터 &&와 || 연산자를 구현하며, 이는 cmd.exe의 조건부 처리 기호와 비슷하고 Test-Command '1' && Test-Command '2'는 Test-Command '1'; if ($?) { Test-Command '2' }와 같다. 이 연산자들은 $?와 $LASTEXITCODE로 실패를 판단해 네이티브 명령에도 쓰인다.",
+      "reference_output": "The token '&&' is not a valid statement separator in this version."
+    },
+    {
+      "id": "win-env-04",
+      "version": 1,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "documented",
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_command_precedence",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_path_syntax?view=powershell-5.1"
+      ],
+      "basis": "about_Command_Precedence 문서에 따르면 보안 기능으로 PowerShell은 $Env:PATH에 있는 경로의 실행 파일만 이름으로 실행하며, 현재 폴더의 실행 파일은 전체 경로나 현재 폴더를 뜻하는 상대 경로 .\\로 지정해야 한다. 경로를 지정하면 그 위치의 명령을 실행한다. about_Path_Syntax 문서에 따르면 ..은 현재 위치의 상위 폴더다.",
+      "reference_output": "report.exe 실행"
+    },
+    {
+      "id": "sh-windows-05",
+      "version": 1,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "fix": {
+        "lines": {
+          "4": "with open(\"sales.csv\", encoding=\"utf-8\") as f:"
+        },
+        "output": "(문서 근거, 실행하지 않음)"
+      },
+      "verify": "documented",
+      "sources": [
+        "https://docs.python.org/3/using/windows.html",
+        "https://docs.python.org/3/library/functions.html#open",
+        "https://docs.python.org/3/library/csv.html",
+        "https://peps.python.org/pep-0686/",
+        "https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers"
+      ],
+      "basis": "Python 문서(Windows에서 사용하기)에 따르면 UTF-8 모드가 꺼져 있으면 Windows에서 Python은 텍스트 파일의 기본 인코딩으로 ANSI 코드 페이지(locale.getencoding())를 쓰고, Python 3.15부터 UTF-8 모드가 기본으로 켜진다(PEP 686, 최종). Microsoft 코드 페이지 표에서 949는 한국어(통합 한글 코드)다.",
+      "reference_output": "UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence"
+    },
+    {
+      "id": "git-status-05",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": ".  ..  .git  todo.txt"
+    },
+    {
+      "id": "git-diff-05",
+      "version": 1,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "reference_output": "우유 사기\n병원 가기\n운동하기"
+    }
+  ]
+}

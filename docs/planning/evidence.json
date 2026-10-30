@@ -1018,6 +1018,19 @@
         "backend/terminal_content.json"
       ],
       "code_reference": "1dfabf887b1f27ecc554dbb049670c6c2896cdf1"
+    },
+    {
+      "id": "EV-074",
+      "record": "docs/planning/evidence/EV-074.md",
+      "artifacts": [
+        "backend/terminal_content.json",
+        "backend/curriculum.py",
+        "src/curriculum.json",
+        "curriculum/reviews/2026-10-30-windows-git.json",
+        "tests/e2e/terminal.spec.ts",
+        "src/style.css"
+      ],
+      "code_reference": "63695a87c12facf4a234ef6072818a083ba6f82c"
     }
   ]
 }

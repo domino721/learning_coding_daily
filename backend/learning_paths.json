@@ -4247,6 +4247,171 @@
       "objective": "서버가 앞서 있을 때 커밋 → pull --rebase → push 순서로 동료 작업과 내 작업을 모두 서버에 남기는 절차를 구성한다.",
       "review_status": "reviewed",
       "task_form": "step-order"
+    },
+    "win-path-01": {
+      "concept_id": "win-path",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-path:PowerShell에서 cd와 pwd",
+      "requires": ["sh-path-01"],
+      "remediation": ["win-path-02"],
+      "objective": "Windows 경로에서도 cd ..과 상대 경로가 한 단계씩 쌓이는 규칙을 따라가고 PowerShell의 pwd 출력 모양을 읽는다.",
+      "review_status": "reviewed",
+      "task_form": "output"
+    },
+    "win-path-02": {
+      "concept_id": "win-path",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-path:숨김 항목 보기",
+      "requires": ["sh-path-02"],
+      "remediation": ["win-path-01"],
+      "objective": "PowerShell의 ls·dir가 Get-ChildItem 별칭이라는 점과 숨김 항목을 보는 옵션(-Force)을 bash·cmd 문법과 구분한다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
+    },
+    "win-path-03": {
+      "concept_id": "win-path",
+      "level": 2,
+      "role": "application",
+      "family": "win-path:띄어쓰기가 든 Windows 경로",
+      "requires": ["win-path-01", "sh-words-03"],
+      "remediation": ["win-path-01"],
+      "objective": "따옴표로 묶은 경로와 묶지 않은 경로를 비교해 인자가 둘로 나뉘어 위치 매개 변수 오류를 낸 줄을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
+    },
+    "win-path-04": {
+      "concept_id": "win-path",
+      "level": 3,
+      "role": "transfer",
+      "family": "win-path:cmd에서 드라이브 바꾸기",
+      "requires": ["win-path-03"],
+      "remediation": ["win-path-01", "win-path-03"],
+      "objective": "cmd에서 지금 드라이브와 드라이브별 폴더가 따로 바뀌는 규칙으로 다른 드라이브의 폴더에서 실행되게 하는 명령을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "condition-change"
+    },
+    "win-files-01": {
+      "concept_id": "win-files",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-files:PowerShell에 없는 bash 명령",
+      "requires": ["sh-files-01"],
+      "remediation": ["win-files-02"],
+      "objective": "PowerShell이 별칭으로 받아 주는 bash 명령과 없는 명령을 구분해 오류가 난 줄을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
+    },
+    "win-files-02": {
+      "concept_id": "win-files",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-files:폴더째 지우기",
+      "requires": ["sh-files-01"],
+      "remediation": ["win-files-01"],
+      "objective": "Remove-Item의 별칭과 -Recurse·-Force 옵션으로 폴더를 확인 없이 지우는 명령을 bash·cmd 문법과 구분한다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
+    },
+    "win-files-03": {
+      "concept_id": "win-files",
+      "level": 2,
+      "role": "application",
+      "family": "win-files:> 저장 인코딩",
+      "requires": ["win-files-01", "sh-redirect-01"],
+      "remediation": ["win-files-01"],
+      "objective": "Windows PowerShell 5.1의 리다이렉트가 UTF-16LE 파일을 만든다는 점으로 다른 프로그램의 디코딩 오류를 해석한다.",
+      "review_status": "reviewed",
+      "task_form": "result-interpretation"
+    },
+    "win-files-04": {
+      "concept_id": "win-files",
+      "level": 3,
+      "role": "transfer",
+      "family": "win-files:cmd와 PowerShell 양쪽 명령",
+      "requires": ["win-files-03"],
+      "remediation": ["win-files-01", "win-files-03"],
+      "objective": "cmd와 PowerShell이 받아들이는 명령·별칭·환경 변수 문법을 비교해 두 창에서 같은 뜻으로 실행되는 명령을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "condition-change"
+    },
+    "win-env-01": {
+      "concept_id": "win-env",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-env:PATH에 폴더 더하기",
+      "requires": ["sh-env-01"],
+      "remediation": ["win-env-02"],
+      "objective": "bash의 PATH 추가 명령을 PowerShell의 $env:PATH와 ; 구분자로 옮긴다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
+    },
+    "win-env-02": {
+      "concept_id": "win-env",
+      "level": 1,
+      "role": "foundation",
+      "family": "win-env:cmd의 %변수%",
+      "requires": ["sh-env-01"],
+      "remediation": ["win-env-01"],
+      "objective": "cmd의 set·%이름% 문법과 PowerShell의 $env: 문법을 구분해 cmd 창의 출력을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "output"
+    },
+    "win-env-03": {
+      "concept_id": "win-env",
+      "level": 2,
+      "role": "application",
+      "family": "win-env:5.1의 &&",
+      "requires": ["win-env-01", "sh-chain-01"],
+      "remediation": ["win-env-01", "win-env-02"],
+      "objective": "PowerShell 5.1이 지원하지 않는 && 연산자가 든 줄을 찾고 같은 뜻의 ; if ($?)로 바꾸는 방법을 판단한다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
+    },
+    "win-env-04": {
+      "concept_id": "win-env",
+      "level": 3,
+      "role": "transfer",
+      "family": "win-env:지금 폴더의 프로그램 실행",
+      "requires": ["win-env-03"],
+      "remediation": ["win-env-01", "win-env-03"],
+      "objective": "PowerShell이 지금 폴더를 찾지 않는 규칙과 경로를 밝힌 실행을 구분해 PATH 밖 프로그램을 실행하는 명령을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "condition-change"
+    },
+    "sh-windows-05": {
+      "concept_id": "sh-windows",
+      "level": 2,
+      "role": "application",
+      "family": "sh-windows:Windows 기본 인코딩 cp949",
+      "requires": ["sh-windows-02"],
+      "remediation": ["sh-windows-02", "sh-windows-01"],
+      "objective": "트레이스백이 가리키는 읽기 줄과 인코딩을 정하는 open 줄을 구분해 encoding을 지정할 줄을 고른다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
+    },
+    "git-status-05": {
+      "concept_id": "git-status",
+      "level": 1,
+      "role": "foundation",
+      "family": "git-status:저장소가 만드는 .git",
+      "requires": [],
+      "remediation": ["git-status-02"],
+      "objective": "git init이 숨김 폴더 .git을 만들어 폴더를 저장소로 바꾼다는 점을 ls -a 결과로 확인한다.",
+      "review_status": "reviewed",
+      "task_form": "output"
+    },
+    "git-diff-05": {
+      "concept_id": "git-diff",
+      "level": 1,
+      "role": "foundation",
+      "family": "git-diff:머리글과 문맥 줄",
+      "requires": [],
+      "remediation": ["git-diff-01"],
+      "objective": "diff의 머리글·@@ 범위·문맥 줄을 구분해 +줄이 들어가는 자리를 찾아 적용 결과를 고른다.",
+      "review_status": "reviewed",
+      "task_form": "output"
     }
   },
   "legacy_catalog": [

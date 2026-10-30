@@ -59,14 +59,15 @@
 - 줄 고르기의 힌트 1은 원인 줄 번호를 말하지 않고 확인할 값이나 관점을 묻는다.
 - 트레이스백 읽기(CR-018): 줄 고르기는 결과 대신 오류로 끝나는 코드도 낼 수 있다. 지문에 오류 메시지와 오류가 난 줄을 밝히고, 답은 고쳐야 할 원인 줄이다. 검수 기록에 `raises`(예외 이름)를 적고 `reference_output`도 같은 예외 이름으로 둔다. `tests/test_format_content.py`가 보인 코드는 그 예외로 멈추고 고친 코드는 목표 결과를 내는지 다시 실행한다.
 
-### 터미널·Git 문항 (CR-019)
+### 터미널·Git 문항 (CR-019, CR-020)
 
 - 문항 domain은 `터미널` 또는 `Git`이고 원본은 `backend/terminal_content.json`이다. 응답 모드는 모두 choice다. 객관식 정답은 터미널이 보여 주는 그대로(여러 줄, `ls`의 열 간격 포함) 쓴다. `git status --short`의 ` M`과 `M `처럼 칸만 다른 보기가 있으므로 서버와 브라우저는 이 두 domain의 답을 정규화하지 않고 보기 그대로 비교한다.
 - 코드 맨 위 주석이 시작 상태의 전부이고 숨은 준비 코드는 쓰지 않는다. `~/`에서 시작하는 트리(폴더는 이름 끝 `/`, 실행 권한 파일은 이름 끝 `*`, 시작 폴더는 `← 지금 위치`), `<경로> 내용:` 아래 `#   ` 줄(파일 내용), `지금 위치는 git 저장소입니다.`와 `위 파일은 "<메시지>"로 커밋됨`(한 번 커밋한 저장소)으로 쓴다.
 - `scripts/validate_shell_content.py`는 문항·보기·순서·고친 줄마다 새 임시 홈(화면에는 /home/mina)을 만들어 bash로 실행한다. LC_ALL=C 정렬, 고정한 Git 사용자·날짜, Python 3.12를 쓴다. 표준 출력과 오류는 화면처럼 순서대로 섞고 bash 자체 오류는 `bash: ...`로 맞춘다. Git 문항은 마지막 명령의 출력으로 채점하므로 지문에 이를 밝힌다. 검수 기록의 `check`는 학습자에게 보이지 않는 확인 명령으로, 순서 맞추기·모두 고르기를 남은 파일과 기록 상태로 채점한다. `compare: exact`는 띄어쓰기까지 비교하고, `compare: last-line`은 Python 버전마다 프레임 표시가 달라지는 트레이스백의 마지막 줄만 비교한다.
 - 정답·고친 결과처럼 일치해야 하는 출력은 macOS(BSD 도구, bash 3.2)와 Ubuntu(GNU 도구, bash 5)에서 같아야 한다. `ls -l`·`wc`·`uniq -c`·정렬하지 않은 `find`·`date`·`sed -i`, ls·rm·mkdir·cp·mv의 오류 문구는 정답 출력에 쓰지 않는다. 커밋 해시는 학습자에게 보이지 않게 `--format=%s`·`--short`·`--name-only`를 쓴다.
 - 모든 보기가 실제로 실행되므로 검증 도구는 권한·네트워크·패키지 설치·프로세스 명령, `/home/mina`와 `/dev/null` 밖의 절대 경로, 변수나 `..`를 쓰는 `rm`을 거부한다. 위험한 명령은 임시 폴더 안의 상대 경로로만 보여 준다.
-- Windows PowerShell 고유 동작(환경 변수 `$env:`, `Scripts\Activate.ps1`, 실행 정책)은 Linux·macOS에서 실행할 수 없다. 이런 문항은 검수 기록에 `verify: documented`, 공식 문서 `sources`, 근거 문장 `basis`를 남기며 Windows 섹터에만 쓴다.
+- Windows PowerShell·cmd 고유 동작(환경 변수 `$env:`·`%이름%`, `Scripts\Activate.ps1`, 실행 정책, 5.1의 `>` 인코딩과 `&&`, 드라이브 이동)은 Linux·macOS에서 실행할 수 없다. 이런 문항은 검수 기록에 `verify: documented`, 공식 문서 `sources`, 근거 문장 `basis`를 남기며 Windows 섹터(Windows 경로와 이동·PowerShell로 파일 다루기·Windows 환경 변수와 실행·Windows에서 Python 실행)에만 쓴다. 지문과 코드에는 어느 창(Windows PowerShell 5.1, PowerShell 7, cmd)인지 밝히고, 버전에 따라 달라지는 동작은 해설에 버전을 적는다.
+- CR-020부터 터미널(`terminal-git`, domain `터미널`)과 Git(`git`, domain `Git`)은 별도 트랙이다. Git 트랙은 터미널 트랙을 거치지 않고 시작하므로 Git 문항이 처음 쓰는 보조 명령(`echo >>`, `cat`, `ls -a`)은 해설에서 한 번 설명한다.
 
 ## 검수
 

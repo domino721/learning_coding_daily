@@ -269,44 +269,62 @@
       "prerequisites": ["sh-files", "sh-script"]
     },
     {
+      "id": "win-path",
+      "track": "terminal-git",
+      "name": "Windows 경로와 이동",
+      "prerequisites": ["sh-path"]
+    },
+    {
+      "id": "win-files",
+      "track": "terminal-git",
+      "name": "PowerShell로 파일 다루기",
+      "prerequisites": ["sh-files", "win-path"]
+    },
+    {
+      "id": "win-env",
+      "track": "terminal-git",
+      "name": "Windows 환경 변수와 실행",
+      "prerequisites": ["sh-env", "win-path"]
+    },
+    {
       "id": "sh-windows",
       "track": "terminal-git",
-      "name": "Windows에서 같은 일 하기",
+      "name": "Windows에서 Python 실행",
       "prerequisites": ["sh-python"]
     },
     {
       "id": "git-status",
-      "track": "terminal-git",
+      "track": "git",
       "name": "저장소와 상태",
-      "prerequisites": ["sh-redirect"]
+      "prerequisites": []
     },
     {
       "id": "git-commit",
-      "track": "terminal-git",
+      "track": "git",
       "name": "커밋과 기록",
       "prerequisites": ["git-status"]
     },
     {
       "id": "git-diff",
-      "track": "terminal-git",
+      "track": "git",
       "name": "바뀐 내용(diff) 읽기",
-      "prerequisites": ["git-status"]
+      "prerequisites": []
     },
     {
       "id": "git-undo",
-      "track": "terminal-git",
+      "track": "git",
       "name": "되돌리기",
       "prerequisites": ["git-commit", "git-diff"]
     },
     {
       "id": "git-branch",
-      "track": "terminal-git",
+      "track": "git",
       "name": "브랜치와 병합",
       "prerequisites": ["git-commit"]
     },
     {
       "id": "git-remote",
-      "track": "terminal-git",
+      "track": "git",
       "name": "원격 저장소와 .gitignore",
       "prerequisites": ["git-commit"]
     },
@@ -21376,7 +21394,7 @@
         "exercise_id": "git-status-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "M  main.py\n?? notes.txt": "파일을 고치면 바로 다음 커밋에 들어가는 상태(스테이지)가 된다고 봤다. git add 전의 수정은 둘째 칸에 M이 붙는다.",
@@ -21389,7 +21407,7 @@
       "prompt": "아래 명령을 차례로 실행했을 때 마지막 명령의 출력을 고르세요.",
       "code": "# ~/app/  ← 지금 위치\n# ├── README.md\n# └── main.py\n# main.py 내용:\n#   print(1)\n# 지금 위치는 git 저장소입니다.\n# 위 파일은 \"첫 기록\"으로 커밋됨\necho \"print(2)\" >> main.py\necho \"메모\" > notes.txt\ngit status --short",
       "answer": " M main.py\n?? notes.txt",
-      "explanation": "git status --short는 바뀐 파일만 한 줄씩, 앞의 두 글자 표시와 함께 보여 줍니다. 첫째 칸은 스테이지(git add로 다음 커밋에 넣기로 한 상태), 둘째 칸은 작업 폴더의 상태입니다. main.py는 커밋된 뒤 내용이 바뀌었지만 아직 git add를 하지 않아 둘째 칸에 M이 붙은 \" M\"으로 나옵니다. notes.txt는 git이 한 번도 추적한 적 없는 새 파일이라 ??로 표시되고, 바뀌지 않은 README.md는 나오지 않습니다. git add main.py를 하면 M이 첫째 칸으로 옮겨 가 \"M \"이 되고, 새 파일을 add하면 \"A \"가 됩니다. AI가 파일을 고쳐 준 뒤 무엇이 바뀌었는지 가장 먼저 확인할 때 쓰는 명령입니다.",
+      "explanation": "git status --short는 바뀐 파일만 한 줄씩, 앞의 두 글자 표시와 함께 보여 줍니다. 첫째 칸은 스테이지(git add로 다음 커밋에 넣기로 한 상태), 둘째 칸은 작업 폴더의 상태입니다. main.py는 커밋된 뒤 내용이 바뀌었지만 아직 git add를 하지 않아 둘째 칸에 M이 붙은 \" M\"으로 나옵니다. notes.txt는 git이 한 번도 추적한 적 없는 새 파일이라 ??로 표시되고, 바뀌지 않은 README.md는 나오지 않습니다. git add main.py를 하면 M이 첫째 칸으로 옮겨 가 \"M \"이 되고, 새 파일을 add하면 \"A \"가 됩니다. AI가 파일을 고쳐 준 뒤 무엇이 바뀌었는지 가장 먼저 확인할 때 쓰는 명령입니다. 코드의 echo \"글\" >> 파일은 파일 끝에 한 줄을 더하고, echo \"글\" > 파일은 그 내용으로 파일을 새로 만듭니다.",
       "hints": [
         "main.py와 notes.txt가 각각 이미 커밋된 파일인지, git add를 한 적이 있는지 먼저 정리하세요.",
         "--short 표시의 두 글자 중 첫째 칸은 스테이지(add한 상태), 둘째 칸은 작업 폴더의 상태입니다. git이 처음 보는 파일은 ??로 표시됩니다."
@@ -21402,7 +21420,7 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-status",
@@ -21420,11 +21438,11 @@
         "rationale": "두 파일의 상태를 각각 판단해 칸 위치까지 맞히는 기초다. 칸 위치와 자동 추적 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-status:짧은 상태 표시 읽기",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["sh-redirect"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-status-01",
@@ -21439,7 +21457,7 @@
         "exercise_id": "git-status-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "step-order",
       "distractor_targets": {
         "3,1,2": "저장소를 만들기 전에 git add를 할 수 있다고 봤다. git init 전에는 \"not a git repository\" 오류가 난다.",
@@ -21463,7 +21481,7 @@
       ],
       "accepted": [],
       "seconds": 70,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-status",
@@ -21481,11 +21499,11 @@
         "rationale": "세 명령의 역할로 순서를 정하는 기초다. 저장소 없이 add, add 없이 commit하는 순서를 함정으로 두었다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-status:첫 커밋까지의 순서",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["sh-redirect"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-status-03",
@@ -21500,7 +21518,7 @@
         "exercise_id": "git-status-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "step-order",
       "distractor_targets": {
         "2,3": "git add .이 고친 파일만 올린다고 봤다. .은 지금 폴더 전체라 새 파일 notes.txt까지 커밋된다.",
@@ -21526,7 +21544,7 @@
       ],
       "accepted": [],
       "seconds": 110,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-status",
@@ -21544,11 +21562,11 @@
         "rationale": "네 줄 중 필요한 두 줄을 골라 순서를 정하는 적용이다. add .의 범위와 파일 삭제를 함정으로 두었다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-status:커밋할 파일 고르기",
       "requires": ["git-status-02", "git-status-01"],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["sh-redirect"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-status-04",
@@ -21563,7 +21581,7 @@
         "exercise_id": "git-status-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "11": "커밋 명령이 폴더의 새 파일까지 알아서 담는다고 봤다. 커밋은 add로 스테이지에 올린 파일만 기록한다.",
@@ -21584,7 +21602,7 @@
       "choices": ["8", "9", "10", "11"],
       "accepted": [],
       "seconds": 140,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-status",
@@ -21602,11 +21620,11 @@
         "rationale": "여러 명령의 결과와 다른 사람 컴퓨터의 오류를 연결해 원인 줄을 찾는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-status:커밋에서 빠진 새 파일",
       "requires": ["git-status-03"],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["sh-redirect"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-commit-01",
@@ -21621,7 +21639,7 @@
         "exercise_id": "git-commit-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "첫 기록\n회의 메모\n장보기 추가": "기록이 만든 순서대로(오래된 것부터) 나온다고 봤다. git log는 가장 최근 커밋부터 보여 준다.",
@@ -21647,7 +21665,7 @@
       ],
       "accepted": [],
       "seconds": 70,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-commit",
@@ -21665,7 +21683,7 @@
         "rationale": "세 커밋이 쌓인 순서를 log 출력 순서로 바꾸는 기초다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-commit:기록은 최신순",
       "requires": ["git-status-01"],
       "release_path_version": "learning-paths-2.3",
@@ -21684,7 +21702,7 @@
         "exercise_id": "git-commit-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "print(1)\nprint(2)\nprint(3)": "커밋이 그 순간 폴더에 있는 파일을 그대로 기록한다고 봤다. 커밋은 git add 때 스테이지에 올린 내용을 기록한다.",
@@ -21710,7 +21728,7 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-commit",
@@ -21728,7 +21746,7 @@
         "rationale": "add 시점과 commit 시점의 파일 내용을 구분해야 하는 기초다. 세 가지 저장 방식 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-commit:커밋은 스테이지를 기록",
       "requires": ["git-status-01"],
       "release_path_version": "learning-paths-2.3",
@@ -21747,7 +21765,7 @@
         "exercise_id": "git-commit-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "8": "새 파일을 >로 만든 것이 문제라고 봤다. config.py는 잘 만들어졌고, 커밋이 그 파일을 담지 않았다.",
@@ -21767,7 +21785,7 @@
       "choices": ["6", "7", "8", "9"],
       "accepted": [],
       "seconds": 110,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-commit",
@@ -21785,7 +21803,7 @@
         "rationale": "추적 여부로 세 파일을 나누고 -a의 범위와 연결하는 적용이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-commit:-a가 담지 않는 새 파일",
       "requires": ["git-commit-02", "git-status-02"],
       "release_path_version": "learning-paths-2.3",
@@ -21804,7 +21822,7 @@
         "exercise_id": "git-commit-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "purpose-choice",
       "distractor_targets": {
         "git log --format=%s -- notes.txt": "빠뜨리게 만드는 오개념: --가 옵션의 끝을 표시할 뿐 경로를 거르지 않는다고 봤다. -- 뒤의 경로를 바꾼 커밋만 나온다.",
@@ -21833,7 +21851,7 @@
       ],
       "accepted": [],
       "seconds": 140,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-commit",
@@ -21851,7 +21869,7 @@
         "rationale": "네 커밋의 변경 파일을 정리하고 다섯 명령의 결과를 각각 비교하는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-commit:파일을 바꾼 커밋 찾기",
       "requires": ["git-commit-03"],
       "release_path_version": "learning-paths-2.3",
@@ -21870,7 +21888,7 @@
         "exercise_id": "git-diff-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "name=shop\nport=8000\nport=9000\ndebug=true": "-줄은 그대로 두고 +줄만 더한다고 봤다. -로 시작하는 줄은 지워진다.",
@@ -21896,7 +21914,7 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-diff",
@@ -21914,11 +21932,11 @@
         "rationale": "한 줄 바뀐 diff를 적용 결과로 바꾸는 기초다. -·+의 방향과 문맥 줄 유지를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-diff:-줄과 +줄 읽기",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["git-status"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-diff-02",
@@ -21933,7 +21951,7 @@
         "exercise_id": "git-diff-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "a.txt\nb.txt": "두 명령을 거꾸로 이해했다. git diff는 아직 add하지 않은 변경을, --staged는 add한 변경을 보여 준다.",
@@ -21959,7 +21977,7 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-diff",
@@ -21977,11 +21995,11 @@
         "rationale": "두 파일의 add 여부와 두 명령의 비교 대상을 조합하는 기초다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-diff:diff와 diff --staged",
       "requires": ["git-status-01"],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["git-status"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-diff-03",
@@ -21996,7 +22014,7 @@
         "exercise_id": "git-diff-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "result-interpretation",
       "distractor_targets": {
         "fee = 500": "빠뜨리게 만드는 오개념: 같은 변수의 -줄과 +줄이 함께 있으면 둘 다 남거나 둘 다 지워진다고 봤다. +줄의 새 값만 남는다.",
@@ -22025,7 +22043,7 @@
       ],
       "accepted": [],
       "seconds": 130,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-diff",
@@ -22043,11 +22061,11 @@
         "rationale": "섞인 -·+줄을 재구성하고 다섯 줄 각각의 존재를 판단하는 적용이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-diff:여러 줄이 바뀐 diff",
       "requires": ["git-diff-01"],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["git-status"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-diff-04",
@@ -22062,7 +22080,7 @@
         "exercise_id": "git-diff-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "13": "지울 줄 -debug=true가 지금 파일과 달라 적용이 안 된다고 봤다. 지금 파일에도 debug=true가 그대로 있다.",
@@ -22083,7 +22101,7 @@
       "choices": ["11", "12", "13", "14"],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-diff",
@@ -22101,11 +22119,11 @@
         "rationale": "diff의 각 줄을 지금 파일과 대조하고 오류 메시지와 결과를 연결하는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-diff:문맥이 맞지 않는 diff",
       "requires": ["git-diff-03"],
       "release_path_version": "learning-paths-2.3",
-      "prerequisite_concepts": ["git-status"]
+      "prerequisite_concepts": []
     },
     {
       "id": "git-undo-01",
@@ -22120,7 +22138,7 @@
         "exercise_id": "git-undo-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "우유 사기\n은행 가기": "git restore가 지금 수정을 보관(저장)해 둔다고 봤다. restore는 파일을 마지막 커밋 내용으로 덮어써 커밋하지 않은 수정을 버린다.",
@@ -22146,7 +22164,7 @@
       ],
       "accepted": [],
       "seconds": 70,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-undo",
@@ -22164,7 +22182,7 @@
         "rationale": "마지막 커밋을 기준으로 파일 하나가 되돌아가는 기초다. 수정을 보관한다는 오해와 파일을 지운다는 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-undo:커밋 안 한 수정 버리기",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
@@ -22183,7 +22201,7 @@
         "exercise_id": "git-undo-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "M  notes.txt\nA  todo.txt": "--staged가 붙은 restore는 아무것도 바꾸지 않는다고 봤다. todo.txt는 스테이지에서 빠져 추적하지 않는 새 파일(??)로 돌아간다.",
@@ -22209,7 +22227,7 @@
       ],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-undo",
@@ -22227,7 +22245,7 @@
         "rationale": "두 파일 중 이름을 준 파일만 스테이지에서 빠지는 결과를 상태 표시로 읽는 기초다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-undo:스테이지에서만 빼기",
       "requires": ["git-status-02"],
       "release_path_version": "learning-paths-2.3",
@@ -22246,7 +22264,7 @@
         "exercise_id": "git-undo-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "equivalent-code",
       "distractor_targets": {
         "git restore notes.txt": "빠뜨리게 만드는 오개념: restore가 모든 파일을 되돌린다고 봤다. 이름을 준 파일 하나만 마지막 커밋 내용으로 돌아간다.",
@@ -22275,7 +22293,7 @@
       ],
       "accepted": [],
       "seconds": 120,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-undo",
@@ -22293,7 +22311,7 @@
         "rationale": "다섯 명령의 범위를 세 파일의 상태에 각각 적용해 남는 것을 판단하는 적용이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-undo:되돌리는 범위",
       "requires": ["git-undo-01"],
       "release_path_version": "learning-paths-2.3",
@@ -22312,7 +22330,7 @@
         "exercise_id": "git-undo-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "11": "commit -am이 plan.txt의 수정까지 커밋에 넣어 함께 사라졌다고 봤다. plan.txt는 커밋한 뒤에 고쳤으므로 이 커밋에 들어가지 않았다.",
@@ -22333,7 +22351,7 @@
       "choices": ["10", "11", "12", "13"],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-undo",
@@ -22351,7 +22369,7 @@
         "rationale": "커밋과 작업 폴더의 상태를 함께 추적해 되돌리기 명령의 부작용을 찾고 다른 명령으로 바꾸는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-undo:기록을 남기는 되돌리기",
       "requires": ["git-undo-03"],
       "release_path_version": "learning-paths-2.3",
@@ -22370,7 +22388,7 @@
         "exercise_id": "git-branch-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "은행 가기": "커밋이 브랜치와 상관없이 모두에 들어간다고, 또는 브랜치를 바꿔도 파일은 마지막으로 고친 그대로라고 봤다. git switch main은 파일을 main의 마지막 커밋 내용으로 바꾼다.",
@@ -22396,7 +22414,7 @@
       ],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-branch",
@@ -22414,7 +22432,7 @@
         "rationale": "두 브랜치의 기록을 나눠 추적하는 기초다. 커밋이 공유된다는 오해와 브랜치를 폴더로 보는 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-branch:브랜치마다 따로 쌓이는 커밋",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
@@ -22433,7 +22451,7 @@
         "exercise_id": "git-branch-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "step-order",
       "distractor_targets": {
         "3,5,2,4,1": "idea에 있는 채로 git merge idea를 실행해도 된다고 봤다. merge는 이름을 준 브랜치를 지금 브랜치로 가져오므로 main으로 먼저 옮겨야 한다.",
@@ -22460,7 +22478,7 @@
       ],
       "accepted": ["5,3,2,1,4"],
       "seconds": 120,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-branch",
@@ -22478,7 +22496,7 @@
         "rationale": "다섯 단계의 순서와 각 단계의 지금 브랜치를 함께 추적하는 기초 조립이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-branch:브랜치에서 작업하고 합치기",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
@@ -22497,7 +22515,7 @@
         "exercise_id": "git-branch-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "10": "합치려면 idea에 머물러 있어야 한다고 봤다. 합친 결과를 받을 main으로 옮기는 이 줄은 맞다.",
@@ -22518,7 +22536,7 @@
       "choices": ["7", "9", "10", "11"],
       "accepted": [],
       "seconds": 110,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-branch",
@@ -22536,7 +22554,7 @@
         "rationale": "브랜치 위치와 병합 방향을 함께 추적해 결과가 나오지 않은 원인 줄을 찾는 적용이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-branch:병합 방향",
       "requires": ["git-branch-02"],
       "release_path_version": "learning-paths-2.3",
@@ -22555,7 +22573,7 @@
         "exercise_id": "git-branch-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "equivalent-code",
       "distractor_targets": {
         "git checkout --theirs price.txt": "빠뜨리게 만드는 오개념: theirs가 지금 브랜치(main) 쪽이라고 봤다. 병합 중 theirs는 가져오는 브랜치(sale), ours는 지금 브랜치(main)다.",
@@ -22584,7 +22602,7 @@
       ],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-branch",
@@ -22602,7 +22620,7 @@
         "rationale": "충돌 표시의 두 영역을 브랜치와 짝지은 뒤 다섯 명령의 결과를 각각 추적하는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-branch:충돌 표시 읽고 풀기",
       "requires": ["git-branch-03"],
       "release_path_version": "learning-paths-2.3",
@@ -22621,7 +22639,7 @@
         "exercise_id": "git-remote-01",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "?? util.py": ".gitignore가 자기 자신도 숨긴다고 봤다. .gitignore는 저장소에 함께 올려야 하는 보통 파일이라 새 파일로 보인다.",
@@ -22647,7 +22665,7 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-remote",
@@ -22665,7 +22683,7 @@
         "rationale": "두 무시 규칙을 다섯 파일에 하나씩 적용하는 기초다. 자기 자신을 숨긴다는 오해와 * 패턴 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-remote:.gitignore 패턴",
       "requires": ["git-status-02"],
       "release_path_version": "learning-paths-2.3",
@@ -22684,7 +22702,7 @@
         "exercise_id": "git-remote-02",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "output",
       "distractor_targets": {
         "할 일 추가": "clone이 마지막 커밋 하나만 가져온다고 봤다. clone은 모든 커밋 기록을 함께 복사한다.",
@@ -22710,7 +22728,7 @@
       ],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 1,
       "concept_id": "git-remote",
@@ -22728,7 +22746,7 @@
         "rationale": "두 저장소 사이에서 복사되는 기록을 추적하는 기초다. 파일만 복사한다는 오해와 기록 순서 오해를 겨냥했다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-remote:clone이 가져오는 기록",
       "requires": [],
       "release_path_version": "learning-paths-2.3",
@@ -22747,7 +22765,7 @@
         "exercise_id": "git-remote-03",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "bug-line",
       "distractor_targets": {
         "8": ".gitignore에 .env를 적은 방식이 틀렸다고 봤다. 이름은 맞게 적혔지만 .gitignore는 이미 추적 중인 파일에는 효과가 없다.",
@@ -22768,7 +22786,7 @@
       "choices": ["8", "9", "10", "12"],
       "accepted": [],
       "seconds": 120,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 2,
       "concept_id": "git-remote",
@@ -22786,7 +22804,7 @@
         "rationale": "추적 여부와 무시 규칙의 적용 범위를 함께 판단해 원인 줄을 찾는 적용이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-remote:이미 추적 중인 파일",
       "requires": ["git-remote-01"],
       "release_path_version": "learning-paths-2.3",
@@ -22805,7 +22823,7 @@
         "exercise_id": "git-remote-04",
         "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
       },
-      "review_record": "curriculum/reviews/2026-10-29-terminal-git.json",
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
       "task_form": "step-order",
       "distractor_targets": {
         "4,3,2,1": "먼저 push해도 서버가 알아서 합쳐 준다고 봤다. 서버에 내가 받지 않은 커밋이 있으면 push는 거절되고, 그 뒤 pull만 해서는 서버에 내 작업이 올라가지 않는다.",
@@ -22831,7 +22849,7 @@
       ],
       "accepted": ["1,4,3,2"],
       "seconds": 150,
-      "version": 1,
+      "version": 2,
       "domain": "Git",
       "level": 3,
       "concept_id": "git-remote",
@@ -22849,11 +22867,950 @@
         "rationale": "두 저장소의 기록과 스테이지 상태를 함께 추적해 네 단계의 순서를 정하는 전이다.",
         "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
-      "track_id": "terminal-git",
+      "track_id": "git",
       "family": "git-remote:pull 뒤 push",
       "requires": ["git-remote-03", "git-remote-02"],
       "release_path_version": "learning-paths-2.3",
       "prerequisite_concepts": ["git-commit"]
+    },
+    {
+      "id": "win-path-01",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "Windows 경로에서도 cd ..과 상대 경로가 한 단계씩 쌓이는 규칙을 따라가고 PowerShell의 pwd 출력 모양을 읽는다.",
+      "new_concept": "Windows 경로(드라이브·\\)와 PowerShell의 cd·pwd",
+      "misconception": "..\\docs를 지금 폴더 안의 docs로 읽거나 PowerShell의 pwd가 경로 한 줄만 보여 준다고 볼 수 있다.",
+      "diagnostic_question": "첫 cd .. 뒤의 지금 위치는 어디인가요?",
+      "remediation": ["win-path-02"],
+      "advancement": {
+        "exercise_id": "win-path-01",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "output",
+      "distractor_targets": {
+        "Path\n----\nC:\\Users\\mina\\shop\\docs": "..\\docs의 ..을 건너뛰고 지금 위치(shop) 안의 docs로 간다고 봤다. ..은 shop의 위 폴더(mina)라 mina 안의 docs로 간다.",
+        "Path\n----\nC:\\Users\\docs": "첫 cd ..이 두 단계를 올라간다고 봤다. ..은 한 단계 위(shop)만 올라간다.",
+        "C:\\Users\\mina\\docs": "PowerShell의 pwd도 bash처럼 경로 한 줄만 보여 준다고 봤다. PowerShell의 pwd(Get-Location)는 Path라는 제목 아래에 경로를 보여 준다."
+      },
+      "concept": "win-path",
+      "kind": "choice",
+      "title": "Windows 문서 폴더 오가기",
+      "prompt": "Windows PowerShell에서 아래 명령을 차례로 실행했을 때 마지막 pwd의 출력을 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\n# ├── docs\\\n# └── shop\\\n#     └── reports\\  ← 지금 위치\ncd ..\ncd ..\\docs\npwd",
+      "answer": "Path\n----\nC:\\Users\\mina\\docs",
+      "explanation": "Windows 경로는 C:처럼 드라이브로 시작하고 폴더를 \\로 구분하지만, 이동 규칙은 macOS·Linux와 같습니다. 첫 cd ..은 reports의 위인 C:\\Users\\mina\\shop으로 가고, cd ..\\docs는 다시 한 단계 위인 C:\\Users\\mina로 올라간 뒤 그 안의 docs로 들어가 C:\\Users\\mina\\docs가 됩니다. PowerShell의 pwd는 Get-Location의 별칭이라 경로를 Path라는 제목과 ---- 밑줄 아래에 보여 줍니다. PowerShell 명령은 \\ 대신 /도 경로 구분자로 받아 주고 경로 맨 앞의 ~를 홈 폴더로 바꿔 주므로, AI가 macOS 기준으로 준 cd ../docs 같은 이동 명령은 대부분 그대로 통합니다.",
+      "hints": [
+        "cd를 할 때마다 지금 위치가 어디로 바뀌는지 차례로 적어 보세요.",
+        "..\\docs는 \"한 단계 위로 간 다음 docs로\"라는 뜻으로 bash와 같습니다. 다만 PowerShell의 pwd는 Get-Location의 별칭이라 결과를 보여 주는 모양이 bash와 다릅니다."
+      ],
+      "choices": [
+        "Path\n----\nC:\\Users\\docs",
+        "Path\n----\nC:\\Users\\mina\\shop\\docs",
+        "C:\\Users\\mina\\docs",
+        "Path\n----\nC:\\Users\\mina\\docs"
+      ],
+      "accepted": [],
+      "seconds": 70,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-path",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "Path\n----\nC:\\Users\\mina\\docs",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "bash에서 익힌 상대 경로 규칙을 Windows 경로 표기에 옮기는 기초다. 출력 모양 차이도 한 보기로 겨냥했다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-path:PowerShell에서 cd와 pwd",
+      "requires": ["sh-path-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-path"]
+    },
+    {
+      "id": "win-path-02",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "PowerShell의 ls·dir가 Get-ChildItem 별칭이라는 점과 숨김 항목을 보는 옵션(-Force)을 bash·cmd 문법과 구분한다.",
+      "new_concept": "Get-ChildItem의 별칭과 -Force",
+      "misconception": "bash의 ls -a나 cmd의 dir /a가 PowerShell에서도 그대로 통한다고 볼 수 있다.",
+      "diagnostic_question": "Windows PowerShell에서 ls는 어떤 명령의 별칭인가요?",
+      "remediation": ["win-path-01"],
+      "advancement": {
+        "exercise_id": "win-path-02",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "equivalent-code",
+      "distractor_targets": {
+        "Get-ChildItem -Force": "빠뜨리게 만드는 오개념: 숨김 항목은 Windows 설정을 바꿔야만 보인다고 봤다. Get-ChildItem의 -Force가 숨김·시스템 항목까지 가져온다.",
+        "ls -Force": "빠뜨리게 만드는 오개념: ls는 macOS·Linux 명령이라 PowerShell에 없다고 봤다. Windows PowerShell의 ls는 Get-ChildItem의 별칭이라 -Force를 그대로 받는다.",
+        "dir -Force": "빠뜨리게 만드는 오개념: dir은 명령 프롬프트(cmd) 전용이라고 봤다. PowerShell의 dir도 Get-ChildItem의 별칭이다.",
+        "ls -a": "고르게 만드는 오개념: bash의 ls -a가 그대로 통한다고 봤다. PowerShell에서 -a는 Attributes 매개변수와 여러 매개변수 별칭(ad·af·ah·ar·as)에 함께 걸려 하나로 정해지지 않아 오류가 난다.",
+        "dir /a": "고르게 만드는 오개념: 명령 프롬프트(cmd)의 dir /a가 PowerShell에서도 통한다고 봤다. PowerShell은 /a를 찾을 경로로 읽어 오류를 낸다."
+      },
+      "concept": "win-path",
+      "kind": "multi",
+      "title": "숨겨진 설정 폴더 찾기",
+      "prompt": "Windows PowerShell에서 숨김 속성이 붙은 폴더까지 목록에 보이게 하려고 합니다. 빈칸에 넣었을 때 숨김 항목까지 보여 주는 명령을 모두 고르세요.",
+      "code": "# Windows PowerShell\n# 지금 위치: C:\\Users\\mina\\app\n# 안에 있는 것: main.py, .env,\n#   숨김 속성이 붙은 폴더 .git\n____",
+      "answer": "2,3,5",
+      "explanation": "Windows PowerShell의 ls와 dir은 둘 다 Get-ChildItem의 별칭입니다. Get-ChildItem은 숨김 속성이 있는 항목을 기본으로 감추고, -Force를 붙이면 숨김·시스템 항목까지 보여 주므로 세 가지 -Force가 모두 맞습니다. bash 습관의 ls -a는 -a가 Attributes 매개변수와 ad·af·ah 같은 여러 매개변수 별칭에 함께 걸려 오류가 나고, cmd 문법인 dir /a는 PowerShell이 /a를 경로로 읽어 오류를 냅니다. Windows에서는 이름이 .으로 시작해도 저절로 숨겨지지 않고 파일의 숨김 속성이 있어야 숨겨지므로, 이 폴더의 .env는 그냥 ls에도 보입니다. macOS에서 배운 \"점으로 시작하면 숨김\"이 Windows에서는 통하지 않는다는 점을 기억하세요.",
+      "hints": [
+        "PowerShell의 ls와 dir이 실제로는 어떤 명령을 부르는지 먼저 떠올려 보세요.",
+        "Get-ChildItem은 기본으로 숨김 항목을 빼고 보여 줍니다. 옵션은 PowerShell 방식(-이름)으로 써야 합니다."
+      ],
+      "choices": [
+        "ls -a",
+        "dir -Force",
+        "Get-ChildItem -Force",
+        "dir /a",
+        "ls -Force"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-path",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": ".git(숨김)·.env·main.py가 모두 보이는 목록",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "세 별칭과 두 가지 다른 셸 문법을 구분하는 기초다. bash·cmd 습관을 각각 겨냥했다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-path:숨김 항목 보기",
+      "requires": ["sh-path-02"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-path"]
+    },
+    {
+      "id": "win-path-03",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "따옴표로 묶은 경로와 묶지 않은 경로를 비교해 인자가 둘로 나뉘어 위치 매개 변수 오류를 낸 줄을 고른다.",
+      "new_concept": "PowerShell의 인자 나누기와 따옴표",
+      "misconception": "Windows에서는 띄어쓰기가 든 폴더 이름도 따옴표 없이 이동할 수 있거나, 따옴표 안의 띄어쓰기도 문제가 된다고 볼 수 있다.",
+      "diagnostic_question": "3번 줄에서 cd가 받는 인자는 몇 개인가요?",
+      "remediation": ["win-path-01"],
+      "advancement": {
+        "exercise_id": "win-path-03",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "bug-line",
+      "distractor_targets": {
+        "2": "띄어쓰기와 -가 든 경로라서 오류가 났다고 봤다. 따옴표로 묶었으므로 경로 하나로 전달된다.",
+        "4": "python 실행 단계에서 오류가 났다고 봤다. 위치 매개 변수 오류는 cmd(Set-Location)가 인자를 너무 많이 받았을 때 나는 오류다."
+      },
+      "concept": "win-path",
+      "kind": "line",
+      "title": "보고서 폴더로 이동",
+      "prompt": "Windows PowerShell에서 OneDrive 안의 보고서 폴더로 이동해 make.py를 실행하려고 했습니다. 그런데 한 줄에서 \"인수를 허용하는 위치 매개 변수를 찾을 수 없습니다\"(영문 Windows: A positional parameter cannot be found that accepts argument) 오류가 나고 그 줄의 이동이 되지 않았습니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# Windows PowerShell\ncd \"C:\\Users\\mina\\OneDrive - ABC\"\ncd Reports 2025\npython make.py",
+      "answer": "3",
+      "explanation": "PowerShell도 bash처럼 따옴표 밖의 띄어쓰기로 인자를 나눕니다. 2번 줄은 띄어쓰기와 -가 든 경로를 따옴표로 묶어 경로 하나로 넘기므로 이동이 됩니다. 3번 줄의 cd Reports 2025는 cd(Set-Location)에 Reports와 2025라는 두 인자를 넘기는데, cd는 경로 하나만 받으므로 남은 2025를 받을 자리가 없다는 오류를 내고 이동하지 않습니다. 3번 줄을 cd \"Reports 2025\"로 고치면 됩니다. 한국어 Windows에서는 이 오류가 한국어로, 영문 Windows에서는 영어로 표시됩니다. 명령 프롬프트(cmd)의 cd는 띄어쓰기를 따옴표 없이도 받아 주지만 PowerShell은 그렇지 않으니, 회사 PC에 흔한 \"OneDrive - 회사명\" 같은 폴더는 늘 따옴표로 감싸세요.",
+      "hints": [
+        "띄어쓰기가 든 이름이 나오는 줄마다 cd가 경로를 몇 개로 받는지 세어 보세요.",
+        "PowerShell은 따옴표 밖의 띄어쓰기로 인자를 나눕니다. cd는 경로를 하나만 받습니다."
+      ],
+      "choices": ["2", "3", "4"],
+      "accepted": [],
+      "seconds": 100,
+      "version": 1,
+      "domain": "터미널",
+      "level": 2,
+      "concept_id": "win-path",
+      "response_mode": "choice",
+      "difficulty": 2,
+      "reference_setup": "",
+      "reference_output": "A positional parameter cannot be found that accepts argument '2025'.",
+      "app_difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "bash에서 배운 띄어쓰기 규칙을 따옴표가 있는 줄과 없는 줄의 비교로 PowerShell에 옮기는 적용이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-path:띄어쓰기가 든 Windows 경로",
+      "requires": ["win-path-01", "sh-words-03"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-path"]
+    },
+    {
+      "id": "win-path-04",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "cmd에서 지금 드라이브와 드라이브별 폴더가 따로 바뀌는 규칙으로 다른 드라이브의 폴더에서 실행되게 하는 명령을 고른다.",
+      "new_concept": "cmd의 현재 드라이브와 cd /d·pushd",
+      "misconception": "cmd의 cd도 다른 드라이브 경로를 주면 그 드라이브로 넘어간다고 볼 수 있다.",
+      "diagnostic_question": "cd D:\\reports를 실행한 뒤 cmd의 지금 위치는 어느 드라이브에 있나요?",
+      "remediation": ["win-path-01", "win-path-03"],
+      "advancement": {
+        "exercise_id": "win-path-04",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "condition-change",
+      "distractor_targets": {
+        "cd /d D:\\reports": "빠뜨리게 만드는 오개념: /d가 붙은 cd는 특별한 일을 하지 않는다고 봤다. cmd의 /d는 현재 드라이브까지 함께 바꾸는 옵션이다.",
+        "pushd D:\\reports": "빠뜨리게 만드는 오개념: pushd는 위치를 저장만 하고 이동하지 않는다고 봤다. pushd는 지금 위치를 저장한 뒤 지정한 폴더로 바로 이동한다.",
+        "cd D:\\reports": "고르게 만드는 오개념: bash나 PowerShell처럼 cd만으로 다른 드라이브로 넘어간다고 봤다. cmd의 cd는 /d 없이 다른 드라이브를 주면 그 드라이브가 기억하는 폴더만 바꾸고 지금 위치는 C:에 남는다.",
+        "cd \\reports": "고르게 만드는 오개념: \\로 시작하면 어느 드라이브든 찾아간다고 봤다. \\reports는 지금 드라이브(C:)의 맨 위 아래 reports다.",
+        "D:\\reports": "고르게 만드는 오개념: 폴더 경로만 쓰면 그리로 이동한다고 봤다. cmd는 경로만 쓴 줄을 실행할 명령 이름으로 읽어 오류를 낸다."
+      },
+      "concept": "win-path",
+      "kind": "multi",
+      "title": "D 드라이브의 보고서 폴더",
+      "prompt": "Anaconda Prompt(명령 프롬프트, cmd)에서 지금 위치는 C:\\Users\\mina입니다. 빈칸에 넣었을 때 다음 줄의 python make.py가 D:\\reports 폴더에서 실행되는 명령을 모두 고르세요.",
+      "code": "REM Anaconda Prompt (cmd)\nREM 지금 위치: C:\\Users\\mina\nREM make.py는 D:\\reports에 있다\n____\npython make.py",
+      "answer": "2,4",
+      "explanation": "명령 프롬프트(cmd)는 지금 드라이브와 드라이브마다 기억하는 폴더를 따로 관리합니다. cd /d D:\\reports는 /d 옵션 덕분에 드라이브까지 D:로 바꾸고, pushd D:\\reports는 지금 위치를 저장한 뒤 D:\\reports로 바로 이동하므로 둘 다 make.py를 찾습니다. /d 없는 cd D:\\reports는 D: 드라이브가 기억하는 폴더만 바꾸고 지금 위치는 C:\\Users\\mina에 그대로 남아, python이 make.py를 찾지 못합니다. cd \\reports는 C:의 맨 위 아래 reports를 뜻하고, 경로만 쓴 D:\\reports는 cmd가 실행할 명령으로 읽어 오류를 냅니다. PowerShell의 cd(Set-Location)는 cd D:\\reports만으로 드라이브까지 넘어가므로, 같은 안내라도 cmd인지 PowerShell인지 먼저 확인하세요.",
+      "hints": [
+        "cmd에서는 \"지금 드라이브\"와 \"드라이브마다 기억하는 폴더\"가 따로 있습니다. 각 보기가 드라이브까지 바꾸는지 따져 보세요.",
+        "cmd의 cd는 /d를 붙여야 다른 드라이브로 넘어갑니다. \\로 시작하는 경로는 지금 드라이브의 맨 위에서 출발합니다."
+      ],
+      "choices": [
+        "cd \\reports",
+        "pushd D:\\reports",
+        "cd D:\\reports",
+        "cd /d D:\\reports",
+        "D:\\reports"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "터미널",
+      "level": 3,
+      "concept_id": "win-path",
+      "response_mode": "choice",
+      "difficulty": 3,
+      "reference_setup": "",
+      "reference_output": "D:\\reports에서 make.py 실행",
+      "app_difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "다섯 명령이 드라이브와 폴더를 각각 바꾸는지 따져 실행 위치를 판단하는 전이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-path:cmd에서 드라이브 바꾸기",
+      "requires": ["win-path-03"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-path"]
+    },
+    {
+      "id": "win-files-01",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "PowerShell이 별칭으로 받아 주는 bash 명령과 없는 명령을 구분해 오류가 난 줄을 고른다.",
+      "new_concept": "PowerShell의 bash식 별칭(ls·cp·cat)",
+      "misconception": "bash 명령은 PowerShell에서 모두 안 되거나 모두 된다고 볼 수 있다.",
+      "diagnostic_question": "Windows PowerShell에서 cp는 어떤 명령의 별칭인가요?",
+      "remediation": ["win-files-02"],
+      "advancement": {
+        "exercise_id": "win-files-01",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "bug-line",
+      "distractor_targets": {
+        "3": "cp가 macOS·Linux 명령이라 PowerShell에 없다고 봤다. Windows PowerShell의 cp는 Copy-Item의 별칭이다.",
+        "5": "ls가 PowerShell에 없다고 봤다. ls는 Get-ChildItem의 별칭이다.",
+        "2": "mkdir이 명령 프롬프트(cmd) 전용이라고 봤다. PowerShell에서도 mkdir로 폴더를 만든다."
+      },
+      "concept": "win-files",
+      "kind": "line",
+      "title": "Windows에서 따라 한 정리 안내",
+      "prompt": "AI가 macOS 기준으로 알려 준 정리 명령을 Windows PowerShell에서 그대로 실행했습니다. 한 줄에서 \"cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다\"(영문: is not recognized as the name of a cmdlet) 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# Windows PowerShell (app 폴더)\nmkdir backup\ncp config.txt backup\ntouch done.txt\nls backup",
+      "answer": "4",
+      "explanation": "Windows PowerShell은 macOS·Linux에 익숙한 사람을 위해 몇몇 명령 이름을 별칭으로 받아 줍니다. ls는 Get-ChildItem, cp는 Copy-Item, cat은 Get-Content의 별칭이고 mkdir로 폴더도 만들 수 있어 2·3·5번 줄은 그대로 실행됩니다. 하지만 touch에 해당하는 별칭은 없어 4번 줄에서 touch를 인식할 수 없다는 오류가 납니다. 빈 파일은 New-Item done.txt -ItemType File로 만듭니다. 별칭은 이름만 같을 뿐 옵션까지 bash와 같지는 않으니, AI가 준 bash 명령에 옵션이 붙어 있다면 PowerShell 문법을 한 번 더 확인하세요.",
+      "hints": [
+        "네 명령 가운데 PowerShell이 자기 명령으로 바꿔 실행해 주는 것과 그렇지 않은 것을 나눠 보세요.",
+        "Windows PowerShell은 ls·cp 같은 자주 쓰는 bash 명령 이름 일부를 별칭으로 받아 주지만 모두는 아닙니다."
+      ],
+      "choices": ["2", "3", "4", "5"],
+      "accepted": [],
+      "seconds": 80,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-files",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program.",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "별칭이 있는 명령과 없는 명령 하나를 가르는 기초다. 별칭을 모르면 cp·ls도 의심하게 된다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-files:PowerShell에 없는 bash 명령",
+      "requires": ["sh-files-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-files", "win-path"]
+    },
+    {
+      "id": "win-files-02",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "Remove-Item의 별칭과 -Recurse·-Force 옵션으로 폴더를 확인 없이 지우는 명령을 bash·cmd 문법과 구분한다.",
+      "new_concept": "Remove-Item과 별칭 rm·del·rmdir",
+      "misconception": "bash의 rm -rf나 cmd의 rmdir /s /q가 PowerShell에서도 통한다고 볼 수 있다.",
+      "diagnostic_question": "Windows PowerShell에서 del은 어떤 명령의 별칭인가요?",
+      "remediation": ["win-files-01"],
+      "advancement": {
+        "exercise_id": "win-files-02",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "equivalent-code",
+      "distractor_targets": {
+        "Remove-Item build -Recurse -Force": "빠뜨리게 만드는 오개념: 긴 cmdlet 이름은 따로 설치해야 쓸 수 있다고 봤다. Remove-Item은 기본 명령이고 -Recurse로 안의 항목까지 지운다.",
+        "rm build -Recurse -Force": "빠뜨리게 만드는 오개념: rm을 쓰면 bash 옵션만 받는다고 봤다. rm은 Remove-Item의 별칭이라 -Recurse·-Force를 그대로 받는다.",
+        "rm -rf build": "고르게 만드는 오개념: bash의 rm -rf가 그대로 통한다고 봤다. PowerShell에는 rf라는 매개변수가 없어 오류가 난다.",
+        "del build": "고르게 만드는 오개념: del 한 번이면 폴더째 지워진다고 봤다. 안에 항목이 있는 폴더를 -Recurse 없이 지우면 정말 지울지 묻는다.",
+        "rmdir /s /q build": "고르게 만드는 오개념: cmd의 rmdir /s /q가 PowerShell에서도 통한다고 봤다. PowerShell의 rmdir은 Remove-Item의 별칭이라 /s를 경로로, /q를 남는 인자로 읽어 오류를 낸다."
+      },
+      "concept": "win-files",
+      "kind": "multi",
+      "title": "빌드 폴더 지우기",
+      "prompt": "Windows PowerShell에서 build 폴더를 안의 파일까지 한 번에, 확인 질문 없이 지우려고 합니다. 빈칸에 넣었을 때 그렇게 되는 명령을 모두 고르세요.",
+      "code": "# Windows PowerShell (project 폴더)\n# build 안: app.exe, cache.tmp\n____",
+      "answer": "1,5",
+      "explanation": "Windows PowerShell의 rm·del·rmdir·rd는 모두 Remove-Item의 별칭입니다. Remove-Item build -Recurse -Force와 별칭을 쓴 rm build -Recurse -Force는 -Recurse로 안의 파일까지 지우고 -Force로 숨김·읽기 전용 파일까지 지우므로 확인 질문 없이 끝납니다. bash의 rm -rf는 PowerShell에 rf라는 매개변수가 없어 오류가 나고, del build는 안에 항목이 있는 폴더라 정말 지울지 묻는 확인 질문이 나옵니다. cmd 문법인 rmdir /s /q는 PowerShell이 /s를 지울 경로로, /q를 받을 자리가 없는 남는 인자로 읽어 오류를 냅니다. Remove-Item은 휴지통으로 보내지 않고 바로 지우므로, AI가 알려 준 삭제 명령은 지울 경로부터 확인하세요.",
+      "hints": [
+        "rm·del·rmdir이 PowerShell에서는 모두 어떤 명령의 별칭인지 먼저 떠올려 보세요.",
+        "Remove-Item은 안에 항목이 있는 폴더를 지울 때 그냥 지우지 않고 확인을 묻는 경우가 있습니다. 어떤 옵션이 그 질문 없이 안까지 지우는지 떠올려 보세요."
+      ],
+      "choices": [
+        "rm build -Recurse -Force",
+        "rm -rf build",
+        "del build",
+        "rmdir /s /q build",
+        "Remove-Item build -Recurse -Force"
+      ],
+      "accepted": [],
+      "seconds": 100,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-files",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "build 폴더와 안의 파일이 확인 없이 지워짐",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "같은 Remove-Item을 부르는 다섯 줄을 옵션 문법과 확인 질문 여부로 가르는 기초다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-files:폴더째 지우기",
+      "requires": ["sh-files-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-files", "win-path"]
+    },
+    {
+      "id": "win-files-03",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "Windows PowerShell 5.1의 리다이렉트가 UTF-16LE 파일을 만든다는 점으로 다른 프로그램의 디코딩 오류를 해석한다.",
+      "new_concept": "PowerShell 5.1의 > 저장 인코딩(UTF-16LE)",
+      "misconception": ">로 저장한 파일은 어느 셸에서나 같은 바이트로 저장된다고 볼 수 있다.",
+      "diagnostic_question": "Windows PowerShell 5.1에서 >로 만든 파일의 인코딩은 무엇인가요?",
+      "remediation": ["win-files-01"],
+      "advancement": {
+        "exercise_id": "win-files-03",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "result-interpretation",
+      "distractor_targets": {
+        "report.py가 한글을 print해서 CSV 내용이 깨졌다": "한글 출력 자체를 원인으로 봤다. 오류는 파일 맨 처음 바이트(0xff)에서 났고, 그 바이트는 PowerShell이 붙인 BOM이다.",
+        "report.py가 맨 앞에 잘못된 문자 0xff를 출력했다": "오류에 나온 바이트를 프로그램이 출력한 글자로 봤다. 0xff는 PowerShell이 파일을 저장하며 맨 앞에 붙인 BOM의 첫 바이트다.",
+        ">는 기존 파일 끝에 덧붙여 저장해 앞부분이 섞였다": ">와 >>를 바꿔 봤다. >는 파일을 새로 쓰고, 덧붙이는 것은 >>다."
+      },
+      "concept": "win-files",
+      "kind": "choice",
+      "title": "깨져서 열리지 않는 결과 파일",
+      "prompt": "회사 PC의 Windows PowerShell 5.1에서 python report.py > result.csv로 결과를 저장했습니다. 그 파일을 pandas의 read_csv로 읽자 UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0 오류가 났습니다. 원인으로 가장 알맞은 것을 고르세요.",
+      "code": "# Windows PowerShell 5.1\npython report.py > result.csv\n# 다른 파이썬 코드\n#   pd.read_csv(\"result.csv\")\n#   → UnicodeDecodeError: 'utf-8' codec\n#     can't decode byte 0xff in position 0",
+      "answer": "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다",
+      "explanation": "Windows PowerShell 5.1의 >는 Out-File을 거쳐 기본으로 파일을 UTF-16LE로 새로 만들고 맨 앞에 BOM(바이트 순서 표시, 첫 바이트 0xff)을 붙입니다(>>도 기존 파일의 인코딩을 따지지 않고 UTF-16LE로 덧붙입니다). read_csv는 기본으로 UTF-8로 읽으므로 맨 처음 바이트 0xff를 해석하지 못해 오류가 납니다. 0xff는 report.py가 출력한 글자가 아니고 한글 출력 자체도 원인이 아니며, >는 덧붙이지 않고 새로 씁니다. PowerShell 7 이상은 기본이 BOM 없는 UTF-8입니다. 5.1에서는 결과 파일을 파이썬 코드 안에서 인코딩을 정해 저장하는 편이 안전합니다(예: df.to_csv(\"result.csv\", encoding=\"utf-8\")). macOS 기준 안내의 > 저장이 Windows PowerShell 5.1에서는 다른 바이트를 만든다는 점을 기억하세요.",
+      "hints": [
+        "오류 메시지가 가리키는 위치(position 0)는 파일의 맨 처음입니다. 파이썬 코드보다 파일을 저장한 단계를 의심해 보세요.",
+        "Windows PowerShell 5.1의 >는 파일을 저장할 때 기본 인코딩이 UTF-8이 아닙니다."
+      ],
+      "choices": [
+        ">는 기존 파일 끝에 덧붙여 저장해 앞부분이 섞였다",
+        "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다",
+        "report.py가 맨 앞에 잘못된 문자 0xff를 출력했다",
+        "report.py가 한글을 print해서 CSV 내용이 깨졌다"
+      ],
+      "accepted": [],
+      "seconds": 110,
+      "version": 1,
+      "domain": "터미널",
+      "level": 2,
+      "concept_id": "win-files",
+      "response_mode": "choice",
+      "difficulty": 2,
+      "reference_setup": "",
+      "reference_output": "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다",
+      "app_difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "오류 메시지의 위치·바이트와 셸의 저장 인코딩을 연결해 원인을 해석하는 적용이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-files:> 저장 인코딩",
+      "requires": ["win-files-01", "sh-redirect-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-files", "win-path"]
+    },
+    {
+      "id": "win-files-04",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "cmd와 PowerShell이 받아들이는 명령·별칭·환경 변수 문법을 비교해 두 창에서 같은 뜻으로 실행되는 명령을 고른다.",
+      "new_concept": "cmd와 PowerShell의 명령·프롬프트 구분",
+      "misconception": "Windows의 두 창(cmd·PowerShell)이 같은 명령을 받아들인다고 볼 수 있다.",
+      "diagnostic_question": "프롬프트에 PS가 보이는 창은 cmd와 PowerShell 중 무엇인가요?",
+      "remediation": ["win-files-01", "win-files-03"],
+      "advancement": {
+        "exercise_id": "win-files-04",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "condition-change",
+      "distractor_targets": {
+        "type notes.txt": "빠뜨리게 만드는 오개념: type은 cmd 명령이라 PowerShell에서는 안 된다고 봤다. PowerShell의 type은 Get-Content의 별칭이라 파일 내용을 보여 준다.",
+        "copy a.txt b.txt": "빠뜨리게 만드는 오개념: copy는 cmd에서만 쓰는 명령이라고 봤다. PowerShell의 copy는 Copy-Item의 별칭이다.",
+        "cat notes.txt": "고르게 만드는 오개념: PowerShell에서 되니 cmd에서도 된다고 봤다. cat은 PowerShell의 별칭일 뿐 cmd에는 없는 명령이다.",
+        "echo %USERNAME%": "고르게 만드는 오개념: %이름%이 두 창 모두에서 환경 변수로 바뀐다고 봤다. PowerShell은 %USERNAME%을 글자 그대로 출력하고 환경 변수는 $env:USERNAME으로 읽는다.",
+        "ls": "고르게 만드는 오개념: ls가 Windows 어디서나 된다고 봤다. ls는 PowerShell의 별칭이고 cmd에는 없다."
+      },
+      "concept": "win-files",
+      "kind": "multi",
+      "title": "두 창에서 쓰는 안내문",
+      "prompt": "같은 안내문을 명령 프롬프트(cmd)와 Windows PowerShell 양쪽에서 쓰려고 합니다. 빈칸에 넣었을 때 두 창 모두에서 뜻대로 실행되는 명령을 모두 고르세요.",
+      "code": "# 폴더 안: notes.txt, a.txt\n# 명령 프롬프트(cmd) 창\nC:\\Users\\mina\\memo> ____\n# Windows PowerShell 창\nPS C:\\Users\\mina\\memo> ____",
+      "answer": "1,4",
+      "explanation": "명령 프롬프트(cmd)와 PowerShell은 다른 프로그램이라 받아들이는 명령과 문법이 다릅니다. type과 copy는 cmd의 기본 명령이면서 PowerShell에서도 각각 Get-Content·Copy-Item의 별칭이라 두 창에서 같은 일을 합니다. cat과 ls는 PowerShell 별칭일 뿐 cmd에는 없어 \"내부 또는 외부 명령이 아닙니다\" 오류가 나고, echo %USERNAME%은 cmd에서는 사용자 이름으로 바뀌지만 PowerShell에서는 %USERNAME% 글자 그대로 출력됩니다. 프롬프트에 PS가 보이면 PowerShell(Anaconda PowerShell Prompt는 (base) PS C:\\...>), C:\\...>처럼 PS가 없으면 cmd입니다. AI에게 명령을 물을 때 어느 창을 쓰는지 함께 알려 주면 맞는 문법으로 답을 받을 수 있습니다.",
+      "hints": [
+        "각 보기를 cmd 창과 PowerShell 창에서 따로 실행한다고 생각하고, 한쪽에서라도 안 되거나 뜻이 달라지면 빼세요.",
+        "PowerShell은 type·copy·cat·ls 같은 이름을 별칭으로 받아 주지만, cmd에는 cat·ls 같은 명령이 기본으로 없습니다. 환경 변수를 읽는 문법도 두 창이 다릅니다."
+      ],
+      "choices": [
+        "type notes.txt",
+        "echo %USERNAME%",
+        "cat notes.txt",
+        "copy a.txt b.txt",
+        "ls"
+      ],
+      "accepted": [],
+      "seconds": 150,
+      "version": 1,
+      "domain": "터미널",
+      "level": 3,
+      "concept_id": "win-files",
+      "response_mode": "choice",
+      "difficulty": 3,
+      "reference_setup": "",
+      "reference_output": "type·copy는 두 창에서 같은 결과",
+      "app_difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "다섯 명령을 두 셸에서 각각 따져 양쪽 조건을 모두 만족하는지 판단하는 전이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-files:cmd와 PowerShell 양쪽 명령",
+      "requires": ["win-files-03"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-files", "win-path"]
+    },
+    {
+      "id": "win-env-01",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "bash의 PATH 추가 명령을 PowerShell의 $env:PATH와 ; 구분자로 옮긴다.",
+      "new_concept": "Windows PATH의 ; 구분자와 $env:PATH",
+      "misconception": "Windows PATH도 :로 폴더를 구분하거나, 새 폴더만 넣어도 기존 명령이 남는다고 볼 수 있다.",
+      "diagnostic_question": "Windows의 PATH에서 폴더 사이를 구분하는 기호는 무엇인가요?",
+      "remediation": ["win-env-02"],
+      "advancement": {
+        "exercise_id": "win-env-01",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "equivalent-code",
+      "distractor_targets": {
+        "$env:PATH = \"$HOME\\tools:\" + $env:PATH": "macOS·Linux처럼 :로 폴더를 나눈다고 봤다. Windows의 PATH는 ;로 폴더를 구분한다.",
+        "$env:PATH = \"$HOME\\tools\"": "tools 폴더만 넣으면 된다고 봤다. 원래 PATH가 지워져 python·git 같은 다른 명령을 찾지 못한다.",
+        "export PATH=\"$HOME\\tools;$PATH\"": "bash의 export가 PowerShell에서도 통한다고 봤다. PowerShell에는 export 명령이 없다."
+      },
+      "concept": "win-env",
+      "kind": "choice",
+      "title": "도구 폴더를 PATH에 넣기",
+      "prompt": "AI가 macOS 기준으로 export PATH=\"$HOME/tools:$PATH\"를 실행하라고 했습니다. Windows PowerShell에서 지금 창에 같은 일을 하는 줄을 고르세요.",
+      "code": "# Windows PowerShell\n# 목표: C:\\Users\\mina\\tools의 report를\n#   이름만으로 실행하고, python 같은\n#   기존 명령도 계속 쓴다\n____\nreport --help",
+      "answer": "$env:PATH = \"$HOME\\tools;\" + $env:PATH",
+      "explanation": "PowerShell에서 환경 변수는 $env:이름으로 읽고 바꾸며, 바꾼 값은 지금 창(세션)에만 적용됩니다. Windows의 PATH는 폴더를 ;로 구분하므로 $env:PATH = \"$HOME\\tools;\" + $env:PATH처럼 새 폴더 뒤에 ;를 붙이고 원래 목록을 이어 붙입니다. macOS·Linux처럼 :로 이으면 새 폴더와 다음 폴더가 한 경로로 붙어 버려 찾지 못하고, 원래 PATH를 붙이지 않으면 python·git 같은 기존 명령까지 찾지 못합니다. export는 bash 명령이라 PowerShell에서는 인식되지 않습니다. 큰따옴표 안의 $HOME은 홈 폴더(C:\\Users\\mina)로 바뀝니다.",
+      "hints": [
+        "bash 줄의 세 부분, 즉 새 폴더·구분 기호·원래 PATH가 PowerShell 줄에서 각각 무엇으로 바뀌는지 보세요.",
+        "Windows에서 PATH의 폴더 사이 구분 기호는 :가 아닙니다. 원래 목록($env:PATH)을 뒤에 붙여야 기존 명령도 계속 찾습니다."
+      ],
+      "choices": [
+        "$env:PATH = \"$HOME\\tools;\" + $env:PATH",
+        "$env:PATH = \"$HOME\\tools\"",
+        "export PATH=\"$HOME\\tools;$PATH\"",
+        "$env:PATH = \"$HOME\\tools:\" + $env:PATH"
+      ],
+      "accepted": [],
+      "seconds": 90,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-env",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "$env:PATH = \"$HOME\\tools;\" + $env:PATH",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 3,
+        "rationale": "bash 한 줄을 세 부분으로 나눠 PowerShell 문법으로 옮기는 기초다. 구분자·덮어쓰기·명령 이름을 각각 겨냥했다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-env:PATH에 폴더 더하기",
+      "requires": ["sh-env-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-env", "win-path"]
+    },
+    {
+      "id": "win-env-02",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "cmd의 set·%이름% 문법과 PowerShell의 $env: 문법을 구분해 cmd 창의 출력을 고른다.",
+      "new_concept": "cmd의 set과 %이름% 변수 읽기",
+      "misconception": "Windows의 모든 창이 같은 변수 문법을 쓴다고 볼 수 있다.",
+      "diagnostic_question": "cmd에서 MODE 변수의 값을 읽는 표기는 무엇인가요?",
+      "remediation": ["win-env-01"],
+      "advancement": {
+        "exercise_id": "win-env-02",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "output",
+      "distractor_targets": {
+        "dev dev": "PowerShell의 $env: 문법을 cmd도 알아듣는다고 봤다. cmd는 $env:MODE를 글자 그대로 출력한다.",
+        "%MODE% $env:MODE": "cmd의 set이 변수를 만들지 않는다고 봤다. set MODE=dev 뒤의 %MODE%는 dev로 바뀐다.",
+        "MODE=dev $env:MODE": "%MODE%가 이름=값 전체로 바뀐다고 봤다. %MODE%는 값 dev만으로 바뀐다."
+      },
+      "concept": "win-env",
+      "kind": "choice",
+      "title": "Anaconda Prompt의 실행 모드",
+      "prompt": "Anaconda Prompt(명령 프롬프트, cmd)에서 아래 두 줄을 실행했을 때 출력을 고르세요.",
+      "code": "REM Anaconda Prompt (cmd)\nset MODE=dev\necho %MODE% $env:MODE",
+      "answer": "dev $env:MODE",
+      "explanation": "명령 프롬프트(cmd)에서 set MODE=dev는 지금 창에 MODE 변수를 만들고, echo 줄의 %MODE%는 그 값 dev로 바뀝니다. $env:MODE는 PowerShell 문법이라 cmd는 특별한 뜻 없이 글자 그대로 출력하므로 dev $env:MODE가 나옵니다. PowerShell이었다면 %MODE%는 글자 그대로 남고, 환경 변수는 $env:MODE = \"dev\"로 정해 $env:MODE로 읽습니다. PowerShell의 set은 Set-Variable의 별칭이라 환경 변수를 만들지 않습니다. Anaconda Prompt는 cmd 기반이고 Anaconda PowerShell Prompt는 PowerShell 기반이라, AI 안내의 변수 문법이 어느 창의 것인지 먼저 확인하세요. set으로 정한 값도 지금 창에만 남습니다.",
+      "hints": [
+        "cmd가 변수 이름을 알아보는 표시가 %…%인지 $…인지 생각해 보세요.",
+        "cmd에서는 set 이름=값으로 정하고 %이름%으로 읽습니다. 다른 셸의 문법은 그냥 글자로 남습니다."
+      ],
+      "choices": [
+        "%MODE% $env:MODE",
+        "dev dev",
+        "MODE=dev $env:MODE",
+        "dev $env:MODE"
+      ],
+      "accepted": [],
+      "seconds": 70,
+      "version": 1,
+      "domain": "터미널",
+      "level": 1,
+      "concept_id": "win-env",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "dev $env:MODE",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "한 줄에 두 셸의 변수 문법을 나란히 두어 어느 쪽이 바뀌는지 고르는 기초다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-env:cmd의 %변수%",
+      "requires": ["sh-env-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-env", "win-path"]
+    },
+    {
+      "id": "win-env-03",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "PowerShell 5.1이 지원하지 않는 && 연산자가 든 줄을 찾고 같은 뜻의 ; if ($?)로 바꾸는 방법을 판단한다.",
+      "new_concept": "PowerShell 7의 &&·||와 5.1의 차이",
+      "misconception": "bash와 cmd에서 되는 &&가 Windows PowerShell에서도 된다고 보거나, ;로 바꾸면 뜻이 같다고 볼 수 있다.",
+      "diagnostic_question": "Windows에 기본으로 들어 있는 Windows PowerShell의 버전은 무엇인가요?",
+      "remediation": ["win-env-01", "win-env-02"],
+      "advancement": {
+        "exercise_id": "win-env-03",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "bug-line",
+      "distractor_targets": {
+        "2": ";도 PowerShell에서는 쓸 수 없는 구분 기호라고 봤다. ;는 PowerShell에서도 명령을 차례로 실행하는 구분자다.",
+        "5": "파이프 |가 5.1에서 쓸 수 없는 기호라고 봤다. 파이프는 Windows PowerShell의 기본 기능이다.",
+        "3": "python -m 형식이 PowerShell에서 구문 오류를 낸다고 봤다. -m은 python에 넘기는 옵션일 뿐이다."
+      },
+      "concept": "win-env",
+      "kind": "line",
+      "title": "AI가 이어 준 실행 명령",
+      "prompt": "AI가 알려 준 실행 순서를 회사 PC의 Windows PowerShell 5.1에 붙여 넣었습니다. 한 줄에서 \"The token '…' is not a valid statement separator in this version.\"(이 버전에서 올바른 문 구분 기호가 아님, 한국어 Windows에서는 한국어로 표시) 구문 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# Windows PowerShell 5.1\ncd shop; dir\npython -m pip --version\npython make.py && python send.py\npip list | Select-String pandas",
+      "answer": "4",
+      "explanation": "&&(앞 명령이 성공하면 다음 명령 실행)와 ||는 PowerShell 7부터 생긴 연산자라, Windows에 기본으로 들어 있는 Windows PowerShell 5.1은 4번 줄을 해석하지 못하고 구문 오류를 냅니다. 4번 줄을 python make.py; if ($?) { python send.py }로 고치면 make.py가 성공했을 때만 send.py를 실행하는 같은 뜻이 됩니다. python make.py; python send.py처럼 ;만 쓰면 make.py가 실패해도 send.py가 실행되므로 뜻이 달라집니다. ;와 파이프 |는 5.1에서도 쓸 수 있습니다. &&로 잇는 안내는 명령 프롬프트(cmd)와 PowerShell 7에서는 되지만 Windows PowerShell 5.1에서는 막힙니다.",
+      "hints": [
+        "네 줄에 쓰인 기호(;·&&·|) 가운데 PowerShell에 나중에 생긴 것이 무엇인지 생각해 보세요.",
+        "&&와 ||는 PowerShell 7부터 생긴 연산자입니다. Windows에 기본으로 들어 있는 것은 Windows PowerShell 5.1입니다."
+      ],
+      "choices": ["2", "3", "4", "5"],
+      "accepted": [],
+      "seconds": 100,
+      "version": 1,
+      "domain": "터미널",
+      "level": 2,
+      "concept_id": "win-env",
+      "response_mode": "choice",
+      "difficulty": 2,
+      "reference_setup": "",
+      "reference_output": "The token '&&' is not a valid statement separator in this version.",
+      "app_difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 2,
+        "distractor_strength": 2,
+        "rationale": "명령을 잇는 기호 세 가지(;·&&·|) 가운데 버전에 따라 막히는 것을 고르는 적용이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-env:5.1의 &&",
+      "requires": ["win-env-01", "sh-chain-01"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-env", "win-path"]
+    },
+    {
+      "id": "win-env-04",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "PowerShell이 지금 폴더를 찾지 않는 규칙과 경로를 밝힌 실행을 구분해 PATH 밖 프로그램을 실행하는 명령을 고른다.",
+      "new_concept": "PowerShell의 명령 검색(PATH만)과 .\\ 실행",
+      "misconception": "cmd처럼 PowerShell도 지금 폴더의 프로그램을 이름만으로 실행한다고 볼 수 있다.",
+      "diagnostic_question": "PowerShell에서 이름만 쓴 명령은 어느 폴더들에서 찾나요?",
+      "remediation": ["win-env-01", "win-env-03"],
+      "advancement": {
+        "exercise_id": "win-env-04",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "condition-change",
+      "distractor_targets": {
+        ".\\report.exe": "빠뜨리게 만드는 오개념: .\\는 cmd에서만 쓰는 표기라고 봤다. PowerShell에서 .\\는 지금 폴더를 뜻하고, 지금 폴더의 프로그램은 이렇게 위치를 밝혀야 실행된다.",
+        "C:\\Users\\mina\\tools\\report.exe": "빠뜨리게 만드는 오개념: 전체 경로를 써도 PATH에 없으면 실행되지 않는다고 봤다. 경로를 쓰면 PATH와 상관없이 그 위치의 프로그램을 실행한다.",
+        "report.exe": "고르게 만드는 오개념: cmd처럼 지금 폴더의 프로그램을 이름만으로 실행할 수 있다고 봤다. PowerShell은 보안을 위해 PATH에 있는 폴더의 프로그램만 이름으로 실행한다.",
+        "tools\\report.exe": "고르게 만드는 오개념: 지금 위치 이름부터 쓰면 된다고 봤다. 지금 위치가 이미 tools라 tools 안의 tools 폴더를 찾는다.",
+        "..\\tools\\report.exe": "빠뜨리게 만드는 오개념: ..이 들어간 경로는 실행할 수 없다고 봤다. 한 단계 위(mina)로 갔다가 tools로 돌아오는 경로라 같은 report.exe를 가리킨다."
+      },
+      "concept": "win-env",
+      "kind": "multi",
+      "title": "받아 둔 report.exe 실행",
+      "prompt": "Windows PowerShell에서 지금 위치는 C:\\Users\\mina\\tools이고 이 폴더에 report.exe가 있습니다. 이 폴더는 PATH에 없습니다. 빈칸에 넣었을 때 report.exe가 실행되는 명령을 모두 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\tools  ← 지금 위치\n# └── report.exe\n# (tools 폴더는 PATH에 없다)\n____",
+      "answer": "1,3,4",
+      "explanation": "PowerShell은 보안을 위해 이름만 쓴 명령을 PATH에 있는 폴더에서만 찾고 지금 폴더는 찾지 않습니다. 그래서 report.exe만 쓰면 인식할 수 없는 명령이라는 오류가 나고, 지금 폴더라는 뜻의 .\\를 붙인 .\\report.exe나 전체 경로 C:\\Users\\mina\\tools\\report.exe, 한 단계 위로 갔다 돌아오는 ..\\tools\\report.exe처럼 위치를 밝혀야 실행됩니다. tools\\report.exe는 지금 위치(tools) 안의 tools 폴더를 찾으므로 틀립니다. 명령 프롬프트(cmd)는 지금 폴더를 먼저 찾아 report만으로도 실행되기 때문에, cmd용 안내를 PowerShell에서 따라 할 때 자주 막히는 지점입니다. macOS·Linux의 ./run.sh와 같은 원리입니다.",
+      "hints": [
+        "PowerShell이 이름만 쓴 명령을 어디에서 찾는지, 경로를 쓴 명령은 어떻게 다루는지 나눠 보세요.",
+        "PowerShell은 이름만 쓰면 PATH의 폴더에서만 찾고 지금 폴더는 찾지 않습니다. .\\나 전체 경로처럼 위치를 밝히면 그 파일을 실행합니다."
+      ],
+      "choices": [
+        "C:\\Users\\mina\\tools\\report.exe",
+        "tools\\report.exe",
+        ".\\report.exe",
+        "..\\tools\\report.exe",
+        "report.exe"
+      ],
+      "accepted": [],
+      "seconds": 140,
+      "version": 1,
+      "domain": "터미널",
+      "level": 3,
+      "concept_id": "win-env",
+      "response_mode": "choice",
+      "difficulty": 3,
+      "reference_setup": "",
+      "reference_output": "report.exe 실행",
+      "app_difficulty": {
+        "level": 3,
+        "label": "조건 변화·전이",
+        "reasoning_steps": 3,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 3,
+        "rationale": "명령 검색 규칙과 상대·절대 경로를 다섯 보기에 적용하는 전이다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "win-env:지금 폴더의 프로그램 실행",
+      "requires": ["win-env-03"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-env", "win-path"]
+    },
+    {
+      "id": "sh-windows-05",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "트레이스백이 가리키는 읽기 줄과 인코딩을 정하는 open 줄을 구분해 encoding을 지정할 줄을 고른다.",
+      "new_concept": "open()의 기본 인코딩(한국어 Windows cp949)",
+      "misconception": "Python이 어느 컴퓨터에서나 같은 인코딩으로 파일을 연다고 볼 수 있다.",
+      "diagnostic_question": "4번 줄의 open은 한국어 Windows에서 어떤 인코딩으로 파일을 읽나요?",
+      "remediation": ["sh-windows-02", "sh-windows-01"],
+      "advancement": {
+        "exercise_id": "sh-windows-05",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "bug-line",
+      "distractor_targets": {
+        "5": "트레이스백이 가리키는 줄을 고쳐야 한다고 봤다. 5번 줄은 글자를 실제로 읽어 디코딩하는 순간일 뿐, 어떤 인코딩으로 읽을지는 파일을 여는 4번 줄에서 정한다.",
+        "6": "Windows 콘솔이 한글을 출력하지 못한다고 봤다. 메시지의 decode는 출력이 아니라 읽기 단계의 오류다.",
+        "2": "csv 모듈을 불러오는 줄이 잘못됐다고 봤다. import csv는 운영체제와 상관없이 같다."
+      },
+      "concept": "sh-windows",
+      "kind": "line",
+      "title": "회사 PC에서 깨진 매출 파일",
+      "prompt": "집의 macOS에서 잘 돌던 코드를 회사 Windows PC(Python 3.12)로 옮겨 실행했더니 UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence 오류가 났고, 트레이스백은 5번 줄을 가리켰습니다. sales.csv는 UTF-8로 저장된 한글 파일입니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# read_sales.py (회사 Windows PC)\nimport csv\n\nwith open(\"sales.csv\") as f:\n    for row in csv.reader(f):\n        print(row)",
+      "answer": "4",
+      "explanation": "open()에 encoding을 주지 않으면 Python은 운영체제의 기본 인코딩으로 파일을 읽습니다. macOS·Linux의 기본은 UTF-8이지만, 한국어 Windows의 기본(ANSI 코드 페이지)은 cp949라서 UTF-8로 저장된 한글 파일을 cp949로 해석하다가 오류가 납니다. open()은 파일을 열 때 인코딩만 정하고, 실제 디코딩은 csv.reader가 줄을 꺼내는 5번 줄에서 일어나므로 트레이스백은 5번 줄을 가리킵니다. 고칠 곳은 인코딩을 정하는 4번 줄이며, with open(\"sales.csv\", encoding=\"utf-8\") as f:로 고치면 어느 컴퓨터에서나 같은 방식으로 읽습니다. 엑셀의 \"CSV UTF-8\"로 저장한 파일은 맨 앞에 BOM이 있어 encoding=\"utf-8-sig\"가 더 낫고, csv 모듈 문서는 newline=\"\"도 함께 권합니다. Python 3.15부터는 UTF-8 모드가 기본이 되어 이 차이가 줄었지만, 회사 PC에는 이전 버전이 많으니 파일을 열 때 encoding을 늘 적는 습관이 안전합니다.",
+      "hints": [
+        "오류 메시지의 decode와 cp949가 무엇을 뜻하는지, 그 인코딩이 어느 줄에서 정해지는지 거슬러 올라가 보세요.",
+        "open()에 encoding을 주지 않으면 Python 3.14까지는 운영체제의 기본 인코딩으로 읽습니다. 한국어 Windows의 기본은 cp949입니다."
+      ],
+      "choices": ["2", "4", "5", "6"],
+      "accepted": [],
+      "seconds": 110,
+      "version": 1,
+      "domain": "터미널",
+      "level": 2,
+      "concept_id": "sh-windows",
+      "response_mode": "choice",
+      "difficulty": 2,
+      "reference_setup": "",
+      "reference_output": "UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence",
+      "app_difficulty": {
+        "level": 2,
+        "label": "적용",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 3,
+        "distractor_strength": 2,
+        "rationale": "오류 메시지의 코덱 이름을 파일을 여는 줄과 연결하는 적용이다. 읽기와 출력 단계를 섞은 보기를 두었다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "terminal-git",
+      "family": "sh-windows:Windows 기본 인코딩 cp949",
+      "requires": ["sh-windows-02"],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": ["sh-python"]
+    },
+    {
+      "id": "git-status-05",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "git init이 숨김 폴더 .git을 만들어 폴더를 저장소로 바꾼다는 점을 ls -a 결과로 확인한다.",
+      "new_concept": "저장소와 .git 폴더",
+      "misconception": "git init이 눈에 보이는 변화 없이 끝나거나 .gitignore까지 만든다고 볼 수 있다.",
+      "diagnostic_question": "git init 뒤 기록은 어느 폴더에 저장되나요?",
+      "remediation": ["git-status-02"],
+      "advancement": {
+        "exercise_id": "git-status-05",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "output",
+      "distractor_targets": {
+        "todo.txt": "git init이 만든 것이 ls -a에도 보이지 않는다고 봤다. -a는 숨김 항목까지 보여 주고, git init은 숨김 폴더 .git을 만든다.",
+        ".  ..  todo.txt": "git init이 따로 폴더를 만들지 않는다고 봤다. 저장소의 기록은 모두 .git 폴더 안에 저장된다.",
+        ".  ..  .git  .gitignore  todo.txt": "git init이 .gitignore도 함께 만든다고 봤다. .gitignore는 필요할 때 직접 만드는 파일이다."
+      },
+      "concept": "git-status",
+      "kind": "choice",
+      "title": "저장소 만들기",
+      "prompt": "아래 명령을 차례로 실행했을 때 마지막 명령의 출력을 고르세요.",
+      "code": "# ~/notes/  ← 지금 위치\n# └── todo.txt\ngit init\nls -a",
+      "answer": ".  ..  .git  todo.txt",
+      "explanation": "git init은 지금 폴더(notes)를 Git 저장소로 만들고, 앞으로의 커밋 기록과 설정을 담을 숨김 폴더 .git을 만듭니다. 이름이 .으로 시작해 옵션 없는 ls에는 보이지 않지만, ls -a는 숨김 항목까지 보여 주므로 ., .., .git, todo.txt가 나옵니다. todo.txt는 그대로이고 아직 커밋된 것도 없습니다. .gitignore는 git init이 만들지 않으며 필요할 때 직접 만듭니다. .git 폴더를 지우면 그 저장소의 모든 기록이 사라지므로, AI가 \"저장소를 다시 만들라\"며 .git을 지우라고 하면 기록을 잃는다는 뜻으로 읽으세요.",
+      "hints": [
+        "ls -a는 이름이 .으로 시작하는 숨김 항목까지 보여 줍니다. git init이 무엇을 새로 만드는지 생각해 보세요.",
+        "git init은 지금 폴더를 저장소로 만들면서 기록을 담을 숨김 폴더 하나를 만듭니다."
+      ],
+      "choices": [
+        "todo.txt",
+        ".  ..  .git  .gitignore  todo.txt",
+        ".  ..  .git  todo.txt",
+        ".  ..  todo.txt"
+      ],
+      "accepted": [],
+      "seconds": 60,
+      "version": 1,
+      "domain": "Git",
+      "level": 1,
+      "concept_id": "git-status",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": ".  ..  .git  todo.txt",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 1,
+        "code_load": 1,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "저장소의 실체(.git)를 숨김 목록으로 확인하는 첫 기초다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "git",
+      "family": "git-status:저장소가 만드는 .git",
+      "requires": [],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": []
+    },
+    {
+      "id": "git-diff-05",
+      "source": "app",
+      "status": "item_reviewed",
+      "objective": "diff의 머리글·@@ 범위·문맥 줄을 구분해 +줄이 들어가는 자리를 찾아 적용 결과를 고른다.",
+      "new_concept": "diff 머리글과 문맥 줄",
+      "misconception": "---·+++ 머리글을 파일 내용으로 보거나 문맥 줄도 새로 더해진다고 볼 수 있다.",
+      "diagnostic_question": "--- a/todo.txt 줄은 파일의 내용인가요?",
+      "remediation": ["git-diff-01"],
+      "advancement": {
+        "exercise_id": "git-diff-05",
+        "criterion": "다른 날 지연 복습에서 이 문항을 힌트 없이 첫 시도에 다시 맞힌다."
+      },
+      "review_record": "curriculum/reviews/2026-10-30-windows-git.json",
+      "task_form": "output",
+      "distractor_targets": {
+        "--- a/todo.txt\n+++ b/todo.txt\n우유 사기\n병원 가기\n운동하기": "--- ·+++ 줄을 파일에 들어갈 내용으로 봤다. 두 줄은 바뀌기 전·후 파일 이름을 알려 주는 머리글이다.",
+        "우유 사기\n운동하기\n병원 가기": "+줄은 항상 파일 끝에 붙는다고 봤다. +줄은 앞뒤 문맥 줄 사이, 쓰인 그 자리에 들어간다.",
+        "우유 사기\n우유 사기\n병원 가기\n운동하기\n운동하기": "앞에 빈칸이 붙은 문맥 줄도 새로 더해진다고 봤다. 문맥 줄은 이미 있는 줄을 가리킬 뿐이다."
+      },
+      "concept": "git-diff",
+      "kind": "choice",
+      "title": "할 일 목록 diff 읽기",
+      "prompt": "AI가 할 일 목록에 한 줄을 더하자며 change.diff를 주었습니다. 아래 명령으로 적용한 뒤 마지막 명령의 출력을 고르세요.",
+      "code": "# ~/memo/  ← 지금 위치\n# ├── change.diff\n# └── todo.txt\n# todo.txt 내용:\n#   우유 사기\n#   운동하기\n# change.diff 내용:\n#   --- a/todo.txt\n#   +++ b/todo.txt\n#   @@ -1,2 +1,3 @@\n#    우유 사기\n#   +병원 가기\n#    운동하기\ngit apply change.diff\ncat todo.txt",
+      "answer": "우유 사기\n병원 가기\n운동하기",
+      "explanation": "diff의 첫 두 줄 --- a/todo.txt와 +++ b/todo.txt는 바뀌기 전과 후의 파일 이름을 알려 주는 머리글이라 파일 내용이 아닙니다. @@ -1,2 +1,3 @@는 바꾸기 전 1번 줄부터 2줄이 바꾼 뒤 1번 줄부터 3줄이 된다는 범위 표시입니다. 앞에 빈칸이 붙은 줄(우유 사기, 운동하기)은 그대로 두는 문맥 줄이고, +가 붙은 병원 가기만 그 자리에 새로 들어갑니다. 그래서 적용한 뒤에는 우유 사기, 병원 가기, 운동하기 세 줄입니다. AI가 준 diff를 읽을 때는 머리글과 문맥 줄을 빼고 -·+ 줄만 실제 변경으로 보세요.",
+      "hints": [
+        "diff에서 맨 앞 기호가 ---·+++인 줄, 빈칸인 줄, +인 줄이 각각 무엇을 뜻하는지 나눠 보세요.",
+        "---·+++ 줄은 파일 이름을 알려 주는 머리글이고, 빈칸으로 시작하는 줄은 바뀌지 않는 문맥입니다."
+      ],
+      "choices": [
+        "우유 사기\n운동하기\n병원 가기",
+        "--- a/todo.txt\n+++ b/todo.txt\n우유 사기\n병원 가기\n운동하기",
+        "우유 사기\n병원 가기\n운동하기",
+        "우유 사기\n우유 사기\n병원 가기\n운동하기\n운동하기"
+      ],
+      "accepted": [],
+      "seconds": 80,
+      "version": 1,
+      "domain": "Git",
+      "level": 1,
+      "concept_id": "git-diff",
+      "response_mode": "choice",
+      "difficulty": 1,
+      "reference_setup": "",
+      "reference_output": "우유 사기\n병원 가기\n운동하기",
+      "app_difficulty": {
+        "level": 1,
+        "label": "기초 확인",
+        "reasoning_steps": 2,
+        "code_load": 2,
+        "transfer": 1,
+        "distractor_strength": 2,
+        "rationale": "diff의 세 종류 줄을 가르는 기초다. 머리글·끝에 붙이기·문맥 중복의 오해를 겨냥했다.",
+        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+      },
+      "track_id": "git",
+      "family": "git-diff:머리글과 문맥 줄",
+      "requires": [],
+      "release_path_version": "learning-paths-2.3",
+      "prerequisite_concepts": []
     }
   ],
   "coverage": {
@@ -23045,12 +24002,24 @@
       "basic_families": 2,
       "has_transfer": true
     },
+    "win-path": {
+      "basic_families": 2,
+      "has_transfer": true
+    },
+    "win-files": {
+      "basic_families": 2,
+      "has_transfer": true
+    },
+    "win-env": {
+      "basic_families": 2,
+      "has_transfer": true
+    },
     "sh-windows": {
       "basic_families": 2,
       "has_transfer": true
     },
     "git-status": {
-      "basic_families": 2,
+      "basic_families": 3,
       "has_transfer": true
     },
     "git-commit": {
@@ -23058,7 +24027,7 @@
       "has_transfer": true
     },
     "git-diff": {
-      "basic_families": 2,
+      "basic_families": 3,
       "has_transfer": true
     },
     "git-undo": {

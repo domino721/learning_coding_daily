@@ -51,15 +51,17 @@ def original(*keys):
 
 REVERSIONED = '2026-10-26 이후 새 version으로 바뀐 문항은 그 version의 검수 기록과 게이트가 확인한다'
 
-# CR-017 added the Python 기초 track and three SQL concepts, CR-018 four more basics concepts and CR-019 the 터미널·Git
-# track. Concepts that existed when a dated fixture was frozen must still match it byte for byte, in their original order.
+# CR-017 added the Python 기초 track and three SQL concepts, CR-018 four more basics concepts, CR-019 the 터미널·Git
+# sectors and CR-020 three Windows sectors. Concepts that existed when a dated fixture was frozen must still match it byte for byte, in their original order.
 ADDED_CONCEPTS = {'py-values', 'py-str', 'py-list', 'py-control', 'py-tuple', 'py-dict', 'py-set', 'py-func',
                   'py-star', 'py-decorator', 'sql-functions', 'sql-windows', 'sql-modify',
                   # CR-018
                   'py-class', 'py-class-deco', 'py-error', 'py-iter',
                   # CR-019
                   'sh-path', 'sh-words', 'sh-files', 'sh-redirect', 'sh-chain', 'sh-env', 'sh-script', 'sh-python',
-                  'sh-windows', 'git-status', 'git-commit', 'git-diff', 'git-undo', 'git-branch', 'git-remote'}
+                  'sh-windows', 'git-status', 'git-commit', 'git-diff', 'git-undo', 'git-branch', 'git-remote',
+                  # CR-020
+                  'win-path', 'win-files', 'win-env'}
 
 
 def concepts_before_additions(bank):

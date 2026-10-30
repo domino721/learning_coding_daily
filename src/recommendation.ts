@@ -149,7 +149,8 @@ export function conceptStates(sessions: Session[]) {
     };
   });
 }
-// Python 기초 (domain Python) and 터미널·Git items form their own tracks and never enter data-analysis sessions.
+// Python 기초, 터미널 and Git items form their own tracks and never enter data-analysis sessions. Since CR-020
+// the 터미널 track keeps the CR-019 ID terminal-git so earlier sessions and saved choices stay attached to it.
 export const TERMINAL_DOMAINS = ["터미널", "Git"];
 export function inTrack(ex: { domain?: string }, track: string) {
   return track === "sql"
@@ -161,8 +162,10 @@ export function inTrack(ex: { domain?: string }, track: string) {
       : track === "python-basics"
         ? ex.domain === "Python"
         : track === "terminal-git"
-          ? TERMINAL_DOMAINS.includes(ex.domain ?? "")
-          : true;
+          ? ex.domain === "터미널"
+          : track === "git"
+            ? ex.domain === "Git"
+            : true;
 }
 export function selectExercises(
   sessions: Session[],

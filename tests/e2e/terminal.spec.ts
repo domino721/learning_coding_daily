@@ -1,43 +1,25 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
 import { enterAnswer } from "./answer";
 
-// CR-019: 터미널·Git is its own track. Its first day draws only on the two root concepts (paths;
-// spaces, quotes and *), terminal output options keep their line breaks, and the track survives a reload.
-test("터미널·Git track starts from paths and quoting on a 320px phone", async ({
-  page,
-}, testInfo) => {
-  // Device mode keeps this learner isolated; tests/test_api.py covers the server track.
-  test.skip(testInfo.project.name !== "mobile-web", "device-mode UI flow");
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  await page.setViewportSize({ width: 320, height: 740 });
-  await page.goto("./");
-  const terminal = page.getByRole("button", { name: /터미널·Git/ });
-  const count = curriculum.tracks.find(
-    (track) => track.id === "terminal-git",
-  )!.exercise_count;
-  await expect(terminal).toContainText(`${count}문제`);
-  await terminal.click();
-  await expect(terminal).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("#daily-title")).toHaveText("터미널·Git");
-  await page.reload();
-  await expect(
-    page.getByRole("button", { name: /터미널·Git/ }),
-  ).toHaveAttribute("aria-pressed", "true");
-  // Four track cards still leave the start button above the fixed navigation.
+// CR-019/CR-020: 터미널 and Git are their own tracks. Each first day draws only on its root concepts,
+// terminal output options keep their line breaks, and the chosen track survives a reload.
+async function startAboveNavigation(page: Page) {
+  // Five track cards still leave the start button above the fixed navigation.
   const start = page.getByRole("button", { name: "오늘 학습 시작하기" });
   const nav = await page.locator(".bottom-nav").boundingBox();
   const button = await start.boundingBox();
   expect(button!.y + button!.height).toBeLessThanOrEqual(nav!.y);
   await start.click();
   await expect(page.locator("#question-title")).toBeVisible();
-  const roots = new Set(["sh-path", "sh-words"]);
+}
+
+async function solveFirstDay(page: Page, domain: string, roots: Set<string>) {
   const served: string[] = [];
   while (await page.locator("#question-title").count()) {
     const title = await page.locator("#question-title").innerText();
     const ex = curriculum.exercises.find((item) => item.title === title)!;
-    expect(ex.domain).toBe("터미널");
+    expect(ex.domain).toBe(domain);
     expect(ex.level).toBe(1);
     expect(roots.has(ex.concept_id)).toBeTruthy();
     expect(served).not.toContain(ex.id);
@@ -71,8 +53,68 @@ test("터미널·Git track starts from paths and quoting on a 320px phone", asyn
       page.getByRole("heading", { name: title, exact: true }),
     ).toHaveCount(0);
   }
+  return served;
+}
+
+test("터미널 track starts from paths and quoting on a 320px phone", async ({
+  page,
+}, testInfo) => {
+  // Device mode keeps this learner isolated; tests/test_api.py covers the server track.
+  test.skip(testInfo.project.name !== "mobile-web", "device-mode UI flow");
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto("./");
+  const terminal = page.getByRole("button", { name: /^터미널/ });
+  const count = curriculum.tracks.find(
+    (track) => track.id === "terminal-git",
+  )!.exercise_count;
+  await expect(terminal).toContainText(`${count}문제`);
+  await terminal.click();
+  await expect(terminal).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("#daily-title")).toHaveText("터미널");
+  await page.reload();
+  await expect(page.getByRole("button", { name: /^터미널/ })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await startAboveNavigation(page);
+  const served = await solveFirstDay(
+    page,
+    "터미널",
+    new Set(["sh-path", "sh-words"]),
+  );
   expect(served).toHaveLength(5);
   expect(served[0]).toBe("sh-path-01");
-  await expect(page.getByText("터미널·Git · 오늘 풀이 결과")).toBeVisible();
+  await expect(page.getByText("터미널 · 오늘 풀이 결과")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Git track starts on its own from status and diff on a 320px phone", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile-web", "device-mode UI flow");
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto("./");
+  const git = page.getByRole("button", { name: /^Git/ });
+  const count = curriculum.tracks.find(
+    (track) => track.id === "git",
+  )!.exercise_count;
+  await expect(git).toContainText(`${count}문제`);
+  await git.click();
+  await expect(git).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("#daily-title")).toHaveText("Git");
+  // A learner who never opened the 터미널 track still gets a full first day.
+  await startAboveNavigation(page);
+  const served = await solveFirstDay(
+    page,
+    "Git",
+    new Set(["git-status", "git-diff"]),
+  );
+  expect(served).toHaveLength(5);
+  expect(served[0].startsWith("git-status-")).toBeTruthy();
+  await expect(page.getByText("Git · 오늘 풀이 결과")).toBeVisible();
   expect(errors).toEqual([]);
 });

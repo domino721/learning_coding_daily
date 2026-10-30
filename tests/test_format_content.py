@@ -124,7 +124,7 @@ def test_every_variant_reproduces_its_reviewed_result(ex, results, shell_results
         entry = ENTRIES[ex.id]
         if entry.get('verify') == 'documented':
             # A Windows-only fact cannot run here; the review entry cites the official documentation.
-            assert entry['sources'] and entry['basis'] and fix
+            assert entry['sources'] and entry['basis'] and (ex.kind != 'line' or fix)
             return
         for label, _, expected, _ in shell_jobs(ex):
             shown = shell_results[(ex.id, label)]

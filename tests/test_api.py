@@ -116,13 +116,13 @@ def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(lear
     seen=set()
     # A growing catalog needs a growing replay budget; daily/review limits stay fixed.
     for _ in range(max(60, len(active))):
-        for track in ('python-basics','python','sql','terminal-git'):
+        for track in ('python-basics','python','sql','terminal-git','git'):
             response=client.post('/api/sessions/today',json={'track_id':track})
             if response.status_code==422: continue
             session=response.json()
             for item in session['items']:
                 assert (item['domain']=='SQL')==(track=='sql') and (item['domain']=='Python')==(track=='python-basics')
-                assert (item['domain'] in TERMINAL_DOMAINS)==(track=='terminal-git')
+                assert (item['domain']=='터미널')==(track=='terminal-git') and (item['domain']=='Git')==(track=='git')
                 assert item['response_mode']!='essay' and item['category'] in ('new','review','practice')
                 seen.add(item['id'])
                 if item['status']=='pending': assert answer(client,session,item).status_code==200
@@ -219,7 +219,8 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         counts = {track["id"]: track["exercise_count"] for track in client.get("/api/tracks").json()}
         assert counts["python"] == sum(ex.domain not in ('SQL', 'Python', *TERMINAL_DOMAINS) and ex.response_mode != 'essay' for ex in EXERCISES)
         assert counts["python-basics"] == sum(ex.domain == 'Python' for ex in EXERCISES)
-        assert counts["terminal-git"] == sum(ex.domain in TERMINAL_DOMAINS for ex in EXERCISES) > 0
+        assert counts["terminal-git"] == sum(ex.domain == '터미널' for ex in EXERCISES) > 0
+        assert counts["git"] == sum(ex.domain == 'Git' for ex in EXERCISES) > 0
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 

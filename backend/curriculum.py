@@ -44,7 +44,7 @@ CONCEPTS = [
     {'id':'py-class-deco','name':'@property와 @dataclass','domain':'Python','prerequisites':['py-class','py-decorator']},
     {'id':'py-error','name':'예외와 트레이스백','domain':'Python','prerequisites':['py-func']},
     {'id':'py-iter','name':'반복자와 생성기','domain':'Python','prerequisites':['py-control']},
-    # CR-019: the 터미널·Git track (domains 터미널 and Git), from paths to remotes.
+    # CR-019: the 터미널 and Git sectors; CR-020 split them into two tracks and added Windows sectors.
     {'id':'sh-path','name':'위치와 경로','domain':'터미널','prerequisites':[]},
     {'id':'sh-words','name':'띄어쓰기·따옴표·*','domain':'터미널','prerequisites':[]},
     {'id':'sh-files','name':'파일과 폴더 다루기','domain':'터미널','prerequisites':['sh-path']},
@@ -53,10 +53,13 @@ CONCEPTS = [
     {'id':'sh-env','name':'환경 변수와 PATH','domain':'터미널','prerequisites':['sh-words']},
     {'id':'sh-script','name':'스크립트 실행','domain':'터미널','prerequisites':['sh-chain','sh-env']},
     {'id':'sh-python','name':'Python 실행 환경','domain':'터미널','prerequisites':['sh-files','sh-script']},
-    {'id':'sh-windows','name':'Windows에서 같은 일 하기','domain':'터미널','prerequisites':['sh-python']},
-    {'id':'git-status','name':'저장소와 상태','domain':'Git','prerequisites':['sh-redirect']},
+    {'id':'win-path','name':'Windows 경로와 이동','domain':'터미널','prerequisites':['sh-path']},
+    {'id':'win-files','name':'PowerShell로 파일 다루기','domain':'터미널','prerequisites':['sh-files','win-path']},
+    {'id':'win-env','name':'Windows 환경 변수와 실행','domain':'터미널','prerequisites':['sh-env','win-path']},
+    {'id':'sh-windows','name':'Windows에서 Python 실행','domain':'터미널','prerequisites':['sh-python']},
+    {'id':'git-status','name':'저장소와 상태','domain':'Git','prerequisites':[]},
     {'id':'git-commit','name':'커밋과 기록','domain':'Git','prerequisites':['git-status']},
-    {'id':'git-diff','name':'바뀐 내용(diff) 읽기','domain':'Git','prerequisites':['git-status']},
+    {'id':'git-diff','name':'바뀐 내용(diff) 읽기','domain':'Git','prerequisites':[]},
     {'id':'git-undo','name':'되돌리기','domain':'Git','prerequisites':['git-commit','git-diff']},
     {'id':'git-branch','name':'브랜치와 병합','domain':'Git','prerequisites':['git-commit']},
     {'id':'git-remote','name':'원격 저장소와 .gitignore','domain':'Git','prerequisites':['git-commit']},
@@ -108,6 +111,9 @@ RATIONALES = {
 'sh-env':'변수가 펼쳐지는 시점과 export 여부, PATH 순서가 실행되는 프로그램을 정하는 과정을 추적한다.',
 'sh-script':'스크립트를 bash·./·source로 실행할 때 권한·인자·현재 셸에 남는 변화가 어떻게 다른지 판단한다.',
 'sh-python':'실행 위치·가상환경·모듈 경로·인자가 Python 프로그램이 찾는 파일과 패키지를 바꾸는 과정을 추적한다.',
+'win-path':'드라이브와 \\로 쓰는 Windows 경로에서 상대 경로·숨김 항목·띄어쓰기를 PowerShell과 cmd 문법으로 따라간다.',
+'win-files':'PowerShell 별칭이 받아 주는 bash 명령과 옵션이 다른 명령, 리다이렉트 인코딩을 cmd와 비교해 구분한다.',
+'win-env':'PATH의 ; 구분자, cmd의 %변수%, PowerShell 5.1의 &&, 지금 폴더의 프로그램 실행 규칙을 bash와 비교해 판단한다.',
 'sh-windows':'macOS·Linux 명령을 Windows PowerShell의 경로·환경 변수·활성화 방식으로 옮길 때 달라지는 부분을 구분한다.',
 'git-status':'파일이 추적 전·수정됨·스테이지됨 중 어디에 있는지 git status 표시로 판단한다.',
 'git-commit':'커밋에 들어가는 것은 스테이지된 내용뿐이며 기록이 최신순으로 쌓이는 과정을 추적한다.',
@@ -189,11 +195,13 @@ def concept_states(sessions, by_id):
             'status':'기초 보완 중' if needs_support else '진단 전' if not all_rows else '관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 확인 중'}
     return result
 
+# Domains of the shell-style items (graded as shown). Since CR-020 each is its own track; the 터미널 track keeps
+# the CR-019 ID terminal-git so sessions and saved choices made before the split stay attached to it.
 TERMINAL_DOMAINS = ('터미널', 'Git')
 
 
 def in_track(ex, track):
-    # Python 기초 (domain Python) and 터미널·Git items form their own tracks and never enter data-analysis sessions.
+    # Python 기초, 터미널 and Git items form their own tracks and never enter data-analysis sessions.
     if track == 'sql':
         return ex.domain == 'SQL'
     if track == 'python':
@@ -201,7 +209,9 @@ def in_track(ex, track):
     if track == 'python-basics':
         return ex.domain == 'Python'
     if track == 'terminal-git':
-        return ex.domain in TERMINAL_DOMAINS
+        return ex.domain == '터미널'
+    if track == 'git':
+        return ex.domain == 'Git'
     return True
 
 
