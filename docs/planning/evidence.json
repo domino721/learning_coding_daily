@@ -1031,6 +1031,16 @@
         "src/style.css"
       ],
       "code_reference": "63695a87c12facf4a234ef6072818a083ba6f82c"
+    },
+    {
+      "id": "EV-075",
+      "record": "docs/planning/evidence/EV-075.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        "scripts/verify-published-site.py",
+        "backend/terminal_content.json"
+      ],
+      "code_reference": "2f26fc11c51e224afe3e1562e894de05d37dd382"
     }
   ]
 }

@@ -799,8 +799,8 @@
 - 전체 검사(scripts/check.sh)와 모바일 E2E 통과
 - 해당 커밋의 Pages 게시와 실제 공개 자산 확인
 
-완료 근거: EV-074. 실제 완료일: 2026-10-30.
+완료 근거: EV-074, EV-075. 실제 완료일: 2026-10-30.
 관련 위험: R-001, R-002, R-006.
-상태 메모: LOG-105: CR-020 터미널·Git 트랙 분리(terminal-git ID 유지·git 신설)와 Windows 섹터 3개·13문항(공식 문서 근거), Git 기초 2문항과 Git 24문항 version 2를 웹/서버에 같게 반영했다. 5장 한 줄 트랙 카드, 정답을 모르는 별도 검수자 재풀이 15/15 일치와 지적 반영, check.sh·모바일 E2E 로컬 검증 EV-074. 원격 게시 전.
+상태 메모: LOG-105: CR-020 터미널·Git 트랙 분리(terminal-git ID 유지·git 신설)와 Windows 섹터 3개·13문항(공식 문서 근거), Git 기초 2문항과 Git 24문항 version 2를 웹/서버에 같게 반영했다. 5장 한 줄 트랙 카드, 정답을 모르는 별도 검수자 재풀이 15/15 일치와 지적 반영, check.sh·모바일 E2E 로컬 검증 EV-074. 원격 게시 전. LOG-106: Ubuntu 확인용 실행 41014836665 success 뒤 main 2f26fc1·Pages 41015626658/관리 41015626708 success, 원격 pytest1397/Node26/모바일52 및 공개 자산 5개 일치 EV-075로 게시 완료.
 
 원본: [버전 원장](versions.json), [진행 상태](status.json), [근거 목록](evidence.json), [위험 목록](risks.json).
