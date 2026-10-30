@@ -16,9 +16,10 @@ CR-017(2026-10-28)로 추가된 66문항과 CR-018의 Python 기초 21문항은 
 ## 절차
 
 1. 최신 main·AGENTS.md·커리큘럼·WBS를 확인한다. 오래된 미커밋 초안은 백업하고 최신 배포본 위에 덮어쓰지 않는다.
-2. `docs/CONTENT_QUALITY_REVIEW.md`의 대상 목록에서 오늘 처리할 다섯 건을 고른다. 우선순위는 단계 3 출력 예측 문항 → `distractor_strength` 0인 객관식 → 나머지.
+2. `docs/CONTENT_QUALITY_REVIEW.md`의 대상 목록에서 오늘 처리할 다섯 건을 고른다. 우선순위는 단계 3 출력 예측 문항 → `distractor_strength` 0인 객관식 → 나머지. 같은 문서의 ‘우선 정비’ 항목이 남아 있으면 다섯 건과 별도로 먼저 고친다. 편집 필드만 바뀌면 version은 유지하고, 오늘 검수 기록에 남긴 뒤 목록에서 지운다.
 3. 새로 쓰거나 고친 문항은 `curriculum/problem_bank.json`의 설계 카드에 `task_form`, `distractor_targets`, 검수 상태를 적고 `backend/learning_paths.json`·`backend/difficulty.json`·콘텐츠 원본을 함께 갱신한다. 날짜별 검수 기록은 `curriculum/reviews/YYYY-MM-DD.json` **한 파일**로 남긴다. 날짜별 Markdown·날짜별 테스트 파일·날짜별 fixture는 더 만들지 않는다.
 4. 직접 다시 풀고 실제 pandas/NumPy/SQLite/scikit-learn 참조 출력, 경계 사례, 정답 유일성·편집 품질을 확인한다. SQL은 모든 테이블의 열·전체 행을 코드 주석에 제시하고 `scripts/validate_sql_content.py`로 표시 입력과 참조 출력의 일치를 확인한다.
+   - 설계 카드를 동기화하고 웹 내보내기·보존 스냅샷을 갱신한 뒤, 손으로 비교 스크립트를 짜지 말고 `python3 -I scripts/maintenance_diff.py --targets <오늘 다섯 ID>`를 실행한다. 기준 커밋과 비교해 바뀐 ID·필드·버전 차이를 보여 주고, `FLAG`로 대상 밖 변경, 버전 없이 바뀐 학습자 필드, 내용 없이 순서만 바뀐 최상위 키, 문구 손상(한자·가나 혼입, 한글 바로 뒤 숫자)을 표시한다. 파일 쓰기가 성공했다고 결과까지 쓸 만하다는 뜻은 아니다. `FLAG`마다 고치거나 완료 보고에 한 줄 근거를 남기고, 고친 뒤 한 번 더 실행해 정리됐는지 확인한다.
 5. 다음을 통과해야 게시한다. 모두 `bash scripts/check.sh`에 포함된다.
    - 품질 게이트 `backend/quality_gate.py`: 2026-10-26 기준선(`curriculum/quality_baseline.json`) 이후의 새 ID·버전 증가분은 `task_form` 필수, 단계 3은 출력 예측 금지·코드 5줄 이상, 객관식은 `distractor_strength` 2 이상과 오답별 `distractor_targets` 필수, 같은 검수 기록 안의 출력 예측 비율 50% 이하.
    - 보존 스냅샷 `python3 scripts/freeze-catalog.py`: 학습자가 보는 내용(`published_view`)을 version별로 고정한다. 같은 ID·버전의 그 내용 변경과 version 감소를 거부하고 새 항목·새 version만 추가한다. 게시 전 한 번 실행해 `tests/fixtures/catalog-published.json`을 갱신한다.
