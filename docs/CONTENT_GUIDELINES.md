@@ -66,8 +66,16 @@
 - `scripts/validate_shell_content.py`는 문항·보기·순서·고친 줄마다 새 임시 홈(화면에는 /home/mina)을 만들어 bash로 실행한다. LC_ALL=C 정렬, 고정한 Git 사용자·날짜, Python 3.12를 쓴다. 표준 출력과 오류는 화면처럼 순서대로 섞고 bash 자체 오류는 `bash: ...`로 맞춘다. Git 문항은 마지막 명령의 출력으로 채점하므로 지문에 이를 밝힌다. 검수 기록의 `check`는 학습자에게 보이지 않는 확인 명령으로, 순서 맞추기·모두 고르기를 남은 파일과 기록 상태로 채점한다. `compare: exact`는 띄어쓰기까지 비교하고, `compare: last-line`은 Python 버전마다 프레임 표시가 달라지는 트레이스백의 마지막 줄만 비교한다.
 - 정답·고친 결과처럼 일치해야 하는 출력은 macOS(BSD 도구, bash 3.2)와 Ubuntu(GNU 도구, bash 5)에서 같아야 한다. `ls -l`·`wc`·`uniq -c`·정렬하지 않은 `find`·`date`·`sed -i`, ls·rm·mkdir·cp·mv의 오류 문구는 정답 출력에 쓰지 않는다. 커밋 해시는 학습자에게 보이지 않게 `--format=%s`·`--short`·`--name-only`를 쓴다.
 - 모든 보기가 실제로 실행되므로 검증 도구는 권한·네트워크·패키지 설치·프로세스 명령, `/home/mina`와 `/dev/null` 밖의 절대 경로, 변수나 `..`를 쓰는 `rm`을 거부한다. 위험한 명령은 임시 폴더 안의 상대 경로로만 보여 준다.
-- Windows PowerShell·cmd 고유 동작(환경 변수 `$env:`·`%이름%`, `Scripts\Activate.ps1`, 실행 정책, 5.1의 `>` 인코딩과 `&&`, 드라이브 이동)은 Linux·macOS에서 실행할 수 없다. 이런 문항은 검수 기록에 `verify: documented`, 공식 문서 `sources`, 근거 문장 `basis`를 남기며 Windows 섹터(Windows 경로와 이동·PowerShell로 파일 다루기·Windows 환경 변수와 실행·Windows에서 Python 실행)에만 쓴다. 지문과 코드에는 어느 창(Windows PowerShell 5.1, PowerShell 7, cmd)인지 밝히고, 버전에 따라 달라지는 동작은 해설에 버전을 적는다.
 - CR-020부터 터미널(`terminal-git`, domain `터미널`)과 Git(`git`, domain `Git`)은 별도 트랙이다. Git 트랙은 터미널 트랙을 거치지 않고 시작하므로 Git 문항이 처음 쓰는 보조 명령(`echo >>`, `cat`, `ls -a`)은 해설에서 한 번 설명한다.
+
+### Windows 문항 (CR-021)
+
+- Windows 트랙(`windows`, 문항 domain `Windows`)은 터미널 트랙(macOS·Linux bash)과 섞지 않고 PowerShell·cmd를 기초부터 다룬다. 원본은 `backend/terminal_content.json`이고 응답 모드는 모두 choice이며, 보기는 터미널·Git처럼 띄어쓰기까지 그대로 비교한다. bash 문항을 선수로 두지 않는다. AI가 bash 기준으로 준 명령과 비교하는 문항은 그 bash 명령을 지문에 보여 준다.
+- 코드 맨 위 주석이 시작 상태의 전부다. 첫 줄은 창 이름(`Windows PowerShell`·`Windows PowerShell 5.1`·`PowerShell 7`·`명령 프롬프트(cmd)`·`Anaconda Prompt (cmd)`)이고, 이어서 `C:\Users\mina`처럼 드라이브로 시작하는 폴더(시작 폴더는 `← 지금 위치`)와 ├──/└── 트리를 쓴다. 폴더는 이름 끝 `\`, 숨김 속성은 `(숨김)`, 실행 파일은 `report.exe  (실행하면 report ok 출력)`, 파일 내용은 `<경로> 내용:` 아래 `#   ` 줄이다. cmd 문항은 `#` 대신 `REM`을 쓴다. 두 창을 비교하는 문항은 `C:\...> ____`·`PS C:\...> ____` 프롬프트 줄로 창을 나누고, 파이썬 파일 문항은 첫 줄을 `# 파일이름.py (...)`로 쓰고 같은 폴더의 파일을 `<이름> 내용:`으로 보인다. 이름·경로는 영어로 쓴다(실행기 창의 코드 페이지와 상관없이 같은 결과를 내도록).
+- `scripts/validate_windows_content.py`가 GitHub Actions의 일회용 Windows 실행기(`.github/workflows/quality.yml`의 windows 작업)에서 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·보기·고친 줄과 해설이 말하는 사실(`runs`)을 모두 실행한다. 명령은 학습자가 붙여 넣듯 한 줄씩 입력하고, 창에는 회사 PC처럼 Windows·Windows PowerShell·Python 3.12·Git의 cmd 폴더만 PATH에 두며(CI 이미지의 touch·cat·ls가 보이지 않게), 실행 정책은 Windows 10·11 기본값(Restricted)에서 시작한다. 이 작업이 실패하면 Pages 게시도 막힌다. macOS·Ubuntu의 내보내기와 테스트는 실행 없이 시작 상태와 검수 기록을 검사한다.
+- 실행기는 영어 Windows라 오류는 영어 원문으로 확인한다. 지문에는 영어 원문과 뜻을 함께 적고 한국어 Windows에서는 한국어로 표시된다고 밝힌다. 한국어 Windows의 코드 페이지(949)가 결과를 바꾸는 문항은 검수 기록에 `emulate: cp949`를 적어 open()의 기본 인코딩·Python 출력·창의 코드 페이지를 949로 맞춰 실행한다.
+- 검수 기록에는 `verify: windows`와 필요한 항목을 적는다. `check`는 같은 창에서 이어 실행하는 확인 명령(학습자에게 보이지 않음)이고, `policy: RemoteSigned`는 스크립트 실행을 허용한 PC, `confirm`은 그 명령의 확인 질문에 Y로 답한 실행이다. `runs`에는 해설의 사실마다 명령과 기대 출력을 적고, `error_line`·`raises`는 줄 고르기에서 오류가 가리키는 줄이다. 출력은 cmd의 시작 문구·프롬프트를 지우고 파일 시각을 `<시각>`, 실행기의 Python 폴더를 일반 설치 폴더로 바꾼 뒤 단어 단위로 비교한다.
+- 실행으로 확인할 수 없는 사실(휴지통으로 보내지 않음, 그룹 정책, 대화형 확인 질문)은 해설에 쓰되 `sources`에 공식 문서를 남긴다.
 
 ## 검수
 

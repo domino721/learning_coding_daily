@@ -54,10 +54,10 @@
 | 터미널 | 환경 변수와 PATH | 2 | 1 | 1 |
 | 터미널 | 스크립트 실행 | 2 | 1 | 1 |
 | 터미널 | Python 실행 환경 | 2 | 1 | 1 |
-| 터미널 | Windows 경로와 이동 | 2 | 1 | 1 |
-| 터미널 | PowerShell로 파일 다루기 | 2 | 1 | 1 |
-| 터미널 | Windows 환경 변수와 실행 | 2 | 1 | 1 |
-| 터미널 | Windows에서 Python 실행 | 2 | 2 | 1 |
+| Windows | Windows 경로와 이동 | 2 | 1 | 1 |
+| Windows | PowerShell로 파일 다루기 | 2 | 1 | 1 |
+| Windows | Windows 환경 변수와 실행 | 2 | 1 | 1 |
+| Windows | Windows에서 Python 실행 | 2 | 2 | 1 |
 | Git | 저장소와 상태 | 3 | 1 | 1 |
 | Git | 커밋과 기록 | 2 | 1 | 1 |
 | Git | 바뀐 내용(diff) 읽기 | 3 | 1 | 1 |
@@ -146,3 +146,12 @@
 - Git에는 git init이 만드는 .git 폴더와 diff의 머리글·문맥 줄을 읽는 기초 2문항을 더해 첫날 5문항을 채웠다.
 - Git 문항 24개는 카드의 트랙과 뿌리 개념의 선수가 바뀌어 version 2가 되었다. 학습자에게 보이는 내용은 첫 Git 편집 문항의 echo 설명 한 문장 외에는 같다.
 - 홈의 트랙 카드는 320px에서도 다섯 장이 한 줄에 들어가 시작 버튼이 하단 메뉴 위에 남는다.
+
+## 2026-10-31 Windows 트랙 분리와 실제 Windows 실행 검증 (CR-021)
+
+[검수 기록](../curriculum/reviews/2026-10-31-windows-track.json)에 따라 터미널 트랙의 Windows 섹터 4개·17문항을 여섯 번째 트랙 Windows(`windows`, 문항 domain `Windows`)로 옮긴다. 터미널 트랙(`terminal-git`)은 macOS·Linux bash 섹터 8개·33문항만 남아 맥·리눅스 학습자에게 Windows 문항이 섞이지 않고, Windows 학습자는 bash 섹터를 거치지 않고 시작한다.
+- Windows 경로와 이동·PowerShell로 파일 다루기·Windows 환경 변수와 실행이 뿌리이고, Windows에서 Python 실행은 경로·환경 변수 뒤에 열린다. 문항의 선수도 bash 문항 대신 같은 트랙의 문항으로 바꿨다. 같은 엔진의 재생에서 첫날은 세 뿌리의 기초 5문항이고, 꾸준한 학습자는 5일 안에 17문항을 모두 본다. 터미널 첫날은 그대로 위치와 경로·띄어쓰기 기초 5문항이며 33문항을 9일 안에 본다.
+- CR-020에서 공식 문서로만 검수한 Windows 문항을 이제 실제 Windows에서 실행한다. 코드 맨 위 주석에 창 이름·드라이브 경로 트리·파일 내용을 보이고, `scripts/validate_windows_content.py`가 GitHub Actions의 Windows 실행기에서 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·보기·고친 줄과 해설의 사실을 모두 실행한다. 이 검사가 실패하면 게시가 막힌다.
+- 실행 결과에 맞춰 바꾼 내용: 숨김 파일이 든 폴더는 -Recurse만으로 지워지지 않아 -Force가 필요하다는 보기(win-files-02), 두 창에서 같은 결과를 내는 명령을 python --version·where python으로 비교(win-files-04), UTF-8 BOM·cp949를 겨냥한 오답 보기(win-files-03), tools\report.exe가 모듈 이름으로 읽혀 나는 오류(win-env-04)의 해설, 고친 Activate.ps1 줄이 처음 설정 그대로인 PC에서 실행 정책에 막힌다는 안내(sh-windows-02).
+- 17문항은 카드의 트랙·domain·선수가 바뀌어 version 2가 되었다. version 1 풀이 기록은 그대로 보존한다.
+- 홈의 트랙 카드는 여섯 장이라 휴대폰에서는 세 장씩 두 줄, 560px 이상에서는 한 줄로 둔다. 320px에서도 시작 버튼이 하단 메뉴 위에 남는다.

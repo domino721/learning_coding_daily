@@ -39,3 +39,37 @@ jobs:
           name: mobile-failure-${{ github.run_id }}-${{ github.run_attempt }}
           path: test-results/
           retention-days: 7
+  windows:
+    # CR-021: the Windows track runs for real in Windows PowerShell 5.1, PowerShell 7 and cmd; the runner is disposable
+    # because the check rebuilds C:\Users\mina and D:\ and changes the execution policy.
+    name: Windows PowerShell and cmd execution checks (${{ matrix.shard }}/4)
+    runs-on: windows-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        id: py315
+        with:
+          python-version: '3.15'
+      - uses: actions/setup-python@v5
+        id: py312
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pandas==2.3.3
+      - name: Run every Windows item, option, fix and explained fact
+        env:
+          PYTHON312: ${{ steps.py312.outputs.python-path }}
+          PYTHON315: ${{ steps.py315.outputs.python-path }}
+        # -X utf8: the repository reads its UTF-8 content files without naming the encoding; the items' own Python
+        # processes still start in a plain company-PC environment (code page decoding included).
+        run: python -X utf8 scripts/validate_windows_content.py --keep-going --shard ${{ matrix.shard }}/4 --report "${{ runner.temp }}/windows-items.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-items-${{ matrix.shard }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/windows-items.json
+          retention-days: 7

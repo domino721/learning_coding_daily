@@ -12479,8 +12479,8 @@
       "concept": "PowerShell의 $env:",
       "kind": "choice",
       "title": "PowerShell에서 환경 변수 정하기",
-      "prompt": "macOS 안내에 있는 export API_URL=http://localhost:8000을 Windows PowerShell에서 같은 뜻으로 바꾸려고 합니다. 빈칸에 알맞은 줄을 고르세요.",
-      "code": "# Windows PowerShell\n# 목표: 이 창에서 실행하는 프로그램이\n#       API_URL 값을 읽게 한다\n____\npython app.py",
+      "prompt": "macOS 안내에 있는 export API_URL=http://localhost:8000을 Windows PowerShell에서 같은 뜻으로 바꿔, 다음 줄의 python app.py가 그 값을 읽게 하려고 합니다. 빈칸에 알맞은 줄을 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\shop  ← 지금 위치\n# └── app.py\n# app.py 내용:\n#   import os\n#   print(os.environ.get(\"API_URL\"))\n____\npython app.py",
       "answer": "$env:API_URL = \"http://localhost:8000\"",
       "explanation": "PowerShell에서 환경 변수는 Env: 드라이브에 있어 $env:API_URL = \"http://localhost:8000\"처럼 정합니다. 이렇게 정한 값은 지금 PowerShell 창(세션)에만 적용되고, 그 창에서 실행하는 python app.py 같은 프로그램에 전달됩니다. setx는 값을 사용자 설정에 저장해 새로 여는 창부터 적용하므로 지금 창의 python app.py는 값을 받지 못합니다. set은 명령 프롬프트(cmd)에서는 환경 변수를 정하지만 PowerShell에서는 Set-Variable의 별칭이라 PowerShell 변수를 다루고, $API_URL처럼 env: 없이 쓴 변수도 PowerShell 안에서만 쓰입니다. AI 안내가 macOS 기준이면 export 이름=값 줄을 $env:이름 = \"값\"으로 바꿔 입력하고, 창을 닫으면 값이 사라진다는 점도 기억하세요.",
       "hints": [
@@ -12495,8 +12495,8 @@
       ],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "sh-windows",
       "response_mode": "choice",
@@ -12508,10 +12508,10 @@
         "transfer": 2,
         "distractor_strength": 3,
         "rationale": "같은 목적의 네 셸 문법 중 PowerShell 환경 변수를 고르는 기초다. bash·cmd 습관과 PowerShell 변수를 겨냥했다.",
-        "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "$env:API_URL = \"http://localhost:8000\""
+      "reference_output": "http://localhost:8000"
     },
     {
       "id": "sh-windows-02",
@@ -12519,18 +12519,18 @@
       "kind": "line",
       "title": "macOS 안내를 Windows에서 따라 하기",
       "prompt": "macOS·Linux용 설치 안내를 Windows PowerShell에서 그대로 따라 하려고 합니다. Windows PowerShell에서 실행되지 않아 고쳐야 할 줄을 고르세요.",
-      "code": "# Windows PowerShell\ncd shop\npython -m venv .venv\nsource .venv/bin/activate\npython app.py",
-      "answer": "4",
-      "explanation": "PowerShell에도 cd가 있고(Set-Location의 별칭), python -m venv .venv와 python app.py도 Windows에서 그대로 씁니다. 다른 것은 가상환경을 켜는 4번 줄입니다. Windows에서 만든 가상환경에는 bin 대신 Scripts 폴더가 생기고, PowerShell에서는 .venv\\Scripts\\Activate.ps1을 실행해 켭니다. source는 bash·zsh 명령이라 PowerShell에서는 인식할 수 없다는 오류가 납니다. 명령 프롬프트(cmd)라면 .venv\\Scripts\\activate.bat을 씁니다. AI 안내가 어느 운영체제와 셸 기준인지 먼저 보고, 경로 구분자(/와 \\)와 활성화 명령을 바꿔 입력하세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina  ← 지금 위치\n# └── shop\\\n#     └── app.py\ncd shop\npython -m venv .venv\nsource .venv/bin/activate\npython app.py",
+      "answer": "7",
+      "explanation": "PowerShell에도 cd가 있고(Set-Location의 별칭), python -m venv .venv와 python app.py도 Windows에서 그대로 씁니다. 다른 것은 가상환경을 켜는 7번 줄입니다. Windows에서 만든 가상환경에는 bin 대신 Scripts 폴더가 생기고, PowerShell에서는 .venv\\Scripts\\Activate.ps1을 실행해 켭니다. source는 bash·zsh 명령이라 PowerShell에서는 인식할 수 없다는 오류가 납니다. 명령 프롬프트(cmd)라면 .venv\\Scripts\\activate.bat을 씁니다. 처음 설정 그대로인 Windows PC에서는 고친 7번 줄이 실행 정책 때문에 막힐 수 있습니다(running scripts is disabled on this system). AI 안내가 어느 운영체제와 셸 기준인지 먼저 보고, 경로 구분자(/와 \\)와 활성화 명령을 바꿔 입력하세요.",
       "hints": [
-        "네 줄을 셸 자체의 명령과 파이썬 실행으로 나눠 보고, 가상환경을 켜는 방법이 운영체제마다 같은지 생각해 보세요.",
+        "각 줄의 명령 이름(cd·python·source)과 경로 모양(/와 \\)이 Windows PowerShell에서도 그대로 통하는지 확인해 보세요.",
         "Windows의 가상환경에는 bin 대신 Scripts 폴더가 생기고, 켜는 방법도 셸마다 다릅니다."
       ],
-      "choices": ["2", "3", "4", "5"],
+      "choices": ["5", "6", "7", "8"],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "sh-windows",
       "response_mode": "choice",
@@ -12542,7 +12542,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "네 줄을 운영체제별 차이로 가려 바꿀 한 줄을 찾는 기초다. cd·python도 다르다는 오해를 겨냥했다.",
-        "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "source : The term 'source' is not recognized as the name of a cmdlet, function, script file, or operable program."
@@ -12552,13 +12552,13 @@
       "concept": "PowerShell 실행 정책",
       "kind": "choice",
       "title": "Activate.ps1이 막혔을 때",
-      "prompt": "Windows PowerShell에서 가상환경을 켜려고 했더니 아래 오류가 났습니다. 이 오류를 풀기 위해 먼저 실행할 명령으로 알맞은 것을 고르세요.",
-      "code": "# Windows PowerShell (shop 폴더)\n.venv\\Scripts\\Activate.ps1\n# 화면에 나온 오류:\n# ...\\Activate.ps1 cannot be loaded because\n# running scripts is disabled on this system.",
+      "prompt": "처음 설정 그대로인 회사 PC의 Windows PowerShell에서 가상환경을 켜려고 했더니 아래 오류가 났습니다. 빈칸에 넣어 먼저 실행했을 때 다음 줄에서 가상환경이 켜지는 명령을 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\shop  ← 지금 위치\npython -m venv .venv\n.venv\\Scripts\\Activate.ps1\n# 화면에 나온 오류:\n# ...\\Activate.ps1 cannot be loaded because\n# running scripts is disabled on this system.\n____\n.venv\\Scripts\\Activate.ps1",
       "answer": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser",
-      "explanation": "오류 문장은 \"이 시스템에서 스크립트 실행이 꺼져 있어 Activate.ps1을 불러올 수 없다\"는 뜻입니다. Windows PowerShell은 실행 정책으로 .ps1 스크립트를 막을 수 있고, 어느 범위에도 정책을 정하지 않은 Windows PC에서는 스크립트를 막는 Restricted가 적용됩니다. Python 공식 문서도 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser로 지금 사용자에게 내 PC에서 만든 스크립트의 실행을 허용한 뒤 다시 켜라고 안내합니다. 정책을 Restricted로 정하면 계속 막히고, Unblock-File은 인터넷에서 받은 파일의 표시만 지울 뿐 정책을 바꾸지 않으며, 가상환경을 다시 만들어도 정책은 그대로입니다. 회사 PC는 그룹 정책이 이 설정보다 우선해 바꿀 수 없을 수 있으니, 그때는 관리자에게 문의하거나 명령 프롬프트(cmd)에서 .venv\\Scripts\\activate.bat으로 켜는 방법을 확인하세요.",
+      "explanation": "오류 문장은 \"이 시스템에서 스크립트 실행이 꺼져 있어 Activate.ps1을 불러올 수 없다\"는 뜻입니다. Windows PowerShell은 실행 정책으로 .ps1 스크립트를 막을 수 있고, 어느 범위에도 정책을 정하지 않은 Windows 10·11 PC에서는 스크립트를 막는 Restricted가 적용됩니다. Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser를 실행하고 확인 질문에 Y로 답하면 지금 사용자에게 내 PC에서 만든 스크립트의 실행이 허용되어 다음 줄에서 가상환경이 켜집니다(Python 공식 문서도 이 명령을 안내합니다). 정책을 Restricted로 정하면 계속 막히고, Unblock-File은 인터넷에서 받은 파일의 표시만 지울 뿐 정책을 바꾸지 않으며, 가상환경을 다시 만들어도 정책은 그대로입니다. 회사 PC는 그룹 정책이 이 설정보다 우선해 바꿀 수 없을 수 있으니, 그때는 관리자에게 문의하거나 명령 프롬프트(cmd)에서 .venv\\Scripts\\activate.bat으로 켜세요. cmd의 activate.bat은 PowerShell 실행 정책의 영향을 받지 않습니다.",
       "hints": [
         "오류 문장의 running scripts is disabled는 파일이 아니라 무엇이 꺼져 있다는 뜻인지 읽어 보세요.",
-        "Windows PowerShell은 실행 정책(Execution Policy)으로 .ps1 스크립트 실행을 허용하거나 막습니다. 정책을 정하지 않은 Windows PC에서는 스크립트를 막는 Restricted가 적용됩니다."
+        "Windows PowerShell은 실행 정책(Execution Policy)으로 .ps1 스크립트 실행을 허용하거나 막습니다. 어느 범위에도 정책을 정하지 않은 Windows 10·11 PC에서는 스크립트를 막는 Restricted가 적용됩니다."
       ],
       "choices": [
         "Unblock-File .venv\\Scripts\\Activate.ps1",
@@ -12568,8 +12568,8 @@
       ],
       "accepted": [],
       "seconds": 100,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 2,
       "concept_id": "sh-windows",
       "response_mode": "choice",
@@ -12581,20 +12581,20 @@
         "transfer": 2,
         "distractor_strength": 3,
         "rationale": "영문 오류 문장을 원인(실행 정책)으로 해석하고 다른 셸의 해결 습관을 배제하는 적용이다.",
-        "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+      "reference_output": "True"
     },
     {
       "id": "sh-windows-04",
       "concept": "Windows 경로와 파이썬 문자열",
       "kind": "multi",
       "title": "Windows 폴더 경로를 코드에 넣기",
-      "prompt": "Windows 폴더 경로를 파이썬 코드에 넣으려고 합니다. 빈칸에 넣었을 때 python3 paths.py가 C:\\Users\\mina\\reports를 그대로 출력하는 것을 모두 고르세요.",
-      "code": "# ~/app/  ← 지금 위치\n# └── paths.py\n# paths.py 내용:\n#   folder = ____\n#   print(folder)\npython3 paths.py",
+      "prompt": "Windows 폴더 경로를 파이썬 코드에 넣으려고 합니다. 빈칸에 넣었을 때 python paths.py가 C:\\Users\\mina\\reports를 그대로 출력하는 것을 모두 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\app  ← 지금 위치\n# └── paths.py\n# paths.py 내용:\n#   folder = ____\n#   print(folder)\npython paths.py",
       "answer": "1,4",
-      "explanation": "파이썬 문자열에서 \\는 뒤 글자와 묶여 특별한 뜻을 만듭니다(\\n은 줄바꿈). \"C:\\Users\\mina\\reports\"는 \\U가 유니코드 문자를 적는 시작으로 읽히는데 뒤에 16진수 8자리가 없어 실행 전에 SyntaxError가 나고, 작은따옴표로 바꿔도 같습니다. 앞에 r을 붙인 r\"C:\\Users\\mina\\reports\"는 \\를 그대로 두고, \"C:\\\\Users\\\\mina\\\\reports\"는 \\\\가 \\ 한 글자라 둘 다 C:\\Users\\mina\\reports를 출력합니다. \"C:/Users/mina/reports\"는 Windows에서 파일을 여는 데는 쓸 수 있지만 출력되는 글자가 다릅니다. 탐색기의 경로를 코드에 그대로 붙여 넣으면 이런 오류가 나므로, AI가 만든 코드에 Windows 경로를 넣을 때는 r\"...\"을 쓰거나 /로 바꾸세요. 이 결과는 Windows의 python에서도 같습니다.",
+      "explanation": "파이썬 문자열에서 \\는 뒤 글자와 묶여 특별한 뜻을 만듭니다(\\n은 줄바꿈). \"C:\\Users\\mina\\reports\"는 \\U가 유니코드 문자를 적는 시작으로 읽히는데 뒤에 16진수 8자리가 없어 실행 전에 SyntaxError(truncated \\UXXXXXXXX escape)가 나고, 작은따옴표로 바꿔도 같습니다. 앞에 r을 붙인 r\"C:\\Users\\mina\\reports\"는 \\를 그대로 두고, \"C:\\\\Users\\\\mina\\\\reports\"는 \\\\가 \\ 한 글자라 둘 다 C:\\Users\\mina\\reports를 출력합니다. \"C:/Users/mina/reports\"는 Windows에서 파일을 여는 데는 쓸 수 있지만 출력되는 글자가 다릅니다. 탐색기의 경로를 코드에 그대로 붙여 넣으면 이런 오류가 나므로, AI가 만든 코드에 Windows 경로를 넣을 때는 r\"...\"을 쓰거나 /로 바꾸세요.",
       "hints": [
         "파이썬 문자열 안에서 \\ 뒤의 글자가 특별한 뜻(예: \\n은 줄바꿈)으로 바뀌는지, 보기마다 \\ 뒤에 무엇이 오는지 보세요.",
         "\\U는 유니코드 문자를 적는 시작이라 뒤에 16진수 8자리가 와야 합니다. r\"...\"은 \\를 그대로 두고, \\\\는 \\ 한 글자를 뜻합니다."
@@ -12608,8 +12608,8 @@
       ],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 3,
       "concept_id": "sh-windows",
       "response_mode": "choice",
@@ -12621,7 +12621,7 @@
         "transfer": 3,
         "distractor_strength": 3,
         "rationale": "다섯 문자열 표기마다 \\의 해석을 따져 오류·다른 출력·같은 출력을 가리는 전이다.",
-        "calibration": "editorial-20261029-terminal-git; 실제 bash·Git 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "C:\\Users\\mina\\reports"
@@ -13540,7 +13540,7 @@
       "id": "win-path-01",
       "concept": "Windows 경로와 PowerShell의 cd·pwd",
       "kind": "choice",
-      "title": "Windows 문서 폴더 오가기",
+      "title": "Windows docs 폴더 오가기",
       "prompt": "Windows PowerShell에서 아래 명령을 차례로 실행했을 때 마지막 pwd의 출력을 고르세요.",
       "code": "# Windows PowerShell\n# C:\\Users\\mina\n# ├── docs\\\n# └── shop\\\n#     └── reports\\  ← 지금 위치\ncd ..\ncd ..\\docs\npwd",
       "answer": "Path\n----\nC:\\Users\\mina\\docs",
@@ -13550,15 +13550,15 @@
         "..\\docs는 \"한 단계 위로 간 다음 docs로\"라는 뜻으로 bash와 같습니다. 다만 PowerShell의 pwd는 Get-Location의 별칭이라 결과를 보여 주는 모양이 bash와 다릅니다."
       ],
       "choices": [
-        "Path\n----\nC:\\Users\\docs",
         "Path\n----\nC:\\Users\\mina\\shop\\docs",
+        "C:\\Users\\mina\\shop\\docs",
         "C:\\Users\\mina\\docs",
         "Path\n----\nC:\\Users\\mina\\docs"
       ],
       "accepted": [],
       "seconds": 70,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-path",
       "response_mode": "choice",
@@ -13570,7 +13570,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "bash에서 익힌 상대 경로 규칙을 Windows 경로 표기에 옮기는 기초다. 출력 모양 차이도 한 보기로 겨냥했다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "Path\n----\nC:\\Users\\mina\\docs"
@@ -13580,10 +13580,10 @@
       "concept": "PowerShell에서 숨김 항목 보기",
       "kind": "multi",
       "title": "숨겨진 설정 폴더 찾기",
-      "prompt": "Windows PowerShell에서 숨김 속성이 붙은 폴더까지 목록에 보이게 하려고 합니다. 빈칸에 넣었을 때 숨김 항목까지 보여 주는 명령을 모두 고르세요.",
-      "code": "# Windows PowerShell\n# 지금 위치: C:\\Users\\mina\\app\n# 안에 있는 것: main.py, .env,\n#   숨김 속성이 붙은 폴더 .git\n____",
+      "prompt": "Windows PowerShell에서 숨김 속성이 붙은 .git 폴더까지 목록에 보이게 하려고 합니다. 빈칸에 넣었을 때 숨김 항목까지 보여 주는 명령을 모두 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\app  ← 지금 위치\n# ├── .git\\  (숨김)\n# ├── .env\n# └── main.py\n____",
       "answer": "2,3,5",
-      "explanation": "Windows PowerShell의 ls와 dir은 둘 다 Get-ChildItem의 별칭입니다. Get-ChildItem은 숨김 속성이 있는 항목을 기본으로 감추고, -Force를 붙이면 숨김·시스템 항목까지 보여 주므로 세 가지 -Force가 모두 맞습니다. bash 습관의 ls -a는 -a가 Attributes 매개변수와 ad·af·ah 같은 여러 매개변수 별칭에 함께 걸려 오류가 나고, cmd 문법인 dir /a는 PowerShell이 /a를 경로로 읽어 오류를 냅니다. Windows에서는 이름이 .으로 시작해도 저절로 숨겨지지 않고 파일의 숨김 속성이 있어야 숨겨지므로, 이 폴더의 .env는 그냥 ls에도 보입니다. macOS에서 배운 \"점으로 시작하면 숨김\"이 Windows에서는 통하지 않는다는 점을 기억하세요.",
+      "explanation": "Windows PowerShell의 ls와 dir은 둘 다 Get-ChildItem의 별칭입니다. Get-ChildItem은 숨김 속성이 있는 항목을 기본으로 감추고, -Force를 붙이면 숨김·시스템 항목까지 보여 주므로 세 가지 -Force가 모두 같은 목록을 냅니다. bash 습관의 ls -a는 -a로 시작하는 매개 변수가 -Attributes 말고도 여럿(-Directory·-File·-Hidden의 별칭 ad·af·ah 등)이라 하나로 정할 수 없다는 오류(the parameter name 'a' is ambiguous)가 나고, cmd 문법인 dir /a는 PowerShell이 /a를 경로 C:\\a로 읽어 찾을 수 없다는 오류를 냅니다. Windows에서는 이름이 .으로 시작해도 저절로 숨겨지지 않고 파일의 숨김 속성이 있어야 숨겨지므로, 이 폴더의 .env는 그냥 ls에도 보입니다. macOS에서 배운 \"점으로 시작하면 숨김\"이 Windows에서는 통하지 않는다는 점을 기억하세요.",
       "hints": [
         "PowerShell의 ls와 dir이 실제로는 어떤 명령을 부르는지 먼저 떠올려 보세요.",
         "Get-ChildItem은 기본으로 숨김 항목을 빼고 보여 줍니다. 옵션은 PowerShell 방식(-이름)으로 써야 합니다."
@@ -13597,8 +13597,8 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-path",
       "response_mode": "choice",
@@ -13610,29 +13610,29 @@
         "transfer": 2,
         "distractor_strength": 3,
         "rationale": "세 별칭과 두 가지 다른 셸 문법을 구분하는 기초다. bash·cmd 습관을 각각 겨냥했다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": ".git(숨김)·.env·main.py가 모두 보이는 목록"
+      "reference_output": "    Directory: C:\\Users\\mina\\app\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\nd--h--        <시각>                .git\n-a----        <시각>              0 .env\n-a----        <시각>              0 main.py"
     },
     {
       "id": "win-path-03",
       "concept": "PowerShell에서 띄어쓰기가 든 경로",
       "kind": "line",
       "title": "보고서 폴더로 이동",
-      "prompt": "Windows PowerShell에서 OneDrive 안의 보고서 폴더로 이동해 make.py를 실행하려고 했습니다. 그런데 한 줄에서 \"인수를 허용하는 위치 매개 변수를 찾을 수 없습니다\"(영문 Windows: A positional parameter cannot be found that accepts argument) 오류가 나고 그 줄의 이동이 되지 않았습니다. 고쳐야 할 줄을 고르세요.",
-      "code": "# Windows PowerShell\ncd \"C:\\Users\\mina\\OneDrive - ABC\"\ncd Reports 2025\npython make.py",
-      "answer": "3",
-      "explanation": "PowerShell도 bash처럼 따옴표 밖의 띄어쓰기로 인자를 나눕니다. 2번 줄은 띄어쓰기와 -가 든 경로를 따옴표로 묶어 경로 하나로 넘기므로 이동이 됩니다. 3번 줄의 cd Reports 2025는 cd(Set-Location)에 Reports와 2025라는 두 인자를 넘기는데, cd는 경로 하나만 받으므로 남은 2025를 받을 자리가 없다는 오류를 내고 이동하지 않습니다. 3번 줄을 cd \"Reports 2025\"로 고치면 됩니다. 한국어 Windows에서는 이 오류가 한국어로, 영문 Windows에서는 영어로 표시됩니다. 명령 프롬프트(cmd)의 cd는 띄어쓰기를 따옴표 없이도 받아 주지만 PowerShell은 그렇지 않으니, 회사 PC에 흔한 \"OneDrive - 회사명\" 같은 폴더는 늘 따옴표로 감싸세요.",
+      "prompt": "Windows PowerShell에서 OneDrive 안의 보고서 폴더로 이동해 make.py를 실행하려고 했습니다. 그런데 한 줄에서 A positional parameter cannot be found that accepts argument(그 인수를 받을 위치 매개 변수가 없다는 뜻, 한국어 Windows에서는 한국어로 표시) 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina  ← 지금 위치\n# └── OneDrive - ABC\\\n#     └── Reports 2025\\\n#         └── make.py\n# OneDrive - ABC\\Reports 2025\\make.py 내용:\n#   import os\n#   print(os.getcwd())\ncd \"C:\\Users\\mina\\OneDrive - ABC\"\ncd Reports 2025\npython make.py",
+      "answer": "10",
+      "explanation": "PowerShell도 bash처럼 따옴표 밖의 띄어쓰기로 인자를 나눕니다. 9번 줄은 띄어쓰기와 -가 든 경로를 따옴표로 묶어 경로 하나로 넘기므로 이동이 됩니다. 10번 줄의 cd Reports 2025는 cd(Set-Location)에 Reports와 2025라는 두 인자를 넘기는데, cd는 경로를 하나만 받으므로 남은 2025를 받을 자리가 없다는 오류를 내고 이동하지 않습니다. 그래서 11번 줄의 python은 OneDrive - ABC 폴더에서 make.py를 찾다가 실패합니다. 10번 줄을 cd \"Reports 2025\"로 고치면 make.py가 C:\\Users\\mina\\OneDrive - ABC\\Reports 2025에서 실행됩니다. 명령 프롬프트(cmd)의 cd는 띄어쓰기가 든 경로를 따옴표 없이도 받아 주지만 PowerShell은 그렇지 않으니, 회사 PC에 흔한 \"OneDrive - 회사명\" 같은 폴더는 늘 따옴표로 감싸세요.",
       "hints": [
         "띄어쓰기가 든 이름이 나오는 줄마다 cd가 경로를 몇 개로 받는지 세어 보세요.",
         "PowerShell은 따옴표 밖의 띄어쓰기로 인자를 나눕니다. cd는 경로를 하나만 받습니다."
       ],
-      "choices": ["2", "3", "4"],
+      "choices": ["9", "10", "11"],
       "accepted": [],
       "seconds": 100,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 2,
       "concept_id": "win-path",
       "response_mode": "choice",
@@ -13644,7 +13644,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "bash에서 배운 띄어쓰기 규칙을 따옴표가 있는 줄과 없는 줄의 비교로 PowerShell에 옮기는 적용이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "A positional parameter cannot be found that accepts argument '2025'."
@@ -13655,9 +13655,9 @@
       "kind": "multi",
       "title": "D 드라이브의 보고서 폴더",
       "prompt": "Anaconda Prompt(명령 프롬프트, cmd)에서 지금 위치는 C:\\Users\\mina입니다. 빈칸에 넣었을 때 다음 줄의 python make.py가 D:\\reports 폴더에서 실행되는 명령을 모두 고르세요.",
-      "code": "REM Anaconda Prompt (cmd)\nREM 지금 위치: C:\\Users\\mina\nREM make.py는 D:\\reports에 있다\n____\npython make.py",
+      "code": "REM Anaconda Prompt (cmd)\nREM C:\\Users\\mina  ← 지금 위치\nREM D:\\reports\nREM └── make.py\nREM make.py 내용:\nREM   import os\nREM   print(os.getcwd())\n____\npython make.py",
       "answer": "2,4",
-      "explanation": "명령 프롬프트(cmd)는 지금 드라이브와 드라이브마다 기억하는 폴더를 따로 관리합니다. cd /d D:\\reports는 /d 옵션 덕분에 드라이브까지 D:로 바꾸고, pushd D:\\reports는 지금 위치를 저장한 뒤 D:\\reports로 바로 이동하므로 둘 다 make.py를 찾습니다. /d 없는 cd D:\\reports는 D: 드라이브가 기억하는 폴더만 바꾸고 지금 위치는 C:\\Users\\mina에 그대로 남아, python이 make.py를 찾지 못합니다. cd \\reports는 C:의 맨 위 아래 reports를 뜻하고, 경로만 쓴 D:\\reports는 cmd가 실행할 명령으로 읽어 오류를 냅니다. PowerShell의 cd(Set-Location)는 cd D:\\reports만으로 드라이브까지 넘어가므로, 같은 안내라도 cmd인지 PowerShell인지 먼저 확인하세요.",
+      "explanation": "명령 프롬프트(cmd)는 지금 드라이브와 드라이브마다 기억하는 폴더를 따로 관리합니다. cd /d D:\\reports는 /d 옵션 덕분에 드라이브까지 D:로 바꾸고, pushd D:\\reports는 지금 위치를 저장한 뒤 D:\\reports로 바로 이동하므로 둘 다 make.py가 D:\\reports를 출력합니다. /d 없는 cd D:\\reports는 D: 드라이브가 기억하는 폴더만 바꾸고 지금 위치는 C:\\Users\\mina에 그대로 남아, python이 make.py를 찾지 못합니다. cd \\reports는 C:의 맨 위 아래 reports를 뜻해 그런 폴더가 없다는 오류(The system cannot find the path specified)가 나고, 경로만 쓴 D:\\reports는 cmd가 실행할 명령으로 읽어 오류를 냅니다. PowerShell의 cd(Set-Location)는 cd D:\\reports만으로 드라이브까지 넘어가므로, 같은 안내라도 cmd인지 PowerShell인지 먼저 확인하세요.",
       "hints": [
         "cmd에서는 \"지금 드라이브\"와 \"드라이브마다 기억하는 폴더\"가 따로 있습니다. 각 보기가 드라이브까지 바꾸는지 따져 보세요.",
         "cmd의 cd는 /d를 붙여야 다른 드라이브로 넘어갑니다. \\로 시작하는 경로는 지금 드라이브의 맨 위에서 출발합니다."
@@ -13671,8 +13671,8 @@
       ],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 3,
       "concept_id": "win-path",
       "response_mode": "choice",
@@ -13684,29 +13684,29 @@
         "transfer": 3,
         "distractor_strength": 3,
         "rationale": "다섯 명령이 드라이브와 폴더를 각각 바꾸는지 따져 실행 위치를 판단하는 전이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "D:\\reports에서 make.py 실행"
+      "reference_output": "D:\\reports"
     },
     {
       "id": "win-files-01",
       "concept": "PowerShell 별칭과 없는 명령",
       "kind": "line",
       "title": "Windows에서 따라 한 정리 안내",
-      "prompt": "AI가 macOS 기준으로 알려 준 정리 명령을 Windows PowerShell에서 그대로 실행했습니다. 한 줄에서 \"cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다\"(영문: is not recognized as the name of a cmdlet) 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
-      "code": "# Windows PowerShell (app 폴더)\nmkdir backup\ncp config.txt backup\ntouch done.txt\nls backup",
-      "answer": "4",
-      "explanation": "Windows PowerShell은 macOS·Linux에 익숙한 사람을 위해 몇몇 명령 이름을 별칭으로 받아 줍니다. ls는 Get-ChildItem, cp는 Copy-Item, cat은 Get-Content의 별칭이고 mkdir로 폴더도 만들 수 있어 2·3·5번 줄은 그대로 실행됩니다. 하지만 touch에 해당하는 별칭은 없어 4번 줄에서 touch를 인식할 수 없다는 오류가 납니다. 빈 파일은 New-Item done.txt -ItemType File로 만듭니다. 별칭은 이름만 같을 뿐 옵션까지 bash와 같지는 않으니, AI가 준 bash 명령에 옵션이 붙어 있다면 PowerShell 문법을 한 번 더 확인하세요.",
+      "prompt": "AI가 macOS 기준으로 알려 준 백업 명령을 Windows PowerShell에서 그대로 실행했습니다. 한 줄에서 is not recognized as the name of a cmdlet(명령으로 인식되지 않는다는 뜻, 한국어 Windows에서는 한국어로 표시) 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\app  ← 지금 위치\n# └── config.txt\nmkdir backup\ncp config.txt backup\ntouch done.txt\nls backup",
+      "answer": "6",
+      "explanation": "Windows PowerShell은 macOS·Linux에 익숙한 사람을 위해 몇몇 명령 이름을 별칭으로 받아 줍니다. ls는 Get-ChildItem, cp는 Copy-Item, cat은 Get-Content의 별칭이고 mkdir도 폴더를 만드는 PowerShell 함수라 4·5·7번 줄은 그대로 실행됩니다. 하지만 touch라는 이름의 명령이나 별칭은 없어 6번 줄에서 touch를 인식할 수 없다는 오류가 납니다. 빈 파일은 New-Item done.txt -ItemType File로 만듭니다. 별칭은 이름만 같을 뿐 옵션까지 bash와 같지는 않으니, AI가 준 bash 명령에 옵션이 붙어 있다면 PowerShell 문법을 한 번 더 확인하세요.",
       "hints": [
         "네 명령 가운데 PowerShell이 자기 명령으로 바꿔 실행해 주는 것과 그렇지 않은 것을 나눠 보세요.",
         "Windows PowerShell은 ls·cp 같은 자주 쓰는 bash 명령 이름 일부를 별칭으로 받아 주지만 모두는 아닙니다."
       ],
-      "choices": ["2", "3", "4", "5"],
+      "choices": ["4", "5", "6", "7"],
       "accepted": [],
       "seconds": 80,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-files",
       "response_mode": "choice",
@@ -13718,7 +13718,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "별칭이 있는 명령과 없는 명령 하나를 가르는 기초다. 별칭을 모르면 cp·ls도 의심하게 된다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program."
@@ -13728,25 +13728,25 @@
       "concept": "Remove-Item과 -Recurse·-Force",
       "kind": "multi",
       "title": "빌드 폴더 지우기",
-      "prompt": "Windows PowerShell에서 build 폴더를 안의 파일까지 한 번에, 확인 질문 없이 지우려고 합니다. 빈칸에 넣었을 때 그렇게 되는 명령을 모두 고르세요.",
-      "code": "# Windows PowerShell (project 폴더)\n# build 안: app.exe, cache.tmp\n____",
+      "prompt": "Windows PowerShell에서 build 폴더를 안의 숨김 파일까지 한 번에, 확인 질문 없이 지우려고 합니다. 빈칸에 넣었을 때 build 폴더가 남지 않는 명령을 모두 고르세요.",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\project  ← 지금 위치\n# └── build\\\n#     ├── app.log\n#     └── cache.tmp  (숨김)\n____",
       "answer": "1,5",
-      "explanation": "Windows PowerShell의 rm·del·rmdir·rd는 모두 Remove-Item의 별칭입니다. Remove-Item build -Recurse -Force와 별칭을 쓴 rm build -Recurse -Force는 -Recurse로 안의 파일까지 지우고 -Force로 숨김·읽기 전용 파일까지 지우므로 확인 질문 없이 끝납니다. bash의 rm -rf는 PowerShell에 rf라는 매개변수가 없어 오류가 나고, del build는 안에 항목이 있는 폴더라 정말 지울지 묻는 확인 질문이 나옵니다. cmd 문법인 rmdir /s /q는 PowerShell이 /s를 지울 경로로, /q를 받을 자리가 없는 남는 인자로 읽어 오류를 냅니다. Remove-Item은 휴지통으로 보내지 않고 바로 지우므로, AI가 알려 준 삭제 명령은 지울 경로부터 확인하세요.",
+      "explanation": "Windows PowerShell의 rm·del·rmdir·rd는 모두 Remove-Item의 별칭입니다. -Recurse를 붙이면 안의 항목까지 묻지 않고 지우고, -Force를 붙이면 숨김·읽기 전용 항목까지 지웁니다. 그래서 Remove-Item build -Recurse -Force와 별칭을 쓴 rm build -Recurse -Force는 숨김 파일 cache.tmp까지 지우고 build를 없앱니다. -Force가 빠진 Remove-Item build -Recurse는 cache.tmp에서 권한이 없다는 오류(You do not have sufficient access rights)를 내고 build를 남깁니다. bash의 rm -rf는 PowerShell에 rf라는 매개 변수가 없어 오류가 나고, cmd 문법인 rmdir /s /q는 PowerShell이 /s를 지울 경로로, /q를 받을 자리가 없는 남는 인자로 읽어 오류를 냅니다. 옵션 없이 rm build처럼 쓰면 안에 항목이 있어 정말 지울지 묻습니다. Remove-Item은 휴지통으로 보내지 않고 바로 지우므로, AI가 알려 준 삭제 명령은 지울 경로부터 확인하세요.",
       "hints": [
-        "rm·del·rmdir이 PowerShell에서는 모두 어떤 명령의 별칭인지 먼저 떠올려 보세요.",
-        "Remove-Item은 안에 항목이 있는 폴더를 지울 때 그냥 지우지 않고 확인을 묻는 경우가 있습니다. 어떤 옵션이 그 질문 없이 안까지 지우는지 떠올려 보세요."
+        "rm·rmdir이 PowerShell에서는 어떤 명령의 별칭인지, 각 보기가 그 명령의 옵션 문법을 지키는지 먼저 보세요.",
+        "Remove-Item의 -Recurse는 안의 항목까지 묻지 않고 지우고, 숨김·읽기 전용 파일은 -Force가 있어야 지웁니다."
       ],
       "choices": [
         "rm build -Recurse -Force",
         "rm -rf build",
-        "del build",
+        "Remove-Item build -Recurse",
         "rmdir /s /q build",
         "Remove-Item build -Recurse -Force"
       ],
       "accepted": [],
       "seconds": 100,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-files",
       "response_mode": "choice",
@@ -13758,10 +13758,10 @@
         "transfer": 2,
         "distractor_strength": 3,
         "rationale": "같은 Remove-Item을 부르는 다섯 줄을 옵션 문법과 확인 질문 여부로 가르는 기초다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "build 폴더와 안의 파일이 확인 없이 지워짐"
+      "reference_output": "False"
     },
     {
       "id": "win-files-03",
@@ -13769,23 +13769,23 @@
       "kind": "choice",
       "title": "깨져서 열리지 않는 결과 파일",
       "prompt": "회사 PC의 Windows PowerShell 5.1에서 python report.py > result.csv로 결과를 저장했습니다. 그 파일을 pandas의 read_csv로 읽자 UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0 오류가 났습니다. 원인으로 가장 알맞은 것을 고르세요.",
-      "code": "# Windows PowerShell 5.1\npython report.py > result.csv\n# 다른 파이썬 코드\n#   pd.read_csv(\"result.csv\")\n#   → UnicodeDecodeError: 'utf-8' codec\n#     can't decode byte 0xff in position 0",
+      "code": "# Windows PowerShell 5.1\n# C:\\Users\\mina\\app  ← 지금 위치\n# └── report.py\n# report.py 내용:\n#   print(\"id,amount\")\n#   print(\"1,100\")\npython report.py > result.csv\n# 다른 파이썬 코드에서 읽으면\n#   pd.read_csv(\"result.csv\")\n#   → UnicodeDecodeError: 'utf-8' codec\n#     can't decode byte 0xff in position 0",
       "answer": "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다",
-      "explanation": "Windows PowerShell 5.1의 >는 Out-File을 거쳐 기본으로 파일을 UTF-16LE로 새로 만들고 맨 앞에 BOM(바이트 순서 표시, 첫 바이트 0xff)을 붙입니다(>>도 기존 파일의 인코딩을 따지지 않고 UTF-16LE로 덧붙입니다). read_csv는 기본으로 UTF-8로 읽으므로 맨 처음 바이트 0xff를 해석하지 못해 오류가 납니다. 0xff는 report.py가 출력한 글자가 아니고 한글 출력 자체도 원인이 아니며, >는 덧붙이지 않고 새로 씁니다. PowerShell 7 이상은 기본이 BOM 없는 UTF-8입니다. 5.1에서는 결과 파일을 파이썬 코드 안에서 인코딩을 정해 저장하는 편이 안전합니다(예: df.to_csv(\"result.csv\", encoding=\"utf-8\")). macOS 기준 안내의 > 저장이 Windows PowerShell 5.1에서는 다른 바이트를 만든다는 점을 기억하세요.",
+      "explanation": "Windows PowerShell 5.1의 >는 파일을 UTF-16LE로 만들고 맨 앞에 BOM(바이트 순서 표시) 0xff 0xfe를 붙입니다. read_csv는 기본으로 UTF-8로 읽으므로 맨 처음 바이트 0xff를 해석하지 못해 오류가 납니다. UTF-8의 BOM은 0xef 0xbb 0xbf로 시작하므로(5.1에서 Out-File -Encoding utf8로 저장하면 이렇게 시작합니다) 0xff로 시작하는 이 파일은 UTF-8이 아닙니다. 오류 메시지의 'utf-8' codec이 read_csv가 쓴 인코딩이고, 0xff는 report.py가 출력한 글자도 아닙니다(같은 출력을 cmd의 >로 저장하면 id,amount로 시작합니다). PowerShell 7에서는 같은 명령으로 만든 이 파일을 read_csv가 그대로 읽습니다. 5.1에서는 cmd /c \"python report.py > result.csv\"처럼 cmd로 저장하거나, 파이썬 코드 안에서 open(\"result.csv\", \"w\", encoding=\"utf-8\")로 직접 쓰는 편이 안전합니다.",
       "hints": [
         "오류 메시지가 가리키는 위치(position 0)는 파일의 맨 처음입니다. 파이썬 코드보다 파일을 저장한 단계를 의심해 보세요.",
         "Windows PowerShell 5.1의 >는 파일을 저장할 때 기본 인코딩이 UTF-8이 아닙니다."
       ],
       "choices": [
-        ">는 기존 파일 끝에 덧붙여 저장해 앞부분이 섞였다",
+        "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-8(BOM 포함)로 저장한다",
         "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다",
         "report.py가 맨 앞에 잘못된 문자 0xff를 출력했다",
-        "report.py가 한글을 print해서 CSV 내용이 깨졌다"
+        "read_csv가 Windows에서는 파일을 cp949로 읽으려 했다"
       ],
       "accepted": [],
       "seconds": 110,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 2,
       "concept_id": "win-files",
       "response_mode": "choice",
@@ -13797,35 +13797,35 @@
         "transfer": 3,
         "distractor_strength": 2,
         "rationale": "오류 메시지의 위치·바이트와 셸의 저장 인코딩을 연결해 원인을 해석하는 적용이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "Windows PowerShell 5.1의 >는 기본으로 결과를 UTF-16LE(BOM 포함)로 저장한다"
+      "reference_output": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
     },
     {
       "id": "win-files-04",
       "concept": "cmd와 PowerShell 양쪽 명령",
       "kind": "multi",
       "title": "두 창에서 쓰는 안내문",
-      "prompt": "같은 안내문을 명령 프롬프트(cmd)와 Windows PowerShell 양쪽에서 쓰려고 합니다. 빈칸에 넣었을 때 두 창 모두에서 뜻대로 실행되는 명령을 모두 고르세요.",
-      "code": "# 폴더 안: notes.txt, a.txt\n# 명령 프롬프트(cmd) 창\nC:\\Users\\mina\\memo> ____\n# Windows PowerShell 창\nPS C:\\Users\\mina\\memo> ____",
-      "answer": "1,4",
-      "explanation": "명령 프롬프트(cmd)와 PowerShell은 다른 프로그램이라 받아들이는 명령과 문법이 다릅니다. type과 copy는 cmd의 기본 명령이면서 PowerShell에서도 각각 Get-Content·Copy-Item의 별칭이라 두 창에서 같은 일을 합니다. cat과 ls는 PowerShell 별칭일 뿐 cmd에는 없어 \"내부 또는 외부 명령이 아닙니다\" 오류가 나고, echo %USERNAME%은 cmd에서는 사용자 이름으로 바뀌지만 PowerShell에서는 %USERNAME% 글자 그대로 출력됩니다. 프롬프트에 PS가 보이면 PowerShell(Anaconda PowerShell Prompt는 (base) PS C:\\...>), C:\\...>처럼 PS가 없으면 cmd입니다. AI에게 명령을 물을 때 어느 창을 쓰는지 함께 알려 주면 맞는 문법으로 답을 받을 수 있습니다.",
+      "prompt": "같은 안내문을 명령 프롬프트(cmd)와 Windows PowerShell 양쪽에서 쓰려고 합니다. 빈칸에 넣었을 때 두 창에서 오류 없이 같은 결과를 보여 주는 명령을 모두 고르세요.",
+      "code": "# 명령 프롬프트(cmd)와 Windows PowerShell\n# C:\\Users\\mina\\memo  ← 지금 위치\n# └── notes.txt\n# notes.txt 내용:\n#   meeting at 10\n# 명령 프롬프트(cmd) 창\nC:\\Users\\mina\\memo> ____\n# Windows PowerShell 창\nPS C:\\Users\\mina\\memo> ____",
+      "answer": "2,5",
+      "explanation": "명령 프롬프트(cmd)와 PowerShell은 다른 프로그램이라 받아들이는 명령과 문법이 다릅니다. type은 cmd의 기본 명령이면서 PowerShell에서도 Get-Content의 별칭이라 두 창 모두 meeting at 10을 보여 줍니다. python --version은 두 창이 PATH에서 찾은 같은 python.exe를 실행하므로 결과가 같습니다. cat은 PowerShell 별칭일 뿐 cmd에는 없어 'cat' is not recognized as an internal or external command 오류가 나고, echo %USERNAME%은 cmd에서는 사용자 이름(mina)으로 바뀌지만 PowerShell에서는 %USERNAME% 글자 그대로 나옵니다. where python은 cmd에서는 where.exe가 python의 위치를 보여 주지만, PowerShell에서 where는 Where-Object의 별칭이라 아무것도 보여 주지 않습니다(PowerShell에서는 where.exe python으로 씁니다). 프롬프트가 PS C:\\...>처럼 PS로 시작하면 PowerShell, C:\\...>처럼 PS가 없으면 cmd입니다. AI에게 명령을 물을 때 어느 창을 쓰는지 함께 알려 주면 맞는 문법으로 답을 받을 수 있습니다.",
       "hints": [
-        "각 보기를 cmd 창과 PowerShell 창에서 따로 실행한다고 생각하고, 한쪽에서라도 안 되거나 뜻이 달라지면 빼세요.",
-        "PowerShell은 type·copy·cat·ls 같은 이름을 별칭으로 받아 주지만, cmd에는 cat·ls 같은 명령이 기본으로 없습니다. 환경 변수를 읽는 문법도 두 창이 다릅니다."
+        "각 보기를 cmd 창과 PowerShell 창에서 따로 실행한다고 생각하고, 한쪽에서라도 오류가 나거나 결과가 달라지면 빼세요.",
+        "PowerShell은 type·cat·where 같은 이름을 자기 명령의 별칭으로 받아 주지만 cmd에는 cat이 없고, where는 두 창에서 서로 다른 명령입니다. 설치한 프로그램(python)은 어느 창에서나 같은 프로그램이 실행됩니다."
       ],
       "choices": [
-        "type notes.txt",
         "echo %USERNAME%",
+        "type notes.txt",
         "cat notes.txt",
-        "copy a.txt b.txt",
-        "ls"
+        "where python",
+        "python --version"
       ],
       "accepted": [],
       "seconds": 150,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 3,
       "concept_id": "win-files",
       "response_mode": "choice",
@@ -13837,10 +13837,10 @@
         "transfer": 3,
         "distractor_strength": 3,
         "rationale": "다섯 명령을 두 셸에서 각각 따져 양쪽 조건을 모두 만족하는지 판단하는 전이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "type·copy는 두 창에서 같은 결과"
+      "reference_output": "type notes.txt와 python --version은 두 창에서 같은 결과"
     },
     {
       "id": "win-env-01",
@@ -13848,9 +13848,9 @@
       "kind": "choice",
       "title": "도구 폴더를 PATH에 넣기",
       "prompt": "AI가 macOS 기준으로 export PATH=\"$HOME/tools:$PATH\"를 실행하라고 했습니다. Windows PowerShell에서 지금 창에 같은 일을 하는 줄을 고르세요.",
-      "code": "# Windows PowerShell\n# 목표: C:\\Users\\mina\\tools의 report를\n#   이름만으로 실행하고, python 같은\n#   기존 명령도 계속 쓴다\n____\nreport --help",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina  ← 지금 위치\n# └── tools\\\n#     └── report.exe  (실행하면 report ok 출력)\n# 목표: report를 이름만으로 실행하고\n#   python 같은 기존 명령도 계속 쓴다\n____\nreport\npython -c \"print('python ok')\"",
       "answer": "$env:PATH = \"$HOME\\tools;\" + $env:PATH",
-      "explanation": "PowerShell에서 환경 변수는 $env:이름으로 읽고 바꾸며, 바꾼 값은 지금 창(세션)에만 적용됩니다. Windows의 PATH는 폴더를 ;로 구분하므로 $env:PATH = \"$HOME\\tools;\" + $env:PATH처럼 새 폴더 뒤에 ;를 붙이고 원래 목록을 이어 붙입니다. macOS·Linux처럼 :로 이으면 새 폴더와 다음 폴더가 한 경로로 붙어 버려 찾지 못하고, 원래 PATH를 붙이지 않으면 python·git 같은 기존 명령까지 찾지 못합니다. export는 bash 명령이라 PowerShell에서는 인식되지 않습니다. 큰따옴표 안의 $HOME은 홈 폴더(C:\\Users\\mina)로 바뀝니다.",
+      "explanation": "PowerShell에서 환경 변수는 $env:이름으로 읽고 바꾸며, 바꾼 값은 지금 창(세션)에만 적용됩니다. Windows의 PATH는 폴더를 ;로 구분하므로 $env:PATH = \"$HOME\\tools;\" + $env:PATH처럼 새 폴더 뒤에 ;를 붙이고 원래 목록을 이어 붙입니다. 큰따옴표 안의 $HOME은 홈 폴더(C:\\Users\\mina)로 바뀝니다. macOS·Linux처럼 :로 이으면 새 폴더와 다음 폴더가 한 경로로 붙어 버려 report를 찾지 못하고, 원래 PATH를 붙이지 않으면 report는 실행돼도 python 같은 기존 명령을 찾지 못합니다. export는 bash 명령이라 PowerShell에서는 인식되지 않습니다.",
       "hints": [
         "bash 줄의 세 부분, 즉 새 폴더·구분 기호·원래 PATH가 PowerShell 줄에서 각각 무엇으로 바뀌는지 보세요.",
         "Windows에서 PATH의 폴더 사이 구분 기호는 :가 아닙니다. 원래 목록($env:PATH)을 뒤에 붙여야 기존 명령도 계속 찾습니다."
@@ -13863,8 +13863,8 @@
       ],
       "accepted": [],
       "seconds": 90,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-env",
       "response_mode": "choice",
@@ -13876,16 +13876,16 @@
         "transfer": 2,
         "distractor_strength": 3,
         "rationale": "bash 한 줄을 세 부분으로 나눠 PowerShell 문법으로 옮기는 기초다. 구분자·덮어쓰기·명령 이름을 각각 겨냥했다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "$env:PATH = \"$HOME\\tools;\" + $env:PATH"
+      "reference_output": "report ok\npython ok"
     },
     {
       "id": "win-env-02",
       "concept": "cmd의 set과 %이름%",
       "kind": "choice",
-      "title": "Anaconda Prompt의 실행 모드",
+      "title": "Anaconda Prompt의 변수 읽기",
       "prompt": "Anaconda Prompt(명령 프롬프트, cmd)에서 아래 두 줄을 실행했을 때 출력을 고르세요.",
       "code": "REM Anaconda Prompt (cmd)\nset MODE=dev\necho %MODE% $env:MODE",
       "answer": "dev $env:MODE",
@@ -13895,15 +13895,15 @@
         "cmd에서는 set 이름=값으로 정하고 %이름%으로 읽습니다. 다른 셸의 문법은 그냥 글자로 남습니다."
       ],
       "choices": [
-        "%MODE% $env:MODE",
+        "dev $env:MODE",
         "dev dev",
-        "MODE=dev $env:MODE",
-        "dev $env:MODE"
+        "%MODE% $env:MODE",
+        "MODE=dev $env:MODE"
       ],
       "accepted": [],
       "seconds": 70,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 1,
       "concept_id": "win-env",
       "response_mode": "choice",
@@ -13915,7 +13915,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "한 줄에 두 셸의 변수 문법을 나란히 두어 어느 쪽이 바뀌는지 고르는 기초다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "dev $env:MODE"
@@ -13926,18 +13926,18 @@
       "kind": "line",
       "title": "AI가 이어 준 실행 명령",
       "prompt": "AI가 알려 준 실행 순서를 회사 PC의 Windows PowerShell 5.1에 붙여 넣었습니다. 한 줄에서 \"The token '…' is not a valid statement separator in this version.\"(이 버전에서 올바른 문 구분 기호가 아님, 한국어 Windows에서는 한국어로 표시) 구문 오류가 났습니다. 고쳐야 할 줄을 고르세요.",
-      "code": "# Windows PowerShell 5.1\ncd shop; dir\npython -m pip --version\npython make.py && python send.py\npip list | Select-String pandas",
-      "answer": "4",
-      "explanation": "&&(앞 명령이 성공하면 다음 명령 실행)와 ||는 PowerShell 7부터 생긴 연산자라, Windows에 기본으로 들어 있는 Windows PowerShell 5.1은 4번 줄을 해석하지 못하고 구문 오류를 냅니다. 4번 줄을 python make.py; if ($?) { python send.py }로 고치면 make.py가 성공했을 때만 send.py를 실행하는 같은 뜻이 됩니다. python make.py; python send.py처럼 ;만 쓰면 make.py가 실패해도 send.py가 실행되므로 뜻이 달라집니다. ;와 파이프 |는 5.1에서도 쓸 수 있습니다. &&로 잇는 안내는 명령 프롬프트(cmd)와 PowerShell 7에서는 되지만 Windows PowerShell 5.1에서는 막힙니다.",
+      "code": "# Windows PowerShell 5.1\n# C:\\Users\\mina  ← 지금 위치\n# └── shop\\\n#     ├── make.py\n#     └── send.py\n# shop\\make.py 내용:\n#   print(\"made\")\n# shop\\send.py 내용:\n#   print(\"sent\")\ncd shop; dir\npython -m venv .venv\npython make.py && python send.py\nGet-Content send.py | Select-String print",
+      "answer": "12",
+      "explanation": "&&(앞 명령이 성공하면 다음 명령 실행)와 ||는 PowerShell 7부터 생긴 연산자라, Windows에 기본으로 들어 있는 Windows PowerShell 5.1은 12번 줄을 해석하지 못하고 구문 오류를 냅니다. 12번 줄을 python make.py; if ($?) { python send.py }로 고치면 make.py가 성공했을 때만 send.py를 실행하는 같은 뜻이 됩니다. python make.py; python send.py처럼 ;만 쓰면 make.py가 실패해도 send.py가 실행되므로 뜻이 달라집니다. ;와 파이프 |는 5.1에서도 쓸 수 있습니다. &&로 잇는 안내는 명령 프롬프트(cmd)와 PowerShell 7에서는 되지만 Windows PowerShell 5.1에서는 막힙니다.",
       "hints": [
         "네 줄에 쓰인 기호(;·&&·|) 가운데 PowerShell에 나중에 생긴 것이 무엇인지 생각해 보세요.",
         "&&와 ||는 PowerShell 7부터 생긴 연산자입니다. Windows에 기본으로 들어 있는 것은 Windows PowerShell 5.1입니다."
       ],
-      "choices": ["2", "3", "4", "5"],
+      "choices": ["10", "11", "12", "13"],
       "accepted": [],
       "seconds": 100,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 2,
       "concept_id": "win-env",
       "response_mode": "choice",
@@ -13949,7 +13949,7 @@
         "transfer": 2,
         "distractor_strength": 2,
         "rationale": "명령을 잇는 기호 세 가지(;·&&·|) 가운데 버전에 따라 막히는 것을 고르는 적용이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
       "reference_output": "The token '&&' is not a valid statement separator in this version."
@@ -13960,9 +13960,9 @@
       "kind": "multi",
       "title": "받아 둔 report.exe 실행",
       "prompt": "Windows PowerShell에서 지금 위치는 C:\\Users\\mina\\tools이고 이 폴더에 report.exe가 있습니다. 이 폴더는 PATH에 없습니다. 빈칸에 넣었을 때 report.exe가 실행되는 명령을 모두 고르세요.",
-      "code": "# Windows PowerShell\n# C:\\Users\\mina\\tools  ← 지금 위치\n# └── report.exe\n# (tools 폴더는 PATH에 없다)\n____",
+      "code": "# Windows PowerShell\n# C:\\Users\\mina\\tools  ← 지금 위치\n# └── report.exe  (실행하면 report ok 출력)\n# (tools 폴더는 PATH에 없다)\n____",
       "answer": "1,3,4",
-      "explanation": "PowerShell은 보안을 위해 이름만 쓴 명령을 PATH에 있는 폴더에서만 찾고 지금 폴더는 찾지 않습니다. 그래서 report.exe만 쓰면 인식할 수 없는 명령이라는 오류가 나고, 지금 폴더라는 뜻의 .\\를 붙인 .\\report.exe나 전체 경로 C:\\Users\\mina\\tools\\report.exe, 한 단계 위로 갔다 돌아오는 ..\\tools\\report.exe처럼 위치를 밝혀야 실행됩니다. tools\\report.exe는 지금 위치(tools) 안의 tools 폴더를 찾으므로 틀립니다. 명령 프롬프트(cmd)는 지금 폴더를 먼저 찾아 report만으로도 실행되기 때문에, cmd용 안내를 PowerShell에서 따라 할 때 자주 막히는 지점입니다. macOS·Linux의 ./run.sh와 같은 원리입니다.",
+      "explanation": "PowerShell은 보안을 위해 이름만 쓴 명령을 PATH에 있는 폴더에서만 찾고 지금 폴더는 찾지 않습니다. 그래서 report.exe만 쓰면 인식할 수 없는 명령이라는 오류가 나고, 지금 폴더라는 뜻의 .\\를 붙인 .\\report.exe나 전체 경로 C:\\Users\\mina\\tools\\report.exe, 한 단계 위로 갔다 돌아오는 ..\\tools\\report.exe처럼 위치를 밝혀야 실행됩니다. tools\\report.exe는 지금 위치(tools) 안의 tools 폴더를 찾는데 그런 폴더가 없어, PowerShell이 이것을 tools 모듈의 명령으로 읽으려다 오류(The module 'tools' could not be loaded)를 냅니다. 명령 프롬프트(cmd)는 지금 폴더를 먼저 찾아 report만으로도 실행되기 때문에, cmd용 안내를 PowerShell에서 따라 할 때 자주 막히는 지점입니다. macOS·Linux의 ./run.sh와 같은 원리입니다.",
       "hints": [
         "PowerShell이 이름만 쓴 명령을 어디에서 찾는지, 경로를 쓴 명령은 어떻게 다루는지 나눠 보세요.",
         "PowerShell은 이름만 쓰면 PATH의 폴더에서만 찾고 지금 폴더는 찾지 않습니다. .\\나 전체 경로처럼 위치를 밝히면 그 파일을 실행합니다."
@@ -13976,8 +13976,8 @@
       ],
       "accepted": [],
       "seconds": 140,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 3,
       "concept_id": "win-env",
       "response_mode": "choice",
@@ -13989,29 +13989,29 @@
         "transfer": 3,
         "distractor_strength": 3,
         "rationale": "명령 검색 규칙과 상대·절대 경로를 다섯 보기에 적용하는 전이다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "report.exe 실행"
+      "reference_output": "report ok"
     },
     {
       "id": "sh-windows-05",
       "concept": "Windows 기본 인코딩과 open(encoding=)",
       "kind": "line",
-      "title": "회사 PC에서 깨진 매출 파일",
-      "prompt": "집의 macOS에서 잘 돌던 코드를 회사 Windows PC(Python 3.12)로 옮겨 실행했더니 UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence 오류가 났고, 트레이스백은 5번 줄을 가리켰습니다. sales.csv는 UTF-8로 저장된 한글 파일입니다. 고쳐야 할 줄을 고르세요.",
-      "code": "# read_sales.py (회사 Windows PC)\nimport csv\n\nwith open(\"sales.csv\") as f:\n    for row in csv.reader(f):\n        print(row)",
-      "answer": "4",
-      "explanation": "open()에 encoding을 주지 않으면 Python은 운영체제의 기본 인코딩으로 파일을 읽습니다. macOS·Linux의 기본은 UTF-8이지만, 한국어 Windows의 기본(ANSI 코드 페이지)은 cp949라서 UTF-8로 저장된 한글 파일을 cp949로 해석하다가 오류가 납니다. open()은 파일을 열 때 인코딩만 정하고, 실제 디코딩은 csv.reader가 줄을 꺼내는 5번 줄에서 일어나므로 트레이스백은 5번 줄을 가리킵니다. 고칠 곳은 인코딩을 정하는 4번 줄이며, with open(\"sales.csv\", encoding=\"utf-8\") as f:로 고치면 어느 컴퓨터에서나 같은 방식으로 읽습니다. 엑셀의 \"CSV UTF-8\"로 저장한 파일은 맨 앞에 BOM이 있어 encoding=\"utf-8-sig\"가 더 낫고, csv 모듈 문서는 newline=\"\"도 함께 권합니다. Python 3.15부터는 UTF-8 모드가 기본이 되어 이 차이가 줄었지만, 회사 PC에는 이전 버전이 많으니 파일을 열 때 encoding을 늘 적는 습관이 안전합니다.",
+      "title": "회사 PC에서 읽히지 않는 매출 파일",
+      "prompt": "집의 macOS에서 잘 돌던 코드를 회사 Windows PC(Python 3.12)로 옮겨 실행했더니 UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence 오류가 났고, 트레이스백은 10번 줄을 가리켰습니다. sales.csv는 UTF-8로 저장한 파일입니다. 고쳐야 할 줄을 고르세요.",
+      "code": "# read_sales.py (회사 Windows PC, Python 3.12)\n# sales.csv 내용:\n#   branch,amount\n#   강남점,120\n#   판교점,170\nimport csv\n\ntotal = 0\nwith open(\"sales.csv\") as f:\n    for row in csv.DictReader(f):\n        total += int(row[\"amount\"])\nprint(total)",
+      "answer": "9",
+      "explanation": "open()에 encoding을 주지 않으면 Python은 운영체제의 기본 인코딩으로 파일을 읽습니다. macOS·Linux의 기본은 UTF-8이지만, 한국어 Windows의 기본(ANSI 코드 페이지)은 cp949라서 UTF-8로 저장한 한글을 cp949로 해석하다가 오류가 납니다. open()은 파일을 열 때 인코딩만 정하고 실제 디코딩은 csv.DictReader가 줄을 꺼내는 10번 줄에서 일어나므로 트레이스백은 10번 줄을 가리킵니다. 고칠 곳은 인코딩을 정하는 9번 줄이며, with open(\"sales.csv\", encoding=\"utf-8\") as f:로 고치면 어느 컴퓨터에서나 같은 방식으로 읽어 290을 출력합니다. 엑셀의 \"CSV UTF-8\"로 저장한 파일은 맨 앞에 BOM이 있어 encoding=\"utf-8-sig\"가 더 낫고, csv 모듈 문서는 newline=\"\"도 함께 권합니다. Python 3.15부터는 UTF-8 모드가 기본이라 encoding 없이도 이 파일을 읽지만, 회사 PC에는 이전 버전이 많으니 파일을 열 때 encoding을 늘 적는 습관이 안전합니다.",
       "hints": [
         "오류 메시지의 decode와 cp949가 무엇을 뜻하는지, 그 인코딩이 어느 줄에서 정해지는지 거슬러 올라가 보세요.",
         "open()에 encoding을 주지 않으면 Python 3.14까지는 운영체제의 기본 인코딩으로 읽습니다. 한국어 Windows의 기본은 cp949입니다."
       ],
-      "choices": ["2", "4", "5", "6"],
+      "choices": ["6", "9", "10", "11"],
       "accepted": [],
       "seconds": 110,
-      "version": 1,
-      "domain": "터미널",
+      "version": 2,
+      "domain": "Windows",
       "level": 2,
       "concept_id": "sh-windows",
       "response_mode": "choice",
@@ -14023,10 +14023,10 @@
         "transfer": 3,
         "distractor_strength": 2,
         "rationale": "오류 메시지의 코덱 이름을 파일을 여는 줄과 연결하는 적용이다. 읽기와 출력 단계를 섞은 보기를 두었다.",
-        "calibration": "editorial-20261030-windows-git; 실제 bash·Git 실행 또는 공식 문서 근거와 별도 재풀이 검수, 사용자 성과 보정 전"
+        "calibration": "editorial-20261031-windows-track; Windows PowerShell 5.1·PowerShell 7·cmd 실제 실행과 별도 재풀이 검수, 사용자 성과 보정 전"
       },
       "reference_setup": "",
-      "reference_output": "UnicodeDecodeError: 'cp949' codec can't decode byte … illegal multibyte sequence"
+      "reference_output": "UnicodeDecodeError: 'cp949' codec can't decode byte 0xec in position 21: illegal multibyte sequence"
     },
     {
       "id": "git-status-05",
@@ -14132,9 +14132,16 @@
     {
       "id": "terminal-git",
       "name": "터미널",
-      "description": "경로 · 파일 · 명령 연결 · 환경 변수 · Windows",
+      "description": "macOS·Linux bash · 경로 · 파일 · 명령 연결 · 환경 변수 · 스크립트",
       "available": true,
-      "exercise_count": 50
+      "exercise_count": 33
+    },
+    {
+      "id": "windows",
+      "name": "Windows",
+      "description": "PowerShell · cmd · 경로 · 파일 · 환경 변수 · Python 실행",
+      "available": true,
+      "exercise_count": 17
     },
     {
       "id": "git",
@@ -14413,26 +14420,26 @@
     {
       "id": "win-path",
       "name": "Windows 경로와 이동",
-      "domain": "터미널",
-      "prerequisites": ["sh-path"]
+      "domain": "Windows",
+      "prerequisites": []
     },
     {
       "id": "win-files",
       "name": "PowerShell로 파일 다루기",
-      "domain": "터미널",
-      "prerequisites": ["sh-files", "win-path"]
+      "domain": "Windows",
+      "prerequisites": []
     },
     {
       "id": "win-env",
       "name": "Windows 환경 변수와 실행",
-      "domain": "터미널",
-      "prerequisites": ["sh-env", "win-path"]
+      "domain": "Windows",
+      "prerequisites": []
     },
     {
       "id": "sh-windows",
       "name": "Windows에서 Python 실행",
-      "domain": "터미널",
-      "prerequisites": ["sh-python"]
+      "domain": "Windows",
+      "prerequisites": ["win-path", "win-env"]
     },
     {
       "id": "git-status",
@@ -18487,7 +18494,7 @@
         "level": 1,
         "role": "foundation",
         "family": "sh-windows:PowerShell의 환경 변수",
-        "requires": ["sh-env-02"],
+        "requires": ["win-env-01"],
         "remediation": ["sh-windows-02"],
         "objective": "bash의 export와 같은 뜻을 PowerShell에서는 $env:이름 = 값으로 쓴다는 점을 다른 셸의 문법과 구분한다.",
         "review_status": "reviewed",
@@ -18498,7 +18505,7 @@
         "level": 1,
         "role": "foundation",
         "family": "sh-windows:가상환경 활성화 경로",
-        "requires": ["sh-python-02"],
+        "requires": ["win-path-01"],
         "remediation": ["sh-windows-01"],
         "objective": "macOS·Linux용 안내 중 Windows PowerShell에서 바꿔야 하는 가상환경 활성화 줄을 찾고 Windows의 경로로 고친다.",
         "review_status": "reviewed",
@@ -18795,7 +18802,7 @@
         "level": 1,
         "role": "foundation",
         "family": "win-path:PowerShell에서 cd와 pwd",
-        "requires": ["sh-path-01"],
+        "requires": [],
         "remediation": ["win-path-02"],
         "objective": "Windows 경로에서도 cd ..과 상대 경로가 한 단계씩 쌓이는 규칙을 따라가고 PowerShell의 pwd 출력 모양을 읽는다.",
         "review_status": "reviewed",
@@ -18806,7 +18813,7 @@
         "level": 1,
         "role": "foundation",
         "family": "win-path:숨김 항목 보기",
-        "requires": ["sh-path-02"],
+        "requires": [],
         "remediation": ["win-path-01"],
         "objective": "PowerShell의 ls·dir가 Get-ChildItem 별칭이라는 점과 숨김 항목을 보는 옵션(-Force)을 bash·cmd 문법과 구분한다.",
         "review_status": "reviewed",
@@ -18817,7 +18824,7 @@
         "level": 2,
         "role": "application",
         "family": "win-path:띄어쓰기가 든 Windows 경로",
-        "requires": ["win-path-01", "sh-words-03"],
+        "requires": ["win-path-01"],
         "remediation": ["win-path-01"],
         "objective": "따옴표로 묶은 경로와 묶지 않은 경로를 비교해 인자가 둘로 나뉘어 위치 매개 변수 오류를 낸 줄을 고른다.",
         "review_status": "reviewed",
@@ -18839,7 +18846,7 @@
         "level": 1,
         "role": "foundation",
         "family": "win-files:PowerShell에 없는 bash 명령",
-        "requires": ["sh-files-01"],
+        "requires": [],
         "remediation": ["win-files-02"],
         "objective": "PowerShell이 별칭으로 받아 주는 bash 명령과 없는 명령을 구분해 오류가 난 줄을 고른다.",
         "review_status": "reviewed",
@@ -18850,9 +18857,9 @@
         "level": 1,
         "role": "foundation",
         "family": "win-files:폴더째 지우기",
-        "requires": ["sh-files-01"],
+        "requires": [],
         "remediation": ["win-files-01"],
-        "objective": "Remove-Item의 별칭과 -Recurse·-Force 옵션으로 폴더를 확인 없이 지우는 명령을 bash·cmd 문법과 구분한다.",
+        "objective": "Remove-Item의 별칭과 -Recurse·-Force가 하는 일을 구분해 숨김 파일이 든 폴더를 확인 없이 지우는 명령을 고른다.",
         "review_status": "reviewed",
         "task_form": "equivalent-code"
       },
@@ -18861,7 +18868,7 @@
         "level": 2,
         "role": "application",
         "family": "win-files:> 저장 인코딩",
-        "requires": ["win-files-01", "sh-redirect-01"],
+        "requires": ["win-files-01"],
         "remediation": ["win-files-01"],
         "objective": "Windows PowerShell 5.1의 리다이렉트가 UTF-16LE 파일을 만든다는 점으로 다른 프로그램의 디코딩 오류를 해석한다.",
         "review_status": "reviewed",
@@ -18874,7 +18881,7 @@
         "family": "win-files:cmd와 PowerShell 양쪽 명령",
         "requires": ["win-files-03"],
         "remediation": ["win-files-01", "win-files-03"],
-        "objective": "cmd와 PowerShell이 받아들이는 명령·별칭·환경 변수 문법을 비교해 두 창에서 같은 뜻으로 실행되는 명령을 고른다.",
+        "objective": "cmd와 PowerShell이 받아들이는 명령·별칭·환경 변수 문법을 비교해 두 창에서 같은 결과를 내는 명령을 고른다.",
         "review_status": "reviewed",
         "task_form": "condition-change"
       },
@@ -18883,7 +18890,7 @@
         "level": 1,
         "role": "foundation",
         "family": "win-env:PATH에 폴더 더하기",
-        "requires": ["sh-env-01"],
+        "requires": [],
         "remediation": ["win-env-02"],
         "objective": "bash의 PATH 추가 명령을 PowerShell의 $env:PATH와 ; 구분자로 옮긴다.",
         "review_status": "reviewed",
@@ -18894,7 +18901,7 @@
         "level": 1,
         "role": "foundation",
         "family": "win-env:cmd의 %변수%",
-        "requires": ["sh-env-01"],
+        "requires": [],
         "remediation": ["win-env-01"],
         "objective": "cmd의 set·%이름% 문법과 PowerShell의 $env: 문법을 구분해 cmd 창의 출력을 고른다.",
         "review_status": "reviewed",
@@ -18905,7 +18912,7 @@
         "level": 2,
         "role": "application",
         "family": "win-env:5.1의 &&",
-        "requires": ["win-env-01", "sh-chain-01"],
+        "requires": ["win-env-01"],
         "remediation": ["win-env-01", "win-env-02"],
         "objective": "PowerShell 5.1이 지원하지 않는 && 연산자가 든 줄을 찾고 같은 뜻의 ; if ($?)로 바꾸는 방법을 판단한다.",
         "review_status": "reviewed",

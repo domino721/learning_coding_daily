@@ -28,7 +28,14 @@ import {
 import { isLayoutKind, validChoiceAnswer } from "./answerFormat";
 const TIMEZONE = "Asia/Seoul";
 // Tracks with a learning path; others (코딩테스트) are announced but cannot start.
-const TRACK_IDS = ["python-basics", "python", "sql", "terminal-git", "git"];
+const TRACK_IDS = [
+  "python-basics",
+  "python",
+  "sql",
+  "terminal-git",
+  "windows",
+  "git",
+];
 const sources = new Map<string, Source>(
   curriculum.exercises.map((ex) => [ex.id, ex]),
 );

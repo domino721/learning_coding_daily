@@ -24,8 +24,8 @@
 
 ## 현재 사용할 수 있는 기능
 
-- 독립 트랙: Python 기초 66문제, Python 데이터 분석 171문제, SQL 71문제, 터미널 50문제(Windows 섹터 포함), Git 26문제. 코딩테스트는 준비 중
-- 보관 원본 389문제(서술형 5개는 추천 보류): Python 기초 66개, pandas 60개, NumPy 52개, SQL 72개, 통계 24개, scikit-learn 39개, 터미널 50개, Git 26개. 코드 읽기·짧은 빈칸·평가 절차·조건 변화 판단
+- 독립 트랙: Python 기초 66문제, Python 데이터 분석 171문제, SQL 71문제, 터미널 33문제(macOS·Linux bash), Windows 17문제(PowerShell·cmd), Git 26문제. 코딩테스트는 준비 중
+- 보관 원본 389문제(서술형 5개는 추천 보류): Python 기초 66개, pandas 60개, NumPy 52개, SQL 72개, 통계 24개, scikit-learn 39개, 터미널 33개, Windows 17개, Git 26개. 코드 읽기·짧은 빈칸·평가 절차·조건 변화 판단
 - SQL은 전체 입력 테이블·열·행을 풀이 전에 표시하며, 표시된 입력과 참조 데이터·정답의 일치 여부를 웹 내보내기 전에 검사한다. [10월 18일 입력 보완·새 문제 검수](docs/content_batches/2026-10-18.md)
 - 10월 19일: 기존 18개 개념에 적용 9·전이 9문항을 추가. [문항별 설계·검수](docs/content_batches/2026-10-19-expansion.md)에 따라 기존 문항·추천 규칙·기록을 보존
 - 10월 20일 별도 보강: 기존 12개 개념에 적용 5·전이 7문항을 추가. [개별 설계·경계 검수](docs/content_batches/2026-10-20-expansion.md)와 기존 142문항·선수 경로 보존 검사를 포함
@@ -121,7 +121,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 
 - `src/`: 모바일 React 화면과 API 타입
 - `backend/content.py`, `backend/extra_content.py`, `backend/content_batches/`: 전체 문제의 정답·힌트·해설·참조 코드 원본
-- `backend/basics_content.json`, `backend/extension_content.json`, `backend/terminal_content.json`: CR-017 이후 트랙별 문항 원본. `scripts/validate_sql_content.py`와 `scripts/validate_shell_content.py`가 화면에 보이는 입력·시작 상태만으로 정답을 다시 실행해 검증
+- `backend/basics_content.json`, `backend/extension_content.json`, `backend/terminal_content.json`: CR-017 이후 트랙별 문항 원본. `scripts/validate_sql_content.py`와 `scripts/validate_shell_content.py`가 화면에 보이는 입력·시작 상태만으로 정답을 다시 실행해 검증하고, Windows 문항은 `scripts/validate_windows_content.py`가 CI의 Windows 실행기에서 Windows PowerShell 5.1·PowerShell 7·cmd로 실행
 - `backend/difficulty.json`, `backend/curriculum.py`: 문항별 상세 난이도·형식·개념 맵·추천 규칙
 - `src/records.ts`, `backend/records.py`: 버전 검증·복구본·파일 백업 병합·학습 로그
 - `backend/main.py`: 일일 학습·제출·복습·기록 API
@@ -130,7 +130,7 @@ curl --fail http://127.0.0.1:5173/api/dashboard
 - `scripts/`: 설치·검증·테스트 서버
 - `docs/PROJECT_PLAN.md`: 학습 설계, 구현 단계와 남은 작업
 
-정답은 문제를 마치기 전까지 API 응답에 포함하지 않습니다. 단답형은 공백·따옴표 스타일·동일 숫자 표기를 정규화해 비교하며 Python 코드로 실행하지 않습니다. 터미널·Git 보기는 띄어쓰기만 다른 출력이 있어 보기 그대로 비교합니다. 이 구조는 개인 연습용이며 외부 사용자 대상 출시는 별도 인증·권한·실행 격리 설계가 필요합니다.
+정답은 문제를 마치기 전까지 API 응답에 포함하지 않습니다. 단답형은 공백·따옴표 스타일·동일 숫자 표기를 정규화해 비교하며 Python 코드로 실행하지 않습니다. 터미널·Windows·Git 보기는 띄어쓰기만 다른 출력이 있어 보기 그대로 비교합니다. 이 구조는 개인 연습용이며 외부 사용자 대상 출시는 별도 인증·권한·실행 격리 설계가 필요합니다.
 
 ## 컨테이너 패키지
 

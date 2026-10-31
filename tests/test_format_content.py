@@ -5,7 +5,8 @@ Line: the shown code prints reference_output (the reported wrong result), or sto
 in the review entry's `raises`; the review fix gives the target.
 Multi: exactly the answer options print reference_output when placed in ____.
 Only repository-owned snippets run, in a separate isolated interpreter (never the API process).
-터미널·Git items run with bash from the starting state their header shows (scripts/validate_shell_content.py).
+터미널·Git items run with bash from the starting state their header shows (scripts/validate_shell_content.py);
+Windows items run in Windows PowerShell and cmd on a Windows runner, and here every one of their runs is built.
 """
 import json
 import sqlite3
@@ -20,6 +21,7 @@ from backend.curriculum import LEARNING_PATHS
 from scripts.validate_shell_content import capture_of, is_shell, outputs, same
 from scripts.validate_shell_content import variants as shell_variants
 from scripts.validate_sql_content import run_sql, sql_output
+from scripts.validate_windows_content import is_windows, plan as windows_plan
 
 CARDS = {c['id']: c for c in json.loads(Path('curriculum/problem_bank.json').read_text())['exercises']}
 ITEMS = [ex for ex in EXERCISES if ex.kind in LAYOUT_KINDS]
@@ -68,7 +70,7 @@ def variants(ex):
 
 @pytest.fixture(scope='module')
 def results():
-    jobs = [(ex, label, program) for ex in ITEMS if ex.domain != 'SQL' and not is_shell(ex)
+    jobs = [(ex, label, program) for ex in ITEMS if ex.domain != 'SQL' and not is_shell(ex) and not is_windows(ex)
             for label, program, _ in variants(ex)]
     out = subprocess.run([sys.executable, '-I', '-c', HARNESS], input=json.dumps([j[2] for j in jobs]),
                          capture_output=True, text=True, check=True, timeout=300).stdout
@@ -87,7 +89,7 @@ def shell_results():
     """Every variant of every executable 터미널·Git layout item, each in its own temporary home."""
     keys, jobs = [], []
     for ex in ITEMS:
-        if is_shell(ex) and ENTRIES[ex.id].get('verify') != 'documented':
+        if is_shell(ex):
             for label, _, _, job in shell_jobs(ex):
                 keys.append((ex.id, label))
                 jobs.append(job)
@@ -120,12 +122,10 @@ def test_answers_are_gradable_and_traps_are_wrong(ex):
 @pytest.mark.parametrize('ex', ITEMS, ids=lambda ex: ex.id)
 def test_every_variant_reproduces_its_reviewed_result(ex, results, shell_results):
     fix = ENTRIES[ex.id].get('fix', {})
+    if is_windows(ex):
+        return  # executed on the Windows runner; test_windows_items_build_every_run checks them here
     if is_shell(ex):
         entry = ENTRIES[ex.id]
-        if entry.get('verify') == 'documented':
-            # A Windows-only fact cannot run here; the review entry cites the official documentation.
-            assert entry['sources'] and entry['basis'] and (ex.kind != 'line' or fix)
-            return
         for label, _, expected, _ in shell_jobs(ex):
             shown = shell_results[(ex.id, label)]
             if expected == 'fix':
@@ -156,3 +156,16 @@ def test_every_variant_reproduces_its_reviewed_result(ex, results, shell_results
                 continue
             output = None if error else stdout
         assert (output == ex.reference_output) == (expected == 'same'), (label, output)
+
+
+def test_windows_items_build_every_run():
+    """Every Windows item parses, names its window and has an executed review entry; CI runs them on Windows."""
+    planned = windows_plan(EXERCISES)
+    assert {ex.id for ex, _ in planned} == {ex.id for ex in EXERCISES if is_windows(ex)} and len(planned) >= 17
+    for ex, jobs in planned:
+        assert ENTRIES.get(ex.id, {'verify': 'windows'})['verify'] == 'windows' and jobs
+        labels = [job.label for job in jobs]
+        if ex.kind == 'multi':
+            assert all(any(label.startswith(f'option {n}') for label in labels) for n in range(1, len(ex.choices) + 1))
+        if ex.kind == 'line':
+            assert {'shown', 'fix'} <= set(labels)

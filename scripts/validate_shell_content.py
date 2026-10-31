@@ -229,10 +229,6 @@ def validate_all(exercises, entries=None, traps=None):
         entry = entries.get(ex.id)
         if entry is None:
             raise ValueError(f'{ex.id}: shell item needs a review entry')
-        if entry.get('verify') == 'documented':
-            if not entry.get('sources') or not entry.get('basis'):
-                raise ValueError(f'{ex.id}: a documented item needs sources and a basis')
-            continue
         if not ex.reference_output:
             raise ValueError(f'{ex.id}: shell item needs reference_output')
         if ex.kind not in ('line', 'order', 'multi') and ex.reference_output != ex.answer:

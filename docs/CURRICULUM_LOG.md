@@ -473,3 +473,18 @@
 - 보존: 터미널 37문항과 다른 트랙의 (id, version)·경로·카드, 2026-10-29 검수 기록, rules·review·learning-paths-2.3·origin/key·기록 계약 유지.
 - 실험: 같은 엔진의 재생에서 터미널은 14일 안에 50문항, Git은 8일 안에 26문항을 모두 본다(꾸준한 학습자). 두 트랙 모두 첫날이 뿌리 개념 5문항이다.
 - 다음확인: Windows 사용자가 PowerShell·cmd 문항을 실제 창에서 따라 할 때의 혼동, 5.1과 7의 차이를 겪는 비율, Git 트랙만 고르는 학습자의 첫 주 정답률(WBS-520/530).
+
+## CD-20261031-001 · Windows 트랙 분리와 실제 Windows 실행 검증 (CR-021)
+
+- 관련: WBS-394·CR-021 / 설계·계획 1.17.0 / Windows 17문항 version 2(새 ID 없음), 그 밖의 version 변경 없음.
+- 근거: CR-020 배포 보고에서 맥·리눅스 학습자에게도 Windows 문항이 2일째부터 섞이고, Windows 문항 16개는 실행이 아니라 공식 문서로만 검수했다고 밝혔다. 사용자가 2026-10-30 “지금 윈도우 터미널이 ios랑 linux랑 섞여서 들어간다며, 그리고 실제 실행 검증도 안됐다며, 이거 문제점 해결해야지”라고 지시했다.
+- 변경:
+  - 트랙: Windows 섹터 4개를 여섯 번째 트랙 Windows(`windows`, domain `Windows`)로 옮겼다. 터미널(`terminal-git`)에는 macOS·Linux bash 섹터 8개·33문항만 남는다. Windows는 경로와 이동·PowerShell로 파일 다루기·환경 변수와 실행이 뿌리이고 Windows에서 Python 실행이 그 뒤에 열린다. 문항의 선수도 bash 문항 대신 같은 트랙 문항으로 바꿨다.
+  - 실행 검증: `scripts/validate_windows_content.py`가 GitHub Actions Windows 실행기에서 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·보기·고친 줄과 해설의 사실을 모두 실행한다. 회사 PC처럼 PATH를 두고 실행 정책은 Windows 10·11 기본값(Restricted)에서 시작하며, 영어 실행기에 없는 한국어 코드 페이지(949)는 그 문항만 맞춰 실행한다. `.github/workflows/quality.yml`의 windows 작업이 실패하면 Pages 게시가 막힌다.
+  - 문항: 17문항 모두 시작 상태를 실행할 수 있는 머리 주석(창 이름·드라이브 경로 트리·파일 내용)으로 다시 쓰고 version 2로 올렸다. 실행 결과에 맞춰 숨김 파일이 든 폴더는 -Force가 있어야 지워진다는 보기(win-files-02), 두 창에서 같은 결과를 내는 명령을 python --version·where python으로 비교하는 보기(win-files-04), UTF-8 BOM·cp949를 겨냥한 오답 보기(win-files-03), tools\report.exe가 모듈 이름으로 읽혀 나는 오류(win-env-04), 처음 설정 그대로인 PC에서는 고친 Activate.ps1 줄이 실행 정책에 막힌다는 안내(sh-windows-02)를 고쳤다.
+  - 홈: 트랙 카드 여섯 장을 휴대폰에서는 세 장씩 두 줄, 560px 이상에서는 한 줄로 둔다.
+- 실행으로 드러난 점: CI 이미지는 Git의 Unix 도구(touch·cat·ls)를 PATH에 두어, 그대로 실행하면 "PowerShell에는 touch가 없다"가 틀린 것처럼 보였다. 회사 PC의 PATH로 실행해야 학습자 화면과 같다. 저장소 코드도 영어 Windows에서는 UTF-8 파일을 cp1252로 읽다 멈춰, 검사 도구는 `python -X utf8`로 실행한다(sh-windows-05가 가르치는 바로 그 차이다).
+- 별도검수: 정답을 모르는 검수자가 17문항을 실행 없이 풀어 17/17 일치했다. 지문이 오답 줄을 지우던 win-path-03, 보기 특징만으로 풀리던 win-path-01, 화면 정보만으로 지워지던 win-files-03의 오답 보기(UTF-8 BOM 보기로 교체), 실행 기록에 없던 win-files-02 해설의 오류 문구, 정답 줄을 짚던 sh-windows-02 힌트와 표현·제목을 고쳤다.
+- 보존: 터미널 33문항·Git 26문항·다른 트랙의 (id, version)·경로·카드, Windows 17문항 version 1의 근거인 2026-10-30 검수 기록, rules·review·learning-paths-2.3·origin/key·기록 계약 유지.
+- 실험: 같은 엔진으로 재생하면 Windows 첫날은 세 뿌리의 기초 5문항(win-path-01·win-files-01·win-env-01·win-path-02·win-env-02)이고 꾸준한 학습자는 5일 안에 17문항을 모두 본다. 터미널 첫날은 그대로(sh-path-01·sh-words-01·sh-path-03·sh-words-02·sh-path-02)이며 33문항을 9일 안에, Git은 26문항을 8일 안에 본다.
+- 다음확인: Windows 학습자의 첫 주 정답률과 힌트 사용, 한국어 Windows 오류 문구와 지문의 영어 원문 차이로 생기는 혼동(WBS-520/530). Windows 트랙은 17문항이라 5일이면 새 문항이 끝나므로 리다이렉트·파이프, 스크립트(.ps1·.bat) 실행, 종료 코드($LASTEXITCODE) 섹터가 다음 후보다.

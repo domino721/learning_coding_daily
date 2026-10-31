@@ -44,7 +44,8 @@ CONCEPTS = [
     {'id':'py-class-deco','name':'@property와 @dataclass','domain':'Python','prerequisites':['py-class','py-decorator']},
     {'id':'py-error','name':'예외와 트레이스백','domain':'Python','prerequisites':['py-func']},
     {'id':'py-iter','name':'반복자와 생성기','domain':'Python','prerequisites':['py-control']},
-    # CR-019: the 터미널 and Git sectors; CR-020 split them into two tracks and added Windows sectors.
+    # CR-019: the 터미널 and Git sectors; CR-020 split them into two tracks and added Windows sectors;
+    # CR-021 moved the Windows sectors into their own Windows track, starting from paths, files and variables.
     {'id':'sh-path','name':'위치와 경로','domain':'터미널','prerequisites':[]},
     {'id':'sh-words','name':'띄어쓰기·따옴표·*','domain':'터미널','prerequisites':[]},
     {'id':'sh-files','name':'파일과 폴더 다루기','domain':'터미널','prerequisites':['sh-path']},
@@ -53,10 +54,10 @@ CONCEPTS = [
     {'id':'sh-env','name':'환경 변수와 PATH','domain':'터미널','prerequisites':['sh-words']},
     {'id':'sh-script','name':'스크립트 실행','domain':'터미널','prerequisites':['sh-chain','sh-env']},
     {'id':'sh-python','name':'Python 실행 환경','domain':'터미널','prerequisites':['sh-files','sh-script']},
-    {'id':'win-path','name':'Windows 경로와 이동','domain':'터미널','prerequisites':['sh-path']},
-    {'id':'win-files','name':'PowerShell로 파일 다루기','domain':'터미널','prerequisites':['sh-files','win-path']},
-    {'id':'win-env','name':'Windows 환경 변수와 실행','domain':'터미널','prerequisites':['sh-env','win-path']},
-    {'id':'sh-windows','name':'Windows에서 Python 실행','domain':'터미널','prerequisites':['sh-python']},
+    {'id':'win-path','name':'Windows 경로와 이동','domain':'Windows','prerequisites':[]},
+    {'id':'win-files','name':'PowerShell로 파일 다루기','domain':'Windows','prerequisites':[]},
+    {'id':'win-env','name':'Windows 환경 변수와 실행','domain':'Windows','prerequisites':[]},
+    {'id':'sh-windows','name':'Windows에서 Python 실행','domain':'Windows','prerequisites':['win-path','win-env']},
     {'id':'git-status','name':'저장소와 상태','domain':'Git','prerequisites':[]},
     {'id':'git-commit','name':'커밋과 기록','domain':'Git','prerequisites':['git-status']},
     {'id':'git-diff','name':'바뀐 내용(diff) 읽기','domain':'Git','prerequisites':[]},
@@ -195,13 +196,13 @@ def concept_states(sessions, by_id):
             'status':'기초 보완 중' if needs_support else '진단 전' if not all_rows else '관찰 중' if days<2 or distinct<2 else '적용 연습 중' if level==2 else '전이 연습 중' if level==3 else '기초 확인 중'}
     return result
 
-# Domains of the shell-style items (graded as shown). Since CR-020 each is its own track; the 터미널 track keeps
-# the CR-019 ID terminal-git so sessions and saved choices made before the split stay attached to it.
-TERMINAL_DOMAINS = ('터미널', 'Git')
+# Domains of the shell-style items (graded as shown). Since CR-020 each is its own track (CR-021 added Windows);
+# the 터미널 track keeps the CR-019 ID terminal-git so sessions and saved choices made before the split stay attached to it.
+TERMINAL_DOMAINS = ('터미널', 'Git', 'Windows')
 
 
 def in_track(ex, track):
-    # Python 기초, 터미널 and Git items form their own tracks and never enter data-analysis sessions.
+    # Python 기초, 터미널, Git and Windows items form their own tracks and never enter data-analysis sessions.
     if track == 'sql':
         return ex.domain == 'SQL'
     if track == 'python':
@@ -212,6 +213,8 @@ def in_track(ex, track):
         return ex.domain == '터미널'
     if track == 'git':
         return ex.domain == 'Git'
+    if track == 'windows':
+        return ex.domain == 'Windows'
     return True
 
 

@@ -21,7 +21,7 @@
       "numpy-shape-01",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "stats-median-01"
+      "win-files-01"
     ]
   },
   {
@@ -65,7 +65,7 @@
       "numpy-shape-01",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "stats-median-01"
+      "win-files-01"
     ]
   },
   {
@@ -99,7 +99,7 @@
       "numpy-shape-01",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "stats-median-01"
+      "win-files-01"
     ]
   },
   {
@@ -133,7 +133,7 @@
       "numpy-shape-01",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "stats-median-01"
+      "win-files-01"
     ]
   },
   {
@@ -176,7 +176,7 @@
       "pandas-select-02",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "numpy-shape-01"
+      "win-files-01"
     ],
     "selected_v21": [
       "pandas-select-01",
@@ -219,7 +219,7 @@
       "numpy-shape-01",
       "sql-clause-order-form-01",
       "sh-path-03",
-      "stats-median-01"
+      "win-files-01"
     ]
   }
 ]

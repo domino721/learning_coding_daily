@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "review_id": "windows-track-2026-10-31",
+  "date": "2026-10-31",
+  "change": "CR-021",
+  "tasks": ["WBS-394"],
+  "status": "reviewed",
+  "method": "Claude가 앱 밖에서 직접 작성했다. CR-020의 Windows 17문항을 터미널 트랙에서 Windows 트랙(windows, domain Windows)으로 옮기면서, 모든 문항의 코드 맨 위 주석을 창 이름·드라이브 경로 트리·파일 내용이 보이는 실행 가능한 시작 상태로 다시 쓰고 version 2로 올렸다. 먼저 GitHub Actions Windows 실행기에서 탐색 실행으로 Windows PowerShell 5.1·PowerShell 7·cmd·Python의 실제 동작을 모은 뒤 문항과 해설을 그 결과에 맞췄고, scripts/validate_windows_content.py가 시작 상태를 C:\\Users\\mina·D:\\에 실제로 만들어 정답·모든 보기·고친 줄과 해설의 사실(runs)을 실행해 검수 기록의 출력과 대조한다. 창의 PATH는 회사 PC처럼 두고 실행 정책은 Windows 10·11 기본값(Restricted, 실행기는 Windows Server라 LocalMachine에 직접 정함)에서 시작하며, 영어 실행기에 없는 한국어 코드 페이지는 sh-windows-05에서만 맞춰 실행한다(emulate: cp949). 대화형 확인 질문·휴지통·그룹 정책처럼 실행으로 확인할 수 없는 사실은 sources에 공식 문서를 남겼다. 정답을 모르는 별도 검수 에이전트가 17문항을 실행 없이 풀고, 풀이를 적은 뒤 정답표와 실제 Windows 출력에 대조했다. 모델 API 호출 없음.",
+  "independent_review": {
+    "blind_answers_matching_key": 17,
+    "items": 17,
+    "checks": "정답을 모르는 검수자가 지문·코드·보기·힌트만 보고 17문항을 풀어 정답표와 17/17 일치했다. 풀이를 저장한 뒤 정답표·해설·오답 근거를 실제 Windows 실행 출력과 대조했다. 풀이 근거 가운데 오류 문구 예측 2개(ls -a의 ambiguous, tools\\report.exe의 module 오류)가 실제와 달랐으나 해설은 실제 출력대로 적혀 있었다.",
+    "fixes_applied": [
+      "win-path-03: 지문의 '그 줄의 이동이 되지 않았습니다'가 python 줄(11번)을 바로 지워 이지선다로 만들어 지웠다.",
+      "sh-windows-02: 힌트 1이 가상환경을 켜는 줄(7번)을 그대로 짚어, 각 줄의 명령 이름과 경로 모양을 확인하라는 관점으로 바꿨다.",
+      "win-path-01: 경로와 Path 머리글이 겹치는 보기만 골라도 풀려, 경로 2가지와 출력 모양 2가지가 고르게 나오도록 보기를 바꿨다.",
+      "win-files-03: 오답 보기 1·3·4가 화면 정보만으로 지워져, '>는 덧붙여 저장' 보기를 'UTF-8(BOM 포함)로 저장'으로 바꾸고 5.1의 Out-File -Encoding utf8이 0xef 0xbb 0xbf로 시작한다는 실행을 더했다. PowerShell 7 문장은 실행이 보여 준 범위로 좁히고, 저장 예시는 실행으로 확인한 cmd /c와 open(..., encoding=\"utf-8\")으로 바꿨다.",
+      "win-files-02: 해설의 오류 문구(rf 매개 변수, 숨김 파일 권한, /q 위치 인자)와 별칭 목록을 실행 기록(runs)에 더했고, 정답 보기의 그럴듯하지 않은 오개념 설명을 고쳤다.",
+      "win-files-01: '정리 명령'을 '백업 명령'으로, 해설의 'touch에 해당하는 명령은 없어'를 'touch라는 이름의 명령이나 별칭은 없어'로 고쳤다.",
+      "sh-windows-03: 힌트 2를 해설과 같은 'Windows 10·11 PC'로 맞췄다.",
+      "제목: win-path-01 'Windows docs 폴더 오가기', win-env-02 'Anaconda Prompt의 변수 읽기', sh-windows-05 '회사 PC에서 읽히지 않는 매출 파일'. win-path-02 오답 근거의 '매개변수'를 '매개 변수'로 맞췄다."
+    ],
+    "not_changed": [
+      "win-env-04: 대화형 창에서만 붙는 .\\report.exe 제안(Suggestion) 문구는 비대화형 실행기에서 확인할 수 없어 해설에 넣지 않았다.",
+      "힌트 1이 많이 좁히는 문항(win-env-02·03, win-files-03, sh-windows-05)과 힌트 2가 거의 답을 주는 문항(win-files-04, sh-windows-01)은 두 단계 힌트 기준 안이라 그대로 두었다."
+    ]
+  },
+  "not_changed": "2026-10-30 CR-020 기록(curriculum/reviews/2026-10-30-windows-git.json)은 이 17문항의 version 1 근거로 그대로 둔다. 한국어 Windows의 오류 문구는 영어 Windows 실행기에서 확인할 수 없어 지문에 영어 원문과 뜻을 함께 적는다.",
+  "items": [
+    {
+      "id": "win-path-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "Path\n----\nC:\\Users\\mina\\docs",
+      "runs": [
+        {
+          "about": "/로 쓴 상대 경로도 PowerShell이 받아 준다",
+          "code": "cd ../../docs\n(Get-Location).Path",
+          "output": "C:\\Users\\mina\\docs"
+        },
+        {
+          "about": "경로 맨 앞의 ~는 홈 폴더",
+          "code": "cd ~/docs\n(Get-Location).Path",
+          "output": "C:\\Users\\mina\\docs"
+        }
+      ]
+    },
+    {
+      "id": "win-path-02",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "    Directory: C:\\Users\\mina\\app\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\nd--h--        <시각>                .git\n-a----        <시각>              0 .env\n-a----        <시각>              0 main.py",
+      "runs": [
+        {
+          "about": "옵션 없는 ls에도 .env는 보이고 .git은 감춰진다",
+          "code": "ls",
+          "output": "    Directory: C:\\Users\\mina\\app\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a----        <시각>              0 .env\n-a----        <시각>              0 main.py"
+        }
+      ]
+    },
+    {
+      "id": "win-path-03",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "verify": "windows",
+      "reference_output": "A positional parameter cannot be found that accepts argument '2025'.",
+      "fix": {
+        "lines": {
+          "10": "cd \"Reports 2025\""
+        },
+        "output": "C:\\Users\\mina\\OneDrive - ABC\\Reports 2025"
+      },
+      "runs": [
+        {
+          "about": "cmd의 cd는 따옴표 없이도 띄어쓰기가 든 경로를 받는다",
+          "code": "REM 명령 프롬프트(cmd)\nREM C:\\Users\\mina  ← 지금 위치\nREM └── OneDrive - ABC\\\nREM     └── Reports 2025\\\ncd OneDrive - ABC\ncd Reports 2025\ncd",
+          "output": "C:\\Users\\mina\\OneDrive - ABC\\Reports 2025"
+        }
+      ]
+    },
+    {
+      "id": "win-path-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "windows",
+      "reference_output": "D:\\reports",
+      "runs": [
+        {
+          "about": "PowerShell의 cd는 드라이브까지 넘어간다",
+          "code": "# Windows PowerShell\n# C:\\Users\\mina  ← 지금 위치\n# D:\\reports\n# └── make.py\n# make.py 내용:\n#   import os\n#   print(os.getcwd())\ncd D:\\reports\npython make.py",
+          "output": "D:\\reports"
+        }
+      ]
+    },
+    {
+      "id": "win-files-01",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program.",
+      "fix": {
+        "lines": {
+          "6": "New-Item done.txt -ItemType File"
+        },
+        "output": "    Directory: C:\\Users\\mina\\app\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\nd-----        <시각>                backup\n\n\n\n\n    Directory: C:\\Users\\mina\\app\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a----        <시각>              0 done.txt\n\n\n\n\n    Directory: C:\\Users\\mina\\app\\backup\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a----        <시각>              0 config.txt"
+      },
+      "runs": [
+        {
+          "about": "ls·cp·cat은 별칭",
+          "code": "(Get-Alias ls, cp, cat).Definition",
+          "output": "Get-ChildItem\nCopy-Item\nGet-Content"
+        },
+        {
+          "about": "mkdir은 함수",
+          "code": "(Get-Command mkdir).CommandType",
+          "output": "Function"
+        }
+      ]
+    },
+    {
+      "id": "win-files-02",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "False",
+      "check": "Test-Path build",
+      "runs": [
+        {
+          "about": "옵션 없는 rm은 안에 항목이 있는 폴더를 지울지 묻는다(검사 창은 -NonInteractive라 질문 대신 오류)",
+          "code": "rm build",
+          "output": "Read and Prompt functionality is not available.",
+          "compare": "contains"
+        },
+        {
+          "about": "rm·del·rmdir·rd는 모두 Remove-Item의 별칭",
+          "code": "(Get-Alias rm, del, rmdir, rd).Definition",
+          "output": "Remove-Item\nRemove-Item\nRemove-Item\nRemove-Item"
+        },
+        {
+          "about": "-Force가 없으면 숨김 파일에서 권한 오류",
+          "code": "Remove-Item build -Recurse",
+          "output": "You do not have sufficient access rights to perform this operation.",
+          "compare": "contains"
+        },
+        {
+          "about": "bash의 rm -rf: rf라는 매개 변수가 없다",
+          "code": "rm -rf build",
+          "output": "A parameter cannot be found that matches parameter name 'rf'.",
+          "compare": "contains"
+        },
+        {
+          "about": "cmd의 rmdir /s /q: /q를 받을 자리가 없다",
+          "code": "rmdir /s /q build",
+          "output": "A positional parameter cannot be found that accepts argument '/q'.",
+          "compare": "contains"
+        }
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item?view=powershell-5.1"
+      ]
+    },
+    {
+      "id": "win-files-03",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "verify": "windows",
+      "reference_output": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+      "check": "python -c \"import pandas as pd; pd.read_csv('result.csv')\"",
+      "compare": "last-line",
+      "runs": [
+        {
+          "about": "정답: 5.1의 >가 만든 파일은 0xff 0xfe(UTF-16LE BOM)로 시작한다",
+          "code": "python report.py > result.csv",
+          "check": "python -c \"print(open('result.csv', 'rb').read(4))\"",
+          "output": "b'\\xff\\xfei\\x00'"
+        },
+        {
+          "about": "5.1의 Out-File -Encoding utf8은 UTF-8 BOM(0xef 0xbb 0xbf)으로 시작한다",
+          "code": "python report.py | Out-File result.csv -Encoding utf8",
+          "check": "python -c \"print(open('result.csv', 'rb').read(3))\"",
+          "output": "b'\\xef\\xbb\\xbf'"
+        },
+        {
+          "about": "report.py의 출력은 id,amount로 시작한다(cmd의 >는 바이트를 그대로 저장)",
+          "code": "cmd /c \"python report.py > raw.csv\"",
+          "check": "python -c \"print(open('raw.csv', 'rb').read(4))\"",
+          "output": "b'id,a'"
+        },
+        {
+          "about": "PowerShell 7에서 같은 명령으로 만든 파일은 read_csv가 읽는다",
+          "code": "# PowerShell 7\n# C:\\Users\\mina\\app  ← 지금 위치\n# └── report.py\n# report.py 내용:\n#   print(\"id,amount\")\n#   print(\"1,100\")\npython report.py > result.csv",
+          "check": "python -c \"import pandas as pd; print(pd.read_csv('result.csv').shape)\"",
+          "output": "(1, 2)"
+        }
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-5.1"
+      ]
+    },
+    {
+      "id": "win-files-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "windows",
+      "reference_output": "type notes.txt와 python --version은 두 창에서 같은 결과",
+      "runs": [
+        {
+          "about": "PowerShell에서는 where.exe로 위치를 찾는다",
+          "code": "where.exe python",
+          "output": "C:\\Users\\mina\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        {
+          "about": "PowerShell의 프롬프트는 PS로 시작한다",
+          "code": "prompt",
+          "output": "PS C:\\Users\\mina\\memo>"
+        }
+      ]
+    },
+    {
+      "id": "win-env-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "report ok\npython ok"
+    },
+    {
+      "id": "win-env-02",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "output",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "dev $env:MODE",
+      "runs": [
+        {
+          "about": "PowerShell에서는 %MODE%가 글자 그대로이고 set은 환경 변수를 만들지 않는다",
+          "code": "# Windows PowerShell\nset MODE=dev\necho %MODE% $env:MODE",
+          "output": "%MODE%"
+        }
+      ]
+    },
+    {
+      "id": "win-env-03",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "verify": "windows",
+      "reference_output": "The token '&&' is not a valid statement separator in this version.",
+      "fix": {
+        "lines": {
+          "12": "python make.py; if ($?) { python send.py }"
+        },
+        "output": "    Directory: C:\\Users\\mina\\shop\n\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a----        <시각>             15 make.py\n-a----        <시각>             15 send.py\n\n\nmade\nsent\n\nprint(\"sent\")"
+      },
+      "runs": [
+        {
+          "about": "PowerShell 7에서는 &&가 된다",
+          "code": "# PowerShell 7\n# C:\\Users\\mina\\shop  ← 지금 위치\n# ├── make.py\n# └── send.py\n# make.py 내용:\n#   print(\"made\")\n# send.py 내용:\n#   print(\"sent\")\npython make.py && python send.py",
+          "output": "made\nsent"
+        },
+        {
+          "about": "cmd에서도 &&가 된다",
+          "code": "REM 명령 프롬프트(cmd)\nREM C:\\Users\\mina\\shop  ← 지금 위치\nREM ├── make.py\nREM └── send.py\nREM make.py 내용:\nREM   print(\"made\")\nREM send.py 내용:\nREM   print(\"sent\")\npython make.py && python send.py",
+          "output": "made\nsent"
+        },
+        {
+          "about": "; if ($?)는 앞이 실패하면 멈춘다",
+          "code": "# Windows PowerShell 5.1\n# C:\\Users\\mina\\shop  ← 지금 위치\n# ├── make.py\n# └── send.py\n# make.py 내용:\n#   raise SystemExit(\"make failed\")\n# send.py 내용:\n#   print(\"sent\")\npython make.py; if ($?) { python send.py }",
+          "output": "make failed"
+        },
+        {
+          "about": ";만 쓰면 앞이 실패해도 다음을 실행한다",
+          "code": "# Windows PowerShell 5.1\n# C:\\Users\\mina\\shop  ← 지금 위치\n# ├── make.py\n# └── send.py\n# make.py 내용:\n#   raise SystemExit(\"make failed\")\n# send.py 내용:\n#   print(\"sent\")\npython make.py; python send.py",
+          "output": "make failed\nsent"
+        }
+      ]
+    },
+    {
+      "id": "win-env-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "condition-change",
+      "level": 3,
+      "verify": "windows",
+      "reference_output": "report ok",
+      "runs": [
+        {
+          "about": "cmd는 지금 폴더의 프로그램을 이름만으로 실행한다",
+          "code": "REM 명령 프롬프트(cmd)\nREM C:\\Users\\mina\\tools  ← 지금 위치\nREM └── report.exe  (실행하면 report ok 출력)\nreport",
+          "output": "report ok"
+        }
+      ]
+    },
+    {
+      "id": "sh-windows-01",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "equivalent-code",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "http://localhost:8000"
+    },
+    {
+      "id": "sh-windows-02",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 1,
+      "verify": "windows",
+      "reference_output": "source : The term 'source' is not recognized as the name of a cmdlet, function, script file, or operable program.",
+      "fix": {
+        "lines": {
+          "7": ".venv\\Scripts\\Activate.ps1"
+        },
+        "output": ".venv\\Scripts\\Activate.ps1 : File C:\\Users\\mina\\shop\\.venv\\Scripts\\Activate.ps1 cannot be loaded because running\nscripts is disabled on this system. For more information, see about_Execution_Policies at\nhttps:/go.microsoft.com/fwlink/?LinkID=135170.\nAt line:1 char:1\n+ .venv\\Scripts\\Activate.ps1\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : SecurityError: (:) [], PSSecurityException\n    + FullyQualifiedErrorId : UnauthorizedAccess"
+      },
+      "runs": [
+        {
+          "about": "스크립트 실행을 허용한 PC에서는 고친 줄이 가상환경을 켠다",
+          "policy": "RemoteSigned",
+          "code": "cd shop\npython -m venv .venv\n.venv\\Scripts\\Activate.ps1",
+          "check": "python -c \"import sys; print(sys.prefix != sys.base_prefix)\"",
+          "output": "True"
+        }
+      ]
+    },
+    {
+      "id": "sh-windows-03",
+      "version": 2,
+      "kind": "choice",
+      "task_form": "result-interpretation",
+      "level": 2,
+      "verify": "windows",
+      "reference_output": "True",
+      "check": "python -c \"import sys; print(sys.prefix != sys.base_prefix)\"",
+      "confirm": ["Set-ExecutionPolicy"],
+      "runs": [
+        {
+          "about": "처음 설정 그대로인 PC에서 Activate.ps1이 막히는 오류",
+          "code": "python -m venv .venv\n.venv\\Scripts\\Activate.ps1",
+          "output": "cannot be loaded because running scripts is disabled on this system.",
+          "compare": "contains"
+        },
+        {
+          "about": "cmd의 activate.bat은 실행 정책과 상관없이 가상환경을 켠다",
+          "code": "REM 명령 프롬프트(cmd)\nREM C:\\Users\\mina\\shop  ← 지금 위치\npython -m venv .venv\n.venv\\Scripts\\activate.bat\npython -c \"import sys; print(sys.prefix != sys.base_prefix)\"",
+          "output": "True",
+          "compare": "contains"
+        }
+      ],
+      "sources": [
+        "https://docs.python.org/3/library/venv.html",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1"
+      ]
+    },
+    {
+      "id": "sh-windows-04",
+      "version": 2,
+      "kind": "multi",
+      "task_form": "equivalent-code",
+      "level": 3,
+      "verify": "windows",
+      "reference_output": "C:\\Users\\mina\\reports"
+    },
+    {
+      "id": "sh-windows-05",
+      "version": 2,
+      "kind": "line",
+      "task_form": "bug-line",
+      "level": 2,
+      "verify": "windows",
+      "reference_output": "UnicodeDecodeError: 'cp949' codec can't decode byte 0xec in position 21: illegal multibyte sequence",
+      "emulate": "cp949",
+      "raises": "UnicodeDecodeError",
+      "error_line": 10,
+      "compare": "contains",
+      "fix": {
+        "lines": {
+          "9": "with open(\"sales.csv\", encoding=\"utf-8\") as f:"
+        },
+        "output": "290"
+      },
+      "runs": [
+        {
+          "about": "Python 3.15는 UTF-8 모드가 기본이라 encoding 없이도 읽는다",
+          "python": "3.15",
+          "output": "290"
+        }
+      ],
+      "sources": [
+        "https://docs.python.org/3/using/windows.html#utf-8-mode",
+        "https://peps.python.org/pep-0686/",
+        "https://docs.python.org/3/library/csv.html"
+      ]
+    }
+  ]
+}

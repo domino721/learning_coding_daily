@@ -24,14 +24,18 @@ const trackName = (id: string) =>
         ? "Python 기초"
         : id === "terminal-git"
           ? "터미널"
-          : id === "git"
-            ? "Git"
-            : "이전 통합 학습";
+          : id === "windows"
+            ? "Windows"
+            : id === "git"
+              ? "Git"
+              : "이전 통합 학습";
+// One line at 320px (Linux fonts are wider than macOS) keeps the start button above the fixed navigation.
 const trackSummary: Record<string, string> = {
-  "python-basics": "값·자료형·조건과 반복·함수부터 *와 @까지 연습해요.",
+  "python-basics": "자료형·반복·함수부터 *와 @까지 연습해요.",
   python: "pandas·NumPy와 통계·머신러닝을 연습해요.",
-  sql: "SQL 기초부터 조건·집계·조인·윈도 함수까지 연습해요.",
-  "terminal-git": "경로·파일부터 Windows 명령까지 연습해요.",
+  sql: "조건·집계·조인부터 윈도 함수까지 연습해요.",
+  "terminal-git": "macOS·Linux 명령을 기초부터 연습해요.",
+  windows: "PowerShell·cmd를 기초부터 연습해요.",
   git: "상태·커밋부터 diff·되돌리기까지 연습해요.",
 };
 const playable = (item: Exercise) =>
@@ -56,6 +60,7 @@ export default function App() {
       return saved === "sql" ||
         saved === "python-basics" ||
         saved === "terminal-git" ||
+        saved === "windows" ||
         saved === "git"
         ? saved
         : "python";

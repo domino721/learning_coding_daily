@@ -1741,24 +1741,30 @@ label.code-line {
   }
 }
 .home-main .tracks-section {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 .home-main .section-heading {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
-/* One row for the five tracks (CR-017, CR-019, CR-020) keeps the start button above the fixed navigation at 320px. */
+/* Six tracks (CR-021): two rows of three compact cards on a phone and one row from 560px keep the start button
+   above the fixed navigation at 320px. Content-sized columns keep every name on one line. */
 .home-main .track-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  grid-template-columns: repeat(3, auto);
   gap: 5px;
+}
+@media (min-width: 560px) {
+  .home-main .track-list {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
 .home-main .track-card {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 4px;
-  padding: 7px 5px;
-  min-height: 64px;
+  gap: 1px;
+  padding: 5px 7px;
+  min-height: 0;
   border-width: 2px;
 }
 .home-main .track-copy strong {
@@ -1776,7 +1782,9 @@ label.code-line {
 .home-main .track-tag {
   display: block;
   margin-left: 0;
-  padding: 3px 5px;
+  padding: 0;
+  line-height: 1.2;
+  background: none;
 }
 .home-main .upcoming-note {
   font-size: 11px;

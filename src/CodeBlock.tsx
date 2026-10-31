@@ -35,22 +35,26 @@ export default function CodeBlock({
 }
 
 // Render tokens as text spans; shared by the line picker for per-line highlighting.
-// language is the item domain: SQL, 터미널/Git (shell commands) or Python (the default).
+// language is the item domain: SQL, 터미널/Git (shell commands), Windows (PowerShell and cmd, where \ is a
+// path separator rather than an escape and REM starts a cmd comment) or Python (the default).
 export function highlight(code: string, language?: string) {
   const sql = language === "SQL";
+  const windows = language === "Windows";
   const shell = language === "터미널" || language === "Git";
   const pattern = sql
     ? /--[^\n]*|'(?:''|[^'])*'|"(?:""|[^"])*"|\b(?:SELECT|FROM|WHERE|GROUP|BY|ORDER|HAVING|AS|JOIN|LEFT|RIGHT|INNER|ON|AND|OR|NOT|NULL|IS|IN|DISTINCT|WITH|OVER|PARTITION|ASC|DESC|CASE|WHEN|THEN|ELSE|END|LIMIT|COUNT|SUM|AVG|MIN|MAX|COALESCE|ROW_NUMBER)\b|\b\d+(?:\.\d+)?\b/gi
-    : shell
-      ? /#[^\n]*|"(?:\\.|[^"\\])*"|'[^'\n]*'|\$\{?\w+\}?|\$[?#@*0-9]|\b(?:if|then|elif|else|fi|for|while|do|done|in|export|source)\b|\b\d+(?:\.\d+)?\b/g
-      : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
+    : windows
+      ? /#[^\n]*|^REM\b[^\n]*|"[^"\n]*"|'[^'\n]*'|\$(?:env:)?\w+|%\w+%|\b\d+(?:\.\d+)?\b/gm
+      : shell
+        ? /#[^\n]*|"(?:\\.|[^"\\])*"|'[^'\n]*'|\$\{?\w+\}?|\$[?#@*0-9]|\b(?:if|then|elif|else|fi|for|while|do|done|in|export|source)\b|\b\d+(?:\.\d+)?\b/g
+        : /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:import|from|as|True|False|None|print|len|for|in|if|else|def|return)\b|\b\d+(?:\.\d+)?\b|\.[a-zA-Z_]\w*(?=\()/g;
   const parts = [];
   let offset = 0;
   for (const match of code.matchAll(pattern)) {
     parts.push(code.slice(offset, match.index));
     const token = match[0];
     const kind =
-      token.startsWith("#") || token.startsWith("--")
+      token.startsWith("#") || token.startsWith("--") || /^REM\b/.test(token)
         ? "comment"
         : /^["']/.test(token)
           ? "string"

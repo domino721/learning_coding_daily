@@ -1633,34 +1633,34 @@
    "version": 1
   },
   "sh-windows-01": {
-   "design_card": "e81af1bb2eeaec5ae12d2576392d1522187a5bcd516ee1173f088a9baaf3e4e0",
-   "exercise": "5cad5e1178470277f62c28008bf96ebee6ba39e629a6e25b3e598afff1ab7013",
-   "path_item": "e0778193fab9c5818819f8cd7213de3c7bb4777d446fe50d5c58c0913cab68cb",
-   "version": 1
+   "design_card": "6ccdb8fbfac4d16cc2b1d5a8fbcb91203b48d3971ee6adec536a452a43101535",
+   "exercise": "6005bc63c98c30fa19d1f0195ab4072a2b83f139074ee5c20f814af8ebe3c2e3",
+   "path_item": "e1ee41aaef76f594639461dd0efd4d8df13e19e2c3eefac40f7532e8899472f0",
+   "version": 2
   },
   "sh-windows-02": {
-   "design_card": "7a7a5bd357ab4a2c10277649375b49702149e328f4c6314674f6153c4fa6e8f5",
-   "exercise": "0f15bdf25ed5e7212ce7b7f9d5af9bfeeda0b6e522f3ed983fe9950fbc751277",
-   "path_item": "a1c1bd342423433bbddb915aba24da7e756a766838a08b6480a6bc7ce895aeeb",
-   "version": 1
+   "design_card": "353ec80768e0e19e86a423deb5f20c8268b2d41b2fed7f0f152b3cb355cf7917",
+   "exercise": "ba2c1e578a2c62eb81fc3c5d48e41315a4909de5e237a9769b2e489159deae78",
+   "path_item": "df2aa4ddd973e62c491a12b1fa5a99a27e8d9dc35eff0d732db9fadb8c74b58d",
+   "version": 2
   },
   "sh-windows-03": {
-   "design_card": "311e5f5424ff7df0c1847b59c0188acc5fb0254f22d1a10b9c91f60ecde0f17f",
-   "exercise": "019701518604af2c6bf57883f30bc8c011852e5d5d140252d2d51e7a187e16b5",
+   "design_card": "4c0225945a0bb554cf9523969ecfb1bd7798aeefc5e4eeadee283de2659283b8",
+   "exercise": "b6829ce7aad4a6fbaf1619b7c98a27c7555a20134050b2bd665ebed2a33bfd26",
    "path_item": "ac366c01773de22429b2f8f2f6ccb8b2abd7d035cddf75901d68c0cc95d07478",
-   "version": 1
+   "version": 2
   },
   "sh-windows-04": {
-   "design_card": "8c142e3ca2354b81447f0f0569504bc3dfa485911e1ab48aea339e0f2b862ee4",
-   "exercise": "b204f7f0ec180f321f20cc6df100b35618857b34d5d4dee1a461f3edfacaba5b",
+   "design_card": "a557b1d87fe03b1771700477b74d2fa656cf57ed0d4c8be58a3449c58e880b4a",
+   "exercise": "b425eb559dfc1fef88706ccdcfd695015ef0f9094bbaa2d3ce26671735602daf",
    "path_item": "191a02bb10748982e6b6ad2ad1a6d7e5a5f45a6e1c56f2eaca2328826855b744",
-   "version": 1
+   "version": 2
   },
   "sh-windows-05": {
-   "design_card": "e1753c8747aab4e020f0ee8ef1383a7b7df1dcc0f37d331412b72ffbd85133ad",
-   "exercise": "8d365339e18d6929d3517edc8be495d3888d925b15aee6548222315e289f1d8d",
+   "design_card": "8413aacee7f0082c02a7a6ab9a9934888f83ff66e5d4fc1980631d95050a0042",
+   "exercise": "27fd125afea39e5b99aa7b20fbfc621d99381d3ad5d71c4fc43a599a417830f5",
    "path_item": "678c0c304c2615cb6e2d39afe39254110d5b484c7b0135ad231883a3374fcb3e",
-   "version": 1
+   "version": 2
   },
   "sh-words-01": {
    "design_card": "7f80dc0254cea8022105a3354833cb1941a77de9ad637025d7997a794ff8c76f",
@@ -2263,76 +2263,76 @@
    "version": 1
   },
   "win-env-01": {
-   "design_card": "d1c45dba70740c87fc3aba6518e8870dc7125ab23b35d8979382056940ef69f1",
-   "exercise": "b9fd64414c8bf1f9d4c1a92c256e06e7d556e6b3d37bb3f9fe209e76ec7560a6",
-   "path_item": "d464d6249b7e4e042af87e2393b3bbb2269172b0a009c1133d3ff8e6637ac51e",
-   "version": 1
+   "design_card": "a03ae73efc59718e54809a826fdca2ee8f7cc471604c37059495083f57f35a60",
+   "exercise": "923006f62e03625b317d3f93a66d5105f42e83822c7fe1859b39757c23dff30b",
+   "path_item": "4c0119707577c8fb6ce35e57d48e045c273612ad29301f6f31ed6fe379a592fd",
+   "version": 2
   },
   "win-env-02": {
-   "design_card": "3f899856532a71dc7d42dbc5cc1e4e8b6ec8c6e9e179679f84e64e988ccb39d9",
-   "exercise": "ac97d4265a0cf50275aff5b05417aa5131720d8539b7f1d7951df09720f6c82f",
-   "path_item": "a0d99460952e0a8dd7543204a5f9abc202aeb1f42ac844712167f0cee8e99609",
-   "version": 1
+   "design_card": "4a800230f5840f5bc308dae613b82472fa0f8d3554a82a5e689e196e09cd4991",
+   "exercise": "768ffe34290fa5997e482c795d457c462522e602b88b286f2bd63afc8c06ea47",
+   "path_item": "44f1554f13e9390c6cea5d009b18087d223200ec56531df0ee509e43611b9c86",
+   "version": 2
   },
   "win-env-03": {
-   "design_card": "f12075512fd91bb7ec4542e45cedd4c060e7678c98d09842c084d82e9b69d92a",
-   "exercise": "45f588e6f6ab571497e07bb241251b00bc7ae1a22b03257122dfe2488cb0fdf4",
-   "path_item": "49f2d1f7ea1de9cf1a3a6b33040084609fd0b6fe95e39cbe4468e597ad1ab851",
-   "version": 1
+   "design_card": "281ab89063af5bb7339158a3fac0caae93204d2f7aa4842ffd83cda1af5b05a4",
+   "exercise": "3f6125889179ccb82f5b986aab72111e7c00707cbffde02ad410e6988dd230b5",
+   "path_item": "787b3bd12edb0a7d47147042b481508d77b5ad2c67bbcc6b5ab0b760588449b5",
+   "version": 2
   },
   "win-env-04": {
-   "design_card": "aa2b9e7e2a8d1901f21c2f126c146a2783e6cc46dccae82e07d7bf9f5e28b46f",
-   "exercise": "6f449d77508ed109c607a4c0d6105292561816a5c4bab97adc632b3d056e6634",
+   "design_card": "6ca85d4f31933fd7f735ce00f6a23032aa1fe8b5fb13e545f5f858ced87d824d",
+   "exercise": "283efee360c06b97e08adea559c86e4f62c0d93dfe1e875cbd8e4675c49fdd27",
    "path_item": "0f7b8a4f4ed7af26667ba8ca7d30df30bb63702abe7f279b17ad75f85cecd6b2",
-   "version": 1
+   "version": 2
   },
   "win-files-01": {
-   "design_card": "4fc73a1a791e7ac3e18f1adf4f47162ab31aeeb6c3e50beb0d95b184631545a0",
-   "exercise": "6d1cb8d1a773e94cbb183025fd79090c29ad2be15f0d6385a692595c04da169c",
-   "path_item": "0b09eb8bb951b768bea4bc01ebdcacaf22fd83379659028d8c8052824ee7e112",
-   "version": 1
+   "design_card": "f857fd0befc1c24c6bbbfc7f1c1a9a7eb9bfd1457fe5c54b3e34c5e4fae2b683",
+   "exercise": "c0d9884bd05b4ff4bd91e3837dd825bb18f7d3f68f4d78730853f4326d12b8d0",
+   "path_item": "47569c4e003191ebe4a4b93548dd8e90c723bdfb73268d1c0cb02b053f3eb969",
+   "version": 2
   },
   "win-files-02": {
-   "design_card": "f812a8b3154277ae56b12c5fde812b1ad2a34c6322c284bcaa3d58ea4d623c13",
-   "exercise": "3bd826baa88817f1efc5e3442329c4e01e8667cd1180557761d4593a4529c131",
-   "path_item": "aee681c9acf3f126e2e600d44c89f63c282764d45b804189229d884b6f3a1bb9",
-   "version": 1
+   "design_card": "d119ef4c87e69843e8ab43d0a0f61958790438681a483c670c3b074a54b8a06f",
+   "exercise": "60173c677cbce99b156527e54c0d95942057806186a303f179f3f6cee8895d08",
+   "path_item": "ecdb81aba019a40a9bacac4829cd34cf374380cec82e941aec6df9637f95e41c",
+   "version": 2
   },
   "win-files-03": {
-   "design_card": "0fcb3c3f097ed911745a1a73b3666edb6bf1d47399b8804937e27a6815d8af36",
-   "exercise": "1d1ee5a452272bca1775befad1d2882d1aaaaa53fb4609e4e10d856e63f2f051",
-   "path_item": "fdf0f76e66915226487661c0c15d6bfac1180f8e6ecd8d42174fcd21ab926433",
-   "version": 1
+   "design_card": "22109fcf4c076d6828677eadc4c183175e4dcda981ecb61212aae12350877802",
+   "exercise": "dd13cb2aec89761e8b130c3618e8beda01193e9dfa37b577988d89f4b120f521",
+   "path_item": "62c2566ddf7e7ca3bedba9c0740ed10dffeeabded85d8cbade9a609069865463",
+   "version": 2
   },
   "win-files-04": {
-   "design_card": "461d5fa0eea53fed4693fe10faeb215ee14acf7bf4048b8305977f6283a1bf83",
-   "exercise": "2c36ffa680f1b69b38371068a8f326e8a630c68ef938fdb74336319887619673",
-   "path_item": "4f5e91170830dc8e3fed78e1a546abad2aa314e06ad1de58eaa400996d874e1f",
-   "version": 1
+   "design_card": "4123cbbd38f740271981ab8bd1777846e7cdf7fd6b85348fd34aa34e5aa0bc43",
+   "exercise": "07886ab622c51e273c3418edfa27b21bc66e697a1079678cb7f4834bd2ef0342",
+   "path_item": "988eee9b4790a791418ad0835de0df05b8276be6111e4681e35d255eb5ad033d",
+   "version": 2
   },
   "win-path-01": {
-   "design_card": "1eb1d5c7eb23122b87a2b89e98234df16a560bad84bfcc52841beca0ad200bc6",
-   "exercise": "046921c70526e86450fc56d3014d956380e5c7511f2fb9ef358ebf68072ef75c",
-   "path_item": "b4ab417094f5750896ecd3c34afe26e674664230be9b40ba433d2de4d7d728e1",
-   "version": 1
+   "design_card": "24f45344530cb7be3e0b7889f369f22655538e1aeb6dc81724e1cd382991bdba",
+   "exercise": "6b308817f7f5ade93141aac54a43993989f765d154c35ef941d56621e8da4ddf",
+   "path_item": "3e2e4612b66efa66ad06f29313b98fc9a122dddbbf2d86ac6a1c01fc9420d4dd",
+   "version": 2
   },
   "win-path-02": {
-   "design_card": "b09bab387b9ac43aae9dd6054ea1e809575163fb447a8041307cc972dbc3e315",
-   "exercise": "0ca915a441223c20ad4ec2a376a15b910e1c5c93606b9009b19e4d55b6b5f253",
-   "path_item": "43f6ab49492f43cb8c2b655065473859d8ca3de173a0e1bb3bcbc46115fcbc44",
-   "version": 1
+   "design_card": "8be09db6e94ea1bcef7c1e270896b794c9ab0d14a67b573f48576cac00288e18",
+   "exercise": "cebe571e18eb255274abe08cd23a5fbff121c2ddf1afbfd7268a1d606b81f889",
+   "path_item": "c2e3bc0ed1ece5066fd10011e875debe3f4d76d76429e8c2d0f3a809b6f0a6ab",
+   "version": 2
   },
   "win-path-03": {
-   "design_card": "53bb1a6417e178722d976c64d23882d7d8b25d3f02ea919382695ba67754ace1",
-   "exercise": "f5331d15b88a99095217688e5fae9364124389c5bf542fc6b6fb37b047a94346",
-   "path_item": "3debdc45d2fc2d45fa57f6d35bd408eed63351dedf4f17d65c537e479a86c696",
-   "version": 1
+   "design_card": "5e5b29250008ed61545b10ed620bd096aa5200a77cadaf447440cca67a282925",
+   "exercise": "4b0d855e8e1dcf42aed54c06a5fec02a81db5f53852c1cb22d2ed53e4ac276b4",
+   "path_item": "daec426f7753c77797321bcbf61ee743144b0cb0657dab7243f60f98fc268e6f",
+   "version": 2
   },
   "win-path-04": {
-   "design_card": "fbc867e8f41f62b4682bf0cff15cb3fc34e8c7fbde6aff9db559ca91a2340887",
-   "exercise": "c8778da952dd19a43092767dc0ced88ed9a92f1c3b443f5b03dd2590af0aaceb",
+   "design_card": "4ac9b7523e6117f0be51af64759d3ae0d17b9ae9c9c6f09b93050c24828bb93a",
+   "exercise": "ba635ebf68926bf0d0cf60cf6e01fb33e3fa3f5ddfc1f78ab324f0761b75fad7",
    "path_item": "20abfa8bccac9f1dd69f42b1f03c1ac65f96de738088ddfa357ab227f23c6506",
-   "version": 1
+   "version": 2
   }
  },
  "projection": "published-view-v1",

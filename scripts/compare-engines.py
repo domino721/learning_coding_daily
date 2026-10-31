@@ -112,7 +112,7 @@ def summarize(served, final, track):
 
 
 def knows(engine, track):
-    """An engine from before CR-017 (python-basics), CR-019 (terminal-git) or CR-020 (git) has no such track: its in_track would admit every item."""
+    """An engine from before CR-017 (python-basics), CR-019 (terminal-git), CR-020 (git) or CR-021 (windows) has no such track: its in_track would admit every item."""
     probe = next(ex for ex in EXERCISES if ex.domain == 'SQL')
     return track in ('python', 'sql') or not engine.in_track(probe, track)
 
@@ -144,7 +144,7 @@ def main():
     for profile in PROFILES:
         # steady and transfer-slip do not depend on the calendar; one start date is enough.
         starts = [first + timedelta(days=7 * k) for k in range(args.starts if profile in ('uneven', 'struggling') else 1)]
-        for track in ('python-basics', 'python', 'sql', 'terminal-git', 'git'):
+        for track in ('python-basics', 'python', 'sql', 'terminal-git', 'windows', 'git'):
             for days in args.days:
                 results.append({'profile': profile, 'track': track, 'days': days, 'runs': len(starts),
                                 'base': average([replay(base, profile, track, days, s) for s in starts]) if knows(base, track) else None,

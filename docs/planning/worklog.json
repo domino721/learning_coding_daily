@@ -1282,6 +1282,18 @@
       ],
       "summary": "최신 main4d92101에서 일일 정비5건. numpy-axis-02 v1→2 bug-line/line(매장 평균 축), numpy-broadcast-02 v1→2 equivalent-code/multi(5매장×3등급 배송비): 각각 합성 업무5행·코드5줄 이상. sql-count-01·stats-weight-01 v2의 편집 필드 검수, ml-scale-01 v2→3의 약한보기1.0·2.0→범위1.5·표본표준편차2.1 교체와 해설 보강. 오답 강도 전부2이상(기존 broadcasting3 유지). Codex 별도 재풀이·실제 NumPy/SQLite/scikit-learn 보기별/오답별 계산·경계12건·품질 게이트 통과. 근거 curriculum/reviews/2026-10-31.json 한 파일. 새 ID0, 기존389개·다섯 트랙·learning-paths-2.3·기록 보존. 전체 scripts/check.sh(Python1397/Node26·타입·포맷·빌드)·모바일52(서버 비해당13 제외) 통과. 웹 빌드의 별도320px 실풀이 Python4/SQL1·과거snapshot387개/이전버전3개·새로고침 보존과 신규형식 화면 확인 통과. freeze/export·planning 통과. 비강제 단일커밋으로 게시하며 원격Pages/공개자산 일치는 해당 실행과 최종보고에서 확인한다. 새 EV·기준선 없음.",
       "commit": "4d92101c825a7deb029fe8038ebfc8cf64c09cf0"
+    },
+    {
+      "id": "LOG-108",
+      "date": "2026-10-31",
+      "tasks": [
+        "WBS-394"
+      ],
+      "changes": [
+        "CR-021"
+      ],
+      "summary": "사용자 지시(“지금 윈도우 터미널이 ios랑 linux랑 섞여서 들어간다며, 그리고 실제 실행 검증도 안됐다며, 이거 문제점 해결해야지”)로 터미널 트랙의 Windows 섹터 4개·17문항을 여섯 번째 트랙 Windows(windows, domain Windows)로 옮겼다. 터미널은 macOS·Linux bash 33문항만 남고, Windows는 경로와 이동·파일 다루기·환경 변수와 실행을 뿌리로 bash 문항 없이 시작한다. 17문항을 창 이름·드라이브 경로 트리·파일 내용이 보이는 실행 가능한 시작 상태로 다시 쓰고 version 2로 올렸다. scripts/validate_windows_content.py와 quality.yml의 Windows 실행 검사(실행기 4대)가 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·모든 보기·고친 줄·해설의 사실 88회를 실행해 검수 기록과 일치했다(41153825097, 회사 PC PATH·Restricted 정책, cp949는 한 문항에서만 맞춤). 실행으로 드러난 CI PATH의 touch·cat·ls, 저장소의 cp1252 읽기 문제를 바로잡았다. 홈 카드 6장을 3장씩 두 줄로 두고 320px에서 두 줄로 접히던 소개 문장 4개(Python 기초·SQL 포함)를 한 줄로 줄였다. 정답을 모르는 별도 검수자가 17문항을 풀어 17/17 일치했고, 지적 가운데 지문 소거 2건(win-path-03·win-path-01 보기), 쉽게 지워지던 오답 보기(win-files-03), 실행 기록에 없던 해설 사실(win-files-02), 정답 줄을 짚던 힌트(sh-windows-02)와 표현·제목을 고쳤다. 기준선 1.17.0(CR-021, WBS-394). 검증 EV-076. 원격 저장/게시 전.",
+      "commit": null
     }
   ]
 }

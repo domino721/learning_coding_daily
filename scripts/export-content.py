@@ -10,9 +10,12 @@ from backend.content import EXERCISES, TRACKS
 from backend.curriculum import CONCEPTS, LEARNING_PATHS, validate_learning_paths
 from validate_sql_content import validate_all
 from validate_shell_content import validate_all as validate_shell
+from validate_windows_content import validate_all as validate_windows
 
 validate_all(EXERCISES)
 validate_shell(EXERCISES)
+# Windows items only parse here; .github/workflows/quality.yml runs them on a Windows runner.
+validate_windows(EXERCISES, execute=False)
 validate_learning_paths(EXERCISES)
 
 path = ROOT / "src/curriculum.json"

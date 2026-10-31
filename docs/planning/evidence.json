@@ -1041,6 +1041,19 @@
         "backend/terminal_content.json"
       ],
       "code_reference": "2f26fc11c51e224afe3e1562e894de05d37dd382"
+    },
+    {
+      "id": "EV-076",
+      "record": "docs/planning/evidence/EV-076.md",
+      "artifacts": [
+        "scripts/validate_windows_content.py",
+        ".github/workflows/quality.yml",
+        "backend/terminal_content.json",
+        "curriculum/reviews/2026-10-31-windows-track.json",
+        "src/style.css",
+        "tests/e2e/terminal.spec.ts"
+      ],
+      "code_reference": "acac19ea8d27370872fd7efb0eb967adab9137eb"
     }
   ]
 }

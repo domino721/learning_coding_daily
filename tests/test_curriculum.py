@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 from backend.content import EXERCISES, LAYOUT_KINDS
 from scripts.validate_shell_content import capture_of, is_shell, review_entries, run_shell, same
+from scripts.validate_windows_content import is_windows
 from scripts.validate_sql_content import run_sql as run_statements, sql_output
 
 
@@ -58,14 +59,14 @@ def test_authored_exercise_with_real_library_or_sql(exercise):
     if exercise.choices:
         assert exercise.answer in exercise.choices
         assert len(set(exercise.choices)) == len(exercise.choices) == 4
+    if is_windows(exercise):
+        # Windows PowerShell 5.1, PowerShell 7 and cmd run these on a Windows runner; tests/test_format_content.py
+        # checks here that every run can be built (scripts/validate_windows_content.py).
+        return
     if exercise.reference_output and is_shell(exercise):
         # 터미널·Git: bash runs the code from the starting state its header shows (scripts/validate_shell_content.py).
         entry = SHELL_ENTRIES[exercise.id]
         assert exercise.reference_output == exercise.answer
-        if entry.get('verify') == 'documented':
-            # A Windows-only fact cannot run here; the review entry cites the official documentation.
-            assert entry['sources'] and entry['basis']
-            return
         assert same(run_shell(exercise.code, capture_of(exercise, entry), entry.get('check')), exercise.answer, entry)
         return
     if exercise.reference_output:
