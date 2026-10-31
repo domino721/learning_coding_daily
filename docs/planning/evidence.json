@@ -1054,6 +1054,17 @@
         "tests/e2e/terminal.spec.ts"
       ],
       "code_reference": "acac19ea8d27370872fd7efb0eb967adab9137eb"
+    },
+    {
+      "id": "EV-077",
+      "record": "docs/planning/evidence/EV-077.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/quality.yml",
+        "scripts/verify-published-site.py",
+        "scripts/validate_windows_content.py"
+      ],
+      "code_reference": "a91247f2ea923317d0185d5d4926b3cf6c09fa39"
     }
   ]
 }

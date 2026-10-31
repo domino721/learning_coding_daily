@@ -821,8 +821,8 @@
 - 전체 검사(scripts/check.sh)와 모바일 E2E 통과
 - 해당 커밋의 Pages 게시(Windows 실행 검사 포함)와 실제 공개 자산 확인
 
-완료 근거: EV-076. 실제 완료일: 2026-10-31.
+완료 근거: EV-076, EV-077. 실제 완료일: 2026-10-31.
 관련 위험: R-001, R-002, R-006.
-상태 메모: LOG-108: CR-021 Windows 트랙(windows) 분리와 17문항 version 2, GitHub Actions Windows 실행기에서 Windows PowerShell 5.1·PowerShell 7·cmd 실행 검증(88회 일치, 게시 선행 조건), 6장 두 줄 트랙 카드와 한 줄 소개 문장, 정답을 모르는 별도 검수자 재풀이 17/17 일치와 지적 반영, check.sh·모바일 E2E 로컬 검증 EV-076. 원격 게시 전.
+상태 메모: LOG-108: CR-021 Windows 트랙(windows) 분리와 17문항 version 2, GitHub Actions Windows 실행기에서 Windows PowerShell 5.1·PowerShell 7·cmd 실행 검증(88회 일치, 게시 선행 조건), 6장 두 줄 트랙 카드와 한 줄 소개 문장, 정답을 모르는 별도 검수자 재풀이 17/17 일치와 지적 반영, check.sh·모바일 E2E 로컬 검증 EV-076. 원격 게시 전. LOG-109: 확인용 실행 41154874830 success 뒤 main a91247f·Pages 41155619839(Windows 실행 검사 선행)/관리 41155619868 success, 공개 자산 5개 일치 EV-077로 게시 완료.
 
 원본: [버전 원장](versions.json), [진행 상태](status.json), [근거 목록](evidence.json), [위험 목록](risks.json).
