@@ -6,7 +6,7 @@
   "timezone": "Asia/Seoul",
   "focus": "WBS-370",
   "next_task": "WBS-370",
-  "code_reference": "a91247f2ea923317d0185d5d4926b3cf6c09fa39",
+  "code_reference": "63f25977b18b9912a2034381ab5040a282cfcb5f",
   "tasks": {
     "WBS-010": {
       "status": "done",
@@ -493,9 +493,10 @@
       "actual_started": "2026-10-31",
       "actual_finished": "2026-10-31",
       "evidence": [
-        "EV-078"
+        "EV-078",
+        "EV-079"
       ],
-      "note": "LOG-110: CR-022 Windows 트랙 보류. 홈·트랙 목록·세션 시작에서 windows를 빼 트랙 다섯, Windows 17문항은 서술형처럼 카탈로그에 보관하되 어떤 트랙에서도 추천하지 않음(웹/서버 같은 판정), 저장된 Windows 선택은 기본 트랙으로 복귀, Windows 실행 검사는 게시 조건에서 뺀 수동 워크플로. check.sh·모바일 E2E 로컬 검증 EV-078. 원격 게시 전."
+      "note": "LOG-110: CR-022 Windows 트랙 보류. 홈·트랙 목록·세션 시작에서 windows를 빼 트랙 다섯, Windows 17문항은 서술형처럼 카탈로그에 보관하되 어떤 트랙에서도 추천하지 않음(웹/서버 같은 판정), 저장된 Windows 선택은 기본 트랙으로 복귀, Windows 실행 검사는 게시 조건에서 뺀 수동 워크플로. check.sh·모바일 E2E 로컬 검증 EV-078. 원격 게시 전. LOG-111: 확인용 실행 41157741098 success 뒤 main 63f2597·Pages 41158374715/관리 41158374746 success, 공개 번들에서 Windows 트랙 제외·보류 판정 확인 EV-079로 게시 완료."
     }
   }
 }

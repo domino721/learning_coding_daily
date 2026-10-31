@@ -1079,6 +1079,17 @@
         "tests/e2e/quality-design.spec.ts"
       ],
       "code_reference": "6b9b9d8838bacd0c223c951ed21f8b65d0fb350a"
+    },
+    {
+      "id": "EV-079",
+      "record": "docs/planning/evidence/EV-079.md",
+      "artifacts": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/quality.yml",
+        ".github/workflows/windows.yml",
+        "scripts/verify-published-site.py"
+      ],
+      "code_reference": "63f25977b18b9912a2034381ab5040a282cfcb5f"
     }
   ]
 }
