@@ -100,7 +100,8 @@
       "requires": ["sql-where-01"],
       "remediation": ["sql-where-01"],
       "objective": "주문 건수 검토: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "stats-weight-01": {
       "concept_id": "stats-rates",
@@ -110,7 +111,8 @@
       "requires": ["stats-median-01"],
       "remediation": ["stats-median-01"],
       "objective": "전체 전환율 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 핵심 연산 한 단계의 확인이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "ml-scale-01": {
       "concept_id": "ml-preprocessing",
@@ -128,7 +130,8 @@
         "ml-transform-foundation-01"
       ],
       "objective": "새 입력 처리 결과: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
-      "review_status": "reviewed"
+      "review_status": "reviewed",
+      "task_form": "output"
     },
     "pandas-null-01": {
       "concept_id": "pandas-null",
@@ -421,8 +424,9 @@
       "family": "numpy-structure:축 보존 집계",
       "requires": ["numpy-shape-01", "numpy-shape-application-01"],
       "remediation": ["numpy-shape-01"],
-      "objective": "행 기준 보정: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "매장별 보정에 필요한 평균 축과 모양을 확인하고 잘못된 기준을 만든 줄을 진단한다.",
+      "review_status": "reviewed",
+      "task_form": "bug-line"
     },
     "numpy-broadcast-02": {
       "concept_id": "numpy-broadcast",
@@ -439,8 +443,9 @@
         "numpy-broadcast-foundation-01",
         "numpy-broadcast-01"
       ],
-      "objective": "행과 열 보정값: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-      "review_status": "reviewed"
+      "objective": "각 매장·배송등급 조합을 만드는 모양 확장 식들의 동치를 판단한다.",
+      "review_status": "reviewed",
+      "task_form": "equivalent-code"
     },
     "numpy-mask-02": {
       "concept_id": "numpy-mask",

@@ -306,9 +306,9 @@ MACHINE_LEARNING = [
         'ml-scale-01', 'fit과 transform의 구분', 'choice', '새 입력 처리 결과',
         '아래 코드의 출력값을 고르세요.',
         'from sklearn.preprocessing import StandardScaler\nscaler = StandardScaler().fit([[10.0], [20.0]])\nvalue = scaler.transform([[30.0]])[0, 0]\nprint(round(float(value), 1))',
-        '3.0', 'fit에 사용한 평균은 15, 표준편차는 5입니다. 새 입력에도 이 기준을 쓰므로 (30-15)/5=3.0입니다. 새 입력으로 다시 fit하지 않습니다.',
+        '3.0', 'fit에 사용한 평균은15, ddof=0 표준편차는5입니다. 새 입력에도 이 기준을 써서 (30-15)/5=3.0입니다. 새 입력 하나에 다시 fit하면0.0이지만 이 코드는 transform만 합니다. 표준편차 대신 범위10으로 나누면1.5, ddof=1 표본 표준편차로 나누면 반올림해2.1이므로 둘 다 저장된 기준과 다릅니다.',
         ('새 입력을 볼 때도 학습 단계에서 구한 기준을 사용하는지 보세요.', 'StandardScaler는 (값-학습 평균)/학습 표준편차로 변환하며 표준편차에 ddof=0을 사용합니다.'),
-        ('0.0', '1.0', '2.0', '3.0'), domain='scikit-learn', level=2,
+        ('0.0', '1.5', '2.1', '3.0'), domain='scikit-learn', level=2, version=3,
     ),
     Exercise(
         'ml-metric-01', '불균형 데이터와 정확도', 'choice', '모델 점수 확인',

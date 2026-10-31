@@ -91,9 +91,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "주문 건수 검토: 집계 대상·NULL 제외·그룹 이후 조건을 구분한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "전체 행 수와 NULL이 아닌 열 값의 개수를 비교한다. 두 COUNT의 NULL 처리 규칙을 뒤집거나 같다고 보는 혼동을 구분하는 기초 확인.",
+    "calibration": "editorial-codex-2026-10-31; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이로 재보정 필요"
   },
   "stats-weight-01": {
     "concept_id": "stats-rates",
@@ -103,9 +103,9 @@
     "reasoning_steps": 1,
     "code_load": 1,
     "transfer": 1,
-    "distractor_strength": 0,
-    "rationale": "전체 전환율 확인: 비율의 분모와 집단 크기·비교 단위를 구분한다. 핵심 연산 한 단계의 확인이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "전체 전환 인원과 전체 분모로 비율을 구한다. 단순 평균 또는 한 집단의 비율을 전체 비율로 쓰는 혼동을 구분하는 기초 확인.",
+    "calibration": "editorial-codex-2026-10-31; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이로 재보정 필요"
   },
   "ml-scale-01": {
     "concept_id": "ml-preprocessing",
@@ -115,9 +115,9 @@
     "reasoning_steps": 2,
     "code_load": 1,
     "transfer": 2,
-    "distractor_strength": 0,
-    "rationale": "새 입력 처리 결과: 학습 기준을 새 입력에 재사용하는 변환 절차를 추적한다. 여러 조건/연산을 연결하는 적용이다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "학습 평균과 모집단 표준편차를 새 입력에 재사용한다. 재학습·범위·표본 표준편차를 각각 실제로 계산할 수 있는 오답으로 구분하는 적용.",
+    "calibration": "editorial-codex-2026-10-31; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이로 재보정 필요"
   },
   "pandas-null-01": {
     "concept_id": "pandas-null",
@@ -445,15 +445,15 @@
   },
   "numpy-axis-02": {
     "concept_id": "numpy-structure",
-    "response_mode": "short",
+    "response_mode": "choice",
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
-    "distractor_strength": 0,
-    "rationale": "행 기준 보정: 축의 길이와 집계/변형 후 남는 배열 구조를 추론한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "distractor_strength": 2,
+    "rationale": "5매장×3일 자료에서 평균을 내며 줄어드는 축·남는 축과 그 기준의 적용을 구별해 잘못된 기준을 만든 줄을 진단하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-31; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이로 재보정 필요"
   },
   "numpy-broadcast-02": {
     "concept_id": "numpy-broadcast",
@@ -461,11 +461,11 @@
     "level": 3,
     "label": "조건 변화·전이",
     "reasoning_steps": 3,
-    "code_load": 1,
+    "code_load": 2,
     "transfer": 3,
     "distractor_strength": 3,
-    "rationale": "행과 열 보정값: 서로 다른 shape를 오른쪽 축부터 맞추어 확장한다. 조건·자료 구조가 달라진 상황으로 개념을 옮긴다.",
-    "calibration": "editorial-v1; 실제 첫 시도·힌트·날짜별 전이 결과로 재보정 필요"
+    "rationale": "5매장 기본비와3등급 추가비의 모양을 맞춰 모든 조합을 만들고, 열 방향 확장·잘못된 차원 축소·전체 합산을 비교하는 전이 과제.",
+    "calibration": "editorial-codex-2026-10-31; 난이도·시간은 편집 추정, 실제 첫 시도/힌트/지연 전이로 재보정 필요"
   },
   "numpy-mask-02": {
     "concept_id": "numpy-mask",

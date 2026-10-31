@@ -337,10 +337,10 @@
    "version": 1
   },
   "ml-scale-01": {
-   "design_card": "02ac15b41798efb73cd6fca58628975cf18904d6ab50adfdafdfe168175386d3",
-   "exercise": "3240c2fb23f1be2b40565dd4c8df6d99916251c013ad6ef23dc66cd04c2b773a",
+   "design_card": "b4de473cdda0495fef214842922d723fc5872ef76ccaa5999b4b65bdf1129df4",
+   "exercise": "73c34deeb64df4c85b85475e7977c79d898527be062382e6e9a364f90d8b00fb",
    "path_item": "be282b3c663c0813bc3f4add7e9f51e81d0bb82be8a5ccb5dc35ed885af395b7",
-   "version": 2
+   "version": 3
   },
   "ml-scale-02": {
    "design_card": "7e41f007c6f719cad13753e7f7feeaefad46d92c35b4ea67b1d199052f2b7928",
@@ -403,10 +403,10 @@
    "version": 2
   },
   "numpy-axis-02": {
-   "design_card": "d709ed7410e3f322e753d8f7e55043b0e4071e11297a149c51919524cf4d5d90",
-   "exercise": "6d2b4f3108f181c517bf344bec7d7c44b32e4ce9d679e02e216bcdba25331905",
-   "path_item": "399d590c5fd4c3e906acc9bf23a729747e26a3f35e84d5bbe54bcf08795e031f",
-   "version": 1
+   "design_card": "b963a248ebb5e7b52262bc981f7032bb0ecb3f9f4b4302ca953045860f61e4b4",
+   "exercise": "1626bf2cc77473c6b3be37d8c713833f8da791bfd8d546bc737b8d1dc28d6645",
+   "path_item": "63615ab156269bc8330872c67c7096893d460242138dbc021a285fddc543e61f",
+   "version": 2
   },
   "numpy-axis-mean-form-01": {
    "design_card": "576a60e92f83c70bbf228e78694d500c89feb9c8000488ee453c21bf236037f3",
@@ -421,10 +421,10 @@
    "version": 2
   },
   "numpy-broadcast-02": {
-   "design_card": "828f0699abbb2b5fe9731411b4dabbf8f24d216d6ab0117c94a327459130a62c",
-   "exercise": "77245f7b286ea553c7adb2674df68edf1a7d6fa2d650614038bd19e10d991321",
-   "path_item": "c0da2218955d0db3f55970b9706d04c4b676b953c96622905ccba48e5aad2077",
-   "version": 1
+   "design_card": "991394bea19f51d8fd625ba9be7a89397a85c4ca7ac30be244533add18d4c1ad",
+   "exercise": "5d899427e677648ce0d6bf8511a48c4591f1dabdc03770cd11252f859e57cf6b",
+   "path_item": "71511567ead807906b24b94948913d276ba4a3765311dcf37b87b04c654785da",
+   "version": 2
   },
   "numpy-broadcast-application-02": {
    "design_card": "785b85369e3478b7ff8fdbcbb194163dd9f96189d8f60d8b4dc4b6b0c59d5db9",
