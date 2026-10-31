@@ -199,6 +199,8 @@ def concept_states(sessions, by_id):
 # Domains of the shell-style items (graded as shown). Since CR-020 each is its own track (CR-021 added Windows);
 # the 터미널 track keeps the CR-019 ID terminal-git so sessions and saved choices made before the split stay attached to it.
 TERMINAL_DOMAINS = ('터미널', 'Git', 'Windows')
+# CR-022 holds the Windows track: like essays, its items stay in the catalog for earlier records but are never served.
+HELD_DOMAINS = ('Windows',)
 
 
 def in_track(ex, track):
@@ -214,6 +216,7 @@ def in_track(ex, track):
     if track == 'git':
         return ex.domain == 'Git'
     if track == 'windows':
+        # Held since CR-022: no session starts here; the branch only keeps the Windows design cards' track_id.
         return ex.domain == 'Windows'
     return True
 
@@ -232,7 +235,7 @@ def select_exercises(exercises, sessions, progress, today, extra=False, track=No
         cid=LEARNING_PATHS['items'][identifier]['concept_id']
         state=states[cid]
         return state['level']>=2 and not state['needs_support']
-    exercises=[ex for ex in exercises if ex.response_mode != 'essay' and in_track(ex,track)]
+    exercises=[ex for ex in exercises if ex.response_mode != 'essay' and ex.domain not in HELD_DOMAINS and in_track(ex,track)]
     done_today={i['id'] for s in sessions if s['local_day']==today for i in s['items']}
     def eligible(ex):
         state=states[ex.concept_id]

@@ -7,7 +7,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from backend.content import BY_ID, EXERCISES
-from backend.curriculum import TERMINAL_DOMAINS, in_track
+from backend.curriculum import HELD_DOMAINS, TERMINAL_DOMAINS, in_track
 from backend.main import create_app
 from backend.storage import connect
 
@@ -112,18 +112,18 @@ def test_midnight_new_session_and_due_review_cap(learning):
 
 def test_both_courses_reach_all_active_questions_and_only_scheduled_reviews(learning):
     client, _, clock = learning
-    active={ex.id for ex in EXERCISES if ex.response_mode!='essay'}
+    # CR-022: held Windows items stay in the catalog but no track serves them.
+    active={ex.id for ex in EXERCISES if ex.response_mode!='essay' and ex.domain not in HELD_DOMAINS}
     seen=set()
     # A growing catalog needs a growing replay budget; daily/review limits stay fixed.
     for _ in range(max(60, len(active))):
-        for track in ('python-basics','python','sql','terminal-git','windows','git'):
+        for track in ('python-basics','python','sql','terminal-git','git'):
             response=client.post('/api/sessions/today',json={'track_id':track})
             if response.status_code==422: continue
             session=response.json()
             for item in session['items']:
                 assert (item['domain']=='SQL')==(track=='sql') and (item['domain']=='Python')==(track=='python-basics')
                 assert (item['domain']=='터미널')==(track=='terminal-git') and (item['domain']=='Git')==(track=='git')
-                assert (item['domain']=='Windows')==(track=='windows')
                 assert item['response_mode']!='essay' and item['category'] in ('new','review','practice')
                 seen.add(item['id'])
                 if item['status']=='pending': assert answer(client,session,item).status_code==200
@@ -149,6 +149,9 @@ def test_retry_idempotency_and_invalid_submissions(learning):
     assert answer(client, session, other, "unknown").status_code == 422
     assert answer(client, session, {"id": "missing"}, "2").status_code == 404
     assert client.post("/api/sessions/today", json={"track_id": "algorithms"}).status_code == 409
+    # CR-022 holds the Windows track: it cannot start, and its items never enter another track.
+    assert client.post("/api/sessions/today", json={"track_id": "windows"}).status_code == 409
+    assert client.get("/api/dashboard", params={"track_id": "windows"}).status_code == 422
     assert client.post("/api/sessions/today", json={"track_id": "invalid"}).status_code == 422
     assert client.get("/api/sessions/unknown").status_code == 404
     for field, value in [("active_seconds", -1), ("active_seconds", 999999), ("attempt_id", "invalid"), ("answer", "")]:
@@ -222,7 +225,7 @@ def test_same_server_serves_frontend_and_learning_api(tmp_path):
         assert counts["python-basics"] == sum(ex.domain == 'Python' for ex in EXERCISES)
         assert counts["terminal-git"] == sum(ex.domain == '터미널' for ex in EXERCISES) > 0
         assert counts["git"] == sum(ex.domain == 'Git' for ex in EXERCISES) > 0
-        assert counts["windows"] == sum(ex.domain == 'Windows' for ex in EXERCISES) > 0
+        assert "windows" not in counts and sum(ex.domain == 'Windows' for ex in EXERCISES) > 0
         assert client.get("/assets/../../pyproject.toml").status_code == 404
 
 

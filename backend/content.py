@@ -372,7 +372,6 @@ TRACKS = [
     {"id": "python", "name": "Python 데이터 분석", "description": "pandas · NumPy · 통계 · 머신러닝", "available": True, "exercise_count": sum(in_track(ex, 'python') and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "sql", "name": "SQL", "description": "행 조건 · 집계 · 조인 · 윈도 · 데이터 변경", "available": True, "exercise_count": sum(in_track(ex, 'sql') and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "terminal-git", "name": "터미널", "description": "macOS·Linux bash · 경로 · 파일 · 명령 연결 · 환경 변수 · 스크립트", "available": True, "exercise_count": sum(in_track(ex, 'terminal-git') and ex.response_mode != 'essay' for ex in EXERCISES)},
-    {"id": "windows", "name": "Windows", "description": "PowerShell · cmd · 경로 · 파일 · 환경 변수 · Python 실행", "available": True, "exercise_count": sum(in_track(ex, 'windows') and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "git", "name": "Git", "description": "상태 · 커밋 · diff · 되돌리기 · 브랜치 · 원격", "available": True, "exercise_count": sum(in_track(ex, 'git') and ex.response_mode != 'essay' for ex in EXERCISES)},
     {"id": "algorithms", "name": "코딩테스트", "description": "문자열부터 탐색까지, 한 단계씩", "available": False, "exercise_count": 0},
 ]

@@ -10,11 +10,16 @@ test("design explorer uses the live curriculum and keeps simulations separate", 
   await expect(
     page.getByRole("heading", { name: "문제의 난이도와 사용자의 단계는 별개" }),
   ).toBeVisible();
+  // Essays and, since CR-022, the held Windows items are stored but not active.
   await expect(page.locator("#catalog-stats")).toContainText(
     String(
-      curriculum.exercises.filter((e) => e.response_mode !== "essay").length,
+      curriculum.exercises.filter(
+        (e) => e.response_mode !== "essay" && e.domain !== "Windows",
+      ).length,
     ),
   );
+  await page.locator("#concept-select").selectOption("win-path");
+  await expect(page.locator("#exercise-detail")).toContainText("보류 문항");
   await page.locator("#concept-select").selectOption("ml-preprocessing");
   await expect(page.locator("#exercise-detail")).toContainText(
     "선수에서 목표까지",

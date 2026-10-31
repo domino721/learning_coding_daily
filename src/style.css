@@ -1746,8 +1746,8 @@ label.code-line {
 .home-main .section-heading {
   margin-bottom: 6px;
 }
-/* Six tracks (CR-021): two rows of three compact cards on a phone and one row from 560px keep the start button
-   above the fixed navigation at 320px. Content-sized columns keep every name on one line. */
+/* Rows of three compact cards on a phone and one row from 560px keep the start button above the fixed navigation
+   at 320px (CR-021 for six tracks; five since CR-022 held Windows). Content-sized columns keep every name on one line. */
 .home-main .track-list {
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -1755,7 +1755,7 @@ label.code-line {
 }
 @media (min-width: 560px) {
   .home-main .track-list {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 .home-main .track-card {

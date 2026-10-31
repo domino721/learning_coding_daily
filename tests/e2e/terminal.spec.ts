@@ -2,10 +2,10 @@ import { test, expect, type Page } from "@playwright/test";
 import curriculum from "../../src/curriculum.json" with { type: "json" };
 import { enterAnswer } from "./answer";
 
-// CR-019/CR-020/CR-021: 터미널, Windows and Git are their own tracks. Each first day draws only on its root
-// concepts, terminal output options keep their line breaks, and the chosen track survives a reload.
+// CR-019/CR-020: 터미널 and Git are their own tracks (CR-022 holds the Windows track CR-021 added). Each first day
+// draws only on its root concepts, terminal output options keep their line breaks, and the chosen track survives a reload.
 async function startAboveNavigation(page: Page) {
-  // Six track cards (two rows of three) still leave the start button above the fixed navigation.
+  // Five track cards (rows of three) still leave the start button above the fixed navigation.
   const start = page.getByRole("button", { name: "오늘 학습 시작하기" });
   const nav = await page.locator(".bottom-nav").boundingBox();
   const button = await start.boundingBox();
@@ -124,41 +124,22 @@ test("Git track starts on its own from status and diff on a 320px phone", async 
   expect(errors).toEqual([]);
 });
 
-test("Windows track starts on its own from paths, files and variables on a 320px phone", async ({
+test("the held Windows track leaves home and a saved Windows choice falls back", async ({
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile-web", "device-mode UI flow");
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
+  // CR-022: a learner who picked Windows under CR-021 comes back to the default track.
+  await page.addInitScript(() =>
+    localStorage.setItem("learning-coding-daily:track", "windows"),
+  );
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("./");
-  const windows = page.getByRole("button", { name: /^Windows/ });
-  const count = curriculum.tracks.find(
-    (track) => track.id === "windows",
-  )!.exercise_count;
-  await expect(windows).toContainText(`${count}문제`);
-  // The 터미널 track no longer counts the Windows sectors.
+  await expect(page.locator("#daily-title")).toHaveText("Python 데이터 분석");
+  await expect(page.getByRole("button", { name: /^Windows/ })).toHaveCount(0);
+  // The 터미널 track still counts only its bash items.
   await expect(page.getByRole("button", { name: /^터미널/ })).toContainText(
     `${curriculum.exercises.filter((ex) => ex.domain === "터미널").length}문제`,
   );
-  await windows.click();
-  await expect(windows).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("#daily-title")).toHaveText("Windows");
-  await page.reload();
-  await expect(page.getByRole("button", { name: /^Windows/ })).toHaveAttribute(
-    "aria-pressed",
-    "true",
-  );
-  // A learner who never opened the 터미널 track still gets a full first day of PowerShell and cmd.
-  await startAboveNavigation(page);
-  const served = await solveFirstDay(
-    page,
-    "Windows",
-    new Set(["win-path", "win-files", "win-env"]),
-  );
-  expect(served).toHaveLength(5);
-  await expect(page.getByText("Windows · 오늘 풀이 결과")).toBeVisible();
-  expect(errors).toEqual([]);
 });
 
 test("every track keeps the start button above the navigation on a 320px phone", async ({
@@ -173,7 +154,7 @@ test("every track keeps the start button above the navigation on a 320px phone",
       .getByRole("button", { name: new RegExp(`^${track.name}`) })
       .click();
     await expect(page.locator("#daily-title")).toHaveText(track.name);
-    // Six cards in two rows and a one-line summary leave the button clear of the navigation.
+    // Five cards in two rows and a one-line summary leave the button clear of the navigation.
     const start = await page
       .getByRole("button", { name: "오늘 학습 시작하기" })
       .boundingBox();

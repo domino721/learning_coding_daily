@@ -70,9 +70,11 @@
 
 ### Windows 문항 (CR-021)
 
+- CR-022부터 Windows 트랙은 보류 중이다(추천하지 않음). 아래 규칙은 다시 열 때 그대로 쓴다.
+
 - Windows 트랙(`windows`, 문항 domain `Windows`)은 터미널 트랙(macOS·Linux bash)과 섞지 않고 PowerShell·cmd를 기초부터 다룬다. 원본은 `backend/terminal_content.json`이고 응답 모드는 모두 choice이며, 보기는 터미널·Git처럼 띄어쓰기까지 그대로 비교한다. bash 문항을 선수로 두지 않는다. AI가 bash 기준으로 준 명령과 비교하는 문항은 그 bash 명령을 지문에 보여 준다.
 - 코드 맨 위 주석이 시작 상태의 전부다. 첫 줄은 창 이름(`Windows PowerShell`·`Windows PowerShell 5.1`·`PowerShell 7`·`명령 프롬프트(cmd)`·`Anaconda Prompt (cmd)`)이고, 이어서 `C:\Users\mina`처럼 드라이브로 시작하는 폴더(시작 폴더는 `← 지금 위치`)와 ├──/└── 트리를 쓴다. 폴더는 이름 끝 `\`, 숨김 속성은 `(숨김)`, 실행 파일은 `report.exe  (실행하면 report ok 출력)`, 파일 내용은 `<경로> 내용:` 아래 `#   ` 줄이다. cmd 문항은 `#` 대신 `REM`을 쓴다. 두 창을 비교하는 문항은 `C:\...> ____`·`PS C:\...> ____` 프롬프트 줄로 창을 나누고, 파이썬 파일 문항은 첫 줄을 `# 파일이름.py (...)`로 쓰고 같은 폴더의 파일을 `<이름> 내용:`으로 보인다. 이름·경로는 영어로 쓴다(실행기 창의 코드 페이지와 상관없이 같은 결과를 내도록).
-- `scripts/validate_windows_content.py`가 GitHub Actions의 일회용 Windows 실행기(`.github/workflows/quality.yml`의 windows 작업)에서 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·보기·고친 줄과 해설이 말하는 사실(`runs`)을 모두 실행한다. 명령은 학습자가 붙여 넣듯 한 줄씩 입력하고, 창에는 회사 PC처럼 Windows·Windows PowerShell·Python 3.12·Git의 cmd 폴더만 PATH에 두며(CI 이미지의 touch·cat·ls가 보이지 않게), 실행 정책은 Windows 10·11 기본값(Restricted)에서 시작한다. 이 작업이 실패하면 Pages 게시도 막힌다. macOS·Ubuntu의 내보내기와 테스트는 실행 없이 시작 상태와 검수 기록을 검사한다.
+- `scripts/validate_windows_content.py`가 GitHub Actions의 일회용 Windows 실행기(보류 중에는 수동 실행인 `.github/workflows/windows.yml`)에서 Windows PowerShell 5.1·PowerShell 7·cmd로 정답·보기·고친 줄과 해설이 말하는 사실(`runs`)을 모두 실행한다. 명령은 학습자가 붙여 넣듯 한 줄씩 입력하고, 창에는 회사 PC처럼 Windows·Windows PowerShell·Python 3.12·Git의 cmd 폴더만 PATH에 두며(CI 이미지의 touch·cat·ls가 보이지 않게), 실행 정책은 Windows 10·11 기본값(Restricted)에서 시작한다. 다시 열 때는 이 작업을 `quality.yml`로 되돌려, 실패하면 Pages 게시가 막히게 한다. macOS·Ubuntu의 내보내기와 테스트는 실행 없이 시작 상태와 검수 기록을 검사한다.
 - 실행기는 영어 Windows라 오류는 영어 원문으로 확인한다. 지문에는 영어 원문과 뜻을 함께 적고 한국어 Windows에서는 한국어로 표시된다고 밝힌다. 한국어 Windows의 코드 페이지(949)가 결과를 바꾸는 문항은 검수 기록에 `emulate: cp949`를 적어 open()의 기본 인코딩·Python 출력·창의 코드 페이지를 949로 맞춰 실행한다.
 - 검수 기록에는 `verify: windows`와 필요한 항목을 적는다. `check`는 같은 창에서 이어 실행하는 확인 명령(학습자에게 보이지 않음)이고, `policy: RemoteSigned`는 스크립트 실행을 허용한 PC, `confirm`은 그 명령의 확인 질문에 Y로 답한 실행이다. `runs`에는 해설의 사실마다 명령과 기대 출력을 적고, `error_line`·`raises`는 줄 고르기에서 오류가 가리키는 줄이다. 출력은 cmd의 시작 문구·프롬프트를 지우고 파일 시각을 `<시각>`, 실행기의 Python 폴더를 일반 설치 폴더로 바꾼 뒤 단어 단위로 비교한다.
 - 실행으로 확인할 수 없는 사실(휴지통으로 보내지 않음, 그룹 정책, 대화형 확인 질문)은 해설에 쓰되 `sources`에 공식 문서를 남긴다.

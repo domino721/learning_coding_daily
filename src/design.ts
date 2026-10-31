@@ -2,6 +2,7 @@ import "./design.css";
 import curriculum from "./curriculum.json";
 import fixtures from "../tests/fixtures/learning-paths.json";
 import {
+  active,
   conceptStates,
   selectExercises,
   reviewDue,
@@ -36,10 +37,7 @@ const paths = curriculum.learning_paths.items as Record<
 const concept = $<HTMLSelectElement>("concept-select"),
   exercise = $<HTMLSelectElement>("exercise-select");
 $("catalog-stats").innerHTML = [
-  [
-    "활성 문항",
-    curriculum.exercises.filter((e) => e.response_mode !== "essay").length,
-  ],
+  ["활성 문항", curriculum.exercises.filter(active).length],
   ["보관 원본", curriculum.exercises.length],
   ["학습 개념", curriculum.concepts.length],
   ["트랙", curriculum.tracks.filter((t) => t.available).length],
@@ -68,17 +66,17 @@ function showExercise() {
     );
   };
   $("exercise-detail").innerHTML =
-    `<article><h3>${escape(e.title)}</h3><p><code>${escape(e.id)}</code> · v${e.version} · ${escape(e.response_mode)} · ${e.response_mode === "essay" ? "보류 문항" : "활성 문항"}</p><p>${escape(e.prompt)}</p><pre>${escape(e.code)}</pre><details><summary>정답·힌트·해설 확인</summary><p>정답: <code>${escape(isLayoutKind(e.kind) ? answerText(e, e.answer) : e.answer)}</code></p><ol>${e.hints.map((h) => `<li>${escape(h)}</li>`).join("")}</ol><p>${escape(e.explanation)}</p><p>보기: ${e.choices.map((c) => escape(c)).join(" / ")}</p></details><h3>이 문항의 난이도 판단</h3><pre>${escape(JSON.stringify(e.difficulty, null, 2))}</pre><p>유형군: <code>${escape(path.family)}</code> · 과제 형식: <code>${escape(taskForm(e))}</code></p><p>목표: ${escape(path.objective)}</p><h3>선수에서 목표까지</h3>${route(e.id)}<p>보충 후보: ${path.remediation.map((id) => escape(byId.get(id)?.title ?? id)).join(" → ")}</p></article>`;
+    `<article><h3>${escape(e.title)}</h3><p><code>${escape(e.id)}</code> · v${e.version} · ${escape(e.response_mode)} · ${active(e) ? "활성 문항" : "보류 문항"}</p><p>${escape(e.prompt)}</p><pre>${escape(e.code)}</pre><details><summary>정답·힌트·해설 확인</summary><p>정답: <code>${escape(isLayoutKind(e.kind) ? answerText(e, e.answer) : e.answer)}</code></p><ol>${e.hints.map((h) => `<li>${escape(h)}</li>`).join("")}</ol><p>${escape(e.explanation)}</p><p>보기: ${e.choices.map((c) => escape(c)).join(" / ")}</p></details><h3>이 문항의 난이도 판단</h3><pre>${escape(JSON.stringify(e.difficulty, null, 2))}</pre><p>유형군: <code>${escape(path.family)}</code> · 과제 형식: <code>${escape(taskForm(e))}</code></p><p>목표: ${escape(path.objective)}</p><h3>선수에서 목표까지</h3>${route(e.id)}<p>보충 후보: ${path.remediation.map((id) => escape(byId.get(id)?.title ?? id)).join(" → ")}</p></article>`;
 }
 function showConcept() {
   const c = curriculum.concepts.find((c) => c.id === concept.value)!;
   const items = curriculum.exercises.filter((e) => e.concept_id === c.id);
   $("concept-detail").innerHTML =
-    `<p>선수 개념: ${c.prerequisites.length ? c.prerequisites.map((id) => escape(curriculum.concepts.find((c) => c.id === id)?.name ?? id)).join(" → ") : "별도 선수 개념 없음"}</p><div class="flow">${[1, 2, 3].map((level) => `<div>단계 ${level}<br/><strong>${items.filter((e) => e.level === level && e.response_mode !== "essay").length}개 활성</strong></div>`).join("")}</div>`;
+    `<p>선수 개념: ${c.prerequisites.length ? c.prerequisites.map((id) => escape(curriculum.concepts.find((c) => c.id === id)?.name ?? id)).join(" → ") : "별도 선수 개념 없음"}</p><div class="flow">${[1, 2, 3].map((level) => `<div>단계 ${level}<br/><strong>${items.filter((e) => e.level === level && active(e)).length}개 활성</strong></div>`).join("")}</div>`;
   exercise.innerHTML = items
     .map(
       (e) =>
-        `<option value="${escape(e.id)}">L${e.level} · ${escape(e.title)}${e.response_mode === "essay" ? " (보류)" : ""}</option>`,
+        `<option value="${escape(e.id)}">L${e.level} · ${escape(e.title)}${active(e) ? "" : " (보류)"}</option>`,
     )
     .join("");
   showExercise();

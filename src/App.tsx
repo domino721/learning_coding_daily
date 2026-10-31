@@ -35,7 +35,6 @@ const trackSummary: Record<string, string> = {
   python: "pandas·NumPy와 통계·머신러닝을 연습해요.",
   sql: "조건·집계·조인부터 윈도 함수까지 연습해요.",
   "terminal-git": "macOS·Linux 명령을 기초부터 연습해요.",
-  windows: "PowerShell·cmd를 기초부터 연습해요.",
   git: "상태·커밋부터 diff·되돌리기까지 연습해요.",
 };
 const playable = (item: Exercise) =>
@@ -60,7 +59,6 @@ export default function App() {
       return saved === "sql" ||
         saved === "python-basics" ||
         saved === "terminal-git" ||
-        saved === "windows" ||
         saved === "git"
         ? saved
         : "python";

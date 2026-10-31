@@ -152,6 +152,10 @@ export function conceptStates(sessions: Session[]) {
 // Python 기초, 터미널, Git and Windows items form their own tracks and never enter data-analysis sessions. Since
 // CR-020 the 터미널 track keeps the CR-019 ID terminal-git so earlier sessions and saved choices stay attached to it.
 export const TERMINAL_DOMAINS = ["터미널", "Git", "Windows"];
+// CR-022 holds the Windows track: like essays, its items stay in the catalog for earlier records but are never served.
+export const HELD_DOMAINS = ["Windows"];
+export const active = (ex: { response_mode: string; domain?: string }) =>
+  ex.response_mode !== "essay" && !HELD_DOMAINS.includes(ex.domain ?? "");
 export function inTrack(ex: { domain?: string }, track: string) {
   return track === "sql"
     ? ex.domain === "SQL"
@@ -178,7 +182,7 @@ export function selectExercises(
 ): [Source, "new" | "review" | "practice"][] {
   sessions = sessions.filter((s) => s.local_day <= today);
   const exercises = curriculum.exercises.filter(
-      (ex) => ex.response_mode !== "essay" && (!track || inTrack(ex, track)),
+      (ex) => active(ex) && (!track || inTrack(ex, track)),
     ),
     states = new Map(conceptStates(sessions).map((s) => [s.id, s])),
     doneToday = new Set(

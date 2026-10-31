@@ -144,7 +144,7 @@ def main():
     for profile in PROFILES:
         # steady and transfer-slip do not depend on the calendar; one start date is enough.
         starts = [first + timedelta(days=7 * k) for k in range(args.starts if profile in ('uneven', 'struggling') else 1)]
-        for track in ('python-basics', 'python', 'sql', 'terminal-git', 'windows', 'git'):
+        for track in ('python-basics', 'python', 'sql', 'terminal-git', 'git'):
             for days in args.days:
                 results.append({'profile': profile, 'track': track, 'days': days, 'runs': len(starts),
                                 'base': average([replay(base, profile, track, days, s) for s in starts]) if knows(base, track) else None,

@@ -11,7 +11,7 @@
 
 유형군 재분류(개념별 3~5개 family)는 기계 게이트가 아니라 별도 콘텐츠 작업이며 `docs/CONTENT_QUALITY_REVIEW.md`의 순서를 따른다.
 
-CR-017(2026-10-28)로 추가된 66문항과 CR-018의 Python 기초 21문항은 원본이 `backend/basics_content.json`(Python 기초)과 `backend/extension_content.json`(SQL 함수·윈도·데이터 변경, NumPy·pandas의 @)에 있다. CR-019(2026-10-29)·CR-020(2026-10-30)의 터미널·Git 76문항은 `backend/terminal_content.json`에 있고, CR-021(2026-10-31)부터 그 가운데 17문항은 Windows 트랙(domain `Windows`)이다. Windows 문항을 고치면 `.github/workflows/quality.yml`의 Windows 실행 검사(`scripts/validate_windows_content.py`)를 통과해야 게시된다. 이 문항들은 게시 전에 게이트(단계 3 비출력 형식·오답 보기 강도 2 이상)를 통과했으므로 정비 우선순위 목록의 대상이 아니다. 고칠 때는 같은 원본 파일에서 version을 올린다.
+CR-017(2026-10-28)로 추가된 66문항과 CR-018의 Python 기초 21문항은 원본이 `backend/basics_content.json`(Python 기초)과 `backend/extension_content.json`(SQL 함수·윈도·데이터 변경, NumPy·pandas의 @)에 있다. CR-019(2026-10-29)·CR-020(2026-10-30)의 터미널·Git 76문항은 `backend/terminal_content.json`에 있고, CR-021(2026-10-31)부터 그 가운데 17문항은 Windows(domain `Windows`) 문항이고 CR-022부터 보류 중이다(추천하지 않음). Windows 문항을 고치면 수동 워크플로 `.github/workflows/windows.yml`(`scripts/validate_windows_content.py`)을 실행해 통과를 확인한다. 이 문항들은 게시 전에 게이트(단계 3 비출력 형식·오답 보기 강도 2 이상)를 통과했으므로 정비 우선순위 목록의 대상이 아니다. 고칠 때는 같은 원본 파일에서 version을 올린다.
 
 ## 절차
 

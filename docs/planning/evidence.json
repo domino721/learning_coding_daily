@@ -1065,6 +1065,20 @@
         "scripts/validate_windows_content.py"
       ],
       "code_reference": "a91247f2ea923317d0185d5d4926b3cf6c09fa39"
+    },
+    {
+      "id": "EV-078",
+      "record": "docs/planning/evidence/EV-078.md",
+      "artifacts": [
+        "backend/curriculum.py",
+        "src/recommendation.ts",
+        "src/browserApi.ts",
+        ".github/workflows/quality.yml",
+        ".github/workflows/windows.yml",
+        "tests/e2e/terminal.spec.ts",
+        "tests/e2e/quality-design.spec.ts"
+      ],
+      "code_reference": "6b9b9d8838bacd0c223c951ed21f8b65d0fb350a"
     }
   ]
 }

@@ -14137,13 +14137,6 @@
       "exercise_count": 33
     },
     {
-      "id": "windows",
-      "name": "Windows",
-      "description": "PowerShell · cmd · 경로 · 파일 · 환경 변수 · Python 실행",
-      "available": true,
-      "exercise_count": 17
-    },
-    {
       "id": "git",
       "name": "Git",
       "description": "상태 · 커밋 · diff · 되돌리기 · 브랜치 · 원격",

@@ -488,3 +488,12 @@
 - 보존: 터미널 33문항·Git 26문항·다른 트랙의 (id, version)·경로·카드, Windows 17문항 version 1의 근거인 2026-10-30 검수 기록, rules·review·learning-paths-2.3·origin/key·기록 계약 유지.
 - 실험: 같은 엔진으로 재생하면 Windows 첫날은 세 뿌리의 기초 5문항(win-path-01·win-files-01·win-env-01·win-path-02·win-env-02)이고 꾸준한 학습자는 5일 안에 17문항을 모두 본다. 터미널 첫날은 그대로(sh-path-01·sh-words-01·sh-path-03·sh-words-02·sh-path-02)이며 33문항을 9일 안에, Git은 26문항을 8일 안에 본다.
 - 다음확인: Windows 학습자의 첫 주 정답률과 힌트 사용, 한국어 Windows 오류 문구와 지문의 영어 원문 차이로 생기는 혼동(WBS-520/530). Windows 트랙은 17문항이라 5일이면 새 문항이 끝나므로 리다이렉트·파이프, 스크립트(.ps1·.bat) 실행, 종료 코드($LASTEXITCODE) 섹터가 다음 후보다.
+
+## CD-20261031-002 · Windows 트랙 보류 (CR-022)
+
+- 관련: WBS-395·CR-022 / 설계·계획 1.18.0 / 새 ID·version 변경 없음.
+- 근거: CR-020 배포 보고(Windows 문항은 공식 문서로만 검수, 맥 사용자에게도 2일째부터 섞임, 홈 카드 공간이 거의 참)를 본 사용자가 2026-10-31 “이런 상태면 일단 터미널에서 윈도우 문제는 빼자”라고 지시했고, 별도 트랙 유지(CR-021)와 완전히 내리기 가운데 “Windows 문제 아예 내리기”를 골랐다.
+- 변경: 홈·트랙 목록·서버/브라우저 세션 시작에서 Windows(`windows`)를 빼 트랙은 다섯이다. Windows 17문항(version 2)은 서술형처럼 보류해 어떤 트랙(트랙 없는 시험용 풀 포함)에서도 추천하지 않는다. 저장된 Windows 선택은 기본 트랙으로 돌아가고, Windows 세션 시작 요청은 준비 중인 트랙으로 거절한다. Windows 실행 검사는 게시 조건에서 빼 수동 워크플로(`.github/workflows/windows.yml`)로 옮겼다. 홈 카드는 휴대폰에서 세 장씩 두 줄(3+2), 560px 이상에서 다섯 칸 한 줄이다.
+- 보존: Windows 17문항·개념 4개·경로·카드·2026-10-30/31 검수 기록과 모든 (id, version)·rules·review·learning-paths-2.3·origin/key·기록 계약 유지. 이미 푼 Windows 기록과 snapshot은 그대로 보인다.
+- 실험: 트랙 없는 시험용 풀의 첫날 다섯째 문항이 CR-020 때처럼 stats-median-01로 돌아왔고(공유 fixture 6곳), 두 엔진의 다섯 트랙 재생 결과가 같다.
+- 다음확인: Windows 트랙을 다시 열지는 베타 반응을 보고 사용자가 정한다. 다시 열 때는 Windows 실행 검사를 게시 조건으로 되돌린다.
