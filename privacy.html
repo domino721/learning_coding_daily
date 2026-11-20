@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#244d3b" />
+    <link rel="icon" href="./icon.svg" />
+    <title>매일코딩 개인정보처리방침</title>
+    <!-- WB-302 (REQ-023): the policy the stats switch links to. No script, font or image is loaded
+         from anywhere else, so opening it sends nothing. tests/test_privacy_page.py keeps it in step
+         with src/telemetryContract.ts, the retention in the stats server and brand.supportEmail. -->
+    <style>
+      :root {
+        color-scheme: light dark;
+        --page: #f7f8f4;
+        --surface: #fff;
+        --text: #223c31;
+        --muted: #627064;
+        --border: #e3e9e1;
+        --accent: #275c43;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --page: #1e1e1e;
+          --surface: #252526;
+          --text: #d4d4d4;
+          --muted: #ababab;
+          --border: #3c3c3c;
+          --accent: #9cdcfe;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--text);
+        font:
+          16px/1.7 -apple-system,
+          BlinkMacSystemFont,
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          sans-serif;
+        overflow-wrap: anywhere;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        line-height: 1.35;
+        margin: 0 0 4px;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin: 32px 0 8px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      p,
+      li,
+      dd {
+        margin: 0 0 8px;
+      }
+      ul {
+        padding-left: 1.2em;
+      }
+      dl {
+        margin: 0;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+      }
+      dt {
+        font-weight: 600;
+      }
+      dd {
+        margin-left: 0;
+        color: var(--muted);
+      }
+      a {
+        color: var(--accent);
+      }
+      .meta {
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>매일코딩 개인정보처리방침</h1>
+      <p class="meta">시행일 2026년 11월 18일</p>
+      <p>
+        매일코딩(이하 "서비스")은 웹사이트와 Android·iPhone 앱에서 코드 읽기
+        문제를 풀게 하는 학습 서비스입니다. 이 방침은 서비스가 어떤 정보를
+        어디에 두고, 무엇을 서버로 보내며, 어떻게 끌 수 있는지 설명합니다.
+      </p>
+
+      <h2 id="device">1. 학습 기록은 기기 안에 저장됩니다</h2>
+      <ul>
+        <li>
+          푼 문제, 입력한 답, 진도, 복습 일정 같은 학습 기록은 쓰고 있는
+          휴대폰이나 브라우저 안에만 저장됩니다. 서비스는 이 기록을 받지
+          않습니다.
+        </li>
+        <li>회원가입이 없고 이름·이메일·전화번호를 받지 않습니다.</li>
+        <li>
+          백업 파일은 학습자가 직접 만들고 직접 보관하며 서비스로 오지 않습니다.
+        </li>
+        <li>프로모 코드는 기기 안에서만 확인하고 보내지 않습니다.</li>
+      </ul>
+
+      <h2 id="statistics">2. 보내는 학습 통계</h2>
+      <p>
+        문제 난이도와 해설, 복습 간격을 고치기 위해, 문제나 이론 강의를 끝낼
+        때마다 아래 풀이 결과를 서비스의 통계 서버로 보냅니다. 인터넷이 끊겨
+        있으면 기기에 모아 두었다가 연결되면 보냅니다.
+      </p>
+      <dl>
+        <dt>통계용 번호</dt>
+        <dd>
+          기기에서 무작위로 만든 번호입니다. 같은 기기의 통계를 이어 보기 위한
+          가명 번호로, 학습 기록의 번호와 다르며 화면과 백업 파일에는 나오지
+          않습니다.
+        </dd>
+        <dt>문제를 끝낼 때</dt>
+        <dd>
+          트랙, 문제 ID와 버전, 문항 종류와 풀이 방식(보기 고르기·직접 입력), 새
+          문제·복습 구분, 결과(맞음·틀림·해설 보고 마침), 시도 횟수, 힌트 수,
+          도움 없이 맞혔는지, 걸린 시간(초), 보기를 고르는 문제에서 처음 틀렸을
+          때 고른 보기의 번호, 그 문제를 지난번에 푼 뒤 지난 날수, 직전까지
+          연속으로 맞힌 횟수, 날짜, 그날 몇 번째 묶음인지
+        </dd>
+        <dt>이론 강의를 끝낼 때</dt>
+        <dd>트랙, 강의 ID와 버전, 날짜</dd>
+        <dt>함께 보내는 정보</dt>
+        <dd>
+          앱 버전, 플랫폼(웹·Android·iPhone), 추천 규칙 버전, 실험 그룹(지금은
+          쓰지 않아 비어 있습니다)
+        </dd>
+      </dl>
+
+      <h2 id="never">3. 보내지 않는 정보</h2>
+      <ul>
+        <li>직접 입력한 답의 글자</li>
+        <li>이름, 이메일, 전화번호, 연락처, 위치</li>
+        <li>광고 식별자(Android 광고 ID, iPhone IDFA)</li>
+        <li>
+          접속 IP 주소: 통계 서버는 너무 많은 요청을 잠시 막는 데만 쓰고
+          저장하지 않습니다.
+        </li>
+      </ul>
+
+      <h2 id="purpose">4. 이용 목적</h2>
+      <p>
+        문제와 해설 개선, 난이도와 복습 간격 조정, 오류 발견에만 씁니다.
+        광고·마케팅에 쓰지 않고 다른 회사에 팔거나 제공하지 않습니다.
+      </p>
+
+      <h2 id="retention">5. 보관 기간과 파기</h2>
+      <p>
+        통계는 서버가 받은 날로부터 <strong>2년</strong> 동안 보관합니다. 2년이
+        지난 통계는 서버가 매일 자동으로 지웁니다.
+      </p>
+
+      <h2 id="opt-out">6. 통계를 끄는 방법</h2>
+      <ul>
+        <li>
+          처음에는 켜져 있습니다. ‘나의 기록’ 화면의 ‘학습 통계 보내기’를 끄면
+          그 뒤로는 보내지 않고, 아직 보내지 못한 통계도 기기에서 지웁니다.
+        </li>
+        <li>꺼도 학습과 기록은 그대로 쓸 수 있습니다.</li>
+        <li>다시 켜면 새 통계용 번호로 시작합니다.</li>
+      </ul>
+
+      <h2 id="sent">7. 이미 보낸 통계</h2>
+      <p>
+        통계용 번호는 이름이나 연락처와 연결되지 않고 화면에도 나오지 않아서,
+        서비스가 특정한 사람의 통계를 찾아 지울 수는 없습니다. 통계를 끄거나
+        앱을 지우면 기기의 통계용 번호가 사라지고, 그 전에 보낸 통계는 서버에
+        남아 있다가 5번의 보관 기간이 지나면 지워집니다.
+      </p>
+
+      <h2 id="transfer">8. 처리 위탁과 국외 이전</h2>
+      <dl>
+        <dt>받는 곳</dt>
+        <dd>
+          Cloudflare, Inc.(미국, 101 Townsend St., San Francisco, CA 94107,
+          privacyquestions@cloudflare.com)의 Workers·D1 서비스
+        </dd>
+        <dt>이전되는 항목</dt>
+        <dd>2번의 학습 통계</dd>
+        <dt>이전되는 국가와 방법</dt>
+        <dd>
+          문제나 강의를 끝낼 때마다 암호화된 연결(HTTPS)로 보내고, 저장 위치는
+          아시아·태평양 지역 데이터센터로 지정합니다.
+        </dd>
+        <dt>목적과 보관 기간</dt>
+        <dd>4번의 목적, 5번의 보관 기간</dd>
+        <dt>거부 방법</dt>
+        <dd>6번의 방법으로 끄면 그 뒤로는 이전되지 않습니다.</dd>
+      </dl>
+      <p>
+        웹사이트와 앱이 받는 새 문제 파일은 GitHub Pages(GitHub, Inc., 미국)로
+        제공됩니다. GitHub은 보안을 위해 방문 기록(IP 주소 등)을 남길 수 있으며,
+        서비스는 그 기록을 받지 않습니다.
+      </p>
+
+      <h2 id="later">9. 광고와 결제</h2>
+      <p>
+        지금은 광고와 결제가 없습니다. 광고나 결제를 붙이면 그 전에 이 방침을
+        고치고 알립니다.
+      </p>
+
+      <h2 id="audience">10. 이용 대상</h2>
+      <p>
+        서비스는 만 18세 이상을 대상으로 합니다. 나이를 묻지 않으며, 만 14세
+        미만 아동의 정보를 알면서 받지 않습니다. 만 14세 미만이라면 ‘나의 기록’
+        화면에서 ‘학습 통계 보내기’를 꺼 주세요.
+      </p>
+
+      <h2 id="contact">11. 문의와 개인정보 보호책임자</h2>
+      <p>
+        개인정보 보호책임자: 매일코딩 운영자<br />
+        문의:
+        <a href="mailto:maeilcoding.help@gmail.com"
+          >maeilcoding.help@gmail.com</a
+        >
+      </p>
+      <p>개인정보 침해에 대한 신고나 상담은 아래 기관에도 할 수 있습니다.</p>
+      <ul>
+        <li>개인정보침해신고센터: 국번 없이 118, privacy.kisa.or.kr</li>
+        <li>개인정보분쟁조정위원회: 1833-6972, www.kopico.go.kr</li>
+        <li>대검찰청: 국번 없이 1301, www.spo.go.kr</li>
+        <li>경찰청: 국번 없이 182, ecrm.police.go.kr</li>
+      </ul>
+
+      <h2 id="changes">12. 방침의 변경</h2>
+      <p>
+        이 방침을 바꾸면 이 페이지에 새 시행일과 함께 올리고, 보내는 항목이
+        늘어나는 경우에는 앱 안에서 먼저 알립니다.
+      </p>
+    </main>
+  </body>
+</html>
